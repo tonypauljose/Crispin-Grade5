@@ -368,35 +368,94 @@
 
   PenaltyGame.prototype.animateBall = function (outcome, keeperReactMs) {
     const ball = document.getElementById('ps-ball');
+    const svg = document.getElementById('ps-svg');
     const netflash = document.getElementById('ps-netflash');
+    const stage = this.host.querySelector('.pitch-stage--big');
     const self = this;
 
     // Destination
     let destX = this.aim.x;
     let destY = this.aim.y;
     if (outcome === 'over') {
-      destY = 10; // above crossbar
+      destY = 10;
       destX = this.aim.x + (Math.random() - 0.5) * 60;
     } else if (outcome === 'wide') {
       destX = this.aim.x + (this.aim.x < 250 ? -80 : 80);
       destY = this.aim.y;
     }
 
-    ball.style.transition = 'transform 0.5s cubic-bezier(0.35, 0.05, 0.5, 1)';
-    ball.setAttribute('transform', `translate(${destX}, ${destY}) scale(0.6)`);
+    // Ball flight in two phases:
+    //  Phase 1: fast ~80% (380ms)
+    //  Phase 2: slow-mo final ~20% (320ms) — "Score! Hero" moment
+    const startX = 250, startY = 272;
+    const phase1X = startX + (destX - startX) * 0.8;
+    const phase1Y = startY + (destY - startY) * 0.8;
 
-    setTimeout(() => self.resolve(outcome), 520);
+    // Spawn trail ghosts while the ball is in flight
+    const trailInterval = setInterval(() => {
+      const m = ball.getBoundingClientRect();
+      const svgRect = svg.getBoundingClientRect();
+      const ghost = document.createElement('div');
+      ghost.className = 'ball-ghost';
+      ghost.style.left = (m.left - svgRect.left + m.width / 2 + svgRect.left) + 'px';
+      ghost.style.top  = (m.top  - svgRect.top  + m.height / 2 + svgRect.top) + 'px';
+      ghost.style.position = 'fixed';
+      document.body.appendChild(ghost);
+      setTimeout(() => ghost.remove(), 500);
+    }, 40);
 
-    if (outcome === 'goal') {
-      setTimeout(() => {
-        netflash.style.transition = 'opacity 0.1s';
-        netflash.setAttribute('opacity', '0.5');
+    // Phase 1: fast burst
+    ball.style.transition = 'transform 0.38s cubic-bezier(0.3, 0.02, 0.7, 0.9)';
+    ball.setAttribute('transform', `translate(${phase1X}, ${phase1Y}) scale(0.8) rotate(360)`);
+
+    // Phase 2: slow-mo finish
+    setTimeout(() => {
+      stage.classList.add('stage-slowmo');
+      ball.style.transition = 'transform 0.32s cubic-bezier(0.4, 0, 0.6, 1)';
+      ball.setAttribute('transform', `translate(${destX}, ${destY}) scale(0.55) rotate(720)`);
+    }, 380);
+
+    // Impact & resolve
+    setTimeout(() => {
+      clearInterval(trailInterval);
+      stage.classList.remove('stage-slowmo');
+      if (outcome === 'goal') {
+        // Impact squash
+        ball.style.transition = 'transform 0.08s ease-out';
+        ball.setAttribute('transform', `translate(${destX}, ${destY}) scale(1.3, 0.7) rotate(720)`);
         setTimeout(() => {
-          netflash.style.transition = 'opacity 0.4s';
+          ball.style.transition = 'transform 0.15s ease-out';
+          ball.setAttribute('transform', `translate(${destX}, ${destY}) scale(0.5)`);
+        }, 80);
+        // Net flash
+        netflash.style.transition = 'opacity 0.1s';
+        netflash.setAttribute('opacity', '0.55');
+        setTimeout(() => {
+          netflash.style.transition = 'opacity 0.45s';
           netflash.setAttribute('opacity', '0');
-        }, 100);
-      }, 500);
-    }
+        }, 110);
+        // Screen shake
+        stage.classList.add('stage-shake');
+        setTimeout(() => stage.classList.remove('stage-shake'), 400);
+      } else {
+        // Miss — desaturate briefly for disappointment
+        stage.classList.add('stage-miss');
+        setTimeout(() => stage.classList.remove('stage-miss'), 600);
+      }
+      self.resolve(outcome);
+    }, 720);
+  };
+
+  PenaltyGame.prototype.showBanner = function (text, variant) {
+    const stage = this.host.querySelector('.pitch-stage--big');
+    if (!stage) return;
+    // Remove any existing
+    stage.querySelectorAll('.streak-banner').forEach(el => el.remove());
+    const b = document.createElement('div');
+    b.className = 'streak-banner show' + (variant ? ' streak-banner--' + variant : '');
+    b.textContent = text;
+    stage.appendChild(b);
+    setTimeout(() => b.remove(), 1700);
   };
 
   PenaltyGame.prototype.resolve = function (outcome) {
@@ -410,28 +469,55 @@
       this.streak++;
       this.bestStreak = Math.max(this.bestStreak, this.streak);
       App.Audio.playGoal();
+      // Crowd roar louder with streak
+      App.Audio.playCrowdRoar(1.6, Math.min(1 + this.streak * 0.25, 2.0));
+
       const text = cornerBonus ? '🎯 TOP CORNER! SIIUUU!' : '⚽ GOAL! SIIUUU!';
       msg.innerHTML = `<strong class="text-yellow">${text}</strong>`;
       log.insertAdjacentHTML('afterbegin', `<div class="pitch-log__entry goal">R${this.round}: ${text}${this.streak >= 2 ? ' · streak x' + this.streak : ''}</div>`);
-      App.launchConfetti(this.streak >= 3 ? 80 : 40);
+
+      // Escalating streak banners
+      if (cornerBonus && this.streak < 3) {
+        this.showBanner('TOP CORNER!', 'fire');
+      } else if (this.streak === 1) {
+        this.showBanner('GOAL!');
+      } else if (this.streak === 2) {
+        this.showBanner('DOUBLE!');
+      } else if (this.streak === 3) {
+        this.showBanner('HAT-TRICK!', 'fire');
+      } else if (this.streak === 4) {
+        this.showBanner('ON FIRE!', 'fire');
+      } else if (this.streak === 5) {
+        this.showBanner('UNSTOPPABLE!', 'epic');
+      } else if (this.streak >= 6) {
+        this.showBanner('LEGEND!', 'epic');
+      }
+
+      App.launchConfetti(this.streak >= 3 ? 120 : 50);
       if (cornerBonus) App.showToast('🎯 Top-corner finish!', 'football', 2000);
     } else if (outcome === 'save') {
       this.saves++;
       this.streak = 0;
       App.Audio.playMiss();
+      App.Audio.playCrowdOh(1.0);
       msg.innerHTML = `<strong class="text-coral">🧤 SAVED! Keeper guessed it.</strong>`;
+      this.showBanner('SAVED!');
       log.insertAdjacentHTML('afterbegin', `<div class="pitch-log__entry miss">R${this.round}: Saved by the keeper.</div>`);
     } else if (outcome === 'over') {
       this.saves++;
       this.streak = 0;
       App.Audio.playMiss();
+      App.Audio.playCrowdOh(1.0);
       msg.innerHTML = `<strong class="text-coral">🚀 Over the bar! Too much power.</strong>`;
+      this.showBanner('OVER!');
       log.insertAdjacentHTML('afterbegin', `<div class="pitch-log__entry miss">R${this.round}: Blasted over the bar!</div>`);
     } else {
       this.saves++;
       this.streak = 0;
       App.Audio.playMiss();
+      App.Audio.playCrowdOh(1.0);
       msg.innerHTML = `<strong class="text-coral">📐 Wide of the post!</strong>`;
+      this.showBanner('WIDE!');
       log.insertAdjacentHTML('afterbegin', `<div class="pitch-log__entry miss">R${this.round}: Wide!</div>`);
     }
 
@@ -474,6 +560,7 @@
     document.getElementById('ps-next').classList.add('hidden');
     this.updateScoreboard();
     document.getElementById('ps-msg').textContent = `Round ${this.round}: keeper is faster now! Pick your moment. ⚡`;
+    App.Audio.playWhistle();
   };
 
   PenaltyGame.prototype.finishMatch = function () {
@@ -484,8 +571,11 @@
 
     if (win) {
       msg.innerHTML = `🏆 <strong class="text-yellow">WIN! ${this.goals}-${this.saves} · best streak x${this.bestStreak}</strong>`;
-      App.launchConfetti(140);
+      App.launchConfetti(200);
       App.Audio.playLevelUp();
+      App.Audio.playCrowdRoar(3.0, 2.0);
+      if (this.goals === 5) this.showBanner('PERFECT 5/5!', 'epic');
+      else this.showBanner('WINNER!', 'fire');
       App.showToast('SIIIUUUU! 🏆 Penalty shootout won!', 'football');
       if (window.Progress) {
         window.Progress.recordPenaltyWin();
@@ -495,6 +585,7 @@
     } else {
       msg.innerHTML = `😬 <strong>Final: ${this.goals}-${this.saves}.</strong> Ronaldo missed 72 penalties in his career. Try again!`;
       App.Audio.playMiss();
+      App.Audio.playCrowdOh(1.5);
     }
   };
 

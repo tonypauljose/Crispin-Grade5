@@ -796,6 +796,10 @@
 .fut-card {
   --fut-w: 260px;
   --fut-h: 380px;
+  /* Parallax vars, set by JS: -0.5..0.5 range */
+  --mx: 0;
+  --my: 0;
+  --tilt: 1;          /* 0..1 easing toward hover state */
   width: var(--fut-w);
   height: var(--fut-h);
   margin: 0 auto;
@@ -812,7 +816,69 @@
   padding: 14px;
   animation: fut-float 4.5s ease-in-out infinite;
   overflow: hidden;
+  transform-style: preserve-3d;
+  transform:
+    perspective(1000px)
+    rotateX(calc(var(--my) * 14deg * var(--tilt)))
+    rotateY(calc(var(--mx) * -14deg * var(--tilt)));
+  transition: transform 0.15s ease-out;
+  will-change: transform;
+  cursor: pointer;
 }
+
+/* Holographic gloss overlay — follows cursor */
+.fut-card__gloss {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: calc(0.65 * var(--tilt));
+  background:
+    radial-gradient(
+      circle at calc(50% + var(--mx) * 120%) calc(50% + var(--my) * 120%),
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 240, 150, 0.25) 25%,
+      transparent 55%
+    );
+  transition: opacity 0.3s ease-out;
+  z-index: 5;
+}
+/* Iridescent stripes that shift with angle */
+.fut-card__holo {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  mix-blend-mode: color-dodge;
+  opacity: calc(0.35 * var(--tilt));
+  background:
+    repeating-linear-gradient(
+      110deg,
+      rgba(255, 255, 255, 0.05) 0px,
+      rgba(255, 100, 200, 0.12) 6px,
+      rgba(100, 200, 255, 0.1) 12px,
+      rgba(255, 220, 100, 0.1) 18px,
+      rgba(255, 255, 255, 0.05) 24px
+    );
+  background-position: calc(var(--mx) * 40%) calc(var(--my) * 40%);
+  transition: opacity 0.3s ease-out;
+  z-index: 4;
+}
+/* 3D depth layers — content that translates in Z for parallax feel */
+.fut-card__photo,
+.fut-card__top,
+.fut-card__name,
+.fut-card__stats,
+.fut-card__spark {
+  transform: translateZ(calc(var(--depth, 6px) * var(--tilt)));
+}
+.fut-card__photo { --depth: 18px; }
+.fut-card__top { --depth: 24px; }
+.fut-card__name { --depth: 14px; }
+.fut-card__stats { --depth: 10px; }
+.fut-card__spark { --depth: 30px; }
+.fut-card__burst { transform: translateZ(calc(-8px * var(--tilt))); }
 @keyframes fut-float {
   0%, 100% { transform: translateY(0) rotate(-1deg); }
   50% { transform: translateY(-10px) rotate(1deg); }
@@ -1322,6 +1388,92 @@
   align-items: center;
   justify-content: center;
   font-size: 0.95rem;
+}
+
+/* ---------- Penalty shootout feel upgrades ---------- */
+.pitch-stage--big.stage-slowmo .goal-svg--v2 {
+  filter: saturate(1.3) contrast(1.1);
+}
+.pitch-stage--big.stage-shake { animation: stage-shake 0.35s ease-in-out; }
+@keyframes stage-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translate(-4px, -2px); }
+  40% { transform: translate(4px, 2px); }
+  60% { transform: translate(-3px, 1px); }
+  80% { transform: translate(3px, -1px); }
+}
+.pitch-stage--big.stage-miss .goal-svg--v2 {
+  filter: grayscale(0.85) brightness(0.7);
+  transition: filter 0.4s ease;
+}
+
+/* Streak banner — flies in, escalates with size */
+.streak-banner {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.1);
+  z-index: 20;
+  font-family: var(--font-heading);
+  font-size: 2.6rem;
+  color: var(--yellow);
+  text-shadow:
+    0 0 20px rgba(250, 204, 21, 0.9),
+    0 4px 0 #4C1D95,
+    0 8px 20px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-transform: uppercase;
+  pointer-events: none;
+  opacity: 0;
+}
+.streak-banner.show {
+  animation: streak-pop 1.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes streak-pop {
+  0%   { transform: translate(-50%, -50%) scale(0.1) rotate(-8deg); opacity: 0; }
+  15%  { transform: translate(-50%, -50%) scale(1.25) rotate(4deg); opacity: 1; }
+  25%  { transform: translate(-50%, -50%) scale(1)    rotate(-2deg); }
+  75%  { transform: translate(-50%, -50%) scale(1)    rotate(0deg); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.4)  rotate(0deg); opacity: 0; }
+}
+.streak-banner--fire {
+  color: #FBBF24;
+  text-shadow:
+    0 0 30px rgba(251, 191, 36, 1),
+    0 0 60px rgba(239, 68, 68, 0.7),
+    0 4px 0 #7F1D1D,
+    0 8px 20px rgba(0,0,0,0.7);
+}
+.streak-banner--epic {
+  background: linear-gradient(90deg, #A855F7, #FACC15, #EF4444, #06B6D4);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px rgba(250, 204, 21, 0.8));
+}
+
+/* Ball trail — ghost copies that fade */
+.ball-ghost {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin-left: -10px;
+  margin-top: -10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 70%, transparent 100%);
+  pointer-events: none;
+  animation: ghost-fade 0.5s ease-out forwards;
+}
+@keyframes ghost-fade {
+  0% { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.4); }
+}
+
+/* Net ripple lines */
+@keyframes net-ripple {
+  0% { opacity: 0.7; transform: scale(0.95); }
+  100% { opacity: 0; transform: scale(1.15); }
 }
 
 /* ============================================================

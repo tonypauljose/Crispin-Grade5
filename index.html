@@ -26,8 +26,10 @@
 
           <!-- Left: FUT-style player card + greeting -->
           <div class="stadium-hero__side">
-            <div class="fut-card" role="img" aria-label="Crispin's player card — rating 99, midfielder">
+            <div class="fut-card" id="fut-card" role="img" aria-label="Crispin's player card — rating 99, midfielder" tabindex="0">
               <div class="fut-card__burst" aria-hidden="true"></div>
+              <div class="fut-card__holo" aria-hidden="true"></div>
+              <div class="fut-card__gloss" aria-hidden="true"></div>
 
               <span class="fut-card__spark" style="top:20px; right:20px;">✨</span>
               <span class="fut-card__spark" style="top:60px; left:18px;">⭐</span>
@@ -182,6 +184,52 @@
 
       // Penalty Shootout (hero)
       new PenaltyGame('shootout-host');
+
+      // ---------- Holographic parallax card ----------
+      (function wireFutParallax() {
+        const card = document.getElementById('fut-card');
+        if (!card) return;
+        let mx = 0, my = 0, tmx = 0, tmy = 0, tilt = 0, ttilt = 0;
+        let rafId = null;
+
+        function render() {
+          // Smooth lerp toward target
+          mx += (tmx - mx) * 0.15;
+          my += (tmy - my) * 0.15;
+          tilt += (ttilt - tilt) * 0.12;
+          card.style.setProperty('--mx', mx.toFixed(3));
+          card.style.setProperty('--my', my.toFixed(3));
+          card.style.setProperty('--tilt', tilt.toFixed(3));
+          if (Math.abs(mx - tmx) > 0.001 || Math.abs(my - tmy) > 0.001 || Math.abs(tilt - ttilt) > 0.001) {
+            rafId = requestAnimationFrame(render);
+          } else {
+            rafId = null;
+          }
+        }
+        function schedule() { if (!rafId) rafId = requestAnimationFrame(render); }
+
+        function onMove(clientX, clientY) {
+          const r = card.getBoundingClientRect();
+          tmx = ((clientX - r.left) / r.width) - 0.5;
+          tmy = ((clientY - r.top) / r.height) - 0.5;
+          ttilt = 1;
+          schedule();
+        }
+
+        card.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+        card.addEventListener('mouseleave', () => { tmx = 0; tmy = 0; ttilt = 0; schedule(); });
+        card.addEventListener('touchmove', (e) => {
+          if (e.touches[0]) { e.preventDefault(); onMove(e.touches[0].clientX, e.touches[0].clientY); }
+        }, { passive: false });
+        card.addEventListener('touchend', () => { tmx = 0; tmy = 0; ttilt = 0; schedule(); });
+
+        // Click the card for fun feedback
+        card.addEventListener('click', () => {
+          App.Audio.playBadge();
+          App.launchConfetti(40);
+          App.showToast('⚽ Let\'s go Crispin!', 'football', 1800);
+        });
+      })();
     })();
   </script>
 </body>

@@ -219,6 +219,48 @@
       this.tone(330, 0.3, 'sine', 0.12);
       this.tone(247, 0.4, 'sine', 0.12, 0.15);
     },
+    /** Procedural crowd roar — band-pass filtered white noise that swells. */
+    playCrowdRoar(duration = 1.8, intensity = 1) {
+      if (!this.sfxOn) return;
+      const ctx = this.ensureCtx(); if (!ctx) return;
+      const bufferSize = ctx.sampleRate * duration;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+      const src = ctx.createBufferSource(); src.buffer = buffer;
+      const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 700; bp.Q.value = 0.8;
+      const g = ctx.createGain();
+      g.gain.value = 0;
+      g.gain.linearRampToValueAtTime(0.25 * intensity, ctx.currentTime + 0.25);
+      g.gain.linearRampToValueAtTime(0.35 * intensity, ctx.currentTime + duration * 0.5);
+      g.gain.linearRampToValueAtTime(0, ctx.currentTime + duration);
+      src.connect(bp).connect(g).connect(ctx.destination);
+      src.start();
+      src.stop(ctx.currentTime + duration + 0.05);
+    },
+    /** Short disappointed crowd "ohhhh" */
+    playCrowdOh(duration = 1.2) {
+      if (!this.sfxOn) return;
+      const ctx = this.ensureCtx(); if (!ctx) return;
+      const bufferSize = ctx.sampleRate * duration;
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+      const src = ctx.createBufferSource(); src.buffer = buffer;
+      const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 450; bp.Q.value = 1;
+      const g = ctx.createGain();
+      g.gain.value = 0;
+      g.gain.linearRampToValueAtTime(0.18, ctx.currentTime + 0.2);
+      g.gain.linearRampToValueAtTime(0, ctx.currentTime + duration);
+      src.connect(bp).connect(g).connect(ctx.destination);
+      src.start();
+      src.stop(ctx.currentTime + duration + 0.05);
+    },
+    /** Referee whistle — short piercing tone */
+    playWhistle() {
+      this.tone(2200, 0.08, 'sine', 0.08);
+      this.tone(2400, 0.12, 'sine', 0.1, 0.06);
+    },
 
     startMusic() {
       if (this.musicNode) return;
