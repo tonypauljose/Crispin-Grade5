@@ -19,13 +19,77 @@
     <div class="container">
 
       <!-- ======================================================
-           STADIUM HERO — avatar + greeting + embedded shootout
+           MATCH HERO — cinematic stadium entrance
            ====================================================== -->
-      <section class="stadium-hero">
-        <div class="stadium-hero__grid">
+      <section class="match-hero" id="match-hero">
 
-          <!-- Left: FUT-style player card + greeting -->
-          <div class="stadium-hero__side">
+        <!-- Layered scene -->
+        <div class="match-hero__sky" aria-hidden="true"></div>
+
+        <!-- Stadium silhouette as inline SVG -->
+        <svg class="match-hero__stadium" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="stadFade" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#1E1B4B" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#1E1B4B" stop-opacity="0.95"/>
+            </linearGradient>
+          </defs>
+          <path d="M 0 200 L 0 140 Q 60 120 120 135 L 180 115 Q 260 90 360 110 L 440 95 Q 540 75 660 95 L 740 80 Q 840 70 960 90 L 1040 110 Q 1120 125 1200 140 L 1200 200 Z" fill="url(#stadFade)"/>
+          <!-- Stadium pillars -->
+          <rect x="150" y="118" width="18" height="82" fill="#0F0D30" opacity="0.8"/>
+          <rect x="420" y="95" width="18" height="105" fill="#0F0D30" opacity="0.8"/>
+          <rect x="720" y="90" width="18" height="110" fill="#0F0D30" opacity="0.8"/>
+          <rect x="1000" y="105" width="18" height="95" fill="#0F0D30" opacity="0.8"/>
+        </svg>
+
+        <!-- Stadium floodlights -->
+        <div class="match-hero__lights" aria-hidden="true">
+          <div class="match-light"></div>
+          <div class="match-light"></div>
+          <div class="match-light"></div>
+          <div class="match-light"></div>
+        </div>
+
+        <!-- Crowd -->
+        <div class="match-hero__crowd" aria-hidden="true">
+          <div class="crowd-row crowd-row--3" id="crowd-row-3"></div>
+          <div class="crowd-row crowd-row--2" id="crowd-row-2"></div>
+          <div class="crowd-row crowd-row--1" id="crowd-row-1"></div>
+        </div>
+
+        <!-- Pitch foreground -->
+        <div class="match-hero__pitch" aria-hidden="true"></div>
+
+        <!-- Drifting confetti -->
+        <div class="match-hero__confetti" id="hero-confetti" aria-hidden="true"></div>
+
+        <!-- Content grid -->
+        <div class="match-hero__content">
+
+          <!-- Title block (LEFT) -->
+          <div class="match-hero__title">
+            <span class="match-day-badge">
+              <span class="match-day-badge__dot"></span>
+              Match Day
+            </span>
+            <p class="match-hero__welcome" id="hero-welcome">Welcome to</p>
+            <h1 class="match-hero__name">Crispin's World</h1>
+            <p class="match-hero__subtitle" id="hero-subtitle">Grade 5 · Mathematics · Asian School Bahrain</p>
+
+            <!-- Live stats ticker -->
+            <div class="match-hero__stats">
+              <span class="live-stat live-stat--streak"><span class="live-stat__icon">🔥</span><span id="hs-streak">0</span>-day streak</span>
+              <span class="live-stat live-stat--level"><span class="live-stat__icon" id="hs-level-emoji">🌱</span><span id="hs-level">Beginner</span></span>
+              <span class="live-stat live-stat--xp"><span class="live-stat__icon">⭐</span><span id="hs-xp">0</span> XP</span>
+            </div>
+
+            <a class="match-cta" href="#shootout-section" id="match-cta">
+              <span>▶ Start Your Match</span>
+            </a>
+          </div>
+
+          <!-- FUT card (RIGHT) -->
+          <div class="match-hero__side">
             <div class="fut-card" id="fut-card" role="img" aria-label="Crispin's player card — rating 99, midfielder" tabindex="0">
               <div class="fut-card__burst" aria-hidden="true"></div>
               <div class="fut-card__holo" aria-hidden="true"></div>
@@ -61,62 +125,47 @@
                 <div class="fut-stat"><span class="fut-stat__label">FUN</span><span class="fut-stat__val">100</span></div>
               </div>
             </div>
-
-            <h1 class="stadium-hero__greeting" id="hero-greeting" style="margin-top:var(--space-4);">
-              <span class="yellow">Welcome!</span>
-            </h1>
-            <p class="stadium-hero__subtitle">Grade 5 · Asian School Bahrain · CBSE</p>
-            <div class="stadium-hero__cr7" id="cr7-quote">
-              <span class="cr7-jersey">7</span>
-              <div>Loading quote…</div>
-            </div>
-          </div>
-
-          <!-- Right: penalty shootout, embedded -->
-          <div class="stadium-hero__game">
-            <h2 class="match-title" style="color:white;">
-              <span class="match-badge">⚽ Live</span>
-              <span style="color:white;">Tonight's Penalty Shootout</span>
-            </h2>
-            <div id="shootout-host"></div>
           </div>
 
         </div>
-      </section>
 
-      <!-- Stadium-style scoreboard stats -->
-      <section class="stats-strip stats-strip--stadium" aria-label="Portal stats">
-        <div class="stat"><div class="stat__value">1</div><div class="stat__label">Chapter Ready</div></div>
-        <div class="stat"><div class="stat__value">9+</div><div class="stat__label">Lessons</div></div>
-        <div class="stat"><div class="stat__value">120</div><div class="stat__label">Quiz Questions</div></div>
-        <div class="stat"><div class="stat__value" id="stat-days">0</div><div class="stat__label">Days On Portal</div></div>
-      </section>
-
-      <!-- Action cards -->
-      <section class="section">
-        <h2 class="section-title">🚀 What would you like to do?</h2>
-        <div class="grid grid-2">
-          <a class="action-tile action-tile--learning" href="learning.html">
-            <span class="action-tile__emoji">🎓</span>
-            <h3 class="action-tile__title">Start Learning</h3>
-            <p class="action-tile__desc">Pick a subject and dive into today's lesson.</p>
-          </a>
-          <a class="action-tile action-tile--maths" href="maths.html">
-            <span class="action-tile__emoji">🧮</span>
-            <h3 class="action-tile__title">Jump to Maths</h3>
-            <p class="action-tile__desc">10 chapters of CBSE Grade 5 Mathematics.</p>
-          </a>
-          <a class="action-tile action-tile--fun" href="fun.html">
-            <span class="action-tile__emoji">🧠</span>
-            <h3 class="action-tile__title">Riddle Archive</h3>
-            <p class="action-tile__desc">33+ brain-teasers — math, word, logic, and football.</p>
-          </a>
-          <a class="action-tile action-tile--progress" href="#" id="progress-tile">
-            <span class="action-tile__emoji">📊</span>
-            <h3 class="action-tile__title">My Progress</h3>
-            <p class="action-tile__desc">See your XP, level, streak and badges earned.</p>
-          </a>
+        <!-- Game menu row at bottom of hero -->
+        <div class="container" style="position:relative; z-index:10; padding-bottom: var(--space-5);">
+          <nav class="game-menu" aria-label="Main menu">
+            <a class="game-menu-btn" href="maths.html">
+              <span class="game-menu-btn__icon">🧮</span>
+              <span class="game-menu-btn__label">Mathematics<span class="game-menu-btn__sub">10 chapters</span></span>
+              <span class="game-menu-btn__arrow">›</span>
+            </a>
+            <a class="game-menu-btn" href="learning.html">
+              <span class="game-menu-btn__icon">🎓</span>
+              <span class="game-menu-btn__label">Learning<span class="game-menu-btn__sub">Subjects</span></span>
+              <span class="game-menu-btn__arrow">›</span>
+            </a>
+            <a class="game-menu-btn" href="fun.html">
+              <span class="game-menu-btn__icon">🧠</span>
+              <span class="game-menu-btn__label">Riddles<span class="game-menu-btn__sub">33+ brain teasers</span></span>
+              <span class="game-menu-btn__arrow">›</span>
+            </a>
+            <a class="game-menu-btn" href="#" id="progress-btn">
+              <span class="game-menu-btn__icon">📊</span>
+              <span class="game-menu-btn__label">My Stats<span class="game-menu-btn__sub">XP · Badges</span></span>
+              <span class="game-menu-btn__arrow">›</span>
+            </a>
+          </nav>
         </div>
+
+      </section>
+
+      <!-- ======================================================
+           SHOOTOUT SECTION — now dedicated, not crammed in hero
+           ====================================================== -->
+      <section class="shootout-section" id="shootout-section">
+        <div class="shootout-section__header">
+          <h2>🏆 Tonight's Penalty Shootout</h2>
+          <p>5 rounds · score 3+ to win · streaks multiply the reward</p>
+        </div>
+        <div id="shootout-host"></div>
       </section>
 
       <!-- Riddle of the Day -->
@@ -156,33 +205,78 @@
       Progress.markVisit();
       Progress.renderGamebar();
 
-      // Greet + ask name on first visit
+      // Populate crowd silhouettes
+      function buildCrowdRow(id, count) {
+        const row = document.getElementById(id);
+        if (!row) return;
+        let html = '';
+        for (let i = 0; i < count; i++) {
+          html += '<div class="crowd-person"></div>';
+        }
+        row.innerHTML = html;
+      }
+      buildCrowdRow('crowd-row-1', 42);
+      buildCrowdRow('crowd-row-2', 38);
+      buildCrowdRow('crowd-row-3', 34);
+
+      // Drifting confetti in the sky
+      (function spawnConfetti() {
+        const host = document.getElementById('hero-confetti');
+        if (!host) return;
+        const colors = ['#FACC15', '#FB7185', '#A855F7', '#14B8A6', '#22C55E'];
+        for (let i = 0; i < 18; i++) {
+          const c = document.createElement('div');
+          c.className = 'confetti-mini';
+          c.style.left = Math.random() * 100 + '%';
+          c.style.background = colors[i % colors.length];
+          c.style.animationDelay = (Math.random() * 8) + 's';
+          c.style.animationDuration = (6 + Math.random() * 4) + 's';
+          c.style.transform = `rotate(${Math.random() * 360}deg)`;
+          host.appendChild(c);
+        }
+      })();
+
+      // Greet: update welcome line with time of day, insert name
       const applyGreet = (name) => {
-        document.getElementById('hero-greeting').innerHTML =
-          `${App.greeting()}, <span class="yellow">${name}</span>!`;
+        document.getElementById('hero-welcome').textContent = App.greeting() + ', Welcome to';
+        // Name stays as 'Crispin's World' but subtitle can personalise if visitor isn't Crispin
+        if (name && name.toLowerCase() !== 'crispin') {
+          document.getElementById('hero-subtitle').innerHTML =
+            `<strong style="color:#FACC15;">${name}</strong>, glad you dropped by. Grade 5 · Mathematics · Bahrain`;
+        }
       };
-      App.askName((profile) => applyGreet(profile.name));
+      App.askName((p) => applyGreet(p.name));
       const existing = App.getProfile();
       if (existing) applyGreet(existing.name);
 
-      // CR7 rotator
-      App.renderCR7Rotator(document.getElementById('cr7-quote'));
+      // Hero live stats
+      (function updateHeroStats() {
+        const s = Progress.getStats();
+        document.getElementById('hs-streak').textContent = s.streak;
+        document.getElementById('hs-level').textContent = s.level.curr.name;
+        document.getElementById('hs-level-emoji').textContent = s.level.curr.emoji;
+        document.getElementById('hs-xp').textContent = s.xp;
+      })();
 
-      // Stats
-      document.getElementById('stat-days').textContent = Progress.getStats().days;
+      // Footer
       document.getElementById('year').textContent = new Date().getFullYear();
       document.getElementById('last-updated').textContent = App.formatDateDMY(new Date());
 
-      // Progress modal
-      document.getElementById('progress-tile').addEventListener('click', (e) => {
+      // Progress modal from stats button
+      document.getElementById('progress-btn').addEventListener('click', (e) => {
         e.preventDefault();
         Progress.showProgressModal();
+      });
+
+      // Click the CTA plays a whistle + smooth scroll
+      document.getElementById('match-cta').addEventListener('click', () => {
+        App.Audio.playWhistle();
       });
 
       // Riddle teaser
       if (window.Riddles) window.Riddles.renderDaily(document.getElementById('riddle-teaser'));
 
-      // Penalty Shootout (hero)
+      // Penalty Shootout in its own section
       new PenaltyGame('shootout-host');
 
       // ---------- Holographic parallax card ----------
@@ -193,7 +287,6 @@
         let rafId = null;
 
         function render() {
-          // Smooth lerp toward target
           mx += (tmx - mx) * 0.15;
           my += (tmy - my) * 0.15;
           tilt += (ttilt - tilt) * 0.12;
@@ -223,13 +316,15 @@
         }, { passive: false });
         card.addEventListener('touchend', () => { tmx = 0; tmy = 0; ttilt = 0; schedule(); });
 
-        // Click the card for fun feedback
         card.addEventListener('click', () => {
           App.Audio.playBadge();
           App.launchConfetti(40);
           App.showToast('⚽ Let\'s go Crispin!', 'football', 1800);
         });
       })();
+
+      // Kick off: crowd roar on page reveal (if sound is enabled)
+      setTimeout(() => { App.Audio.playCrowdRoar(2.0, 1.2); }, 1200);
     })();
   </script>
 </body>

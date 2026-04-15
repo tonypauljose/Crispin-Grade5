@@ -737,59 +737,465 @@
 .badge-chip__desc { font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; }
 
 /* ============================================================
-   STADIUM HERO (landing page)
+   MATCH HERO — cinematic stadium entrance
    ============================================================ */
-.stadium-hero {
+.match-hero {
   position: relative;
-  background:
-    radial-gradient(ellipse at top, rgba(250, 204, 21, 0.15) 0%, transparent 60%),
-    linear-gradient(180deg, #1E3A8A 0%, #4C1D95 40%, #0F172A 100%);
   border-radius: var(--radius-xl);
-  padding: var(--space-6) var(--space-5) var(--space-5);
-  margin-bottom: var(--space-6);
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  margin-bottom: var(--space-6);
+  min-height: 540px;
   color: var(--white);
-}
-.stadium-hero::before {
-  /* Stadium lights overlay */
-  content: '';
-  position: absolute;
-  top: -20px; left: 0; right: 0;
-  height: 120px;
-  background:
-    radial-gradient(circle at 15% 0, rgba(255,255,255,0.2), transparent 30%),
-    radial-gradient(circle at 50% 0, rgba(255,255,255,0.25), transparent 28%),
-    radial-gradient(circle at 85% 0, rgba(255,255,255,0.2), transparent 30%);
-  pointer-events: none;
-}
-.stadium-hero::after {
-  /* Pitch stripes at the bottom */
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 40%;
-  background:
-    repeating-linear-gradient(90deg, rgba(34,197,94,0.15), rgba(34,197,94,0.15) 40px, rgba(20,83,45,0.18) 40px, rgba(20,83,45,0.18) 80px);
-  pointer-events: none;
-  z-index: 0;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  isolation: isolate;
 }
 
-.stadium-hero__grid {
-  position: relative;
+/* --- Layered stadium background --- */
+.match-hero__sky {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 10%, rgba(250, 204, 21, 0.35), transparent 55%),
+    linear-gradient(180deg, #4C1D95 0%, #5B21B6 20%, #7C3AED 35%, #EA580C 65%, #7C2D12 90%, #1E1B4B 100%);
+  z-index: 1;
+}
+/* Floating light orbs in the sky */
+.match-hero__sky::before,
+.match-hero__sky::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  pointer-events: none;
+}
+.match-hero__sky::before {
+  top: 8%; left: 20%;
+  width: 200px; height: 200px;
+  background: rgba(250, 204, 21, 0.45);
+  animation: orb-drift 12s ease-in-out infinite;
+}
+.match-hero__sky::after {
+  top: 12%; right: 18%;
+  width: 160px; height: 160px;
+  background: rgba(251, 113, 133, 0.4);
+  animation: orb-drift 14s ease-in-out infinite 2s;
+}
+@keyframes orb-drift {
+  0%, 100% { transform: translate(0, 0); opacity: 0.55; }
+  50% { transform: translate(20px, -12px); opacity: 0.85; }
+}
+
+/* Stadium silhouette */
+.match-hero__stadium {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 28%;
+  height: 200px;
   z-index: 2;
+  opacity: 0.9;
+}
+/* Stadium floodlights (pulsing) */
+.match-hero__lights {
+  position: absolute;
+  left: 0; right: 0;
+  top: 8%;
+  height: 120px;
+  z-index: 2;
+  pointer-events: none;
+  display: flex;
+  justify-content: space-around;
+}
+.match-light {
+  position: relative;
+  width: 60px; height: 80px;
+  animation: light-flicker 4s ease-in-out infinite;
+}
+.match-light:nth-child(2) { animation-delay: 0.7s; }
+.match-light:nth-child(3) { animation-delay: 1.4s; }
+.match-light:nth-child(4) { animation-delay: 2.1s; }
+.match-light::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  width: 180px; height: 160px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at top, rgba(255,255,230,0.5), transparent 65%);
+  filter: blur(8px);
+}
+.match-light::after {
+  content: '';
+  position: absolute;
+  top: 65px; left: 50%;
+  width: 14px; height: 14px;
+  transform: translateX(-50%);
+  background: #FDE68A;
+  border-radius: 50%;
+  box-shadow: 0 0 16px rgba(253, 230, 138, 0.9), 0 0 30px rgba(255, 255, 200, 0.6);
+}
+@keyframes light-flicker {
+  0%, 100% { opacity: 1; }
+  48% { opacity: 1; }
+  50% { opacity: 0.8; }
+  52% { opacity: 1; }
+}
+
+/* Crowd rows */
+.match-hero__crowd {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 22%;
+  height: 90px;
+  z-index: 3;
+  overflow: hidden;
+  opacity: 0.9;
+}
+.crowd-row {
+  position: absolute;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+.crowd-row--1 { bottom: 0; }
+.crowd-row--2 { bottom: 22px; }
+.crowd-row--3 { bottom: 44px; opacity: 0.7; }
+.crowd-person {
+  width: 18px; height: 28px;
+  background: #1E1B4B;
+  border-radius: 50% 50% 20% 20%;
+  animation: crowd-bob 1.8s ease-in-out infinite;
+  flex-shrink: 0;
+  margin: 0 2px;
+}
+.crowd-row--1 .crowd-person { background: #1E1B4B; }
+.crowd-row--2 .crowd-person { background: #312E81; }
+.crowd-row--3 .crowd-person { background: #4338CA; }
+.crowd-person:nth-child(3n) { animation-delay: 0.3s; }
+.crowd-person:nth-child(5n) { animation-delay: 0.6s; }
+.crowd-person:nth-child(7n) { animation-delay: 0.9s; }
+@keyframes crowd-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Pitch foreground */
+.match-hero__pitch {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 0;
+  height: 25%;
+  z-index: 4;
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 100%),
+    repeating-linear-gradient(90deg, rgba(34,197,94,0.95) 0px, rgba(34,197,94,0.95) 60px, rgba(22,163,74,0.95) 60px, rgba(22,163,74,0.95) 120px),
+    linear-gradient(180deg, #15803D 0%, #14532D 100%);
+  border-top: 2px solid #FACC15;
+  box-shadow: inset 0 20px 30px rgba(0,0,0,0.3);
+}
+
+/* Confetti drifting in sky */
+.match-hero__confetti {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  overflow: hidden;
+}
+.confetti-mini {
+  position: absolute;
+  width: 8px; height: 12px;
+  opacity: 0.7;
+  animation: confetti-drift 8s linear infinite;
+}
+@keyframes confetti-drift {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(540px) rotate(720deg); opacity: 0; }
+}
+
+/* ---------- Content grid ---------- */
+.match-hero__content {
+  position: relative;
+  z-index: 10;
+  padding: var(--space-6) var(--space-5);
   display: grid;
-  grid-template-columns: minmax(220px, 1fr) minmax(320px, 2fr);
-  gap: var(--space-6);
+  grid-template-columns: minmax(300px, 1.3fr) minmax(260px, 1fr);
+  gap: var(--space-5);
   align-items: center;
+  min-height: 540px;
 }
 @media (max-width: 860px) {
-  .stadium-hero__grid { grid-template-columns: 1fr; gap: var(--space-4); }
+  .match-hero__content {
+    grid-template-columns: 1fr;
+    padding: var(--space-5) var(--space-3);
+    gap: var(--space-4);
+  }
+  .match-hero { min-height: auto; }
 }
 
-.stadium-hero__side {
-  text-align: center;
+/* ---------- Left side: title block ---------- */
+.match-hero__title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  opacity: 0;
+  animation: title-enter 0.8s ease-out 0.3s forwards;
 }
+@keyframes title-enter {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.match-day-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 5px 14px;
+  background: rgba(239, 68, 68, 0.9);
+  color: white;
+  border-radius: var(--radius-full);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.5);
+}
+.match-day-badge__dot {
+  width: 8px; height: 8px;
+  background: white;
+  border-radius: 50%;
+  animation: pulse-red 1.2s ease-in-out infinite;
+}
+@keyframes pulse-red {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+
+.match-hero__welcome {
+  color: rgba(255, 255, 255, 0.8);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin: 0;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+.match-hero__name {
+  position: relative;
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 7vw, 4.8rem);
+  line-height: 0.9;
+  margin: 0;
+  color: transparent;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FDE047 50%, #F59E0B 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  letter-spacing: 0.02em;
+  text-shadow: none;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.55)) drop-shadow(0 0 24px rgba(250, 204, 21, 0.35));
+  animation: name-scale 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s backwards;
+}
+@keyframes name-scale {
+  0% { opacity: 0; transform: scale(0.4); filter: drop-shadow(0 0 30px rgba(250,204,21,0.9)); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.match-hero__subtitle {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 1.05rem;
+  margin: 0;
+  font-weight: 600;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  opacity: 0;
+  animation: subtitle-enter 0.6s ease-out 1s forwards;
+}
+@keyframes subtitle-enter {
+  0% { opacity: 0; transform: translateX(-16px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* Live stats row */
+.match-hero__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-2) 0;
+  opacity: 0;
+  animation: subtitle-enter 0.6s ease-out 1.2s forwards;
+}
+.live-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  border-radius: var(--radius-full);
+  color: white;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  backdrop-filter: blur(4px);
+}
+.live-stat__icon { font-size: 1rem; }
+.live-stat--streak { border-color: rgba(251, 146, 60, 0.6); }
+.live-stat--xp { border-color: rgba(250, 204, 21, 0.6); }
+.live-stat--level { border-color: rgba(168, 85, 247, 0.6); }
+
+/* Primary CTA */
+.match-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  background: linear-gradient(135deg, #FACC15 0%, #F59E0B 100%);
+  color: #4C1D95;
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(250, 204, 21, 0.45), 0 0 0 0 rgba(250, 204, 21, 0.6);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  text-decoration: none;
+  width: max-content;
+  opacity: 0;
+  animation: cta-enter 0.6s ease-out 1.5s forwards, cta-pulse 2s ease-in-out 2s infinite;
+}
+.match-cta:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(250, 204, 21, 0.6);
+  color: #4C1D95;
+  text-decoration: none;
+}
+.match-cta:active { transform: translateY(0) scale(0.97); }
+@keyframes cta-enter {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes cta-pulse {
+  0%, 100% { box-shadow: 0 8px 24px rgba(250, 204, 21, 0.45), 0 0 0 0 rgba(250, 204, 21, 0.5); }
+  50% { box-shadow: 0 8px 24px rgba(250, 204, 21, 0.45), 0 0 0 16px rgba(250, 204, 21, 0); }
+}
+
+/* ---------- Right side: FUT card ---------- */
+.match-hero__side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: card-enter 0.9s cubic-bezier(0.25, 0.8, 0.3, 1.3) 0.8s forwards;
+}
+@keyframes card-enter {
+  0% { opacity: 0; transform: translateY(30px) scale(0.9); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ---------- Game-menu buttons ---------- */
+.game-menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+  opacity: 0;
+  animation: subtitle-enter 0.6s ease-out 1.8s forwards;
+}
+.game-menu-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(135deg, rgba(107, 33, 168, 0.85) 0%, rgba(76, 29, 149, 0.9) 100%);
+  border: 2px solid rgba(250, 204, 21, 0.3);
+  border-radius: var(--radius-md);
+  color: white;
+  text-decoration: none;
+  font-family: var(--font-heading);
+  letter-spacing: 0.06em;
+  transition: transform 0.2s ease, border-color 0.2s, box-shadow 0.2s;
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.game-menu-btn::before {
+  /* Slide-in gradient sheen on hover */
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(250, 204, 21, 0.2) 50%, transparent 100%);
+  transition: left 0.5s ease;
+}
+.game-menu-btn:hover {
+  transform: translateY(-4px);
+  border-color: var(--yellow);
+  box-shadow: 0 10px 24px rgba(250, 204, 21, 0.25);
+  color: white;
+  text-decoration: none;
+}
+.game-menu-btn:hover::before { left: 100%; }
+.game-menu-btn__icon {
+  font-size: 2rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+}
+.game-menu-btn__label {
+  flex: 1;
+  font-size: 1rem;
+}
+.game-menu-btn__sub {
+  display: block;
+  color: rgba(250, 204, 21, 0.85);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  margin-top: 2px;
+  font-family: var(--font-body);
+  font-weight: 600;
+}
+.game-menu-btn__arrow {
+  color: var(--yellow);
+  font-size: 1.2rem;
+  transition: transform 0.2s;
+}
+.game-menu-btn:hover .game-menu-btn__arrow { transform: translateX(4px); }
+
+/* ---------- Shootout section (own section, no longer in hero) ---------- */
+.shootout-section {
+  position: relative;
+  background: linear-gradient(135deg, #064E3B 0%, #022c22 50%, #042f2e 100%);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  margin-bottom: var(--space-6);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+.shootout-section__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+.shootout-section__header h2 {
+  color: var(--yellow);
+  margin: 0;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  flex: 1;
+  min-width: 200px;
+}
+.shootout-section__header p {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Legacy .stadium-hero — keep empty shell so no refs break if reused */
+.stadium-hero { position: relative; }
+.stadium-hero__grid { display: grid; }
+.stadium-hero__side { text-align: center; }
 /* ============================================================
    FUT-STYLE PLAYER CARD (Crispin)
    ============================================================ */
