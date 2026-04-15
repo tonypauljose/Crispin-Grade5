@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crispin's World — Grade 5 Learning Portal</title>
+  <meta name="description" content="An interactive Grade 5 learning portal for Crispin — Mathematics, riddles, penalty shootout, and more. Asian School Bahrain, CBSE.">
+  <meta name="theme-color" content="#6B21A8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%BD%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+  <main class="page">
+    <div class="container">
+
+      <!-- Hero -->
+      <section class="hero section" id="hero">
+        <img id="hero-avatar" class="hero__avatar" src="assets/crispin-avatar-source.jpeg" alt="Crispin's avatar">
+        <div class="hero__content">
+          <h1 class="hero__greeting" id="hero-greeting">👋 Welcome!</h1>
+          <p class="hero__subtitle" id="hero-subtitle">Grade 5 · Asian School Bahrain · CBSE Mathematics</p>
+          <div class="hero__cr7" id="cr7-quote">
+            <span class="hero__cr7-jersey">7</span>
+            <div>Loading quote…</div>
+          </div>
+        </div>
+        <span class="float-emoji" style="top:10px; right:40px; animation-delay:0s;">⚽</span>
+        <span class="float-emoji" style="top:40px; right:150px; animation-delay:1s;">🏆</span>
+        <span class="float-emoji" style="top:80px; right:20px; animation-delay:2s;">⭐</span>
+        <span class="float-emoji" style="top:130px; right:100px; animation-delay:0.5s;">➕</span>
+      </section>
+
+      <!-- Stats strip -->
+      <section class="stats-strip" aria-label="Portal stats">
+        <div class="stat"><div class="stat__value">1</div><div class="stat__label">Chapter Ready</div></div>
+        <div class="stat"><div class="stat__value">9+</div><div class="stat__label">Lessons</div></div>
+        <div class="stat"><div class="stat__value">120</div><div class="stat__label">Quiz Questions</div></div>
+        <div class="stat"><div class="stat__value" id="stat-days">0</div><div class="stat__label">Days On Portal</div></div>
+      </section>
+
+      <!-- Action cards -->
+      <section class="section">
+        <h2 class="section-title">🚀 What would you like to do?</h2>
+        <div class="grid grid-2">
+          <a class="action-tile action-tile--learning" href="learning.html">
+            <span class="action-tile__emoji">🎓</span>
+            <h3 class="action-tile__title">Start Learning</h3>
+            <p class="action-tile__desc">Pick a subject and dive into today's lesson.</p>
+          </a>
+          <a class="action-tile action-tile--maths" href="maths.html">
+            <span class="action-tile__emoji">🧮</span>
+            <h3 class="action-tile__title">Jump to Maths</h3>
+            <p class="action-tile__desc">Straight to the 10 chapters of CBSE Grade 5 Mathematics.</p>
+          </a>
+          <a class="action-tile action-tile--fun" href="fun.html">
+            <span class="action-tile__emoji">⚽</span>
+            <h3 class="action-tile__title">Fun Zone</h3>
+            <p class="action-tile__desc">Penalty shootout, brain-teaser riddles and more.</p>
+          </a>
+          <a class="action-tile action-tile--progress" href="#" id="progress-tile">
+            <span class="action-tile__emoji">📊</span>
+            <h3 class="action-tile__title">My Progress</h3>
+            <p class="action-tile__desc">See your XP, level, streak and all the badges you've earned.</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- Riddle of the Day -->
+      <section class="section">
+        <h2 class="section-title">🧠 Riddle of the Day</h2>
+        <div id="riddle-teaser"></div>
+        <div class="text-center" style="margin-top:16px;">
+          <a class="btn btn-outline" href="fun.html">See all riddles →</a>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section class="section card card--flat">
+        <h2 class="section-title">👋 About This Portal</h2>
+        <p>This is <strong>Crispin's personal learning portal</strong> — built to make Grade 5 Mathematics fun with lessons, practice, quizzes, printable worksheets, daily riddles, and a football mini-game. The portal follows the CBSE syllabus used at Asian School Bahrain.</p>
+        <p><strong>Open to friends and family too!</strong> If you're visiting, try the <a href="fun.html">Fun Zone</a> — there's a penalty shootout and a riddle archive for you.</p>
+      </section>
+
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p>Made with ❤️ and ⚽ for Crispin · Last updated <span id="last-updated"></span></p>
+        <p class="muted">© <span id="year"></span> Crispin's World · crispintony.com</p>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="data/riddles.js"></script>
+  <script src="js/riddles.js"></script>
+  <script>
+    (function () {
+      App.renderTopBar('home');
+      Progress.markVisit();
+      Progress.renderGamebar();
+
+      // Ask for name on first visit, then greet
+      App.askName(function (profile) {
+        const name = profile.name;
+        const greet = App.greeting();
+        document.getElementById('hero-greeting').innerHTML =
+          `${greet}, <span class="text-yellow">${name}</span>! 👋`;
+      });
+      // If already saved, greet immediately
+      const existing = App.getProfile();
+      if (existing) {
+        document.getElementById('hero-greeting').innerHTML =
+          `${App.greeting()}, <span class="text-yellow">${existing.name}</span>! 👋`;
+      }
+
+      // CR7 quotes rotate
+      App.renderCR7Rotator(document.getElementById('cr7-quote'));
+
+      // Stats
+      document.getElementById('stat-days').textContent = Progress.getStats().days;
+      document.getElementById('year').textContent = new Date().getFullYear();
+      document.getElementById('last-updated').textContent = App.formatDateDMY(new Date());
+
+      // Progress modal
+      document.getElementById('progress-tile').addEventListener('click', function (e) {
+        e.preventDefault();
+        Progress.showProgressModal();
+      });
+
+      // Riddle teaser
+      if (window.Riddles) window.Riddles.renderDaily(document.getElementById('riddle-teaser'));
+    })();
+  </script>
+</body>
+</html>

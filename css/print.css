@@ -1,0 +1,144 @@
+/* ============================================================
+   Crispin's World — print.css
+   A4 worksheet printing rules
+   ============================================================ */
+
+.worksheet {
+  font-family: 'Nunito', system-ui, sans-serif;
+  max-width: 210mm;
+  margin: 0 auto;
+  padding: 12mm 15mm;
+  background: white;
+  color: #000;
+  line-height: 1.5;
+}
+.worksheet h1, .worksheet h2, .worksheet h3 {
+  font-family: 'Fredoka One', system-ui, sans-serif;
+  color: #6B21A8;
+}
+.worksheet__header {
+  border-bottom: 3px solid #6B21A8;
+  padding-bottom: 8mm;
+  margin-bottom: 8mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10mm;
+  flex-wrap: wrap;
+}
+.worksheet__title-block h1 {
+  margin: 0 0 2mm;
+  font-size: 22pt;
+}
+.worksheet__title-block .subtitle { margin: 0; color: #444; font-size: 11pt; }
+.worksheet__fields {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 3mm 6mm;
+  font-size: 11pt;
+  min-width: 220px;
+}
+.worksheet__fields label { font-weight: 700; }
+.worksheet__fields .blank {
+  border-bottom: 1.5px solid #000;
+  min-width: 140px;
+  display: inline-block;
+  min-height: 18px;
+}
+.worksheet__section { margin-bottom: 8mm; page-break-inside: avoid; }
+.worksheet__section h2 {
+  font-size: 14pt;
+  background: #FEF3C7;
+  padding: 3mm 5mm;
+  border-left: 4px solid #FACC15;
+  margin: 0 0 4mm;
+  border-radius: 4px;
+}
+.worksheet__section h2 .section-letter { color: #EAB308; font-size: 16pt; margin-right: 2mm; }
+.worksheet__instructions { font-style: italic; color: #555; margin-bottom: 3mm; font-size: 10.5pt; }
+.ws-list { padding-left: 8mm; }
+.ws-list li { margin-bottom: 3mm; font-size: 11pt; }
+.ws-blank {
+  display: inline-block;
+  border-bottom: 1.5px solid #000;
+  min-width: 50px;
+  min-height: 18px;
+  padding: 0 4px;
+  margin: 0 2px;
+}
+.ws-blank.wide { min-width: 120px; }
+.ws-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3mm 8mm;
+}
+.ws-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.ws-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+.ws-place-value-box {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+  max-width: 80mm;
+  border: 2px solid #000;
+  font-size: 10pt;
+  text-align: center;
+}
+.ws-place-value-box > div { padding: 2mm; border-right: 1px solid #999; }
+.ws-place-value-box > div:last-child { border-right: none; }
+.ws-place-value-box .head { background: #6B21A8; color: white; font-weight: 700; border-bottom: 2px solid #000; }
+
+.ws-toolbar { text-align: center; margin: 5mm 0; }
+.ws-toolbar .btn { margin: 0 4px; }
+
+.answer-key {
+  page-break-before: always;
+  background: #FEF3C7;
+  border-top: 4px solid #FACC15;
+  padding-top: 8mm;
+}
+.answer-key h1 { color: #EAB308; }
+.answer-key__section { margin-bottom: 6mm; }
+.answer-key__section h3 { margin-bottom: 2mm; font-size: 13pt; }
+.answer-key__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2mm 6mm;
+  font-size: 10.5pt;
+  padding-left: 6mm;
+}
+
+/* ---------- @media print ---------- */
+@media print {
+  body {
+    background: white !important;
+    margin: 0;
+  }
+  .topbar, .gamebar, .footer, .toast-zone, .sound-menu, .ws-toolbar { display: none !important; }
+  .worksheet { max-width: 100%; padding: 0; margin: 0; }
+  .worksheet__section { page-break-inside: avoid; }
+  .answer-key { page-break-before: always; background: white; }
+  .answer-key h1, .answer-key__section h3 { color: #6B21A8; }
+  a { color: inherit; text-decoration: none; }
+  a::after { content: ''; }
+  .no-print { display: none !important; }
+  @page {
+    size: A4;
+    margin: 12mm 15mm;
+  }
+}
+
+/* On screen, show the worksheet nicely */
+@media screen {
+  body.worksheet-page {
+    background: #F3F4F6;
+    min-height: 100vh;
+  }
+  body.worksheet-page .worksheet {
+    background: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    min-height: 297mm;
+    margin-top: 20mm;
+    margin-bottom: 20mm;
+  }
+}

@@ -1,0 +1,114 @@
+/* ============================================================
+   Crispin's World — animations.css
+   Keyframes for confetti, float, bounce, level-up, keeper dive
+   ============================================================ */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.85); }
+  60% { opacity: 1; transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideOutRight {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(24px); }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes pulse-yellow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.6); }
+  50% { box-shadow: 0 0 0 12px rgba(250, 204, 21, 0); }
+}
+@keyframes badgePop {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.3) rotate(12deg); }
+  80% { transform: scale(0.95) rotate(-6deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+/* ============ Confetti ============ */
+.confetti-piece {
+  position: fixed;
+  width: 10px;
+  height: 16px;
+  pointer-events: none;
+  z-index: 400;
+  animation: confetti-fall linear forwards;
+}
+@keyframes confetti-fall {
+  0% { transform: translateY(-40px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* ============ Keeper / Ball (penalty shootout) ============ */
+@keyframes keeper-dive-tl { to { transform: translate(-110px, -40px) rotate(-25deg); } }
+@keyframes keeper-dive-tm { to { transform: translate(0, -60px); } }
+@keyframes keeper-dive-tr { to { transform: translate(110px, -40px) rotate(25deg); } }
+@keyframes keeper-dive-bl { to { transform: translate(-110px, 10px) rotate(-35deg); } }
+@keyframes keeper-dive-bm { to { transform: translate(0, 20px); } }
+@keyframes keeper-dive-br { to { transform: translate(110px, 10px) rotate(35deg); } }
+
+.keeper-dive-tl { animation: keeper-dive-tl 0.5s forwards ease-out; }
+.keeper-dive-tm { animation: keeper-dive-tm 0.5s forwards ease-out; }
+.keeper-dive-tr { animation: keeper-dive-tr 0.5s forwards ease-out; }
+.keeper-dive-bl { animation: keeper-dive-bl 0.5s forwards ease-out; }
+.keeper-dive-bm { animation: keeper-dive-bm 0.5s forwards ease-out; }
+.keeper-dive-br { animation: keeper-dive-br 0.5s forwards ease-out; }
+
+@keyframes ball-shoot {
+  0% { transform: translate(0,0) scale(1); }
+  100% { transform: translate(var(--bx, 0), var(--by, -120px)) scale(0.5) rotate(540deg); }
+}
+.ball-shoot { animation: ball-shoot 0.6s forwards cubic-bezier(0.55, 0.08, 0.5, 1); }
+
+/* ============ Level-up / glow ============ */
+.levelup-glow { animation: pulse-yellow 1.2s ease-out 2; border-radius: var(--radius-full); }
+.shake { animation: shake 0.4s ease-in-out; }
+
+/* ============ Sparkles (badge earned) ============ */
+.sparkle-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.sparkle {
+  position: absolute;
+  font-size: 1.5rem;
+  animation: sparkle 1.2s ease-in-out infinite;
+}
+
+/* ============ Reduced motion ============ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .topbar__ball { animation: none; }
+}

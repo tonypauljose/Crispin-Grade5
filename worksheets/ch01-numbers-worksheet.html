@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ch 1 Worksheet · Numbers 1 to 10,000 — Crispin's World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/print.css">
+</head>
+<body class="worksheet-page">
+
+  <div class="no-print" style="position:sticky; top:0; background:#6B21A8; color:white; padding:12px 20px; text-align:center; z-index:10;">
+    <strong>📄 Chapter 1 Worksheet</strong> · <a href="../chapters/ch01-numbers.html" style="color:#FACC15;">← Back to chapter</a>
+    <button class="btn btn-yellow btn-sm" onclick="window.print()" style="margin-left:12px;">🖨️ Print</button>
+    <button class="btn btn-teal btn-sm" onclick="location.reload()" style="margin-left:8px;">🔄 New questions</button>
+    <button class="btn btn-outline btn-sm" onclick="toggleAnswers()" style="margin-left:8px; background:white;">👁️ Toggle answer key</button>
+  </div>
+
+  <div class="worksheet">
+    <div class="worksheet__header">
+      <div class="worksheet__title-block">
+        <h1>📘 Numbers 1 to 10,000</h1>
+        <p class="subtitle">Grade 5 · CBSE · Chapter 1 · Worksheet</p>
+      </div>
+      <div class="worksheet__fields">
+        <label>Name:</label><span class="blank"></span>
+        <label>Date:</label><span class="blank" id="ws-date"></span>
+        <label>Score:</label><span class="blank">&nbsp;&nbsp;&nbsp; / 40</span>
+      </div>
+    </div>
+
+    <!-- Section A: Write in words -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">A.</span> Write each number in words <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <p class="worksheet__instructions">Example: 3,402 → three thousand four hundred two</p>
+      <ol class="ws-list" id="sec-a"></ol>
+    </section>
+
+    <!-- Section B: Write in numerals -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">B.</span> Write the numeral <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <ol class="ws-list" id="sec-b"></ol>
+    </section>
+
+    <!-- Section C: Place value -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">C.</span> Place value of the underlined digit <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <ol class="ws-list ws-grid" id="sec-c"></ol>
+    </section>
+
+    <!-- Section D: Expanded form -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">D.</span> Write in expanded form <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <p class="worksheet__instructions">Example: 3,482 = 3000 + 400 + 80 + 2</p>
+      <ol class="ws-list" id="sec-d"></ol>
+    </section>
+
+    <!-- Section E: Compare -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">E.</span> Put the correct sign: &lt;, &gt;, or = <span style="float:right; font-size:10pt; font-weight:normal;">(6 marks)</span></h2>
+      <ol class="ws-list ws-grid" id="sec-e"></ol>
+    </section>
+
+    <!-- Section F: Rounding -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">F.</span> Round as asked <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <ol class="ws-list" id="sec-f"></ol>
+    </section>
+
+    <!-- Section G: Successor & predecessor -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">G.</span> Successor &amp; Predecessor <span style="float:right; font-size:10pt; font-weight:normal;">(4 marks)</span></h2>
+      <ol class="ws-list ws-grid" id="sec-g"></ol>
+    </section>
+
+    <!-- Section H: Roman numerals -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">H.</span> Roman numerals <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <ol class="ws-list ws-grid" id="sec-h"></ol>
+    </section>
+
+    <!-- Answer key -->
+    <section class="answer-key" id="answer-key">
+      <h1>🗝️ Answer Key</h1>
+      <p class="muted">For teachers/parents. Students: try without peeking!</p>
+
+      <div class="answer-key__section"><h3>A. Numbers in words</h3><ol class="answer-key__list" id="ans-a"></ol></div>
+      <div class="answer-key__section"><h3>B. Numerals</h3><ol class="answer-key__list" id="ans-b"></ol></div>
+      <div class="answer-key__section"><h3>C. Place value</h3><ol class="answer-key__list" id="ans-c"></ol></div>
+      <div class="answer-key__section"><h3>D. Expanded form</h3><ol class="answer-key__list" id="ans-d"></ol></div>
+      <div class="answer-key__section"><h3>E. Compare</h3><ol class="answer-key__list" id="ans-e"></ol></div>
+      <div class="answer-key__section"><h3>F. Rounding</h3><ol class="answer-key__list" id="ans-f"></ol></div>
+      <div class="answer-key__section"><h3>G. Successor &amp; predecessor</h3><ol class="answer-key__list" id="ans-g"></ol></div>
+      <div class="answer-key__section"><h3>H. Roman numerals</h3><ol class="answer-key__list" id="ans-h"></ol></div>
+    </section>
+
+  </div>
+
+  <script src="../js/common.js"></script>
+  <script>
+    document.getElementById('ws-date').textContent = App.formatDateDMY(new Date());
+
+    // ---------- helpers ----------
+    function randInt(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+    function rand4digit() { return randInt(1000, 9999); }
+    function formatComma(n) { return n.toLocaleString('en-US'); }
+
+    function append(listId, html) {
+      document.getElementById(listId).insertAdjacentHTML('beforeend', '<li>' + html + '</li>');
+    }
+
+    const ANS = { a: [], b: [], c: [], d: [], e: [], f: [], g: [], h: [] };
+
+    // ---------- A: write in words ----------
+    const usedA = new Set();
+    for (let i = 0; i < 5; i++) {
+      let n;
+      do { n = rand4digit(); } while (usedA.has(n));
+      usedA.add(n);
+      append('sec-a', `${formatComma(n)} = <span class="ws-blank wide"></span>`);
+      ANS.a.push(`${formatComma(n)} → ${App.numberInWords(n)}`);
+    }
+
+    // ---------- B: words to numerals ----------
+    const usedB = new Set();
+    for (let i = 0; i < 5; i++) {
+      let n;
+      do { n = rand4digit(); } while (usedB.has(n));
+      usedB.add(n);
+      append('sec-b', `${App.numberInWords(n)} = <span class="ws-blank"></span>`);
+      ANS.b.push(`${App.numberInWords(n)} = ${formatComma(n)}`);
+    }
+
+    // ---------- C: place value ----------
+    const placeNames = ['ones', 'tens', 'hundreds', 'thousands'];
+    for (let i = 0; i < 5; i++) {
+      const n = rand4digit();
+      const s = String(n);
+      const pos = randInt(0, 3);
+      const digit = parseInt(s[3 - pos], 10);
+      const withUnderline = s.split('').map((d, idx) => (idx === 3 - pos) ? `<u>${d}</u>` : d).join('');
+      const formatted = withUnderline.length === 4 ? withUnderline.slice(0, 1) + ',' + withUnderline.slice(1) : withUnderline;
+      append('sec-c', `${formatted} → <span class="ws-blank"></span>`);
+      const pv = digit * Math.pow(10, pos);
+      ANS.c.push(`${formatComma(n)} (digit <b>${digit}</b> in ${placeNames[pos]} place) → ${pv}`);
+    }
+
+    // ---------- D: expanded form ----------
+    for (let i = 0; i < 5; i++) {
+      const n = rand4digit();
+      append('sec-d', `${formatComma(n)} = <span class="ws-blank wide"></span>`);
+      ANS.d.push(`${formatComma(n)} = ${App.expandedForm(n) || '0'}`);
+    }
+
+    // ---------- E: compare ----------
+    const usedE = new Set();
+    for (let i = 0; i < 6; i++) {
+      let a, b;
+      do {
+        a = rand4digit();
+        // Half the time pick a close number, other half a random
+        b = (i % 2 === 0) ? a + randInt(-120, 120) : rand4digit();
+        if (b < 1000) b = 1000;
+        if (b > 9999) b = 9999;
+      } while (usedE.has(a + '-' + b));
+      usedE.add(a + '-' + b);
+      append('sec-e', `${formatComma(a)} &nbsp;<span class="ws-blank" style="min-width:24px;"></span>&nbsp; ${formatComma(b)}`);
+      const sign = a < b ? '<' : a > b ? '>' : '=';
+      ANS.e.push(`${formatComma(a)} ${sign} ${formatComma(b)}`);
+    }
+
+    // ---------- F: rounding ----------
+    function roundTo(n, base) { return Math.round(n / base) * base; }
+    const roundCases = [
+      { base: 10, name: 'nearest 10' },
+      { base: 100, name: 'nearest 100' },
+      { base: 1000, name: 'nearest 1,000' },
+      { base: 10, name: 'nearest 10' },
+      { base: 100, name: 'nearest 100' }
+    ];
+    roundCases.forEach(c => {
+      const n = rand4digit();
+      append('sec-f', `Round ${formatComma(n)} to the ${c.name} = <span class="ws-blank"></span>`);
+      ANS.f.push(`${formatComma(n)} → ${formatComma(roundTo(n, c.base))} (${c.name})`);
+    });
+
+    // ---------- G: successor & predecessor ----------
+    for (let i = 0; i < 4; i++) {
+      const n = randInt(1001, 9998);
+      const which = i % 2 === 0 ? 'Successor' : 'Predecessor';
+      append('sec-g', `${which} of ${formatComma(n)} = <span class="ws-blank"></span>`);
+      ANS.g.push(`${which} of ${formatComma(n)} = ${formatComma(which === 'Successor' ? n + 1 : n - 1)}`);
+    }
+
+    // ---------- H: Roman numerals ----------
+    const usedH = new Set();
+    for (let i = 0; i < 5; i++) {
+      let n;
+      do { n = randInt(1, 90); } while (usedH.has(n));
+      usedH.add(n);
+      const askRoman = i % 2 === 0; // half ask "to Roman", half "to Hindu-Arabic"
+      if (askRoman) {
+        append('sec-h', `Write ${n} in Roman = <span class="ws-blank"></span>`);
+        ANS.h.push(`${n} → ${App.intToRoman(n)}`);
+      } else {
+        const roman = App.intToRoman(n);
+        append('sec-h', `${roman} = <span class="ws-blank"></span>`);
+        ANS.h.push(`${roman} → ${n}`);
+      }
+    }
+
+    // ---------- render answer key ----------
+    Object.keys(ANS).forEach(key => {
+      const el = document.getElementById('ans-' + key);
+      ANS[key].forEach(item => {
+        el.insertAdjacentHTML('beforeend', '<li>' + item + '</li>');
+      });
+    });
+
+    // Toggle answer key
+    window.toggleAnswers = function () {
+      const k = document.getElementById('answer-key');
+      k.style.display = (k.style.display === 'none') ? 'block' : 'none';
+    };
+  </script>
+</body>
+</html>

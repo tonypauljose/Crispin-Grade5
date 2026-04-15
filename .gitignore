@@ -1,0 +1,33 @@
+# ── WAT scratch & secrets ──
+.tmp/
+.env
+credentials.json
+token.json
+
+# ── Python tooling ──
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+*.egg-info/
+
+# ── OS / Editor ──
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ── Build / dependency ──
+node_modules/
+dist/
+build/
+
+# ── Logs ──
+*.log
+npm-debug.log*

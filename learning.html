@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learning Hub — Crispin's World</title>
+  <meta name="theme-color" content="#6B21A8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%93%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+  <main class="page">
+    <div class="container">
+
+      <section class="section">
+        <h1>🎓 Learning Hub</h1>
+        <p class="lead">Pick a subject. Right now Mathematics is ready — other subjects land later this term.</p>
+      </section>
+
+      <section class="section">
+        <div class="grid grid-2">
+
+          <a class="action-tile action-tile--maths" href="maths.html">
+            <span class="action-tile__emoji">🧮</span>
+            <h3 class="action-tile__title">Mathematics</h3>
+            <p class="action-tile__desc">10 chapters · CBSE Grade 5 workbook · Chapter 1 live now.</p>
+            <span class="chapter-card__badge" style="margin-top:auto;">Active</span>
+          </a>
+
+          <a class="action-tile action-tile--learning" href="#" onclick="event.preventDefault(); App.showToast('English coming soon — stay tuned! 📚', 'info');">
+            <span class="action-tile__emoji">📖</span>
+            <h3 class="action-tile__title">English</h3>
+            <p class="action-tile__desc">Grammar, comprehension, creative writing.</p>
+            <span class="chapter-card__badge soon" style="margin-top:auto;">Coming soon</span>
+          </a>
+
+          <a class="action-tile action-tile--fun" href="#" onclick="event.preventDefault(); App.showToast('EVS / Science coming soon! 🌱', 'info');">
+            <span class="action-tile__emoji">🌍</span>
+            <h3 class="action-tile__title">Science / EVS</h3>
+            <p class="action-tile__desc">Our world, life, and how things work.</p>
+            <span class="chapter-card__badge soon" style="margin-top:auto;">Coming soon</span>
+          </a>
+
+          <a class="action-tile action-tile--progress" href="#" onclick="event.preventDefault(); App.showToast('Hindi / Arabic coming soon! 🗣️', 'info');">
+            <span class="action-tile__emoji">🗣️</span>
+            <h3 class="action-tile__title">Hindi / Arabic</h3>
+            <p class="action-tile__desc">Second language practice and vocabulary.</p>
+            <span class="chapter-card__badge soon" style="margin-top:auto;">Coming soon</span>
+          </a>
+
+        </div>
+      </section>
+
+      <section class="section card card--flat">
+        <h2>🏆 Your learning snapshot</h2>
+        <div class="stats-strip" style="margin-top:8px;">
+          <div class="stat"><div class="stat__value" id="st-xp">0</div><div class="stat__label">Total XP</div></div>
+          <div class="stat"><div class="stat__value" id="st-level">🌱</div><div class="stat__label" id="st-level-name">Beginner</div></div>
+          <div class="stat"><div class="stat__value" id="st-badges">0/21</div><div class="stat__label">Badges</div></div>
+          <div class="stat"><div class="stat__value" id="st-streak">🔥 0</div><div class="stat__label">Day Streak</div></div>
+        </div>
+        <div class="text-center" style="margin-top:16px;">
+          <button class="btn btn-primary" id="open-progress">Open full progress →</button>
+        </div>
+      </section>
+
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p>Made with ❤️ and ⚽ for Crispin · <a href="index.html">Home</a></p>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/progress.js"></script>
+  <script>
+    App.renderTopBar('learning');
+    Progress.markVisit();
+    Progress.renderGamebar();
+    const s = Progress.getStats();
+    document.getElementById('st-xp').textContent = s.xp;
+    document.getElementById('st-level').textContent = s.level.curr.emoji;
+    document.getElementById('st-level-name').textContent = s.level.curr.name;
+    document.getElementById('st-badges').textContent = s.badges + '/' + s.totalBadges;
+    document.getElementById('st-streak').textContent = '🔥 ' + s.streak;
+    document.getElementById('open-progress').addEventListener('click', () => Progress.showProgressModal());
+  </script>
+</body>
+</html>
