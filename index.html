@@ -24,22 +24,43 @@
       <section class="stadium-hero">
         <div class="stadium-hero__grid">
 
-          <!-- Left: avatar + greeting -->
+          <!-- Left: FUT-style player card + greeting -->
           <div class="stadium-hero__side">
-            <div class="crest" role="img" aria-label="Crispin — jersey number seven">
-              <div class="crest__ring"></div>
-              <div class="crest__sep"></div>
-              <div class="crest__photo">
+            <div class="fut-card" role="img" aria-label="Crispin's player card — rating 99, midfielder">
+              <div class="fut-card__burst" aria-hidden="true"></div>
+
+              <span class="fut-card__spark" style="top:20px; right:20px;">✨</span>
+              <span class="fut-card__spark" style="top:60px; left:18px;">⭐</span>
+              <span class="fut-card__spark" style="bottom:120px; right:14px;">✨</span>
+              <span class="fut-card__spark" style="bottom:80px; left:24px;">⭐</span>
+
+              <div class="fut-card__top">
+                <div class="fut-card__rating">
+                  <div class="fut-card__rating-num">99</div>
+                  <div class="fut-card__rating-pos">MID</div>
+                  <div class="fut-card__rating-pos" style="font-size:0.75rem; margin-top:4px;">⚽ #7</div>
+                </div>
+                <div class="fut-card__flag" title="Asian School Bahrain">🇧🇭</div>
+              </div>
+
+              <div class="fut-card__photo">
                 <img src="assets/crispin-avatar-source.jpeg" alt="Crispin">
               </div>
-              <div class="crest__shine"></div>
-              <div class="crest__ball" aria-hidden="true">⚽</div>
-              <div class="crest__seven" aria-hidden="true">7</div>
+
+              <h2 class="fut-card__name">CRISPIN</h2>
+              <div class="fut-card__divider"></div>
+
+              <div class="fut-card__stats">
+                <div class="fut-stat"><span class="fut-stat__label">MATH</span><span class="fut-stat__val">99</span></div>
+                <div class="fut-stat"><span class="fut-stat__label">FOCUS</span><span class="fut-stat__val">96</span></div>
+                <div class="fut-stat"><span class="fut-stat__label">SPEED</span><span class="fut-stat__val">95</span></div>
+                <div class="fut-stat"><span class="fut-stat__label">READ</span><span class="fut-stat__val">94</span></div>
+                <div class="fut-stat"><span class="fut-stat__label">TEAM</span><span class="fut-stat__val">98</span></div>
+                <div class="fut-stat"><span class="fut-stat__label">FUN</span><span class="fut-stat__val">100</span></div>
+              </div>
             </div>
-            <div style="text-align:center; margin-bottom:var(--space-3);">
-              <span class="crest__name">Crispin · #7</span>
-            </div>
-            <h1 class="stadium-hero__greeting" id="hero-greeting">
+
+            <h1 class="stadium-hero__greeting" id="hero-greeting" style="margin-top:var(--space-4);">
               <span class="yellow">Welcome!</span>
             </h1>
             <p class="stadium-hero__subtitle">Grade 5 · Asian School Bahrain · CBSE</p>

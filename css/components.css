@@ -790,7 +790,225 @@
 .stadium-hero__side {
   text-align: center;
 }
-/* ---------- Club-badge avatar (real photo + jersey frame) ---------- */
+/* ============================================================
+   FUT-STYLE PLAYER CARD (Crispin)
+   ============================================================ */
+.fut-card {
+  --fut-w: 260px;
+  --fut-h: 380px;
+  width: var(--fut-w);
+  height: var(--fut-h);
+  margin: 0 auto;
+  position: relative;
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(255, 215, 0, 0.18), transparent 60%),
+    linear-gradient(165deg, #FACC15 0%, #F59E0B 30%, #B45309 100%);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.35),
+    inset 0 0 60px rgba(139, 69, 19, 0.35),
+    0 20px 40px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(250, 204, 21, 0.35);
+  padding: 14px;
+  animation: fut-float 4.5s ease-in-out infinite;
+  overflow: hidden;
+}
+@keyframes fut-float {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+
+/* Inner shimmer ornament */
+.fut-card::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+}
+.fut-card::after {
+  /* Diagonal light sheen that sweeps across */
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -20%;
+  width: 40%;
+  height: 120%;
+  background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
+  transform: rotate(20deg);
+  animation: fut-sheen 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes fut-sheen {
+  0%, 100% { transform: translateX(-30%) rotate(20deg); opacity: 0; }
+  40%, 60% { opacity: 0.85; }
+  100% { transform: translateX(280%) rotate(20deg); opacity: 0; }
+}
+
+/* Top strip: rating + position + flag */
+.fut-card__top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 6px 8px 0;
+  color: #3F1D0B;
+}
+.fut-card__rating {
+  line-height: 0.95;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+.fut-card__rating-num {
+  font-family: var(--font-heading);
+  font-size: 2.4rem;
+  color: #3F1D0B;
+}
+.fut-card__rating-pos {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  color: #3F1D0B;
+  letter-spacing: 0.12em;
+  margin-top: 2px;
+  opacity: 0.9;
+}
+.fut-card__flag {
+  font-size: 1.25rem;
+  line-height: 1;
+  background: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1.5px solid rgba(255,255,255,0.6);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Photo area */
+.fut-card__photo {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 178px;
+  margin-top: -4px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+.fut-card__photo img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  object-position: 50% 22%;
+  /* Radial mask — centre bright, edges fade to transparent so the gray
+     studio background blends into the gold card, making background-free */
+  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 40%, #000 55%, transparent 80%);
+          mask-image: radial-gradient(ellipse at 50% 40%, #000 40%, #000 55%, transparent 80%);
+  filter: saturate(1.2) contrast(1.1) brightness(1.05) drop-shadow(0 6px 8px rgba(0,0,0,0.35));
+}
+
+/* Action-line burst behind the photo (adds "pose energy") */
+.fut-card__burst {
+  position: absolute;
+  top: 50px; left: 0; right: 0;
+  height: 200px;
+  background:
+    conic-gradient(
+      from 0deg at 50% 50%,
+      rgba(255,255,255,0.18) 0deg 20deg,
+      transparent 20deg 45deg,
+      rgba(255,255,255,0.18) 45deg 65deg,
+      transparent 65deg 90deg,
+      rgba(255,255,255,0.18) 90deg 110deg,
+      transparent 110deg 135deg,
+      rgba(255,255,255,0.18) 135deg 155deg,
+      transparent 155deg 180deg,
+      rgba(255,255,255,0.18) 180deg 200deg,
+      transparent 200deg 225deg,
+      rgba(255,255,255,0.18) 225deg 245deg,
+      transparent 245deg 270deg,
+      rgba(255,255,255,0.18) 270deg 290deg,
+      transparent 290deg 315deg,
+      rgba(255,255,255,0.18) 315deg 335deg,
+      transparent 335deg 360deg
+    );
+  animation: burst-spin 18s linear infinite;
+  pointer-events: none;
+  opacity: 0.7;
+}
+@keyframes burst-spin { to { transform: rotate(360deg); } }
+
+/* Floating sparkles */
+.fut-card__spark {
+  position: absolute;
+  z-index: 3;
+  color: #FFFFFF;
+  font-size: 1rem;
+  pointer-events: none;
+  animation: spark-twinkle 2.5s ease-in-out infinite;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+}
+.fut-card__spark:nth-child(odd) { animation-delay: 0.6s; }
+@keyframes spark-twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* Name row */
+.fut-card__name {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #3F1D0B;
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.4);
+}
+.fut-card__divider {
+  position: relative;
+  z-index: 2;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, rgba(63, 29, 11, 0.7), transparent);
+  margin: 6px 16px 8px;
+}
+
+/* Stats grid */
+.fut-card__stats {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 10px;
+  padding: 0 14px;
+  color: #3F1D0B;
+  font-weight: 800;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+.fut-stat {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-heading);
+  padding: 1px 0;
+}
+.fut-stat__label { font-size: 0.7rem; letter-spacing: 0.08em; }
+.fut-stat__val {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  color: #6B21A8;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.4);
+}
+
+@media (max-width: 520px) {
+  .fut-card { --fut-w: 220px; --fut-h: 330px; }
+  .fut-card__rating-num { font-size: 2rem; }
+  .fut-card__photo { height: 150px; }
+  .fut-card__photo img { width: 170px; height: 170px; }
+}
+
+/* Old crest kept in case reused later (legacy) */
 .crest {
   --crest-size: 210px;
   width: var(--crest-size);
