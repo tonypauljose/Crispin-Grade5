@@ -5,188 +5,193 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crispin's World — Grade 5 Learning Portal</title>
   <meta name="description" content="Crispin's interactive Grade 5 learning portal — Mathematics, riddles, penalty shootout, and more. Asian School Bahrain, CBSE.">
-  <meta name="theme-color" content="#0B0520">
+  <meta name="theme-color" content="#FFFDF5">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Kalam:wght@400;700&family=Patrick+Hand&family=Permanent+Marker&family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/animations.css">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%BD%3C/text%3E%3C/svg%3E">
+  <style>
+    body { background: #F3EBD3; background-image: radial-gradient(ellipse at top, #FEF3C7 0%, #FDE68A 100%); }
+  </style>
 </head>
 <body>
   <main class="page">
     <div class="container">
 
       <!-- ======================================================
-           PACK HERO — Daily pack-opening experience
+           SCRAPBOOK HERO — Crispin's notebook page
            ====================================================== -->
-      <section class="pack-hero" id="pack-hero">
+      <section class="scrapbook">
 
-        <!-- Ambient dust motes -->
-        <div class="pack-hero__motes" id="pack-motes" aria-hidden="true"></div>
-
-        <!-- Light rays (activate during opening) -->
-        <svg class="pack-rays" id="pack-rays" viewBox="0 0 800 800" aria-hidden="true">
-          <defs>
-            <radialGradient id="rayGrad">
-              <stop offset="0%" stop-color="white" stop-opacity="0.9"/>
-              <stop offset="100%" stop-color="white" stop-opacity="0"/>
-            </radialGradient>
-          </defs>
-          <g fill="url(#rayGrad)" transform="translate(400 400)">
-            <polygon points="0,-400 60,0 -60,0" opacity="0.7"/>
-            <polygon points="0,-400 60,0 -60,0" opacity="0.6" transform="rotate(30)"/>
-            <polygon points="0,-400 60,0 -60,0" opacity="0.7" transform="rotate(60)"/>
-            <polygon points="0,-400 60,0 -60,0" opacity="0.6" transform="rotate(90)"/>
-            <polygon points="0,-400 60,0 -60,0" opacity="0.7" transform="rotate(120)"/>
-            <polygon points="0,-400 60,0 -60,0" opacity="0.6" transform="rotate(150)"/>
-            <polygon points="0,-400 60,0 -60,0" opacity="0.7" transform="rotate(180)"/>
-            <polygon points="0,-400 60,0 -60,0" opacity="0.6" transform="rotate(210)"/>
-            <polygon points="0,-400 60,0 -60,0" opacity="0.7" transform="rotate(240)"/>
-            <polygon points="0,-400 60,0 -60,0" opacity="0.6" transform="rotate(270)"/>
-            <polygon points="0,-400 60,0 -60,0" opacity="0.7" transform="rotate(300)"/>
-            <polygon points="0,-400 60,0 -60,0" opacity="0.6" transform="rotate(330)"/>
-          </g>
+        <!-- Doodles scattered around -->
+        <svg class="doodle doodle--football-1" width="54" height="54" viewBox="0 0 60 60" aria-hidden="true">
+          <circle cx="30" cy="30" r="25" fill="none" stroke="#1F2937" stroke-width="2.5"/>
+          <polygon points="30,18 40,24 36,36 24,36 20,24" fill="#1F2937"/>
+          <line x1="30" y1="18" x2="30" y2="6"  stroke="#1F2937" stroke-width="2"/>
+          <line x1="40" y1="24" x2="50" y2="20" stroke="#1F2937" stroke-width="2"/>
+          <line x1="36" y1="36" x2="44" y2="48" stroke="#1F2937" stroke-width="2"/>
+          <line x1="24" y1="36" x2="16" y2="48" stroke="#1F2937" stroke-width="2"/>
+          <line x1="20" y1="24" x2="10" y2="20" stroke="#1F2937" stroke-width="2"/>
         </svg>
 
-        <!-- Flash overlay -->
-        <div class="pack-flash" id="pack-flash" aria-hidden="true"></div>
+        <svg class="doodle doodle--star-1" width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+          <path d="M 20 3 L 25 15 L 37 15 L 27 23 L 31 36 L 20 28 L 9 36 L 13 23 L 3 15 L 15 15 Z"
+                fill="#FACC15" stroke="#F59E0B" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
 
-        <!-- Skip hint -->
-        <span class="pack-skip-hint" id="pack-skip">↵ Tap to skip</span>
+        <svg class="doodle doodle--lightning-1" width="32" height="42" viewBox="0 0 32 42" aria-hidden="true">
+          <path d="M 14 3 L 4 22 L 14 22 L 10 39 L 28 17 L 18 17 L 22 3 Z"
+                fill="#FBBF24" stroke="#1F2937" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
 
-        <div class="pack-stage" id="pack-stage">
+        <svg class="doodle doodle--heart-1" width="36" height="32" viewBox="0 0 36 32" aria-hidden="true">
+          <path d="M 18 28 C 8 20 2 14 2 8 C 2 4 5 2 9 2 C 13 2 15 4 18 8 C 21 4 23 2 27 2 C 31 2 34 4 34 8 C 34 14 28 20 18 28 Z"
+                fill="#EF4444" stroke="#7F1D1D" stroke-width="2"/>
+        </svg>
 
-          <!-- CLOSED PACK state -->
-          <div class="pack__aura" aria-hidden="true"></div>
+        <svg class="doodle doodle--arrow-1" width="110" height="60" viewBox="0 0 110 60" aria-hidden="true">
+          <path d="M 5 30 Q 40 10 75 30" stroke="#DC2626" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M 65 22 L 76 30 L 65 38" stroke="#DC2626" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="10" y="56" font-family="Caveat, cursive" font-size="18" fill="#DC2626" transform="rotate(-5 55 50)">look it's me!</text>
+        </svg>
 
-          <div class="pack__date-chip" id="pack-date">
-            📅 <span id="pack-date-text">Loading…</span>
+        <!-- Title -->
+        <div class="scrapbook__title-wrap">
+          <h1 class="scrapbook__title">
+            <span>CRISPIN'S</span>
+            <span>AWESOME</span>
+            <span>NOTEBOOK!</span>
+          </h1>
+          <div>
+            <span class="scrapbook__subtitle">grade 5 · maths · football · siiuuu!!</span>
           </div>
+        </div>
 
-          <div class="pack" id="pack-card" role="button" tabindex="0" aria-label="Open today's pack">
-            <div class="pack__inner">
-              <div class="pack__top-banner">CRISPIN'S · DAILY · PACK</div>
-              <h2 class="pack__title">CRISPIN</h2>
-              <div class="pack__seven">#7</div>
-              <div class="pack__seal">SIIUU!</div>
-              <div class="pack__footer">⚽ Grade 5 · CBSE · Bahrain ⚽</div>
+        <!-- Main grid: polaroid + introduction -->
+        <div class="scrapbook__grid">
+
+          <div style="display:flex; flex-direction:column; gap:var(--space-3); align-items:center;">
+            <div class="polaroid">
+              <div class="polaroid__tape polaroid__tape--tl"></div>
+              <div class="polaroid__tape polaroid__tape--tr"></div>
+              <div class="polaroid__seven">7</div>
+              <img class="polaroid__img" src="assets/crispin-avatar-source.jpeg" alt="Crispin">
+              <div class="polaroid__caption">that's me ⚽</div>
+              <div class="polaroid__tape polaroid__tape--br"></div>
+            </div>
+
+            <div class="hand-scorecard" style="width: 100%; max-width: 220px;">
+              <div class="hand-scorecard__title">⭐ my stats</div>
+              <div class="hand-scorecard__row"><span class="hand-scorecard__label">level</span><span class="hand-scorecard__val" id="sb-level">Beginner</span></div>
+              <div class="hand-scorecard__row"><span class="hand-scorecard__label">XP</span><span class="hand-scorecard__val" id="sb-xp">0</span></div>
+              <div class="hand-scorecard__row"><span class="hand-scorecard__label">streak 🔥</span><span class="hand-scorecard__val" id="sb-streak">0d</span></div>
+              <div class="hand-scorecard__row"><span class="hand-scorecard__label">badges</span><span class="hand-scorecard__val" id="sb-badges">0/21</span></div>
             </div>
           </div>
 
-          <button class="pack-open-btn" id="pack-open-btn">▶ Open Today's Pack</button>
+          <div>
+            <div class="hand-header">hey! it's me 👋</div>
+            <p class="hand" style="font-size:1.25rem; line-height:1.6; color:var(--ink-blue); margin-bottom:var(--space-3);">
+              my name is <strong style="color:var(--marker-red);">CRISPIN</strong> and i'm in grade 5 at asian school bahrain. i LOVE <span class="siuuu">football</span> and ronaldo (obvs). this is MY notebook where i do maths and play games and stuff.
+            </p>
+            <p class="hand" style="font-size:1.15rem; color:var(--ink-blue); margin-bottom:var(--space-3);">
+              <span class="scribble-underline"><strong>today's mission:</strong></span> chapter 1 → numbers 1 to 10,000 📚
+            </p>
 
-          <!-- REVEALED state (hidden until pack is opened) -->
-          <div class="reveal-wrap" id="reveal-wrap">
-            <h1 class="reveal-hello" id="reveal-hello">Welcome back, Crispin!</h1>
-            <p class="reveal-sub" id="reveal-sub">Grade 5 · Mathematics · Asian School Bahrain</p>
-
-            <div class="fut-card" id="fut-card" role="img" aria-label="Crispin's player card" tabindex="0">
-              <div class="fut-card__burst" aria-hidden="true"></div>
-              <div class="fut-card__holo" aria-hidden="true"></div>
-              <div class="fut-card__gloss" aria-hidden="true"></div>
-
-              <span class="fut-card__spark" style="top:20px; right:20px;">✨</span>
-              <span class="fut-card__spark" style="top:60px; left:18px;">⭐</span>
-              <span class="fut-card__spark" style="bottom:120px; right:14px;">✨</span>
-              <span class="fut-card__spark" style="bottom:80px; left:24px;">⭐</span>
-
-              <div class="fut-card__top">
-                <div class="fut-card__rating">
-                  <div class="fut-card__rating-num">99</div>
-                  <div class="fut-card__rating-pos">MID</div>
-                  <div class="fut-card__rating-pos" style="font-size:0.75rem; margin-top:4px;">⚽ #7</div>
-                </div>
-                <div class="fut-card__flag" title="Asian School Bahrain">🇧🇭</div>
-              </div>
-
-              <div class="fut-card__photo">
-                <img src="assets/crispin-avatar-source.jpeg" alt="Crispin">
-              </div>
-
-              <h2 class="fut-card__name">CRISPIN</h2>
-              <div class="fut-card__divider"></div>
-
-              <div class="fut-card__stats">
-                <div class="fut-stat"><span class="fut-stat__label">MATH</span><span class="fut-stat__val">99</span></div>
-                <div class="fut-stat"><span class="fut-stat__label">FOCUS</span><span class="fut-stat__val">96</span></div>
-                <div class="fut-stat"><span class="fut-stat__label">SPEED</span><span class="fut-stat__val">95</span></div>
-                <div class="fut-stat"><span class="fut-stat__label">READ</span><span class="fut-stat__val">94</span></div>
-                <div class="fut-stat"><span class="fut-stat__label">TEAM</span><span class="fut-stat__val">98</span></div>
-                <div class="fut-stat"><span class="fut-stat__label">FUN</span><span class="fut-stat__val">100</span></div>
-              </div>
-            </div>
-
-            <!-- Live stats -->
-            <div class="reveal-stats">
-              <span class="live-stat live-stat--streak"><span class="live-stat__icon">🔥</span><span id="hs-streak">0</span>-day streak</span>
-              <span class="live-stat live-stat--level"><span class="live-stat__icon" id="hs-level-emoji">🌱</span><span id="hs-level">Beginner</span></span>
-              <span class="live-stat live-stat--xp"><span class="live-stat__icon">⭐</span><span id="hs-xp">0</span> XP</span>
-            </div>
-
-            <!-- Game menu -->
-            <nav class="reveal-menu" aria-label="Main menu">
-              <a class="game-menu-btn" href="maths.html">
-                <span class="game-menu-btn__icon">🧮</span>
-                <span class="game-menu-btn__label">Mathematics<span class="game-menu-btn__sub">10 chapters</span></span>
-                <span class="game-menu-btn__arrow">›</span>
-              </a>
-              <a class="game-menu-btn" href="learning.html">
-                <span class="game-menu-btn__icon">🎓</span>
-                <span class="game-menu-btn__label">Learning<span class="game-menu-btn__sub">Subjects</span></span>
-                <span class="game-menu-btn__arrow">›</span>
-              </a>
-              <a class="game-menu-btn" href="fun.html">
-                <span class="game-menu-btn__icon">🧠</span>
-                <span class="game-menu-btn__label">Riddles<span class="game-menu-btn__sub">33+ teasers</span></span>
-                <span class="game-menu-btn__arrow">›</span>
-              </a>
-              <a class="game-menu-btn" href="#" id="progress-btn">
-                <span class="game-menu-btn__icon">📊</span>
-                <span class="game-menu-btn__label">My Stats<span class="game-menu-btn__sub">XP · Badges</span></span>
-                <span class="game-menu-btn__arrow">›</span>
-              </a>
-            </nav>
-
-            <a class="btn btn-pitch btn-lg" href="#shootout-section" id="goto-match" style="margin-top:var(--space-3);">⚽ Take the Penalty Shootout</a>
+            <ul class="hand-list">
+              <li class="strike">show up (done ✅)</li>
+              <li>open today's maths chapter</li>
+              <li>score at least 3/5 in penalty shootout</li>
+              <li>crack the riddle of the day 🧠</li>
+            </ul>
           </div>
 
+        </div>
+
+        <!-- Section: "things i can do" -->
+        <div style="margin-top: var(--space-5);">
+          <div class="hand-header" style="margin-bottom:var(--space-4);">things i can do on this page 👇</div>
+          <div class="grid" style="grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap: var(--space-4);">
+            <a class="sticky-note" href="maths.html">
+              <span class="sticky-note__icon">🧮</span>
+              <span class="sticky-note__title">MATHS!</span>
+              <span class="sticky-note__sub">chapter 1 open →</span>
+            </a>
+            <a class="sticky-note sticky-note--pink" href="#shootout-section">
+              <span class="sticky-note__icon">⚽</span>
+              <span class="sticky-note__title">PENALTY!</span>
+              <span class="sticky-note__sub">5 shots · siuuu</span>
+            </a>
+            <a class="sticky-note sticky-note--blue" href="fun.html">
+              <span class="sticky-note__icon">🧠</span>
+              <span class="sticky-note__title">RIDDLES</span>
+              <span class="sticky-note__sub">33 brain teasers</span>
+            </a>
+            <a class="sticky-note sticky-note--green" href="learning.html">
+              <span class="sticky-note__icon">🎓</span>
+              <span class="sticky-note__title">SUBJECTS</span>
+              <span class="sticky-note__sub">english · evs · more</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- PS note -->
+        <div style="text-align: right; margin-top: var(--space-5);">
+          <div class="ps-note">p.s. cristiano ronaldo is the GOAT 🐐 pls no haters ok bye</div>
         </div>
 
       </section>
 
-      <!-- Shootout section -->
-      <section class="shootout-section" id="shootout-section">
-        <div class="shootout-section__header">
-          <h2>🏆 Tonight's Penalty Shootout</h2>
-          <p>5 rounds · score 3+ to win · streaks multiply the reward</p>
-        </div>
+      <!-- ======================================================
+           Shootout (notebook-framed)
+           ====================================================== -->
+      <section class="notebook-frame" id="shootout-section">
+        <div class="hand-header" style="margin-bottom: var(--space-2);">tonight's match ⚽🔥</div>
+        <p class="hand" style="font-size: 1.1rem; color: var(--ink-blue); margin-bottom: var(--space-4);">
+          pick a corner, hold to charge (not too much!!), release to shoot. score <span class="siuuu">3 out of 5</span> to win. keeper gets trickier each round. <span class="hand" style="color:var(--marker-green);">good luck champ</span> 🍀
+        </p>
         <div id="shootout-host"></div>
       </section>
 
-      <!-- Riddle of the Day -->
+      <!-- ======================================================
+           Riddle of the day (speech bubble)
+           ====================================================== -->
       <section class="section">
-        <h2 class="section-title">🧠 Riddle of the Day</h2>
-        <div id="riddle-teaser"></div>
-        <div class="text-center" style="margin-top:16px;">
-          <a class="btn btn-outline" href="fun.html">See all riddles →</a>
+        <div class="hand-header" style="display:block; margin-bottom:var(--space-3);">
+          riddle of the day 🧠
+        </div>
+        <div style="display:flex; align-items:flex-start; gap: 16px;">
+          <div style="flex-shrink:0; font-size: 3.5rem; line-height: 1;">🤔</div>
+          <div style="flex:1;">
+            <div id="riddle-teaser"></div>
+            <div style="margin-top: 12px;">
+              <a class="sticky-note sticky-note--orange" style="display:inline-flex; min-height: 0; padding: 12px 22px; font-size: 1rem;" href="fun.html">
+                📚 see all 33 riddles →
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- About -->
-      <section class="section card card--flat">
-        <h2 class="section-title">👋 About This Portal</h2>
-        <p>This is <strong>Crispin's personal learning portal</strong> — built to make Grade 5 Mathematics fun with lessons, practice, quizzes, printable worksheets, daily riddles, and a penalty-shootout mini-game. The portal follows the CBSE syllabus used at Asian School Bahrain.</p>
-        <p><strong>Friends and family welcome!</strong> Open today's pack, try the shootout, or head to the <a href="fun.html">Riddle Archive</a>.</p>
+      <!-- ======================================================
+           About (handwritten footer notes)
+           ====================================================== -->
+      <section class="section" style="text-align:center; padding-top: var(--space-5);">
+        <p class="hand" style="font-size: 1.2rem; color: var(--ink-blue);">
+          built by my dad <span class="siuuu" style="font-size:1em;">🛠️</span> with lots of ❤️
+          <br>
+          <span class="sketch" style="font-size: 1.4rem; color: var(--marker-pink);">for crispin, grade 5, asian school bahrain</span>
+        </p>
       </section>
 
     </div>
 
     <footer class="footer">
       <div class="container">
-        <p>Made with ❤️ and ⚽ for Crispin · Last updated <span id="last-updated"></span></p>
-        <p class="muted">© <span id="year"></span> Crispin's World · crispintony.com</p>
+        <p class="hand" style="font-size: 1.1rem;">last updated <span id="last-updated"></span> · © <span id="year"></span> crispin's world · <a href="https://crispintony.com">crispintony.com</a></p>
       </div>
     </footer>
   </main>
@@ -202,209 +207,37 @@
       Progress.markVisit();
       Progress.renderGamebar();
 
-      // ----- Ambient dust motes (pack hero) -----
-      (function buildMotes() {
-        const host = document.getElementById('pack-motes');
-        if (!host) return;
-        let html = '';
-        for (let i = 0; i < 24; i++) {
-          const left = Math.random() * 100;
-          const delay = Math.random() * 8;
-          const dur = 6 + Math.random() * 6;
-          const top = 100 + Math.random() * 20;
-          html += `<div class="mote" style="left:${left}%; top:${top}%; animation-duration:${dur}s; animation-delay:${delay}s;"></div>`;
-        }
-        host.innerHTML = html;
-      })();
+      // Name prompt on first visit
+      const existing = App.getProfile();
+      if (!existing) App.askName(() => {});
 
-      // ----- Pack date & pack number -----
-      const today = App.todayKey(); // YYYY-MM-DD in Bahrain time
-      document.getElementById('pack-date-text').textContent =
-        App.formatDateDMY(new Date()) + ' · Pack #' + packNumberForDate(today);
+      // Scorecard update
+      const s = Progress.getStats();
+      document.getElementById('sb-level').textContent = s.level.curr.name;
+      document.getElementById('sb-xp').textContent = s.xp;
+      document.getElementById('sb-streak').textContent = s.streak + 'd';
+      document.getElementById('sb-badges').textContent = s.badges + '/' + s.totalBadges;
 
-      function packNumberForDate(iso) {
-        // Pack #N counts days since an arbitrary epoch so it's a pleasant growing number
-        const epoch = new Date('2026-04-01T00:00:00');
-        const now = new Date(iso + 'T00:00:00');
-        return Math.max(1, Math.floor((now - epoch) / 86400000) + 1);
-      }
-
-      // ----- Personalised greetings after reveal -----
-      const visitor = App.getProfile();
-      function applyRevealText(name) {
-        const isCrispin = !name || name.toLowerCase() === 'crispin';
-        const hello = isCrispin
-          ? `${App.greeting()}, Crispin!`
-          : `${App.greeting()}, <span style="color:#FACC15;">${name}</span>! Meet Crispin.`;
-        document.getElementById('reveal-hello').innerHTML = hello;
-        if (!isCrispin) {
-          document.getElementById('reveal-sub').textContent =
-            "Grade 5 · Mathematics · Bahrain — welcome to his world";
-        }
-      }
-      if (visitor) applyRevealText(visitor.name);
-      else App.askName((p) => applyRevealText(p.name));
-
-      // ----- Populate live stats -----
-      function updateStats() {
-        const s = Progress.getStats();
-        document.getElementById('hs-streak').textContent = s.streak;
-        document.getElementById('hs-level').textContent = s.level.curr.name;
-        document.getElementById('hs-level-emoji').textContent = s.level.curr.emoji;
-        document.getElementById('hs-xp').textContent = s.xp;
-      }
-      updateStats();
-
-      // ===================================================
-      // PACK-OPENING STATE MACHINE
-      // ===================================================
-      const STORE_KEY = 'crispin_pack_opened_' + today;
-      const heroEl = document.getElementById('pack-hero');
-      const stage = document.getElementById('pack-stage');
-      const pack = document.getElementById('pack-card');
-      const openBtn = document.getElementById('pack-open-btn');
-      const raysEl = document.getElementById('pack-rays');
-      const flashEl = document.getElementById('pack-flash');
-      const skipEl = document.getElementById('pack-skip');
-
-      function goToRevealed(skipConfetti) {
-        stage.classList.add('revealed');
-        heroEl.classList.remove('is-opening');
-        skipEl.style.display = 'none';
-        if (!skipConfetti) App.launchConfetti(80);
-      }
-
-      function playOpenSequence() {
-        if (stage.classList.contains('revealed')) return;
-        heroEl.classList.add('is-opening');
-        App.Audio.playWhistle();
-
-        // Phase 1: shake
-        pack.classList.add('is-shaking');
-        setTimeout(() => {
-          pack.classList.remove('is-shaking');
-
-          // Phase 2: rays appear + pack charges brighter
-          raysEl.classList.add('active');
-          pack.classList.add('is-charging');
-          App.Audio.playCrowdRoar(1.5, 1.3);
-
-          setTimeout(() => {
-            // Phase 3: flash + pack explodes + particles
-            flashEl.classList.add('active');
-            pack.classList.add('is-exploding');
-            App.Audio.playGoal();
-            burstParticles();
-
-            setTimeout(() => {
-              // Phase 4: reveal
-              goToRevealed();
-              localStorage.setItem(STORE_KEY, '1');
-              // Grant a small daily XP bonus if this is a fresh pack open
-              if (window.Progress) window.Progress.addXP(15, 'Daily pack opened!');
-              updateStats();
-            }, 700);
-
-          }, 1000);
-
-        }, 400);
-      }
-
-      function burstParticles() {
-        const colors = ['#FACC15', '#FB7185', '#A855F7', '#22C55E', '#14B8A6', '#F97316'];
-        for (let i = 0; i < 40; i++) {
-          const p = document.createElement('div');
-          p.className = 'pack-particle burst';
-          p.style.background = colors[i % colors.length];
-          const angle = (i / 40) * Math.PI * 2 + Math.random() * 0.3;
-          const dist = 150 + Math.random() * 180;
-          p.style.setProperty('--px', Math.cos(angle) * dist + 'px');
-          p.style.setProperty('--py', Math.sin(angle) * dist + 'px');
-          p.style.animationDelay = (Math.random() * 0.15) + 's';
-          // Mount on stage so it's centred
-          stage.appendChild(p);
-          setTimeout(() => p.remove(), 1100);
-        }
-      }
-
-      function skipSequence() {
-        heroEl.classList.remove('is-opening');
-        raysEl.classList.remove('active');
-        flashEl.classList.remove('active');
-        pack.classList.remove('is-shaking', 'is-charging', 'is-exploding');
-        goToRevealed(true);
-        localStorage.setItem(STORE_KEY, '1');
-      }
-
-      // Initial state: if already opened today, skip straight to revealed
-      if (localStorage.getItem(STORE_KEY)) {
-        goToRevealed(true);
-      }
-
-      // Click handlers
-      pack.addEventListener('click', playOpenSequence);
-      openBtn.addEventListener('click', playOpenSequence);
-      pack.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); playOpenSequence(); }
-      });
-      skipEl.addEventListener('click', skipSequence);
-      document.addEventListener('keydown', (e) => {
-        if (heroEl.classList.contains('is-opening') && (e.key === 'Escape' || e.key === 'Enter')) {
-          skipSequence();
-        }
-      });
-
-      // Progress modal
-      document.getElementById('progress-btn').addEventListener('click', (e) => {
-        e.preventDefault();
-        Progress.showProgressModal();
-      });
-
-      // Riddle teaser + shootout (always rendered)
+      // Riddle of the day
       if (window.Riddles) window.Riddles.renderDaily(document.getElementById('riddle-teaser'));
+
+      // Penalty shootout
       new PenaltyGame('shootout-host');
 
       // Footer
       document.getElementById('year').textContent = new Date().getFullYear();
       document.getElementById('last-updated').textContent = App.formatDateDMY(new Date());
 
-      // ----- Holographic parallax on revealed card -----
-      function wireFutParallax() {
-        const card = document.getElementById('fut-card');
-        if (!card) return;
-        let mx = 0, my = 0, tmx = 0, tmy = 0, tilt = 0, ttilt = 0, rafId = null;
-        function render() {
-          mx += (tmx - mx) * 0.15;
-          my += (tmy - my) * 0.15;
-          tilt += (ttilt - tilt) * 0.12;
-          card.style.setProperty('--mx', mx.toFixed(3));
-          card.style.setProperty('--my', my.toFixed(3));
-          card.style.setProperty('--tilt', tilt.toFixed(3));
-          if (Math.abs(mx - tmx) > 0.001 || Math.abs(my - tmy) > 0.001 || Math.abs(tilt - ttilt) > 0.001) {
-            rafId = requestAnimationFrame(render);
-          } else { rafId = null; }
-        }
-        function schedule() { if (!rafId) rafId = requestAnimationFrame(render); }
-        function onMove(cx, cy) {
-          const r = card.getBoundingClientRect();
-          tmx = ((cx - r.left) / r.width) - 0.5;
-          tmy = ((cy - r.top) / r.height) - 0.5;
-          ttilt = 1;
-          schedule();
-        }
-        card.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
-        card.addEventListener('mouseleave', () => { tmx = 0; tmy = 0; ttilt = 0; schedule(); });
-        card.addEventListener('touchmove', (e) => {
-          if (e.touches[0]) { e.preventDefault(); onMove(e.touches[0].clientX, e.touches[0].clientY); }
-        }, { passive: false });
-        card.addEventListener('touchend', () => { tmx = 0; tmy = 0; ttilt = 0; schedule(); });
-        card.addEventListener('click', () => {
-          App.Audio.playBadge();
-          App.launchConfetti(30);
-          App.showToast('⚽ Let\'s go Crispin!', 'football', 1800);
-        });
-      }
-      wireFutParallax();
+      // Polaroid click — fun interaction
+      document.querySelector('.polaroid').addEventListener('click', () => {
+        App.Audio.playClick();
+        App.showToast("Hey! That's me 😎", 'football', 1800);
+      });
+
+      // Sticky notes — marker "squeak" on hover
+      document.querySelectorAll('.sticky-note').forEach(n => {
+        n.addEventListener('mouseenter', () => App.Audio.playClick());
+      });
     })();
   </script>
 </body>

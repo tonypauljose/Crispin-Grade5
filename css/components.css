@@ -737,7 +737,439 @@
 .badge-chip__desc { font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; }
 
 /* ============================================================
-   PACK HERO — daily pack-opening experience
+   NOTEBOOK / SCRAPBOOK AESTHETIC
+   (Diary of a Wimpy Kid feel — hand-made, not polished)
+   ============================================================ */
+
+:root {
+  --paper: #FFFDF5;
+  --paper-line: #BFD8F7;
+  --paper-margin: #F87171;
+  --ink-blue: #1E3A8A;
+  --ink-black: #1F2937;
+  --marker-red: #DC2626;
+  --marker-pink: #EC4899;
+  --marker-orange: #F97316;
+  --marker-green: #16A34A;
+  --marker-purple: #9333EA;
+  --tape-yellow: rgba(250, 230, 120, 0.65);
+  --tape-blue: rgba(160, 210, 255, 0.6);
+}
+
+/* ------- Handwriting font utilities ------- */
+.hand  { font-family: 'Kalam', 'Caveat', 'Patrick Hand', cursive; }
+.marker { font-family: 'Permanent Marker', 'Kalam', cursive; }
+.sketch { font-family: 'Caveat', 'Kalam', cursive; }
+
+/* ------- Notebook page (the whole hero is a page of Crispin's book) ------- */
+.scrapbook {
+  --page-rotate: -0.5deg;
+  position: relative;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(90deg, transparent 70px, var(--paper-margin) 70px, var(--paper-margin) 72px, transparent 72px),
+    repeating-linear-gradient(var(--paper) 0px, var(--paper) 31px, var(--paper-line) 31px, var(--paper-line) 32px);
+  border-radius: 6px;
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.1),
+    0 20px 40px rgba(31, 41, 55, 0.25),
+    inset 0 0 0 2px rgba(0,0,0,0.05);
+  padding: 50px 40px 60px 96px;
+  margin-bottom: var(--space-6);
+  color: var(--ink-black);
+  transform: rotate(var(--page-rotate));
+  min-height: 640px;
+  overflow: visible;
+  isolation: isolate;
+}
+
+/* Three-ring binder holes on the left edge */
+.scrapbook::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 0; bottom: 0;
+  width: 22px;
+  background-image:
+    radial-gradient(circle at 50% 60px, rgba(0,0,0,0.35) 10px, transparent 11px),
+    radial-gradient(circle at 50% 50%, rgba(0,0,0,0.35) 10px, transparent 11px),
+    radial-gradient(circle at 50% calc(100% - 60px), rgba(0,0,0,0.35) 10px, transparent 11px);
+  pointer-events: none;
+}
+
+/* Folded corner (top-right) */
+.scrapbook::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 50px; height: 50px;
+  background:
+    linear-gradient(225deg, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.05) 50%, transparent 50%),
+    linear-gradient(225deg, #F3F4F6 0%, #F3F4F6 50%, transparent 50%);
+  border-bottom-left-radius: 8px;
+  pointer-events: none;
+}
+
+/* Page header (marker-drawn title) */
+.scrapbook__title-wrap {
+  text-align: center;
+  margin-bottom: var(--space-5);
+}
+.scrapbook__title {
+  display: inline-block;
+  font-family: 'Permanent Marker', 'Kalam', cursive;
+  font-size: clamp(2rem, 5.5vw, 3.8rem);
+  color: var(--marker-red);
+  line-height: 1;
+  transform: rotate(-2deg);
+  text-shadow:
+    2px 2px 0 rgba(0,0,0,0.08);
+  position: relative;
+}
+.scrapbook__title span { display: block; }
+.scrapbook__title span:nth-child(1) { color: var(--marker-purple); transform: rotate(1deg); }
+.scrapbook__title span:nth-child(2) { color: var(--marker-orange); transform: rotate(-1deg); font-size: 1.1em; }
+.scrapbook__title span:nth-child(3) { color: var(--marker-green); transform: rotate(2deg); }
+
+.scrapbook__subtitle {
+  font-family: 'Caveat', cursive;
+  font-size: 1.4rem;
+  color: var(--ink-blue);
+  transform: rotate(1deg);
+  display: inline-block;
+  margin-top: 8px;
+}
+
+/* Underline drawn like a marker squiggle */
+.scribble-underline {
+  position: relative;
+  display: inline-block;
+}
+.scribble-underline::after {
+  content: '';
+  position: absolute;
+  left: -4px; right: -4px;
+  bottom: -8px;
+  height: 12px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'><path d='M 2 6 Q 20 2 40 7 T 80 6 Q 100 2 120 8 T 160 6 Q 180 3 198 7' stroke='%23DC2626' stroke-width='3' fill='none' stroke-linecap='round'/></svg>") no-repeat center;
+  background-size: 100% 100%;
+}
+
+/* ------- Polaroid ------- */
+.polaroid {
+  --tilt: -3deg;
+  background: #FFFFFF;
+  padding: 14px 14px 50px;
+  box-shadow:
+    0 2px 4px rgba(0,0,0,0.15),
+    0 10px 25px rgba(0,0,0,0.2);
+  transform: rotate(var(--tilt));
+  position: relative;
+  width: 220px;
+  transition: transform 0.3s ease;
+}
+.polaroid:hover { transform: rotate(0deg) scale(1.03); z-index: 2; }
+
+.polaroid__img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: 50% 30%;
+  background: #E5E7EB;
+  filter: saturate(0.9) contrast(1.05);
+}
+
+.polaroid__caption {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 12px;
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  font-size: 1.35rem;
+  color: var(--ink-blue);
+}
+
+.polaroid__tape {
+  position: absolute;
+  width: 90px;
+  height: 26px;
+  background: var(--tape-yellow);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 230, 120, 0.5),
+    0 1px 3px rgba(0,0,0,0.15);
+  backdrop-filter: blur(0.5px);
+}
+.polaroid__tape--tl { top: -13px; left: -20px; transform: rotate(-35deg); }
+.polaroid__tape--tr { top: -13px; right: -20px; transform: rotate(25deg); background: var(--tape-blue); }
+.polaroid__tape--br { bottom: -10px; right: -16px; transform: rotate(-15deg); background: var(--tape-yellow); width: 60px; }
+
+/* Little #7 jersey sticker on the polaroid */
+.polaroid__seven {
+  position: absolute;
+  top: -18px; right: -18px;
+  width: 48px; height: 48px;
+  background: #DC2626;
+  color: white;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 1.6rem;
+  transform: rotate(15deg);
+}
+
+/* ------- Sticky notes ------- */
+.sticky-note {
+  --tilt: -2deg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 22px 22px;
+  background: linear-gradient(180deg, #FEF3C7 0%, #FDE68A 100%);
+  box-shadow:
+    0 1px 2px rgba(0,0,0,0.1),
+    0 8px 20px rgba(0,0,0,0.15),
+    inset 0 -3px 8px rgba(0,0,0,0.05);
+  transform: rotate(var(--tilt));
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  color: var(--ink-black);
+  font-family: 'Kalam', cursive;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-align: center;
+  min-height: 130px;
+  position: relative;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.sticky-note:hover {
+  transform: rotate(0deg) translateY(-4px) scale(1.03);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1), 0 16px 30px rgba(0,0,0,0.2);
+  text-decoration: none;
+  color: var(--ink-black);
+}
+.sticky-note__icon { font-size: 2.4rem; margin-bottom: 6px; line-height: 1; }
+.sticky-note__title { font-size: 1.3rem; line-height: 1.1; margin-bottom: 4px; }
+.sticky-note__sub { font-family: 'Caveat', cursive; font-size: 1rem; color: var(--ink-blue); font-weight: 400; }
+
+.sticky-note--pink  { background: linear-gradient(180deg, #FCE7F3 0%, #FBCFE8 100%); --tilt: 2deg; }
+.sticky-note--blue  { background: linear-gradient(180deg, #DBEAFE 0%, #BFDBFE 100%); --tilt: -3deg; }
+.sticky-note--green { background: linear-gradient(180deg, #D1FAE5 0%, #A7F3D0 100%); --tilt: 1deg; }
+.sticky-note--orange{ background: linear-gradient(180deg, #FED7AA 0%, #FDBA74 100%); --tilt: -1deg; }
+
+/* Tape strip at top of sticky */
+.sticky-note::before {
+  content: '';
+  position: absolute;
+  top: -10px; left: 50%;
+  width: 60px; height: 20px;
+  transform: translateX(-50%) rotate(-3deg);
+  background: var(--tape-yellow);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* ------- Scrapbook sections ------- */
+.scrapbook__grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--space-5);
+  align-items: flex-start;
+  margin-bottom: var(--space-5);
+}
+@media (max-width: 680px) {
+  .scrapbook__grid { grid-template-columns: 1fr; justify-items: center; }
+  .scrapbook { padding: 30px 20px 40px 50px; }
+  .scrapbook::before { left: 8px; width: 16px; }
+}
+
+/* Doodles — inline SVGs sprinkled around */
+.doodle {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.85;
+}
+.doodle--football-1  { top: 24px;  right: 90px; transform: rotate(20deg); }
+.doodle--star-1      { top: 12%;   left: 120px; }
+.doodle--arrow-1     { top: 38%;   right: 8%;   transform: rotate(-15deg); }
+.doodle--heart-1     { bottom: 60px; right: 130px; }
+.doodle--lightning-1 { top: 60%; left: 40%; transform: rotate(10deg); }
+
+/* Arrow "look at this" pointing at polaroid */
+.scribble-arrow {
+  position: relative;
+  display: inline-block;
+  font-family: 'Caveat', cursive;
+  font-size: 1.3rem;
+  color: var(--marker-red);
+  transform: rotate(-6deg);
+}
+
+/* Handwritten "bullet list" */
+.hand-list {
+  list-style: none;
+  padding-left: 0;
+  font-family: 'Kalam', cursive;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--ink-blue);
+}
+.hand-list li {
+  position: relative;
+  padding-left: 28px;
+  margin-bottom: 6px;
+}
+.hand-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--marker-green);
+  font-family: 'Permanent Marker', cursive;
+  font-size: 1.1rem;
+}
+.hand-list li.strike {
+  text-decoration: line-through;
+  text-decoration-color: var(--marker-red);
+  text-decoration-thickness: 2px;
+  opacity: 0.65;
+}
+
+/* Section header with drawn box */
+.hand-header {
+  display: inline-block;
+  position: relative;
+  font-family: 'Permanent Marker', cursive;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: var(--marker-purple);
+  padding: 6px 14px;
+  margin-bottom: var(--space-3);
+  transform: rotate(-1deg);
+}
+.hand-header::before {
+  content: '';
+  position: absolute;
+  inset: -4px -6px;
+  border: 3px solid var(--marker-purple);
+  border-radius: 8px;
+  opacity: 0.8;
+  /* hand-drawn wobble via SVG */
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 60' preserveAspectRatio='none'><path d='M 4 6 Q 50 2 100 5 T 196 6 Q 198 30 196 54 Q 150 58 100 55 T 4 54 Q 2 30 4 6 Z' stroke='%239333EA' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat center / 100% 100%;
+  border: none;
+}
+
+/* Speech bubble (for the riddle) */
+.speech-bubble {
+  position: relative;
+  background: white;
+  border: 3px solid var(--ink-black);
+  border-radius: 20px;
+  padding: 18px 20px;
+  font-family: 'Kalam', cursive;
+  font-size: 1.15rem;
+  color: var(--ink-black);
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.15);
+  margin: 0 0 20px 80px;
+  max-width: 520px;
+  transform: rotate(0.5deg);
+}
+.speech-bubble::before {
+  content: '';
+  position: absolute;
+  left: -22px; top: 24px;
+  width: 0; height: 0;
+  border-right: 22px solid black;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+}
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  left: -16px; top: 26px;
+  width: 0; height: 0;
+  border-right: 18px solid white;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+}
+
+/* Paper clip */
+.paperclip {
+  position: absolute;
+  top: -14px; left: 30%;
+  width: 38px; height: 60px;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 60' fill='none'><path d='M 14 5 Q 30 5 30 22 L 30 48 Q 30 55 20 55 Q 10 55 10 48 L 10 22 Q 10 14 20 14 Q 26 14 26 22 L 26 40' stroke='%23A0A0A0' stroke-width='3' stroke-linecap='round'/></svg>") no-repeat center;
+  z-index: 3;
+}
+
+/* Match score (handwritten stats) */
+.hand-scorecard {
+  position: relative;
+  background: white;
+  border: 2px dashed var(--ink-blue);
+  padding: 16px 20px;
+  font-family: 'Kalam', cursive;
+  transform: rotate(0.8deg);
+  box-shadow: 3px 3px 0 rgba(30, 58, 138, 0.15);
+}
+.hand-scorecard__title {
+  font-family: 'Permanent Marker', cursive;
+  color: var(--marker-red);
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+.hand-scorecard__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  color: var(--ink-blue);
+  border-bottom: 1.5px dotted rgba(30, 58, 138, 0.3);
+  padding: 4px 0;
+}
+.hand-scorecard__row:last-child { border-bottom: none; }
+.hand-scorecard__label { }
+.hand-scorecard__val { font-weight: 700; color: var(--marker-red); }
+
+/* Notebook-framed section for the shootout */
+.notebook-frame {
+  position: relative;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(90deg, transparent 70px, var(--paper-margin) 70px, var(--paper-margin) 71px, transparent 71px),
+    repeating-linear-gradient(var(--paper) 0px, var(--paper) 31px, var(--paper-line) 31px, var(--paper-line) 32px);
+  border-radius: 6px;
+  padding: 40px 30px 40px 90px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 18px 35px rgba(31, 41, 55, 0.2);
+  transform: rotate(0.5deg);
+  margin-bottom: var(--space-6);
+}
+@media (max-width: 680px) {
+  .notebook-frame { padding: 24px 16px 30px 46px; }
+}
+
+/* Big "SIIUUU" style handwritten emphasis */
+.siuuu {
+  display: inline-block;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 1.5em;
+  color: var(--marker-red);
+  transform: rotate(-6deg);
+}
+
+/* PS handwritten footer note */
+.ps-note {
+  margin-top: var(--space-5);
+  font-family: 'Caveat', cursive;
+  font-size: 1.5rem;
+  color: var(--marker-pink);
+  transform: rotate(-2deg);
+  display: inline-block;
+}
+
+/* ============================================================
+   PACK HERO — daily pack-opening experience (LEGACY, unused)
    ============================================================ */
 .pack-hero {
   position: relative;
