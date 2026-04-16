@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crispin's World — Grade 5 Learning Portal</title>
   <meta name="description" content="Crispin's interactive Grade 5 learning portal — Mathematics, riddles, penalty shootout, and more. Asian School Bahrain, CBSE.">
-  <meta name="theme-color" content="#6B21A8">
+  <meta name="theme-color" content="#0B0520">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -19,78 +19,70 @@
     <div class="container">
 
       <!-- ======================================================
-           MATCH HERO — cinematic stadium entrance
+           PACK HERO — Daily pack-opening experience
            ====================================================== -->
-      <section class="match-hero" id="match-hero">
+      <section class="pack-hero" id="pack-hero">
 
-        <!-- Layered scene -->
-        <div class="match-hero__sky" aria-hidden="true"></div>
+        <!-- Ambient dust motes -->
+        <div class="pack-hero__motes" id="pack-motes" aria-hidden="true"></div>
 
-        <!-- Stadium silhouette as inline SVG -->
-        <svg class="match-hero__stadium" viewBox="0 0 1200 200" preserveAspectRatio="none" aria-hidden="true">
+        <!-- Light rays (activate during opening) -->
+        <svg class="pack-rays" id="pack-rays" viewBox="0 0 800 800" aria-hidden="true">
           <defs>
-            <linearGradient id="stadFade" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stop-color="#1E1B4B" stop-opacity="0.4"/>
-              <stop offset="100%" stop-color="#1E1B4B" stop-opacity="0.95"/>
-            </linearGradient>
+            <radialGradient id="rayGrad">
+              <stop offset="0%" stop-color="white" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="white" stop-opacity="0"/>
+            </radialGradient>
           </defs>
-          <path d="M 0 200 L 0 140 Q 60 120 120 135 L 180 115 Q 260 90 360 110 L 440 95 Q 540 75 660 95 L 740 80 Q 840 70 960 90 L 1040 110 Q 1120 125 1200 140 L 1200 200 Z" fill="url(#stadFade)"/>
-          <!-- Stadium pillars -->
-          <rect x="150" y="118" width="18" height="82" fill="#0F0D30" opacity="0.8"/>
-          <rect x="420" y="95" width="18" height="105" fill="#0F0D30" opacity="0.8"/>
-          <rect x="720" y="90" width="18" height="110" fill="#0F0D30" opacity="0.8"/>
-          <rect x="1000" y="105" width="18" height="95" fill="#0F0D30" opacity="0.8"/>
+          <g fill="url(#rayGrad)" transform="translate(400 400)">
+            <polygon points="0,-400 60,0 -60,0" opacity="0.7"/>
+            <polygon points="0,-400 60,0 -60,0" opacity="0.6" transform="rotate(30)"/>
+            <polygon points="0,-400 60,0 -60,0" opacity="0.7" transform="rotate(60)"/>
+            <polygon points="0,-400 60,0 -60,0" opacity="0.6" transform="rotate(90)"/>
+            <polygon points="0,-400 60,0 -60,0" opacity="0.7" transform="rotate(120)"/>
+            <polygon points="0,-400 60,0 -60,0" opacity="0.6" transform="rotate(150)"/>
+            <polygon points="0,-400 60,0 -60,0" opacity="0.7" transform="rotate(180)"/>
+            <polygon points="0,-400 60,0 -60,0" opacity="0.6" transform="rotate(210)"/>
+            <polygon points="0,-400 60,0 -60,0" opacity="0.7" transform="rotate(240)"/>
+            <polygon points="0,-400 60,0 -60,0" opacity="0.6" transform="rotate(270)"/>
+            <polygon points="0,-400 60,0 -60,0" opacity="0.7" transform="rotate(300)"/>
+            <polygon points="0,-400 60,0 -60,0" opacity="0.6" transform="rotate(330)"/>
+          </g>
         </svg>
 
-        <!-- Stadium floodlights -->
-        <div class="match-hero__lights" aria-hidden="true">
-          <div class="match-light"></div>
-          <div class="match-light"></div>
-          <div class="match-light"></div>
-          <div class="match-light"></div>
-        </div>
+        <!-- Flash overlay -->
+        <div class="pack-flash" id="pack-flash" aria-hidden="true"></div>
 
-        <!-- Crowd -->
-        <div class="match-hero__crowd" aria-hidden="true">
-          <div class="crowd-row crowd-row--3" id="crowd-row-3"></div>
-          <div class="crowd-row crowd-row--2" id="crowd-row-2"></div>
-          <div class="crowd-row crowd-row--1" id="crowd-row-1"></div>
-        </div>
+        <!-- Skip hint -->
+        <span class="pack-skip-hint" id="pack-skip">↵ Tap to skip</span>
 
-        <!-- Pitch foreground -->
-        <div class="match-hero__pitch" aria-hidden="true"></div>
+        <div class="pack-stage" id="pack-stage">
 
-        <!-- Drifting confetti -->
-        <div class="match-hero__confetti" id="hero-confetti" aria-hidden="true"></div>
+          <!-- CLOSED PACK state -->
+          <div class="pack__aura" aria-hidden="true"></div>
 
-        <!-- Content grid -->
-        <div class="match-hero__content">
-
-          <!-- Title block (LEFT) -->
-          <div class="match-hero__title">
-            <span class="match-day-badge">
-              <span class="match-day-badge__dot"></span>
-              Match Day
-            </span>
-            <p class="match-hero__welcome" id="hero-welcome">Welcome to</p>
-            <h1 class="match-hero__name">Crispin's World</h1>
-            <p class="match-hero__subtitle" id="hero-subtitle">Grade 5 · Mathematics · Asian School Bahrain</p>
-
-            <!-- Live stats ticker -->
-            <div class="match-hero__stats">
-              <span class="live-stat live-stat--streak"><span class="live-stat__icon">🔥</span><span id="hs-streak">0</span>-day streak</span>
-              <span class="live-stat live-stat--level"><span class="live-stat__icon" id="hs-level-emoji">🌱</span><span id="hs-level">Beginner</span></span>
-              <span class="live-stat live-stat--xp"><span class="live-stat__icon">⭐</span><span id="hs-xp">0</span> XP</span>
-            </div>
-
-            <a class="match-cta" href="#shootout-section" id="match-cta">
-              <span>▶ Start Your Match</span>
-            </a>
+          <div class="pack__date-chip" id="pack-date">
+            📅 <span id="pack-date-text">Loading…</span>
           </div>
 
-          <!-- FUT card (RIGHT) -->
-          <div class="match-hero__side">
-            <div class="fut-card" id="fut-card" role="img" aria-label="Crispin's player card — rating 99, midfielder" tabindex="0">
+          <div class="pack" id="pack-card" role="button" tabindex="0" aria-label="Open today's pack">
+            <div class="pack__inner">
+              <div class="pack__top-banner">CRISPIN'S · DAILY · PACK</div>
+              <h2 class="pack__title">CRISPIN</h2>
+              <div class="pack__seven">#7</div>
+              <div class="pack__seal">SIIUU!</div>
+              <div class="pack__footer">⚽ Grade 5 · CBSE · Bahrain ⚽</div>
+            </div>
+          </div>
+
+          <button class="pack-open-btn" id="pack-open-btn">▶ Open Today's Pack</button>
+
+          <!-- REVEALED state (hidden until pack is opened) -->
+          <div class="reveal-wrap" id="reveal-wrap">
+            <h1 class="reveal-hello" id="reveal-hello">Welcome back, Crispin!</h1>
+            <p class="reveal-sub" id="reveal-sub">Grade 5 · Mathematics · Asian School Bahrain</p>
+
+            <div class="fut-card" id="fut-card" role="img" aria-label="Crispin's player card" tabindex="0">
               <div class="fut-card__burst" aria-hidden="true"></div>
               <div class="fut-card__holo" aria-hidden="true"></div>
               <div class="fut-card__gloss" aria-hidden="true"></div>
@@ -125,41 +117,46 @@
                 <div class="fut-stat"><span class="fut-stat__label">FUN</span><span class="fut-stat__val">100</span></div>
               </div>
             </div>
+
+            <!-- Live stats -->
+            <div class="reveal-stats">
+              <span class="live-stat live-stat--streak"><span class="live-stat__icon">🔥</span><span id="hs-streak">0</span>-day streak</span>
+              <span class="live-stat live-stat--level"><span class="live-stat__icon" id="hs-level-emoji">🌱</span><span id="hs-level">Beginner</span></span>
+              <span class="live-stat live-stat--xp"><span class="live-stat__icon">⭐</span><span id="hs-xp">0</span> XP</span>
+            </div>
+
+            <!-- Game menu -->
+            <nav class="reveal-menu" aria-label="Main menu">
+              <a class="game-menu-btn" href="maths.html">
+                <span class="game-menu-btn__icon">🧮</span>
+                <span class="game-menu-btn__label">Mathematics<span class="game-menu-btn__sub">10 chapters</span></span>
+                <span class="game-menu-btn__arrow">›</span>
+              </a>
+              <a class="game-menu-btn" href="learning.html">
+                <span class="game-menu-btn__icon">🎓</span>
+                <span class="game-menu-btn__label">Learning<span class="game-menu-btn__sub">Subjects</span></span>
+                <span class="game-menu-btn__arrow">›</span>
+              </a>
+              <a class="game-menu-btn" href="fun.html">
+                <span class="game-menu-btn__icon">🧠</span>
+                <span class="game-menu-btn__label">Riddles<span class="game-menu-btn__sub">33+ teasers</span></span>
+                <span class="game-menu-btn__arrow">›</span>
+              </a>
+              <a class="game-menu-btn" href="#" id="progress-btn">
+                <span class="game-menu-btn__icon">📊</span>
+                <span class="game-menu-btn__label">My Stats<span class="game-menu-btn__sub">XP · Badges</span></span>
+                <span class="game-menu-btn__arrow">›</span>
+              </a>
+            </nav>
+
+            <a class="btn btn-pitch btn-lg" href="#shootout-section" id="goto-match" style="margin-top:var(--space-3);">⚽ Take the Penalty Shootout</a>
           </div>
 
         </div>
 
-        <!-- Game menu row at bottom of hero -->
-        <div class="container" style="position:relative; z-index:10; padding-bottom: var(--space-5);">
-          <nav class="game-menu" aria-label="Main menu">
-            <a class="game-menu-btn" href="maths.html">
-              <span class="game-menu-btn__icon">🧮</span>
-              <span class="game-menu-btn__label">Mathematics<span class="game-menu-btn__sub">10 chapters</span></span>
-              <span class="game-menu-btn__arrow">›</span>
-            </a>
-            <a class="game-menu-btn" href="learning.html">
-              <span class="game-menu-btn__icon">🎓</span>
-              <span class="game-menu-btn__label">Learning<span class="game-menu-btn__sub">Subjects</span></span>
-              <span class="game-menu-btn__arrow">›</span>
-            </a>
-            <a class="game-menu-btn" href="fun.html">
-              <span class="game-menu-btn__icon">🧠</span>
-              <span class="game-menu-btn__label">Riddles<span class="game-menu-btn__sub">33+ brain teasers</span></span>
-              <span class="game-menu-btn__arrow">›</span>
-            </a>
-            <a class="game-menu-btn" href="#" id="progress-btn">
-              <span class="game-menu-btn__icon">📊</span>
-              <span class="game-menu-btn__label">My Stats<span class="game-menu-btn__sub">XP · Badges</span></span>
-              <span class="game-menu-btn__arrow">›</span>
-            </a>
-          </nav>
-        </div>
-
       </section>
 
-      <!-- ======================================================
-           SHOOTOUT SECTION — now dedicated, not crammed in hero
-           ====================================================== -->
+      <!-- Shootout section -->
       <section class="shootout-section" id="shootout-section">
         <div class="shootout-section__header">
           <h2>🏆 Tonight's Penalty Shootout</h2>
@@ -181,7 +178,7 @@
       <section class="section card card--flat">
         <h2 class="section-title">👋 About This Portal</h2>
         <p>This is <strong>Crispin's personal learning portal</strong> — built to make Grade 5 Mathematics fun with lessons, practice, quizzes, printable worksheets, daily riddles, and a penalty-shootout mini-game. The portal follows the CBSE syllabus used at Asian School Bahrain.</p>
-        <p><strong>Friends and family welcome!</strong> Try the shootout above or head to the <a href="fun.html">Riddle Archive</a>.</p>
+        <p><strong>Friends and family welcome!</strong> Open today's pack, try the shootout, or head to the <a href="fun.html">Riddle Archive</a>.</p>
       </section>
 
     </div>
@@ -205,87 +202,177 @@
       Progress.markVisit();
       Progress.renderGamebar();
 
-      // Populate crowd silhouettes
-      function buildCrowdRow(id, count) {
-        const row = document.getElementById(id);
-        if (!row) return;
-        let html = '';
-        for (let i = 0; i < count; i++) {
-          html += '<div class="crowd-person"></div>';
-        }
-        row.innerHTML = html;
-      }
-      buildCrowdRow('crowd-row-1', 42);
-      buildCrowdRow('crowd-row-2', 38);
-      buildCrowdRow('crowd-row-3', 34);
-
-      // Drifting confetti in the sky
-      (function spawnConfetti() {
-        const host = document.getElementById('hero-confetti');
+      // ----- Ambient dust motes (pack hero) -----
+      (function buildMotes() {
+        const host = document.getElementById('pack-motes');
         if (!host) return;
-        const colors = ['#FACC15', '#FB7185', '#A855F7', '#14B8A6', '#22C55E'];
-        for (let i = 0; i < 18; i++) {
-          const c = document.createElement('div');
-          c.className = 'confetti-mini';
-          c.style.left = Math.random() * 100 + '%';
-          c.style.background = colors[i % colors.length];
-          c.style.animationDelay = (Math.random() * 8) + 's';
-          c.style.animationDuration = (6 + Math.random() * 4) + 's';
-          c.style.transform = `rotate(${Math.random() * 360}deg)`;
-          host.appendChild(c);
+        let html = '';
+        for (let i = 0; i < 24; i++) {
+          const left = Math.random() * 100;
+          const delay = Math.random() * 8;
+          const dur = 6 + Math.random() * 6;
+          const top = 100 + Math.random() * 20;
+          html += `<div class="mote" style="left:${left}%; top:${top}%; animation-duration:${dur}s; animation-delay:${delay}s;"></div>`;
         }
+        host.innerHTML = html;
       })();
 
-      // Greet: update welcome line with time of day, insert name
-      const applyGreet = (name) => {
-        document.getElementById('hero-welcome').textContent = App.greeting() + ', Welcome to';
-        // Name stays as 'Crispin's World' but subtitle can personalise if visitor isn't Crispin
-        if (name && name.toLowerCase() !== 'crispin') {
-          document.getElementById('hero-subtitle').innerHTML =
-            `<strong style="color:#FACC15;">${name}</strong>, glad you dropped by. Grade 5 · Mathematics · Bahrain`;
-        }
-      };
-      App.askName((p) => applyGreet(p.name));
-      const existing = App.getProfile();
-      if (existing) applyGreet(existing.name);
+      // ----- Pack date & pack number -----
+      const today = App.todayKey(); // YYYY-MM-DD in Bahrain time
+      document.getElementById('pack-date-text').textContent =
+        App.formatDateDMY(new Date()) + ' · Pack #' + packNumberForDate(today);
 
-      // Hero live stats
-      (function updateHeroStats() {
+      function packNumberForDate(iso) {
+        // Pack #N counts days since an arbitrary epoch so it's a pleasant growing number
+        const epoch = new Date('2026-04-01T00:00:00');
+        const now = new Date(iso + 'T00:00:00');
+        return Math.max(1, Math.floor((now - epoch) / 86400000) + 1);
+      }
+
+      // ----- Personalised greetings after reveal -----
+      const visitor = App.getProfile();
+      function applyRevealText(name) {
+        const isCrispin = !name || name.toLowerCase() === 'crispin';
+        const hello = isCrispin
+          ? `${App.greeting()}, Crispin!`
+          : `${App.greeting()}, <span style="color:#FACC15;">${name}</span>! Meet Crispin.`;
+        document.getElementById('reveal-hello').innerHTML = hello;
+        if (!isCrispin) {
+          document.getElementById('reveal-sub').textContent =
+            "Grade 5 · Mathematics · Bahrain — welcome to his world";
+        }
+      }
+      if (visitor) applyRevealText(visitor.name);
+      else App.askName((p) => applyRevealText(p.name));
+
+      // ----- Populate live stats -----
+      function updateStats() {
         const s = Progress.getStats();
         document.getElementById('hs-streak').textContent = s.streak;
         document.getElementById('hs-level').textContent = s.level.curr.name;
         document.getElementById('hs-level-emoji').textContent = s.level.curr.emoji;
         document.getElementById('hs-xp').textContent = s.xp;
-      })();
+      }
+      updateStats();
 
-      // Footer
-      document.getElementById('year').textContent = new Date().getFullYear();
-      document.getElementById('last-updated').textContent = App.formatDateDMY(new Date());
+      // ===================================================
+      // PACK-OPENING STATE MACHINE
+      // ===================================================
+      const STORE_KEY = 'crispin_pack_opened_' + today;
+      const heroEl = document.getElementById('pack-hero');
+      const stage = document.getElementById('pack-stage');
+      const pack = document.getElementById('pack-card');
+      const openBtn = document.getElementById('pack-open-btn');
+      const raysEl = document.getElementById('pack-rays');
+      const flashEl = document.getElementById('pack-flash');
+      const skipEl = document.getElementById('pack-skip');
 
-      // Progress modal from stats button
+      function goToRevealed(skipConfetti) {
+        stage.classList.add('revealed');
+        heroEl.classList.remove('is-opening');
+        skipEl.style.display = 'none';
+        if (!skipConfetti) App.launchConfetti(80);
+      }
+
+      function playOpenSequence() {
+        if (stage.classList.contains('revealed')) return;
+        heroEl.classList.add('is-opening');
+        App.Audio.playWhistle();
+
+        // Phase 1: shake
+        pack.classList.add('is-shaking');
+        setTimeout(() => {
+          pack.classList.remove('is-shaking');
+
+          // Phase 2: rays appear + pack charges brighter
+          raysEl.classList.add('active');
+          pack.classList.add('is-charging');
+          App.Audio.playCrowdRoar(1.5, 1.3);
+
+          setTimeout(() => {
+            // Phase 3: flash + pack explodes + particles
+            flashEl.classList.add('active');
+            pack.classList.add('is-exploding');
+            App.Audio.playGoal();
+            burstParticles();
+
+            setTimeout(() => {
+              // Phase 4: reveal
+              goToRevealed();
+              localStorage.setItem(STORE_KEY, '1');
+              // Grant a small daily XP bonus if this is a fresh pack open
+              if (window.Progress) window.Progress.addXP(15, 'Daily pack opened!');
+              updateStats();
+            }, 700);
+
+          }, 1000);
+
+        }, 400);
+      }
+
+      function burstParticles() {
+        const colors = ['#FACC15', '#FB7185', '#A855F7', '#22C55E', '#14B8A6', '#F97316'];
+        for (let i = 0; i < 40; i++) {
+          const p = document.createElement('div');
+          p.className = 'pack-particle burst';
+          p.style.background = colors[i % colors.length];
+          const angle = (i / 40) * Math.PI * 2 + Math.random() * 0.3;
+          const dist = 150 + Math.random() * 180;
+          p.style.setProperty('--px', Math.cos(angle) * dist + 'px');
+          p.style.setProperty('--py', Math.sin(angle) * dist + 'px');
+          p.style.animationDelay = (Math.random() * 0.15) + 's';
+          // Mount on stage so it's centred
+          stage.appendChild(p);
+          setTimeout(() => p.remove(), 1100);
+        }
+      }
+
+      function skipSequence() {
+        heroEl.classList.remove('is-opening');
+        raysEl.classList.remove('active');
+        flashEl.classList.remove('active');
+        pack.classList.remove('is-shaking', 'is-charging', 'is-exploding');
+        goToRevealed(true);
+        localStorage.setItem(STORE_KEY, '1');
+      }
+
+      // Initial state: if already opened today, skip straight to revealed
+      if (localStorage.getItem(STORE_KEY)) {
+        goToRevealed(true);
+      }
+
+      // Click handlers
+      pack.addEventListener('click', playOpenSequence);
+      openBtn.addEventListener('click', playOpenSequence);
+      pack.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); playOpenSequence(); }
+      });
+      skipEl.addEventListener('click', skipSequence);
+      document.addEventListener('keydown', (e) => {
+        if (heroEl.classList.contains('is-opening') && (e.key === 'Escape' || e.key === 'Enter')) {
+          skipSequence();
+        }
+      });
+
+      // Progress modal
       document.getElementById('progress-btn').addEventListener('click', (e) => {
         e.preventDefault();
         Progress.showProgressModal();
       });
 
-      // Click the CTA plays a whistle + smooth scroll
-      document.getElementById('match-cta').addEventListener('click', () => {
-        App.Audio.playWhistle();
-      });
-
-      // Riddle teaser
+      // Riddle teaser + shootout (always rendered)
       if (window.Riddles) window.Riddles.renderDaily(document.getElementById('riddle-teaser'));
-
-      // Penalty Shootout in its own section
       new PenaltyGame('shootout-host');
 
-      // ---------- Holographic parallax card ----------
-      (function wireFutParallax() {
+      // Footer
+      document.getElementById('year').textContent = new Date().getFullYear();
+      document.getElementById('last-updated').textContent = App.formatDateDMY(new Date());
+
+      // ----- Holographic parallax on revealed card -----
+      function wireFutParallax() {
         const card = document.getElementById('fut-card');
         if (!card) return;
-        let mx = 0, my = 0, tmx = 0, tmy = 0, tilt = 0, ttilt = 0;
-        let rafId = null;
-
+        let mx = 0, my = 0, tmx = 0, tmy = 0, tilt = 0, ttilt = 0, rafId = null;
         function render() {
           mx += (tmx - mx) * 0.15;
           my += (tmy - my) * 0.15;
@@ -295,36 +382,29 @@
           card.style.setProperty('--tilt', tilt.toFixed(3));
           if (Math.abs(mx - tmx) > 0.001 || Math.abs(my - tmy) > 0.001 || Math.abs(tilt - ttilt) > 0.001) {
             rafId = requestAnimationFrame(render);
-          } else {
-            rafId = null;
-          }
+          } else { rafId = null; }
         }
         function schedule() { if (!rafId) rafId = requestAnimationFrame(render); }
-
-        function onMove(clientX, clientY) {
+        function onMove(cx, cy) {
           const r = card.getBoundingClientRect();
-          tmx = ((clientX - r.left) / r.width) - 0.5;
-          tmy = ((clientY - r.top) / r.height) - 0.5;
+          tmx = ((cx - r.left) / r.width) - 0.5;
+          tmy = ((cy - r.top) / r.height) - 0.5;
           ttilt = 1;
           schedule();
         }
-
         card.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
         card.addEventListener('mouseleave', () => { tmx = 0; tmy = 0; ttilt = 0; schedule(); });
         card.addEventListener('touchmove', (e) => {
           if (e.touches[0]) { e.preventDefault(); onMove(e.touches[0].clientX, e.touches[0].clientY); }
         }, { passive: false });
         card.addEventListener('touchend', () => { tmx = 0; tmy = 0; ttilt = 0; schedule(); });
-
         card.addEventListener('click', () => {
           App.Audio.playBadge();
-          App.launchConfetti(40);
+          App.launchConfetti(30);
           App.showToast('⚽ Let\'s go Crispin!', 'football', 1800);
         });
-      })();
-
-      // Kick off: crowd roar on page reveal (if sound is enabled)
-      setTimeout(() => { App.Audio.playCrowdRoar(2.0, 1.2); }, 1200);
+      }
+      wireFutParallax();
     })();
   </script>
 </body>

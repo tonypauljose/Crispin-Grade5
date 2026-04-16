@@ -737,7 +737,468 @@
 .badge-chip__desc { font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; }
 
 /* ============================================================
-   MATCH HERO — cinematic stadium entrance
+   PACK HERO — daily pack-opening experience
+   ============================================================ */
+.pack-hero {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  margin-bottom: var(--space-6);
+  min-height: 640px;
+  color: white;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(88, 28, 135, 0.7), transparent 70%),
+    radial-gradient(ellipse at 50% 80%, rgba(250, 204, 21, 0.15), transparent 60%),
+    linear-gradient(180deg, #060314 0%, #1A0B2E 40%, #0B0520 100%);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45);
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+}
+
+/* Ambient dust motes drifting upward */
+.pack-hero__motes {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.mote {
+  position: absolute;
+  width: 4px; height: 4px;
+  background: rgba(250, 204, 21, 0.6);
+  border-radius: 50%;
+  filter: blur(0.5px);
+  box-shadow: 0 0 4px rgba(250, 204, 21, 0.7);
+  animation: mote-rise linear infinite;
+}
+@keyframes mote-rise {
+  0%   { transform: translateY(0)     translateX(0); opacity: 0; }
+  10%  { opacity: 0.8; }
+  50%  { transform: translateY(-300px) translateX(20px); }
+  90%  { opacity: 0.8; }
+  100% { transform: translateY(-640px) translateX(-10px); opacity: 0; }
+}
+
+/* Spotlight from above */
+.pack-hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; left: 50%;
+  transform: translateX(-50%);
+  width: 900px; height: 900px;
+  background: radial-gradient(ellipse at top, rgba(250, 204, 21, 0.22), transparent 55%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Stage — contains pack, rays, particles, CTA, revealed card */
+.pack-stage {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* ---------- CLOSED PACK ---------- */
+.pack {
+  --pack-w: 260px;
+  --pack-h: 370px;
+  width: var(--pack-w);
+  height: var(--pack-h);
+  position: relative;
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%),
+    repeating-linear-gradient(135deg, #B45309 0px, #B45309 3px, transparent 3px, transparent 10px),
+    linear-gradient(165deg, #FBBF24 0%, #F59E0B 30%, #92400E 100%);
+  box-shadow:
+    inset 0 0 0 3px rgba(255, 255, 255, 0.35),
+    inset 0 0 0 5px rgba(120, 53, 15, 0.6),
+    inset 0 0 60px rgba(120, 53, 15, 0.5),
+    0 18px 40px rgba(0, 0, 0, 0.55),
+    0 0 80px rgba(250, 204, 21, 0.4);
+  animation: pack-float 3s ease-in-out infinite;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+.pack:hover:not(.is-opening) {
+  transform: translateY(-4px) rotate(-1deg) scale(1.02);
+  box-shadow:
+    inset 0 0 0 3px rgba(255, 255, 255, 0.45),
+    inset 0 0 0 5px rgba(120, 53, 15, 0.6),
+    inset 0 0 60px rgba(120, 53, 15, 0.5),
+    0 24px 50px rgba(0, 0, 0, 0.6),
+    0 0 100px rgba(250, 204, 21, 0.55);
+}
+@keyframes pack-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(-1.5deg); }
+}
+
+/* Pack inner face */
+.pack__inner {
+  position: absolute;
+  inset: 12px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  padding: 18px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(139, 69, 19, 0.15) 100%);
+}
+
+.pack__top-banner {
+  width: 100%;
+  text-align: center;
+  padding: 6px 0;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.35);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  letter-spacing: 0.25em;
+  color: #7C2D12;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+.pack__title {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: #FFFFFF;
+  letter-spacing: 0.12em;
+  text-shadow:
+    0 2px 0 #7C2D12,
+    0 4px 6px rgba(0, 0, 0, 0.45),
+    0 0 20px rgba(255, 255, 255, 0.3);
+  margin: 0;
+  text-transform: uppercase;
+}
+.pack__seven {
+  font-family: var(--font-heading);
+  font-size: 4.5rem;
+  line-height: 1;
+  color: #7C2D12;
+  text-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.5),
+    0 0 40px rgba(255, 255, 255, 0.4);
+  margin: 0;
+}
+
+/* Wax-seal circle */
+.pack__seal {
+  position: relative;
+  width: 86px; height: 86px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 35%, #FECACA 0%, #EF4444 50%, #991B1B 100%);
+  box-shadow:
+    inset 2px 2px 6px rgba(255, 255, 255, 0.3),
+    inset -2px -2px 6px rgba(0, 0, 0, 0.3),
+    0 4px 8px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  letter-spacing: 0.05em;
+}
+.pack__seal::before {
+  /* Seal ribs */
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+}
+
+.pack__footer {
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: #7C2D12;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* Shine sweep on pack */
+.pack::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -20%;
+  width: 35%;
+  height: 120%;
+  background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+  transform: rotate(20deg);
+  animation: pack-sheen 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes pack-sheen {
+  0%, 100% { transform: translateX(-30%) rotate(20deg); opacity: 0; }
+  40%, 60% { opacity: 0.85; }
+  100% { transform: translateX(300%) rotate(20deg); opacity: 0; }
+}
+
+/* Aura ring behind the pack */
+.pack__aura {
+  position: absolute;
+  width: 360px; height: 360px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(circle, rgba(250, 204, 21, 0.4) 0%, transparent 45%);
+  filter: blur(20px);
+  animation: aura-pulse 2s ease-in-out infinite;
+}
+@keyframes aura-pulse {
+  0%, 100% { opacity: 0.55; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.95; transform: translate(-50%, -50%) scale(1.08); }
+}
+
+/* Date chip */
+.pack__date-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: rgba(250, 204, 21, 0.12);
+  border: 1px solid rgba(250, 204, 21, 0.3);
+  border-radius: var(--radius-full);
+  color: rgba(250, 204, 21, 0.95);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  backdrop-filter: blur(6px);
+  text-transform: uppercase;
+}
+
+/* Open button */
+.pack-open-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  background: linear-gradient(135deg, #FACC15 0%, #F59E0B 100%);
+  color: #3F1D0B;
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(250, 204, 21, 0.5), 0 0 0 0 rgba(250, 204, 21, 0.6);
+  animation: pack-cta-pulse 1.8s ease-in-out infinite;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.pack-open-btn:hover { transform: translateY(-3px) scale(1.04); }
+.pack-open-btn:active { transform: translateY(0) scale(0.96); }
+@keyframes pack-cta-pulse {
+  0%, 100% { box-shadow: 0 10px 30px rgba(250, 204, 21, 0.5), 0 0 0 0 rgba(250, 204, 21, 0.65); }
+  50% { box-shadow: 0 10px 30px rgba(250, 204, 21, 0.5), 0 0 0 24px rgba(250, 204, 21, 0); }
+}
+
+/* Pack-opening animation states */
+.pack.is-shaking { animation: pack-shake 0.4s ease-in-out; }
+@keyframes pack-shake {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  15% { transform: translateX(-8px) rotate(-3deg); }
+  30% { transform: translateX(8px) rotate(3deg); }
+  45% { transform: translateX(-6px) rotate(-2deg); }
+  60% { transform: translateX(6px) rotate(2deg); }
+  75% { transform: translateX(-3px) rotate(-1deg); }
+}
+.pack.is-charging {
+  animation: pack-charge 0.8s ease-out forwards;
+}
+@keyframes pack-charge {
+  0% { transform: scale(1); filter: brightness(1); }
+  100% { transform: scale(1.1); filter: brightness(1.8); }
+}
+.pack.is-exploding {
+  animation: pack-explode 0.5s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes pack-explode {
+  0% { transform: scale(1.1); filter: brightness(1.8) blur(0); opacity: 1; }
+  60% { transform: scale(1.5); filter: brightness(3) blur(4px); opacity: 0.8; }
+  100% { transform: scale(2); filter: brightness(4) blur(20px); opacity: 0; }
+}
+
+/* Light rays SVG overlay during opening */
+.pack-rays {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 800px; height: 800px;
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.4s;
+  mix-blend-mode: screen;
+}
+.pack-rays.active {
+  opacity: 1;
+  animation: rays-emerge 1.5s ease-out forwards;
+}
+@keyframes rays-emerge {
+  0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.2) rotate(180deg); opacity: 0; }
+}
+
+/* Flash overlay */
+.pack-flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, #FFFFFF 0%, rgba(250, 204, 21, 0.8) 30%, transparent 70%);
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+}
+.pack-flash.active { animation: pack-flash-anim 0.6s ease-out forwards; }
+@keyframes pack-flash-anim {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Particles that explode out from pack */
+.pack-particle {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 12;
+  opacity: 0;
+}
+.pack-particle.burst { animation: particle-burst 0.9s ease-out forwards; }
+@keyframes particle-burst {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--px, 100px)), calc(-50% + var(--py, 100px))) scale(0.4);
+    opacity: 0;
+  }
+}
+
+/* Reveal state — contains the revealed FUT card + welcome text + menu */
+.pack-stage.revealed .pack,
+.pack-stage.revealed .pack-open-btn,
+.pack-stage.revealed .pack__date-chip,
+.pack-stage.revealed .pack__aura { display: none; }
+
+.pack-stage .reveal-wrap {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  text-align: center;
+}
+.pack-stage.revealed .reveal-wrap {
+  display: flex;
+  animation: reveal-fade 0.5s ease-out;
+}
+@keyframes reveal-fade {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.reveal-hello {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  color: transparent;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FDE047 60%, #F59E0B 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+  letter-spacing: 0.04em;
+  margin: 0;
+  text-align: center;
+}
+.reveal-sub {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Card rises from pack origin */
+.pack-stage .fut-card {
+  animation: card-rise 1s cubic-bezier(0.25, 1.2, 0.3, 1) both;
+}
+.pack-stage.revealed .fut-card {
+  animation: card-rise 1s cubic-bezier(0.25, 1.2, 0.3, 1) both, rare-bounce 0.5s ease-out 1s;
+}
+@keyframes card-rise {
+  0% { transform: translateY(60px) scale(0.4); opacity: 0; }
+  60% { transform: translateY(-10px) scale(1.05); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes rare-bounce {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-12px) rotate(1deg); }
+  60% { transform: translateY(4px) rotate(-1deg); }
+}
+
+/* Live stats + menu for reveal state */
+.reveal-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  justify-content: center;
+}
+
+/* Reveal-state game menu */
+.reveal-menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 760px;
+  margin-top: var(--space-3);
+}
+
+/* Skip hint during animation */
+.pack-skip-hint {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  z-index: 25;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.8rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.pack-hero.is-opening .pack-skip-hint { opacity: 1; }
+.pack-skip-hint:hover { color: white; }
+
+@media (max-width: 620px) {
+  .pack-hero { min-height: 560px; padding: var(--space-5) var(--space-3); }
+  .pack { --pack-w: 220px; --pack-h: 320px; }
+  .pack__title { font-size: 1.6rem; }
+  .pack__seven { font-size: 3.5rem; }
+}
+
+/* ============================================================
+   MATCH HERO — (kept for legacy, now deprecated) cinematic stadium
    ============================================================ */
 .match-hero {
   position: relative;
