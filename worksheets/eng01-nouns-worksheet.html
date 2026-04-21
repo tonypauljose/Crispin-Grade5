@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eng 1 Worksheet · Nouns — Crispin's World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/print.css">
+</head>
+<body class="worksheet-page">
+
+  <div class="no-print" style="position:sticky; top:0; background:#6B21A8; color:white; padding:12px 20px; text-align:center; z-index:10;">
+    <strong>📄 English Ch 1 Worksheet · Nouns</strong> · <a href="../chapters/eng01-nouns.html" style="color:#FACC15;">← Back to chapter</a>
+    <button class="btn btn-yellow btn-sm" onclick="window.print()" style="margin-left:12px;">🖨️ Print</button>
+    <button class="btn btn-teal btn-sm" onclick="location.reload()" style="margin-left:8px;">🔄 New questions</button>
+    <button class="btn btn-outline btn-sm" onclick="toggleAnswers()" style="margin-left:8px; background:white;">👁️ Toggle answer key</button>
+  </div>
+
+  <div class="worksheet">
+    <div class="worksheet__header">
+      <div class="worksheet__title-block">
+        <h1>📖 Nouns</h1>
+        <p class="subtitle">Grade 5 · CBSE · English Chapter 1 · Worksheet</p>
+      </div>
+      <div class="worksheet__fields">
+        <label>Name:</label><span class="blank"></span>
+        <label>Date:</label><span class="blank" id="ws-date"></span>
+        <label>Score:</label><span class="blank">&nbsp;&nbsp;&nbsp; / 40</span>
+      </div>
+    </div>
+
+    <!-- A: Underline the noun -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">A.</span> Underline the noun in each sentence <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <ol class="ws-list" id="sec-a"></ol>
+    </section>
+
+    <!-- B: Common or Proper -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">B.</span> Tick C (common) or P (proper) <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <ol class="ws-list ws-grid" id="sec-b"></ol>
+    </section>
+
+    <!-- C: Plurals -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">C.</span> Write the plural <span style="float:right; font-size:10pt; font-weight:normal;">(6 marks)</span></h2>
+      <ol class="ws-list ws-grid" id="sec-c"></ol>
+    </section>
+
+    <!-- D: Gender pairs -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">D.</span> Write the opposite gender <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <ol class="ws-list ws-grid" id="sec-d"></ol>
+    </section>
+
+    <!-- E: Collective -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">E.</span> Fill in the collective noun <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <ol class="ws-list" id="sec-e"></ol>
+    </section>
+
+    <!-- F: Abstract or Concrete -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">F.</span> Abstract or Concrete? <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <ol class="ws-list ws-grid" id="sec-f"></ol>
+    </section>
+
+    <!-- G: Possessives -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">G.</span> Rewrite using an apostrophe <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <ol class="ws-list" id="sec-g"></ol>
+    </section>
+
+    <!-- H: Write three proper nouns -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">H.</span> Your own nouns <span style="float:right; font-size:10pt; font-weight:normal;">(4 marks)</span></h2>
+      <p class="worksheet__instructions">No wrong answers here — just fill them in.</p>
+      <ol class="ws-list">
+        <li>Write 2 proper nouns (names): <span class="ws-blank wide"></span>, <span class="ws-blank wide"></span></li>
+        <li>Write 2 common nouns (things): <span class="ws-blank wide"></span>, <span class="ws-blank wide"></span></li>
+        <li>Write 2 abstract nouns (feelings): <span class="ws-blank wide"></span>, <span class="ws-blank wide"></span></li>
+        <li>Write 2 collective nouns: <span class="ws-blank wide"></span>, <span class="ws-blank wide"></span></li>
+      </ol>
+    </section>
+
+    <!-- Answer key -->
+    <section class="answer-key" id="answer-key">
+      <h1>🗝️ Answer Key</h1>
+      <p class="muted">For teachers/parents. Students: try it first without peeking!</p>
+      <div class="answer-key__section"><h3>A. Underline the noun</h3><ol class="answer-key__list" id="ans-a"></ol></div>
+      <div class="answer-key__section"><h3>B. Common or Proper</h3><ol class="answer-key__list" id="ans-b"></ol></div>
+      <div class="answer-key__section"><h3>C. Plurals</h3><ol class="answer-key__list" id="ans-c"></ol></div>
+      <div class="answer-key__section"><h3>D. Gender pairs</h3><ol class="answer-key__list" id="ans-d"></ol></div>
+      <div class="answer-key__section"><h3>E. Collective nouns</h3><ol class="answer-key__list" id="ans-e"></ol></div>
+      <div class="answer-key__section"><h3>F. Abstract or Concrete</h3><ol class="answer-key__list" id="ans-f"></ol></div>
+      <div class="answer-key__section"><h3>G. Possessives</h3><ol class="answer-key__list" id="ans-g"></ol></div>
+      <p class="muted">(Section H is open-ended — no fixed answer key.)</p>
+    </section>
+
+  </div>
+
+  <script src="../js/common.js"></script>
+  <script>
+    document.getElementById('ws-date').textContent = App.formatDateDMY(new Date());
+
+    function pick(arr, n) {
+      const copy = arr.slice();
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy.slice(0, n);
+    }
+
+    function append(listId, html) {
+      document.getElementById(listId).insertAdjacentHTML('beforeend', '<li>' + html + '</li>');
+    }
+
+    const ANS = { a: [], b: [], c: [], d: [], e: [], f: [], g: [] };
+
+    // A: underline the noun — 5 sentences
+    const poolA = [
+      { s: 'The __ball__ rolled under the sofa.', n: 'ball' },
+      { s: 'Our __teacher__ gave us homework.', n: 'teacher' },
+      { s: 'Crispin kicked the __ball__ into the goal.', n: 'ball' },
+      { s: 'We read a __book__ about space.', n: 'book' },
+      { s: 'The __dog__ barked loudly.', n: 'dog' },
+      { s: 'Her __courage__ impressed everyone.', n: 'courage' },
+      { s: 'The __car__ stopped at the signal.', n: 'car' },
+      { s: 'I love this __city__.', n: 'city' },
+      { s: 'The __box__ is heavy.', n: 'box' },
+      { s: 'His __happiness__ was clear.', n: 'happiness' },
+      { s: 'The __stadium__ was full.', n: 'stadium' }
+    ];
+    pick(poolA, 5).forEach(item => {
+      append('sec-a', item.s.replace(/__([^_]+)__/, '$1'));
+      ANS.a.push(`"${item.s.replace(/__/g, '')}" → noun: <b>${item.n}</b>`);
+    });
+
+    // B: Common vs Proper — 5 items
+    const poolB = [
+      { w: 'Ronaldo', t: 'P' }, { w: 'river', t: 'C' }, { w: 'Bahrain', t: 'P' },
+      { w: 'dog', t: 'C' }, { w: 'Friday', t: 'P' }, { w: 'teacher', t: 'C' },
+      { w: 'Crispin', t: 'P' }, { w: 'market', t: 'C' }, { w: 'April', t: 'P' },
+      { w: 'school', t: 'C' }, { w: 'Manama', t: 'P' }
+    ];
+    pick(poolB, 5).forEach(item => {
+      append('sec-b', `${item.w} → <span class="ws-blank" style="min-width:40px;"></span>`);
+      ANS.b.push(`${item.w} → <b>${item.t}</b> (${item.t === 'C' ? 'common' : 'proper'})`);
+    });
+
+    // C: Plurals — 6 items
+    const poolC = [
+      { s: 'child', p: 'children' }, { s: 'mouse', p: 'mice' }, { s: 'foot', p: 'feet' },
+      { s: 'tooth', p: 'teeth' }, { s: 'leaf', p: 'leaves' }, { s: 'baby', p: 'babies' },
+      { s: 'box', p: 'boxes' }, { s: 'man', p: 'men' }, { s: 'woman', p: 'women' },
+      { s: 'knife', p: 'knives' }, { s: 'bus', p: 'buses' }, { s: 'sheep', p: 'sheep' },
+      { s: 'person', p: 'people' }, { s: 'goose', p: 'geese' }, { s: 'tomato', p: 'tomatoes' }
+    ];
+    pick(poolC, 6).forEach(item => {
+      append('sec-c', `${item.s} → <span class="ws-blank"></span>`);
+      ANS.c.push(`${item.s} → <b>${item.p}</b>`);
+    });
+
+    // D: Gender pairs — 5 items
+    const poolD = [
+      { a: 'lion (m)', b: 'lioness', prompt: 'feminine of lion' },
+      { a: 'queen (f)', b: 'king', prompt: 'masculine of queen' },
+      { a: 'uncle (m)', b: 'aunt', prompt: 'feminine of uncle' },
+      { a: 'actress (f)', b: 'actor', prompt: 'masculine of actress' },
+      { a: 'prince (m)', b: 'princess', prompt: 'feminine of prince' },
+      { a: 'cow (f)', b: 'bull', prompt: 'masculine of cow' },
+      { a: 'hen (f)', b: 'cock', prompt: 'masculine of hen' },
+      { a: 'waiter (m)', b: 'waitress', prompt: 'feminine of waiter' },
+      { a: 'nephew (m)', b: 'niece', prompt: 'feminine of nephew' }
+    ];
+    pick(poolD, 5).forEach(item => {
+      append('sec-d', `${item.prompt} → <span class="ws-blank"></span>`);
+      ANS.d.push(`${item.prompt} → <b>${item.b}</b>`);
+    });
+
+    // E: Collective nouns — 5 items
+    const poolE = [
+      { x: 'sheep', w: 'flock' }, { x: 'lions', w: 'pride' }, { x: 'bees', w: 'swarm' },
+      { x: 'fish', w: 'school' }, { x: 'flowers', w: 'bouquet' }, { x: 'ships', w: 'fleet' },
+      { x: 'players', w: 'team' }, { x: 'wolves', w: 'pack' }, { x: 'musicians', w: 'band' },
+      { x: 'grapes', w: 'bunch' }, { x: 'cattle', w: 'herd' }
+    ];
+    pick(poolE, 5).forEach(item => {
+      append('sec-e', `A <span class="ws-blank"></span> of ${item.x}`);
+      ANS.e.push(`A <b>${item.w}</b> of ${item.x}`);
+    });
+
+    // F: Abstract or Concrete — 5 items
+    const poolF = [
+      { w: 'love', t: 'abstract' }, { w: 'pencil', t: 'concrete' },
+      { w: 'freedom', t: 'abstract' }, { w: 'football', t: 'concrete' },
+      { w: 'honesty', t: 'abstract' }, { w: 'table', t: 'concrete' },
+      { w: 'courage', t: 'abstract' }, { w: 'phone', t: 'concrete' },
+      { w: 'beauty', t: 'abstract' }, { w: 'friendship', t: 'abstract' }
+    ];
+    pick(poolF, 5).forEach(item => {
+      append('sec-f', `${item.w} → <span class="ws-blank"></span>`);
+      ANS.f.push(`${item.w} → <b>${item.t}</b>`);
+    });
+
+    // G: Possessives — 5 items
+    const poolG = [
+      { q: 'the book of Crispin', a: "Crispin's book" },
+      { q: 'the toys of the children', a: "the children's toys" },
+      { q: 'the shoes of the boys', a: "the boys' shoes" },
+      { q: 'the tail of the dog', a: "the dog's tail" },
+      { q: 'the bag of the girl', a: "the girl's bag" },
+      { q: 'the cars of the men', a: "the men's cars" },
+      { q: 'the pens of the students', a: "the students' pens" }
+    ];
+    pick(poolG, 5).forEach(item => {
+      append('sec-g', `${item.q} → <span class="ws-blank wide"></span>`);
+      ANS.g.push(`${item.q} → <b>${item.a}</b>`);
+    });
+
+    // Render answer key
+    Object.keys(ANS).forEach(key => {
+      const el = document.getElementById('ans-' + key);
+      ANS[key].forEach(item => el.insertAdjacentHTML('beforeend', '<li>' + item + '</li>'));
+    });
+
+    window.toggleAnswers = function () {
+      const k = document.getElementById('answer-key');
+      k.style.display = (k.style.display === 'none') ? 'block' : 'none';
+    };
+  </script>
+</body>
+</html>

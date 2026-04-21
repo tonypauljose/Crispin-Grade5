@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English — Crispin's World</title>
+  <meta name="theme-color" content="#FFFDF5">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Kalam:wght@400;700&family=Patrick+Hand&family=Permanent+Marker&family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E">
+  <style>
+    body { background: #F3EBD3; background-image: radial-gradient(ellipse at top, #FEF3C7 0%, #FDE68A 100%); }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="container">
+
+      <section class="scrapbook">
+
+        <div class="scrapbook__title-wrap">
+          <h1 class="scrapbook__title">
+            <span>MY ENGLISH</span>
+            <span>NOTEBOOK</span>
+            <span>📖 ✏️</span>
+          </h1>
+          <div>
+            <span class="scrapbook__subtitle">grade 5 · 11 topics · mostly nouns rn lol</span>
+          </div>
+        </div>
+
+        <p class="hand" style="font-size:1.2rem; color:var(--ink-blue); max-width:620px; margin: 0 auto var(--space-4); text-align:center;">
+          these are all the english topics i have to learn this year. i'm on <span class="siuuu" style="font-size:1.1em;">NOUNS</span> right now. tap a sticky note to jump in 👇
+        </p>
+
+        <!-- 11 topic tiles as sticky notes -->
+        <div class="grid" style="grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-4);">
+
+          <a class="sticky-note" href="chapters/eng01-nouns.html">
+            <span class="sticky-note__icon">🧾</span>
+            <span class="sticky-note__title">1. NOUNS</span>
+            <span class="sticky-note__sub">open · learning now</span>
+          </a>
+
+          <a class="sticky-note sticky-note--pink" href="#" onclick="event.preventDefault(); App.showToast('coming soon 📚', 'info');">
+            <span class="sticky-note__icon">📜</span>
+            <span class="sticky-note__title">2. OUTLINE STORY</span>
+            <span class="sticky-note__sub">soon</span>
+          </a>
+
+          <a class="sticky-note sticky-note--blue" href="#" onclick="event.preventDefault(); App.showToast('coming soon 🎨', 'info');">
+            <span class="sticky-note__icon">🎨</span>
+            <span class="sticky-note__title">3. ADJECTIVES</span>
+            <span class="sticky-note__sub">soon</span>
+          </a>
+
+          <a class="sticky-note sticky-note--green" href="#" onclick="event.preventDefault(); App.showToast('coming soon ⏰', 'info');">
+            <span class="sticky-note__icon">⏱️</span>
+            <span class="sticky-note__title">4. TENSE</span>
+            <span class="sticky-note__sub">soon</span>
+          </a>
+
+          <a class="sticky-note sticky-note--orange" href="#" onclick="event.preventDefault(); App.showToast('coming soon ✍️', 'info');">
+            <span class="sticky-note__icon">✍️</span>
+            <span class="sticky-note__title">5. CREATIVE WRITING</span>
+            <span class="sticky-note__sub">soon</span>
+          </a>
+
+          <a class="sticky-note" href="#" onclick="event.preventDefault(); App.showToast('coming soon 🔗', 'info');">
+            <span class="sticky-note__icon">🔗</span>
+            <span class="sticky-note__title">6. CONJUNCTIONS</span>
+            <span class="sticky-note__sub">soon</span>
+          </a>
+
+          <a class="sticky-note sticky-note--pink" href="#" onclick="event.preventDefault(); App.showToast('coming soon ⚡', 'info');">
+            <span class="sticky-note__icon">⚡</span>
+            <span class="sticky-note__title">7. ADVERBS</span>
+            <span class="sticky-note__sub">soon</span>
+          </a>
+
+          <a class="sticky-note sticky-note--blue" href="#" onclick="event.preventDefault(); App.showToast('coming soon ⚙️', 'info');">
+            <span class="sticky-note__icon">⚙️</span>
+            <span class="sticky-note__title">8. TRANS/INTRANS VERBS</span>
+            <span class="sticky-note__sub">soon</span>
+          </a>
+
+          <a class="sticky-note sticky-note--green" href="#" onclick="event.preventDefault(); App.showToast('coming soon 💌', 'info');">
+            <span class="sticky-note__icon">💌</span>
+            <span class="sticky-note__title">9. LETTER WRITING</span>
+            <span class="sticky-note__sub">soon</span>
+          </a>
+
+          <a class="sticky-note sticky-note--orange" href="#" onclick="event.preventDefault(); App.showToast('coming soon 💬', 'info');">
+            <span class="sticky-note__icon">💬</span>
+            <span class="sticky-note__title">10. REPORTED SPEECH</span>
+            <span class="sticky-note__sub">soon</span>
+          </a>
+
+          <a class="sticky-note" href="#" onclick="event.preventDefault(); App.showToast('coming soon 🗣️', 'info');">
+            <span class="sticky-note__icon">🗣️</span>
+            <span class="sticky-note__title">11. DIALOGUE WRITING</span>
+            <span class="sticky-note__sub">soon</span>
+          </a>
+
+        </div>
+
+        <!-- Word of the day -->
+        <div style="margin-top: var(--space-5);">
+          <div class="hand-header">word of the day 📚</div>
+          <div class="speech-bubble" id="wotd-bubble">
+            <strong id="wotd-word">...</strong> <em id="wotd-type" style="color:var(--marker-purple);"></em><br>
+            <span class="hand" id="wotd-meaning"></span>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p class="hand" style="font-size:1.05rem;">back to <a href="index.html">home</a> · <a href="learning.html">all subjects</a></p>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/progress.js"></script>
+  <script>
+    App.renderTopBar('english');
+    Progress.markVisit();
+    Progress.renderGamebar();
+
+    // Word of the day — deterministic by date
+    const words = [
+      { w: 'serendipity', t: 'noun', m: 'finding something nice by accident — like finding money in your old jacket pocket.' },
+      { w: 'gobsmacked',  t: 'adjective', m: 'super surprised, like your jaw dropped on the floor.' },
+      { w: 'flabbergasted', t: 'adjective', m: 'shocked in a funny way.' },
+      { w: 'mischievous', t: 'adjective', m: 'playful in a slightly naughty way (like a cat).' },
+      { w: 'persevere', t: 'verb', m: 'to keep trying even when it\'s hard.' },
+      { w: 'whimsical', t: 'adjective', m: 'silly and imaginative.' },
+      { w: 'tranquil', t: 'adjective', m: 'calm and peaceful, like a quiet library.' },
+      { w: 'euphoria', t: 'noun', m: 'a feeling of super great happiness.' },
+      { w: 'bewildered', t: 'adjective', m: 'totally confused.' },
+      { w: 'magnanimous', t: 'adjective', m: 'being generous and kind, especially to someone you beat.' }
+    ];
+    const rand = App.seededRand(App.todayKey() + 'eng');
+    const pick = words[Math.floor(rand() * words.length)];
+    document.getElementById('wotd-word').textContent = pick.w;
+    document.getElementById('wotd-type').textContent = '(' + pick.t + ')';
+    document.getElementById('wotd-meaning').textContent = pick.m;
+  </script>
+</body>
+</html>
