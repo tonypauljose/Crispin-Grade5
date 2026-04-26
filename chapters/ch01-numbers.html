@@ -298,10 +298,10 @@
           <h3 class="exercise__title">3. Place Value</h3>
           <p class="muted">Write the place value (the worth) of the underlined digit.</p>
           <div class="exercise__items">
-            <div class="ex-item" data-answer="600"><span class="ex-item__q">3,<u>6</u>78 → </span><input class="ex-item__input" /></div>
-            <div class="ex-item" data-answer="4000"><span class="ex-item__q"><u>4</u>,218 → </span><input class="ex-item__input" /></div>
-            <div class="ex-item" data-answer="50"><span class="ex-item__q">2,9<u>5</u>3 → </span><input class="ex-item__input" /></div>
-            <div class="ex-item" data-answer="0"><span class="ex-item__q">4,<u>0</u>93 → </span><input class="ex-item__input" /></div>
+            <div class="ex-item" data-answer="600|6 hundreds|6 hundred"><span class="ex-item__q">3,<u>6</u>78 → </span><input class="ex-item__input" /></div>
+            <div class="ex-item" data-answer="4000|4 thousands|4 thousand"><span class="ex-item__q"><u>4</u>,218 → </span><input class="ex-item__input" /></div>
+            <div class="ex-item" data-answer="50|5 tens"><span class="ex-item__q">2,9<u>5</u>3 → </span><input class="ex-item__input" /></div>
+            <div class="ex-item" data-answer="0|zero"><span class="ex-item__q">4,<u>0</u>93 → </span><input class="ex-item__input" /></div>
           </div>
           <button class="btn btn-primary btn-sm" onclick="checkEx(3)">Check</button>
           <div class="ex-feedback" id="fb-3"></div>
@@ -419,6 +419,7 @@
 
   <script src="../js/common.js"></script>
   <script src="../js/progress.js"></script>
+  <script src="../js/practice-runner.js"></script>
   <script src="../js/quiz-engine.js"></script>
   <script src="../data/ch01-numbers.js"></script>
   <script>
@@ -444,50 +445,8 @@
       }
     };
 
-    // ---------- Practice scoring ----------
-    function normalise(s) {
-      return (s || '').toString().toLowerCase().trim().replace(/\s+/g, ' ').replace(/,/g, '').replace(/[.!]/g, '');
-    }
-
-    window.checkEx = function (n) {
-      const card = document.getElementById('ex-' + n);
-      const items = card.querySelectorAll('.ex-item');
-      let correct = 0;
-      items.forEach(item => {
-        const expected = normalise(item.dataset.answer);
-        const inputEl = item.querySelector('input, select');
-        const given = normalise(inputEl.value);
-        item.classList.remove('correct', 'wrong');
-        const ok = (expected === given) || expected.split('|').includes(given);
-        // Accept "three thousand four hundred and fifty-six" style with/without 'and'
-        const alt = expected.replace(/ and /g, ' ');
-        if (!ok && alt === given.replace(/ and /g, ' ')) {
-          item.classList.add('correct');
-          correct++;
-        } else if (ok) {
-          item.classList.add('correct');
-          correct++;
-        } else {
-          item.classList.add('wrong');
-          // Show correct answer as placeholder tip
-          if (inputEl.tagName === 'INPUT') inputEl.title = 'Correct answer: ' + item.dataset.answer;
-        }
-      });
-      const total = items.length;
-      const pct = Math.round((correct / total) * 100);
-      const fb = document.getElementById('fb-' + n);
-      fb.className = 'ex-feedback show ' + (pct === 100 ? 'good' : pct >= 60 ? 'mixed' : 'bad');
-      let msg = `You got ${correct} of ${total} (${pct}%).`;
-      if (pct === 100) msg += ' 💯 Brilliant!';
-      else if (pct >= 80) msg += ' 🌟 Great effort!';
-      else if (pct >= 60) msg += ' 👍 Nice — a couple to review.';
-      else msg += ' Check the wrong ones (hover for the correct answer) and try again.';
-      fb.innerHTML = msg;
-
-      if (pct >= 80) App.launchConfetti(40);
-      App.Audio[pct === 100 ? 'playGoal' : pct >= 60 ? 'playCorrect' : 'playWrong']();
-      Progress.recordPracticeComplete(pct);
-    };
+    // Practice scoring is handled by the shared js/practice-runner.js
+    // (which exposes window.checkEx with lenient matching + inline answer reveal)
 
     // ---------- Quiz tier picker ----------
     function renderTiers() {

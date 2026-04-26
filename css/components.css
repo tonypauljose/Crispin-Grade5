@@ -346,6 +346,20 @@
 .ex-feedback.mixed { background: #FEF3C7; color: #92400E; }
 .ex-feedback.bad { background: #FEE2E2; color: var(--coral-dark); }
 
+/* Inline correct-answer reveal under wrong items */
+.ex-item__correct {
+  flex-basis: 100%;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: rgba(20, 184, 166, 0.12);
+  border-left: 4px solid var(--teal);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  color: var(--teal-dark);
+  font-weight: 600;
+}
+.ex-item__correct strong { color: var(--purple-dark); }
+
 /* --------------- Quiz --------------- */
 .quiz-tier-picker {
   display: grid;
