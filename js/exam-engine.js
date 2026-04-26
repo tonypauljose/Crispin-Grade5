@@ -361,36 +361,101 @@
     const review = this._scoreAll();
     const total = review.length;
     const correct = review.filter(r => r.isCorrect).length;
+    const wrong = review.filter(r => !r.isCorrect && r.given !== '(unanswered)').length;
+    const skipped = review.filter(r => r.given === '(unanswered)').length;
     const pct = total ? Math.round((correct / total) * 100) : 0;
     const timeTaken = Math.round((Date.now() - this.startTime) / 1000);
     const mins = Math.floor(timeTaken / 60), secs = timeTaken % 60;
+    const avgSecPerQ = total ? Math.round(timeTaken / total) : 0;
+
+    // Star rating + verdict
+    let stars, verdict;
+    if (pct === 100) { stars = '⭐⭐⭐⭐⭐'; verdict = 'PERFECT! 🏆'; }
+    else if (pct >= 90) { stars = '⭐⭐⭐⭐'; verdict = 'Brilliant!'; }
+    else if (pct >= 75) { stars = '⭐⭐⭐'; verdict = 'Great job!'; }
+    else if (pct >= 60) { stars = '⭐⭐'; verdict = 'Good effort!'; }
+    else if (pct >= 40) { stars = '⭐'; verdict = 'Keep practising — you got this.'; }
+    else { stars = '✨'; verdict = "Don't worry — review the rationales below and try again."; }
+
+    const formatAnswer = (val) => val === '(unanswered)' ? '<em>not answered</em>' : val;
 
     this.host.innerHTML = `
       <div class="exam-result">
         ${timedOut ? '<div class="exam-banner exam-banner--warn">⏱ Time\'s up! The exam was auto-submitted.</div>' : ''}
-        <h2 style="text-align:center; margin-bottom: 8px;">📊 Exam Results</h2>
-        <div class="exam-result__big">${correct} / ${total} <span style="font-size:1.4rem;">(${pct}%)</span></div>
-        <div class="exam-result__meta">
-          ${this.subject} · ${this.chapterTitle}<br>
-          Time taken: ${mins}m ${secs}s
+
+        <div class="exam-result__hero">
+          <h2>📊 Exam Results</h2>
+          <div class="exam-result__stars">${stars}</div>
+          <div class="exam-result__big">${correct} <span class="of">/ ${total}</span></div>
+          <div class="exam-result__pct">${pct}%</div>
+          <div class="exam-result__verdict">${verdict}</div>
+          <div class="exam-result__chapter">${this.subject} · ${this.chapterTitle}</div>
         </div>
+
+        <div class="exam-result__stats">
+          <div class="result-stat result-stat--ok">
+            <div class="result-stat__num">${correct}</div>
+            <div class="result-stat__label">✓ Correct</div>
+          </div>
+          <div class="result-stat result-stat--bad">
+            <div class="result-stat__num">${wrong}</div>
+            <div class="result-stat__label">✗ Wrong</div>
+          </div>
+          <div class="result-stat result-stat--skip">
+            <div class="result-stat__num">${skipped}</div>
+            <div class="result-stat__label">⊘ Skipped</div>
+          </div>
+          <div class="result-stat result-stat--time">
+            <div class="result-stat__num">${mins}m ${secs}s</div>
+            <div class="result-stat__label">⏱ Time taken</div>
+          </div>
+          <div class="result-stat result-stat--avg">
+            <div class="result-stat__num">${avgSecPerQ}s</div>
+            <div class="result-stat__label">avg per Q</div>
+          </div>
+        </div>
+
         <div id="email-status" class="exam-email-status">Sending results to <strong>${this.parentEmail}</strong>…</div>
-        <details class="exam-review" open>
-          <summary>Review answers (${total} questions)</summary>
-          <ol class="exam-review-list">
-            ${review.map(a => `
-              <li class="${a.isCorrect ? 'exam-review-li--ok' : 'exam-review-li--bad'}">
-                <div class="exam-review-q">${a.q}</div>
-                <div class="exam-review-yours"><strong>Your answer:</strong> ${a.given}</div>
-                ${a.isCorrect ? '' : `<div class="exam-review-correct"><strong>Correct:</strong> ${a.correct}</div>`}
-                ${a.explain && !a.isCorrect ? `<div class="exam-review-explain">${a.explain}</div>` : ''}
+
+        <h3 class="exam-review-heading">📋 Question-by-Question Review</h3>
+        <p class="exam-review-help">Read every rationale — even on the ones you got right. That's how the next exam goes higher.</p>
+
+        <ol class="exam-review-list">
+          ${review.map((a, i) => {
+            const isUnanswered = a.given === '(unanswered)';
+            const cls = a.isCorrect ? 'is-ok' : (isUnanswered ? 'is-skip' : 'is-bad');
+            const status = a.isCorrect ? '✓ CORRECT' : (isUnanswered ? '⊘ SKIPPED' : '✗ WRONG');
+            return `
+              <li class="exam-review-card ${cls}">
+                <div class="exam-review-card__header">
+                  <span class="exam-review-card__qnum">Q${i + 1}</span>
+                  <span class="exam-review-card__status">${status}</span>
+                </div>
+                <div class="exam-review-card__q">${a.q}</div>
+                <div class="exam-review-card__answers">
+                  <div class="ans-block ans-block--yours">
+                    <div class="ans-block__label">Your answer</div>
+                    <div class="ans-block__val">${formatAnswer(a.given)}</div>
+                  </div>
+                  <div class="ans-block ans-block--correct">
+                    <div class="ans-block__label">Correct answer</div>
+                    <div class="ans-block__val">${a.correct}</div>
+                  </div>
+                </div>
+                ${a.explain ? `
+                  <div class="exam-review-card__rationale">
+                    <span class="rationale-label">💡 Why?</span>
+                    <span>${a.explain}</span>
+                  </div>` : ''}
               </li>
-            `).join('')}
-          </ol>
-        </details>
-        <div style="text-align:center; margin-top: 24px;">
-          <a class="btn btn-primary" href="exam.html">📝 New Exam</a>
-          <a class="btn btn-outline" href="maths.html" style="margin-left:8px;">← Back to Maths</a>
+            `;
+          }).join('')}
+        </ol>
+
+        <div class="exam-result__actions">
+          <a class="btn btn-primary btn-lg" href="exam.html">📝 New Exam</a>
+          <a class="btn btn-outline" href="${this.subject === 'English' ? 'english.html' : 'maths.html'}">← Back to ${this.subject}</a>
+          <button class="btn btn-yellow" onclick="window.print()">🖨️ Print results</button>
         </div>
       </div>
     `;
