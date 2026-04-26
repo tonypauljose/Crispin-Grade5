@@ -1,15 +1,13 @@
 /* ============================================================
-   Crispin's World — exam-engine.js
-   30-minute timed exam mode. Picks N questions from a bank,
-   runs them with a countdown clock, no skipping back, locks
-   the page until done, then emails the results to a parent
-   via FormSubmit.co (free, no signup required).
+   Crispin's World — exam-engine.js (v2 · competitive-exam UI)
 
-   FormSubmit setup:
-   - First submission triggers a confirmation email to the
-     PARENT_EMAIL address. The parent must click the link
-     once. From then on every submission is delivered silently.
-   - To change the parent address, edit PARENT_EMAIL below.
+   - Sticky top bar with the timer (always visible while scrolling)
+   - Question palette grid (jump to any question, see status colours)
+   - Save answers as you navigate; nothing is scored until final submit
+   - "Mark for review" toggle, Clear, Previous / Save & Next
+   - Confirmation modal before submit (warns about unanswered/marked)
+   - Auto-submits at 0:00
+   - Results emailed to PARENT_EMAIL via FormSubmit.co
    ============================================================ */
 (function () {
   'use strict';
@@ -25,15 +23,18 @@
     this.subject = opts.subject || 'Maths';
     this.chapter = opts.chapter || 'Unknown';
     this.chapterTitle = opts.chapterTitle || opts.chapter;
-    this.bank = opts.bank || []; // flat array of question objects
+    this.bank = opts.bank || [];
     this.count = Math.min(opts.count || DEFAULT_QUESTION_COUNT, this.bank.length);
     this.durationSec = opts.durationSec || DEFAULT_DURATION_SEC;
     this.studentName = opts.studentName || 'Crispin';
     this.parentEmail = opts.parentEmail || PARENT_EMAIL;
 
     this.qs = (App && App.shuffle ? App.shuffle(this.bank) : this.bank.slice()).slice(0, this.count);
+    this.answers = new Array(this.qs.length).fill(null);
+    this.markedReview = new Array(this.qs.length).fill(false);
+    this.visited = new Array(this.qs.length).fill(false);
     this.idx = 0;
-    this.answers = []; // {q, given, correct, isCorrect}
+
     this.startTime = Date.now();
     this.endTime = this.startTime + this.durationSec * 1000;
     this.tickHandle = null;
@@ -43,32 +44,55 @@
   ExamEngine.prototype.start = function () {
     if (!this.host) return;
     this.host.innerHTML = `
-      <div class="exam-stage">
-        <div class="exam-bar">
-          <div class="exam-bar__title">📝 ${this.subject} · ${this.chapterTitle}</div>
-          <div class="exam-bar__meta">
-            <span class="exam-bar__counter" id="exam-counter">Q 1 / ${this.qs.length}</span>
-            <span class="exam-bar__timer" id="exam-timer">30:00</span>
-          </div>
+      <div class="exam-shell">
+        <div class="exam-topbar">
+          <div class="exam-topbar__title">📝 ${this.subject} · ${this.chapterTitle}</div>
+          <div class="exam-topbar__center" id="exam-counter">Question 1 of ${this.qs.length}</div>
+          <div class="exam-topbar__timer" id="exam-timer">30:00</div>
         </div>
-        <div class="exam-progress"><div class="exam-progress__fill" id="exam-progress"></div></div>
-        <div class="exam-question" id="exam-question"></div>
-        <div class="exam-feedback" id="exam-feedback"></div>
-        <div class="exam-actions">
-          <button class="btn btn-outline" id="exam-skip">Skip ⤼</button>
-          <button class="btn btn-primary" id="exam-next">Submit answer →</button>
+        <div class="exam-body">
+          <aside class="exam-palette">
+            <h3>Questions</h3>
+            <div class="palette-grid" id="palette-grid"></div>
+            <div class="palette-legend">
+              <div><span class="dot dot--ok"></span> Answered</div>
+              <div><span class="dot dot--seen"></span> Seen, not answered</div>
+              <div><span class="dot dot--mark"></span> Marked for review</div>
+              <div><span class="dot dot--new"></span> Not visited</div>
+            </div>
+            <div class="palette-counts">
+              <div><span>Answered</span><strong id="cnt-ok">0</strong></div>
+              <div><span>Marked</span><strong id="cnt-mark">0</strong></div>
+              <div><span>Remaining</span><strong id="cnt-rem">${this.qs.length}</strong></div>
+            </div>
+          </aside>
+          <main class="exam-main">
+            <div class="exam-q-header">
+              <div class="exam-q-num" id="exam-q-num">Q 1</div>
+              <span id="exam-mark-status">⚑ Marked for Review</span>
+            </div>
+            <div class="exam-q-text" id="exam-question"></div>
+            <div class="exam-q-body" id="exam-body"></div>
+            <div class="exam-controls">
+              <button class="btn btn-outline" id="exam-prev">← Previous</button>
+              <button class="btn btn-yellow btn-sm" id="exam-clear">Clear answer</button>
+              <button class="btn btn-outline" id="exam-mark">⚑ Mark for review</button>
+              <button class="btn btn-primary" id="exam-next">Save &amp; Next →</button>
+            </div>
+            <div class="exam-submit-row">
+              <button class="btn btn-coral btn-lg" id="exam-submit">📤 Submit Exam</button>
+              <p class="muted" style="margin-top:8px;">No grading happens until you click Submit.</p>
+            </div>
+          </main>
         </div>
-        <p class="muted" style="text-align:center; margin-top:16px;">
-          ⚠️ Answers can't be changed after you click Submit. The exam auto-ends after 30 minutes.
-        </p>
       </div>
     `;
-    this.renderQuestion();
+    this.renderPalette();
+    this.gotoQuestion(0);
     this.startTimer();
-    document.getElementById('exam-skip').addEventListener('click', () => this.skip());
-    document.getElementById('exam-next').addEventListener('click', () => this.submitAnswer());
+    this.wireControls();
 
-    // Block tab navigation accidentally closing
+    // Block accidental close
     window.addEventListener('beforeunload', this._beforeunload = (e) => {
       if (!this.finished) {
         e.preventDefault();
@@ -78,6 +102,7 @@
     });
   };
 
+  // ---------- Timer ----------
   ExamEngine.prototype.startTimer = function () {
     const tick = () => {
       const remaining = Math.max(0, Math.round((this.endTime - Date.now()) / 1000));
@@ -86,8 +111,8 @@
       const t = document.getElementById('exam-timer');
       if (t) {
         t.textContent = mm + ':' + ss;
-        if (remaining <= 60) t.classList.add('exam-bar__timer--warn');
-        if (remaining <= 10) t.classList.add('exam-bar__timer--danger');
+        t.classList.toggle('exam-topbar__timer--warn', remaining <= 300 && remaining > 60);
+        t.classList.toggle('exam-topbar__timer--danger', remaining <= 60);
       }
       if (remaining <= 0) {
         this.finish(true);
@@ -98,57 +123,201 @@
     tick();
   };
 
-  ExamEngine.prototype.renderQuestion = function () {
-    if (this.idx >= this.qs.length) return this.finish(false);
-    const q = this.qs[this.idx];
-    document.getElementById('exam-counter').textContent = `Q ${this.idx + 1} / ${this.qs.length}`;
-    document.getElementById('exam-progress').style.width = ((this.idx) / this.qs.length * 100) + '%';
-
-    let body = '';
-    if (q.type === 'mcq' || q.type === 'compare') {
-      body = `<div class="exam-question__text">${q.q}</div>` +
-             `<div class="qz-options">` +
-              q.options.map((o, i) => `<button class="qz-option" data-i="${i}">${o}</button>`).join('') +
-             `</div>`;
-    } else if (q.type === 'tf') {
-      body = `<div class="exam-question__text">${q.q}</div>` +
-             `<div class="qz-options">` +
-               `<button class="qz-option" data-i="0">✅ True</button>` +
-               `<button class="qz-option" data-i="1">❌ False</button>` +
-             `</div>`;
-    } else if (q.type === 'fill') {
-      body = `<div class="exam-question__text">${q.q}</div>` +
-             `<input class="qz-fill-input" id="exam-fill" placeholder="Type your answer" autocomplete="off" />`;
-    }
-    document.getElementById('exam-question').innerHTML = body;
-    document.getElementById('exam-feedback').innerHTML = '';
-    document.querySelectorAll('.qz-option').forEach(btn => {
-      btn.addEventListener('click', function () {
-        document.querySelectorAll('.qz-option').forEach(b => b.classList.remove('selected'));
-        this.classList.add('selected');
-        if (App && App.Audio) App.Audio.playClick();
-      });
-    });
-    const fillInput = document.getElementById('exam-fill');
-    if (fillInput) {
-      fillInput.focus();
-      fillInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') this.submitAnswer();
-      });
-    }
+  // ---------- Palette ----------
+  ExamEngine.prototype.tileClasses = function (i) {
+    const c = ['palette-tile'];
+    if (i === this.idx) c.push('is-current');
+    if (this._hasAnswer(i)) c.push('is-answered');
+    else if (this.visited[i]) c.push('is-visited');
+    if (this.markedReview[i]) c.push('is-marked');
+    return c.join(' ');
+  };
+  ExamEngine.prototype._hasAnswer = function (i) {
+    const a = this.answers[i];
+    return a !== null && a !== undefined && a !== '';
   };
 
-  ExamEngine.prototype.skip = function () {
-    const q = this.qs[this.idx];
-    this.answers.push({
-      q: q.q, type: q.type, given: '(skipped)',
-      correct: this._correctText(q),
-      isCorrect: false
+  ExamEngine.prototype.renderPalette = function () {
+    const grid = document.getElementById('palette-grid');
+    grid.innerHTML = this.qs.map((_, i) =>
+      `<div class="${this.tileClasses(i)}" data-i="${i}" tabindex="0">${i + 1}</div>`
+    ).join('');
+    grid.querySelectorAll('.palette-tile').forEach(t => {
+      t.addEventListener('click', () => this.gotoQuestion(parseInt(t.dataset.i, 10)));
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.gotoQuestion(parseInt(t.dataset.i, 10));
+        }
+      });
     });
-    this.idx++;
+    this.updateCounts();
+  };
+
+  ExamEngine.prototype.updatePaletteTile = function (i) {
+    const tile = document.querySelector(`.palette-tile[data-i="${i}"]`);
+    if (!tile) return;
+    tile.className = this.tileClasses(i);
+  };
+
+  ExamEngine.prototype.updateCounts = function () {
+    const ok = this.answers.reduce((c, _, i) => c + (this._hasAnswer(i) ? 1 : 0), 0);
+    const mark = this.markedReview.filter(Boolean).length;
+    const rem = this.qs.length - ok;
+    const okEl = document.getElementById('cnt-ok');
+    const markEl = document.getElementById('cnt-mark');
+    const remEl = document.getElementById('cnt-rem');
+    if (okEl) okEl.textContent = ok;
+    if (markEl) markEl.textContent = mark;
+    if (remEl) remEl.textContent = rem;
+  };
+
+  // ---------- Navigation ----------
+  ExamEngine.prototype.gotoQuestion = function (i) {
+    if (i < 0 || i >= this.qs.length) return;
+    // Mark previous tile to drop the is-current class
+    const prevIdx = this.idx;
+    this.idx = i;
+    this.visited[i] = true;
     this.renderQuestion();
+    this.updatePaletteTile(prevIdx);
+    this.updatePaletteTile(i);
+    this.updateCounts();
+    document.getElementById('exam-counter').textContent = `Question ${i + 1} of ${this.qs.length}`;
+    document.getElementById('exam-q-num').textContent = 'Q ' + (i + 1);
+    const ms = document.getElementById('exam-mark-status');
+    ms.classList.toggle('show', !!this.markedReview[i]);
+    // Update prev/next button enabled-ness
+    document.getElementById('exam-prev').disabled = (i === 0);
+    document.getElementById('exam-next').disabled = (i === this.qs.length - 1);
   };
 
+  ExamEngine.prototype.renderQuestion = function () {
+    const i = this.idx;
+    const q = this.qs[i];
+    const stored = this.answers[i];
+    const self = this;
+
+    document.getElementById('exam-question').innerHTML = q.q;
+    const body = document.getElementById('exam-body');
+
+    if (q.type === 'mcq' || q.type === 'compare') {
+      body.innerHTML = q.options.map((o, j) => {
+        const isSel = stored === j;
+        return `
+          <label class="exam-option ${isSel ? 'selected' : ''}">
+            <input type="radio" name="exam-q-${i}" value="${j}" ${isSel ? 'checked' : ''}>
+            <span class="exam-option__letter">${String.fromCharCode(65 + j)}</span>
+            <span class="exam-option__text">${o}</span>
+          </label>`;
+      }).join('');
+      body.querySelectorAll('input[type=radio]').forEach(r => {
+        r.addEventListener('change', () => {
+          self.answers[i] = parseInt(r.value, 10);
+          body.querySelectorAll('.exam-option').forEach(l => l.classList.remove('selected'));
+          r.closest('.exam-option').classList.add('selected');
+          self.updatePaletteTile(i);
+          self.updateCounts();
+          if (App && App.Audio) App.Audio.playClick();
+        });
+      });
+    } else if (q.type === 'tf') {
+      body.innerHTML = ['✅ True', '❌ False'].map((o, j) => {
+        const isSel = stored === j;
+        return `
+          <label class="exam-option ${isSel ? 'selected' : ''}">
+            <input type="radio" name="exam-q-${i}" value="${j}" ${isSel ? 'checked' : ''}>
+            <span class="exam-option__letter">${j === 0 ? 'T' : 'F'}</span>
+            <span class="exam-option__text">${o}</span>
+          </label>`;
+      }).join('');
+      body.querySelectorAll('input[type=radio]').forEach(r => {
+        r.addEventListener('change', () => {
+          self.answers[i] = parseInt(r.value, 10);
+          body.querySelectorAll('.exam-option').forEach(l => l.classList.remove('selected'));
+          r.closest('.exam-option').classList.add('selected');
+          self.updatePaletteTile(i);
+          self.updateCounts();
+          if (App && App.Audio) App.Audio.playClick();
+        });
+      });
+    } else if (q.type === 'fill') {
+      const value = (stored !== null && stored !== undefined) ? String(stored) : '';
+      body.innerHTML = `
+        <input class="qz-fill-input exam-fill-input" id="exam-fill-input"
+               placeholder="Type your answer here"
+               value="${value.replace(/"/g, '&quot;')}" autocomplete="off">
+      `;
+      const inp = document.getElementById('exam-fill-input');
+      inp.addEventListener('input', () => {
+        self.answers[i] = inp.value.trim() === '' ? null : inp.value;
+        self.updatePaletteTile(i);
+        self.updateCounts();
+      });
+      inp.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          if (self.idx < self.qs.length - 1) self.gotoQuestion(self.idx + 1);
+        }
+      });
+      setTimeout(() => inp.focus(), 50);
+    }
+  };
+
+  // ---------- Controls ----------
+  ExamEngine.prototype.wireControls = function () {
+    const self = this;
+    document.getElementById('exam-prev').addEventListener('click', () => {
+      if (self.idx > 0) self.gotoQuestion(self.idx - 1);
+    });
+    document.getElementById('exam-next').addEventListener('click', () => {
+      if (self.idx < self.qs.length - 1) self.gotoQuestion(self.idx + 1);
+    });
+    document.getElementById('exam-clear').addEventListener('click', () => {
+      self.answers[self.idx] = null;
+      self.renderQuestion();
+      self.updatePaletteTile(self.idx);
+      self.updateCounts();
+    });
+    document.getElementById('exam-mark').addEventListener('click', () => {
+      self.markedReview[self.idx] = !self.markedReview[self.idx];
+      const ms = document.getElementById('exam-mark-status');
+      ms.classList.toggle('show', !!self.markedReview[self.idx]);
+      self.updatePaletteTile(self.idx);
+      self.updateCounts();
+    });
+    document.getElementById('exam-submit').addEventListener('click', () => self.confirmSubmit());
+  };
+
+  ExamEngine.prototype.confirmSubmit = function () {
+    const ok = this.answers.reduce((c, _, i) => c + (this._hasAnswer(i) ? 1 : 0), 0);
+    const total = this.qs.length;
+    const unanswered = total - ok;
+    const marked = this.markedReview.filter(Boolean).length;
+
+    let warn = '';
+    if (unanswered > 0) warn += `<p style="color:var(--coral-dark);"><strong>${unanswered}</strong> question${unanswered === 1 ? '' : 's'} still unanswered.</p>`;
+    if (marked > 0) warn += `<p style="color:var(--purple);"><strong>${marked}</strong> marked for review.</p>`;
+
+    const html = `
+      <h2 class="modal__title">Submit your exam?</h2>
+      <div class="modal__body">
+        ${warn}
+        <p>You answered <strong>${ok} / ${total}</strong> questions. After submitting, you can't change anything and your score is sent to your parent.</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn-outline" data-close>Keep working</button>
+        <button class="btn btn-coral btn-lg" id="confirm-submit-btn">📤 Submit now</button>
+      </div>
+    `;
+    const { close } = App.openModal(html);
+    document.getElementById('confirm-submit-btn').addEventListener('click', () => {
+      close();
+      this.finish(false);
+    });
+  };
+
+  // ---------- Score & finish ----------
   ExamEngine.prototype._correctText = function (q) {
     if (q.type === 'mcq' || q.type === 'compare') return q.options[q.answer];
     if (q.type === 'tf') return q.answer === 0 ? 'True' : 'False';
@@ -156,39 +325,31 @@
     return '';
   };
 
-  ExamEngine.prototype.submitAnswer = function () {
-    const q = this.qs[this.idx];
-    let given = '', isCorrect = false;
-    if (q.type === 'mcq' || q.type === 'compare' || q.type === 'tf') {
-      const sel = document.querySelector('.qz-option.selected');
-      if (!sel) {
-        if (App && App.showToast) App.showToast('Pick an answer or click Skip.', 'warn');
-        return;
+  ExamEngine.prototype._scoreAll = function () {
+    return this.qs.map((q, i) => {
+      const stored = this.answers[i];
+      let given = '', isCorrect = false;
+      if (stored === null || stored === undefined || stored === '') {
+        given = '(unanswered)';
+      } else if (q.type === 'mcq' || q.type === 'compare') {
+        given = q.options[stored];
+        isCorrect = (stored === q.answer);
+      } else if (q.type === 'tf') {
+        given = stored === 0 ? 'True' : 'False';
+        isCorrect = (stored === q.answer);
+      } else if (q.type === 'fill') {
+        given = String(stored);
+        const norm = given.toLowerCase().trim().replace(/\s+/g, ' ').replace(/,/g, '');
+        const acceptable = Array.isArray(q.answer) ? q.answer : [q.answer];
+        isCorrect = acceptable.some(a => String(a).toLowerCase().trim().replace(/\s+/g, ' ').replace(/,/g, '') === norm);
       }
-      const i = parseInt(sel.dataset.i, 10);
-      given = (q.options ? q.options[i] : (i === 0 ? 'True' : 'False'));
-      isCorrect = (i === q.answer);
-    } else if (q.type === 'fill') {
-      const input = document.getElementById('exam-fill');
-      given = (input.value || '').trim();
-      if (!given) {
-        if (App && App.showToast) App.showToast('Type an answer or click Skip.', 'warn');
-        return;
-      }
-      const norm = given.toLowerCase().replace(/\s+/g, ' ').replace(/,/g, '');
-      const acceptable = Array.isArray(q.answer) ? q.answer : [q.answer];
-      isCorrect = acceptable.some(a => String(a).toLowerCase().replace(/\s+/g, ' ').replace(/,/g, '') === norm);
-    }
-
-    this.answers.push({
-      q: q.q, type: q.type, given,
-      correct: this._correctText(q),
-      isCorrect,
-      explain: q.explain || ''
+      return {
+        q: q.q, type: q.type, given,
+        correct: this._correctText(q),
+        isCorrect,
+        explain: q.explain || ''
+      };
     });
-    if (App && App.Audio) App.Audio[isCorrect ? 'playCorrect' : 'playWrong']();
-    this.idx++;
-    this.renderQuestion();
   };
 
   ExamEngine.prototype.finish = function (timedOut) {
@@ -197,18 +358,9 @@
     if (this.tickHandle) clearTimeout(this.tickHandle);
     window.removeEventListener('beforeunload', this._beforeunload);
 
-    const total = this.qs.length;
-    const correct = this.answers.filter(a => a.isCorrect).length;
-    const skipped = this.answers.filter(a => a.given === '(skipped)').length;
-    // Mark unanswered remaining questions as skipped
-    const unanswered = total - this.answers.length;
-    for (let i = 0; i < unanswered; i++) {
-      const q = this.qs[this.answers.length];
-      this.answers.push({
-        q: q.q, type: q.type, given: '(unanswered)',
-        correct: this._correctText(q), isCorrect: false
-      });
-    }
+    const review = this._scoreAll();
+    const total = review.length;
+    const correct = review.filter(r => r.isCorrect).length;
     const pct = total ? Math.round((correct / total) * 100) : 0;
     const timeTaken = Math.round((Date.now() - this.startTime) / 1000);
     const mins = Math.floor(timeTaken / 60), secs = timeTaken % 60;
@@ -220,13 +372,13 @@
         <div class="exam-result__big">${correct} / ${total} <span style="font-size:1.4rem;">(${pct}%)</span></div>
         <div class="exam-result__meta">
           ${this.subject} · ${this.chapterTitle}<br>
-          Time taken: ${mins}m ${secs}s · Skipped/blank: ${total - correct - this.answers.filter(a => a.isCorrect).length + this.answers.filter(a => a.isCorrect && false).length} ${''}
+          Time taken: ${mins}m ${secs}s
         </div>
         <div id="email-status" class="exam-email-status">Sending results to <strong>${this.parentEmail}</strong>…</div>
         <details class="exam-review" open>
           <summary>Review answers (${total} questions)</summary>
           <ol class="exam-review-list">
-            ${this.answers.map(a => `
+            ${review.map(a => `
               <li class="${a.isCorrect ? 'exam-review-li--ok' : 'exam-review-li--bad'}">
                 <div class="exam-review-q">${a.q}</div>
                 <div class="exam-review-yours"><strong>Your answer:</strong> ${a.given}</div>
@@ -245,21 +397,19 @@
     if (App && App.launchConfetti && pct >= 80) App.launchConfetti(120);
     if (App && App.Audio) App.Audio[pct >= 80 ? 'playGoal' : pct >= 50 ? 'playCorrect' : 'playMiss']();
 
-    // Award XP
     if (window.Progress) {
       const xp = pct >= 90 ? 80 : pct >= 70 ? 60 : pct >= 50 ? 40 : 25;
       window.Progress.addXP(xp, `Exam · ${this.chapterTitle} · ${pct}%`);
     }
 
-    // Send results to parent via FormSubmit
-    this._sendEmail({ correct, total, pct, mins, secs, timedOut });
+    this._sendEmail({ correct, total, pct, mins, secs, timedOut, review });
   };
 
-  ExamEngine.prototype._sendEmail = function ({ correct, total, pct, mins, secs, timedOut }) {
-    const wrongList = this.answers.filter(a => !a.isCorrect);
+  ExamEngine.prototype._sendEmail = function ({ correct, total, pct, mins, secs, timedOut, review }) {
+    const wrongList = review.filter(a => !a.isCorrect);
     const wrongSummary = wrongList.length === 0
       ? 'All correct! 🎉'
-      : wrongList.map((a, i) => `Q${i+1}: ${a.q}\n   Your answer: ${a.given}\n   Correct: ${a.correct}`).join('\n\n');
+      : wrongList.map((a, i) => `Q${i + 1}: ${a.q}\n   Your answer: ${a.given}\n   Correct: ${a.correct}`).join('\n\n');
 
     const payload = {
       _subject: `Crispin's exam result — ${this.subject} · ${this.chapterTitle} · ${pct}%`,
@@ -281,10 +431,7 @@
     const status = document.getElementById('email-status');
     fetch(FORMSUBMIT_URL, {
       method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     })
       .then(r => r.json())
@@ -298,7 +445,6 @@
       })
       .catch(err => {
         console.warn('Email delivery failed:', err);
-        // Fallback: pre-fill a mailto link the parent can click manually
         const body = encodeURIComponent(
 `Crispin's exam result
 
@@ -311,9 +457,8 @@ Date: ${App.formatDateDMY(new Date())}
 ${wrongSummary}`);
         const subject = encodeURIComponent(payload._subject);
         status.innerHTML = `
-          ⚠️ Auto-email didn't go through (probably the first time — FormSubmit needs you to confirm
-          <strong>${this.parentEmail}</strong> the first time).<br>
-          You can also <a href="mailto:${this.parentEmail}?subject=${subject}&body=${body}" class="btn btn-outline btn-sm" style="margin-top:6px;">📧 Open email manually</a>
+          ⚠️ Auto-email didn't go through (probably the first time — FormSubmit needs a one-time confirmation at <strong>${this.parentEmail}</strong>).<br>
+          You can also <a href="mailto:${this.parentEmail}?subject=${subject}&body=${body}" class="btn btn-outline btn-sm" style="margin-top:6px;">📧 Open email manually</a>.
         `;
         status.classList.add('exam-email-status--warn');
       });
