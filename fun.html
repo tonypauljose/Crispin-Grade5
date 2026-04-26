@@ -3,30 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Riddle Archive — Crispin's World</title>
-  <meta name="theme-color" content="#6B21A8">
+  <title>Fun Zone — Crispin's World</title>
+  <meta name="theme-color" content="#FAF7F0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/animations.css">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%A0%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%BD%3C/text%3E%3C/svg%3E">
 </head>
 <body>
   <main class="page">
     <div class="container">
 
-      <section class="section">
-        <h1>🧠 Riddle Archive</h1>
-        <p class="lead">Tap any card to reveal the answer. Filter by category, challenge a friend.</p>
-        <p class="muted">Looking for the penalty shootout? It's now on the <a href="index.html">home page</a>. ⚽</p>
+      <section class="bento-hero">
+        <div class="bento-hero__eyebrow">
+          <span>Fun Zone</span><span style="color:var(--ink-muted);">·</span><span>Take a break</span>
+        </div>
+        <h1 class="bento-hero__title">Riddles &amp;<br><span class="accent">a penalty kick.</span></h1>
+        <p class="bento-hero__sub">33+ brain teasers in math, word, logic and football flavours, plus a full penalty shootout to play between lessons.</p>
+      </section>
+
+      <!-- Penalty Shootout -->
+      <section class="section" id="shootout">
+        <h2 class="section-title">⚽ Penalty Shootout</h2>
+        <p class="muted" style="margin-bottom: var(--space-4);">Pick a corner. Hold to charge — sweet spot is the amber zone. Score 3 of 5 to win. The keeper gets sharper every round.</p>
+        <div id="shootout-host"></div>
       </section>
 
       <!-- Daily Riddle -->
       <section class="section">
-        <h2 class="section-title">🌟 Riddle of the Day</h2>
-        <p class="muted">Changes once every 24 hours (Bahrain time).</p>
+        <h2 class="section-title">🧠 Riddle of the Day</h2>
+        <p class="muted" style="margin-bottom: var(--space-3);">Changes once every 24 hours (Bahrain time).</p>
         <div id="daily-riddle-host"></div>
       </section>
 
@@ -49,10 +58,12 @@
   <script src="js/progress.js"></script>
   <script src="data/riddles.js"></script>
   <script src="js/riddles.js"></script>
+  <script src="js/penalty-shootout.js"></script>
   <script>
     App.renderTopBar('fun');
     Progress.markVisit();
     Progress.renderGamebar();
+    new PenaltyGame('shootout-host');
     Riddles.renderDaily(document.getElementById('daily-riddle-host'));
     Riddles.renderArchive(document.getElementById('archive-host'));
   </script>

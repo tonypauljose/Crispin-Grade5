@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>📝 Exam Mode — Crispin's World</title>
-  <meta name="theme-color" content="#DC2626">
+  <meta name="theme-color" content="#FAF7F0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/animations.css">
@@ -17,24 +17,33 @@
   <main class="page">
     <div class="container">
 
-      <!-- Picker (visible until exam starts) -->
-      <section class="section" id="picker-section">
-        <h1>📝 Exam Mode</h1>
-        <p class="lead">Pick a chapter, take a <strong>30-minute timed exam</strong>. The score is sent to your parent's email at the end.</p>
-
-        <div class="card card--flat" style="margin-bottom: var(--space-5);">
-          <h3 style="color: var(--purple); margin-bottom: 8px;">📋 Rules</h3>
-          <ul class="hand-list" style="font-size: 1rem;">
-            <li>25 questions, mixed types (multiple-choice, true/false, fill-in-the-blank).</li>
-            <li>Hard timer: <strong>30 minutes</strong>. Auto-submits at 0:00.</li>
-            <li>You can navigate freely between questions, mark some for review, and change answers any time before final Submit.</li>
-            <li>At the end you'll see a full review of every question with the correct answer and a "Why?" rationale.</li>
-            <li><strong>Optional:</strong> at submit time you can enter an email address to receive the results — leave blank to skip emailing.</li>
-          </ul>
+      <!-- Picker view -->
+      <section id="picker-section">
+        <div class="bento-hero">
+          <div class="bento-hero__eyebrow">
+            <span>Exam Mode</span><span style="color:var(--ink-muted);">·</span><span>30 minutes · timed</span>
+          </div>
+          <h1 class="bento-hero__title">Pick a chapter,<br><span class="accent">take an exam.</span></h1>
+          <p class="bento-hero__sub">25 questions, hard 30-minute timer. Navigate freely between questions, mark for review, change answers any time. Score is calculated only when you submit.</p>
         </div>
 
-        <h2 style="margin-bottom: var(--space-3);">Pick a chapter</h2>
-        <div class="grid grid-3" id="chapter-grid"></div>
+        <!-- Rules tile -->
+        <section class="bento" style="margin-bottom: var(--space-7);">
+          <div class="bento__tile no-hover mesh-warm span-12">
+            <span class="bento__bg-emoji">📋</span>
+            <p class="bento__eyebrow">Quick rules</p>
+            <ul style="margin: var(--space-2) 0 0; padding-left: 20px; line-height: 1.7; color: var(--ink); font-size: 1rem;">
+              <li>25 questions, mixed types (multiple-choice, true/false, fill-in-the-blank).</li>
+              <li><strong>30-minute hard timer.</strong> Auto-submits at 0:00.</li>
+              <li>Navigate freely between questions, mark some for review, change answers any time before final Submit.</li>
+              <li>At the end you'll see a full review of every question with the correct answer + 💡 rationale, plus marks out of 100.</li>
+              <li><strong>Optional:</strong> at submit time you can enter an email to receive the results — leave blank to skip.</li>
+            </ul>
+          </div>
+        </section>
+
+        <h2 class="section-title">Pick a chapter</h2>
+        <section class="bento" id="chapter-grid"></section>
       </section>
 
       <!-- Exam runner (filled when exam starts) -->
@@ -46,7 +55,7 @@
 
     <footer class="footer">
       <div class="container">
-        <p>Made with ❤️ and ⚽ for Crispin · <a href="maths.html">Maths</a> · <a href="index.html">Home</a></p>
+        <p>Made with ❤️ and ⚽ for Crispin · <a href="maths.html">Maths</a> · <a href="english.html">English</a> · <a href="index.html">Home</a></p>
       </div>
     </footer>
   </main>
@@ -59,28 +68,29 @@
     Progress.markVisit();
     Progress.renderGamebar();
 
-    // Chapters available for exam — must match data/chXX-*.js files
     const CHAPTERS = [
-      { id: 'ch01', title: 'Numbers 1 to 10,000', subj: 'Maths', file: 'data/ch01-numbers.js',          bank: 'CH01_BANK',     useTier: true },
-      { id: 'ch02', title: 'The Four Operations', subj: 'Maths', file: 'data/ch02-four-operations.js',  bank: 'CH02_BANK' },
-      { id: 'ch03', title: 'Multiples & Factors', subj: 'Maths', file: 'data/ch03-multiples-factors.js',bank: 'CH03_BANK' },
-      { id: 'ch04', title: 'Geometry',            subj: 'Maths', file: 'data/ch04-geometry.js',         bank: 'CH04_BANK' },
-      { id: 'ch05', title: 'Decimal Numbers',     subj: 'Maths', file: 'data/ch05-decimals.js',         bank: 'CH05_BANK' },
-      { id: 'ch06', title: 'Perimeter, Area, Volume', subj: 'Maths', file: 'data/ch06-perimeter-area-volume.js', bank: 'CH06_BANK' },
-      { id: 'ch07', title: 'Speed & Temperature', subj: 'Maths', file: 'data/ch07-speed-temperature.js',bank: 'CH07_BANK' },
-      { id: 'ch08', title: 'Data Handling',       subj: 'Maths', file: 'data/ch08-data-handling.js',    bank: 'CH08_BANK' },
-      { id: 'ch09', title: 'Measurement',         subj: 'Maths', file: 'data/ch09-measurement.js',      bank: 'CH09_BANK' },
-      { id: 'ch10', title: 'Time & Money',        subj: 'Maths', file: 'data/ch10-time-money.js',       bank: 'CH10_BANK' },
-      { id: 'eng01', title: 'Nouns',              subj: 'English', file: 'data/eng01-nouns.js',         bank: 'ENG01_BANK',    useTier: true }
+      { id: 'ch01', title: 'Numbers 1 to 10,000', subj: 'Maths', file: 'data/ch01-numbers.js',          bank: 'CH01_BANK',   mesh: 'mesh-purple', emoji: '🔢' },
+      { id: 'ch02', title: 'The Four Operations', subj: 'Maths', file: 'data/ch02-four-operations.js',  bank: 'CH02_BANK',   mesh: 'mesh-mint',   emoji: '➕' },
+      { id: 'ch03', title: 'Multiples & Factors', subj: 'Maths', file: 'data/ch03-multiples-factors.js',bank: 'CH03_BANK',   mesh: 'mesh-warm',   emoji: '✖️' },
+      { id: 'ch04', title: 'Geometry',            subj: 'Maths', file: 'data/ch04-geometry.js',         bank: 'CH04_BANK',   mesh: 'mesh-cool',   emoji: '📐' },
+      { id: 'ch05', title: 'Decimal Numbers',     subj: 'Maths', file: 'data/ch05-decimals.js',         bank: 'CH05_BANK',   mesh: 'mesh-sunset', emoji: '🔢' },
+      { id: 'ch06', title: 'Perimeter, Area, Volume', subj: 'Maths', file: 'data/ch06-perimeter-area-volume.js', bank: 'CH06_BANK', mesh: 'mesh-purple', emoji: '📏' },
+      { id: 'ch07', title: 'Speed & Temperature', subj: 'Maths', file: 'data/ch07-speed-temperature.js',bank: 'CH07_BANK',   mesh: 'mesh-mint',   emoji: '🌡️' },
+      { id: 'ch08', title: 'Data Handling',       subj: 'Maths', file: 'data/ch08-data-handling.js',    bank: 'CH08_BANK',   mesh: 'mesh-warm',   emoji: '📊' },
+      { id: 'ch09', title: 'Measurement',         subj: 'Maths', file: 'data/ch09-measurement.js',      bank: 'CH09_BANK',   mesh: 'mesh-cool',   emoji: '⚖️' },
+      { id: 'ch10', title: 'Time & Money',        subj: 'Maths', file: 'data/ch10-time-money.js',       bank: 'CH10_BANK',   mesh: 'mesh-sunset', emoji: '⏰' },
+      { id: 'eng01', title: 'Nouns',              subj: 'English', file: 'data/eng01-nouns.js',         bank: 'ENG01_BANK',  mesh: 'mesh-mint',   emoji: '🧾' }
     ];
 
     function renderPicker() {
       const grid = document.getElementById('chapter-grid');
       grid.innerHTML = CHAPTERS.map(c => `
-        <a class="exam-tile" href="?ch=${c.id}" style="cursor:pointer;">
-          <span class="exam-tile__pulse">${c.subj.toUpperCase()}</span>
-          <span class="exam-tile__title">${c.title}</span>
-          <p class="exam-tile__desc">${c.subj === 'English' ? 'Grammar exam' : 'Maths exam'} · 25 Qs · 30 min</p>
+        <a class="bento__tile ${c.mesh} span-4" href="?ch=${c.id}">
+          <span class="bento__bg-emoji">${c.emoji}</span>
+          <span class="tag ${c.subj === 'English' ? 'tag--mint' : 'tag--purple'}">${c.subj}</span>
+          <h2 class="bento__title">${c.title}</h2>
+          <p class="bento__desc">25 questions · 30 min · ${c.subj === 'English' ? 'Grammar' : 'Maths'} exam</p>
+          <span class="bento__cta">Start exam</span>
         </a>
       `).join('');
     }
@@ -88,46 +98,23 @@
     function loadScript(src) {
       return new Promise((resolve, reject) => {
         const s = document.createElement('script');
-        s.src = src;
-        s.onload = resolve;
-        s.onerror = reject;
+        s.src = src; s.onload = resolve; s.onerror = reject;
         document.head.appendChild(s);
       });
     }
 
     async function startExam(chapterId) {
       const ch = CHAPTERS.find(c => c.id === chapterId);
-      if (!ch) {
-        App.showToast('Unknown chapter — back to picker.', 'warn');
-        return;
-      }
-      // Load the bank script
-      try {
-        await loadScript(ch.file);
-      } catch (err) {
-        App.showToast('Could not load exam questions for this chapter.', 'error');
-        return;
-      }
+      if (!ch) { App.showToast('Unknown chapter — back to picker.', 'warn'); return; }
+      try { await loadScript(ch.file); }
+      catch (err) { App.showToast('Could not load exam questions.', 'error'); return; }
       let bankObj = window[ch.bank];
-      if (!bankObj) {
-        App.showToast('Exam bank not found in loaded file.', 'error');
-        return;
-      }
-      // Flatten bank if it's split by tier (Explorer/Adventurer/Champion)
-      let flat;
-      if (Array.isArray(bankObj)) {
-        flat = bankObj;
-      } else if (bankObj.explorer || bankObj.adventurer || bankObj.champion) {
-        flat = [].concat(bankObj.explorer || [], bankObj.adventurer || [], bankObj.champion || []);
-      } else {
-        App.showToast('Unrecognised bank format.', 'error');
-        return;
-      }
-
+      if (!bankObj) { App.showToast('Exam bank not found.', 'error'); return; }
+      let flat = Array.isArray(bankObj) ? bankObj :
+                 [].concat(bankObj.explorer || [], bankObj.adventurer || [], bankObj.champion || []);
       document.getElementById('picker-section').style.display = 'none';
       document.getElementById('exam-section').style.display = 'block';
       const visitor = App.getProfile();
-      const studentName = (visitor && visitor.name) || 'Crispin';
       const exam = new ExamEngine({
         containerId: 'exam-host',
         subject: ch.subj,
@@ -136,21 +123,15 @@
         bank: flat,
         count: 25,
         durationSec: 30 * 60,
-        studentName
-        // parentEmail is collected from the user in the submit modal
+        studentName: (visitor && visitor.name) || 'Crispin'
       });
       exam.start();
       App.Audio.playWhistle();
     }
 
-    // Read ?ch=chXX from URL
     const params = new URLSearchParams(location.search);
     const chParam = params.get('ch');
-    if (chParam) {
-      startExam(chParam);
-    } else {
-      renderPicker();
-    }
+    if (chParam) startExam(chParam); else renderPicker();
   </script>
 </body>
 </html>

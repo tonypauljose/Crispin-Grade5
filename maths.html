@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mathematics — Crispin's World</title>
-  <meta name="theme-color" content="#6B21A8">
+  <meta name="theme-color" content="#FAF7F0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/animations.css">
@@ -17,104 +17,114 @@
   <main class="page">
     <div class="container">
 
-      <section class="section">
-        <h1>🧮 Mathematics — Grade 5</h1>
-        <p class="lead">CBSE syllabus · Asian School Bahrain. Every chapter has practice now. Take a 30-minute timed exam any time.</p>
+      <section class="bento-hero">
+        <div class="bento-hero__eyebrow">
+          <span>Mathematics</span><span style="color:var(--ink-muted);">·</span><span>Grade 5 · CBSE</span>
+        </div>
+        <h1 class="bento-hero__title">10 chapters,<br><span class="accent">all unlocked.</span></h1>
+        <p class="bento-hero__sub">Asian School Bahrain syllabus. Practice every chapter — Chapter 1 has full lessons too. Take a 30-minute exam any time.</p>
       </section>
 
-      <!-- Exam mode call-out -->
-      <section class="section" style="margin-bottom: var(--space-5);">
-        <a class="exam-tile" href="exam.html" style="display:flex; flex-direction:row; gap:var(--space-4); align-items:center; padding: var(--space-5) var(--space-5);">
-          <div style="font-size:3rem;">📝</div>
-          <div style="flex:1;">
-            <span class="exam-tile__title" style="display:block; font-size:1.5rem; margin-bottom:6px;">Take a 30-Minute Chapter Exam</span>
-            <p class="exam-tile__desc" style="margin:0;">Pick any chapter, 25 questions, hard timer. Results emailed to mum at the end.</p>
-          </div>
-          <div style="font-size: 1.5rem; color: var(--yellow);">›</div>
-          <span class="exam-tile__pulse">NEW</span>
+      <!-- Featured Exam tile + Daily tip -->
+      <section class="bento" style="margin-bottom: var(--space-7);">
+        <a class="bento__tile mesh-warm span-8" href="exam.html">
+          <span class="bento__bg-emoji">⏱️</span>
+          <span class="tag tag--coral tag--live">Exam</span>
+          <h2 class="bento__title bento__title--big">Take a 30-Minute Chapter Exam</h2>
+          <p class="bento__desc" style="font-size:1.05rem;">Pick any chapter, 25 mixed questions, hard timer. Navigate freely, mark for review, submit at the end. See rationales and email results to a parent.</p>
+          <span class="bento__cta">Start exam</span>
         </a>
-      </section>
-
-      <h2 class="section-title">All chapters · practice ready</h2>
-      <section class="section">
-        <div class="grid grid-3" id="chapter-grid">
-
-          <a class="chapter-card" href="chapters/ch01-numbers.html">
-            <div class="chapter-card__num">01</div>
-            <h3 class="chapter-card__title">Numbers 1 to 10,000</h3>
-            <p class="chapter-card__desc">Place value, expanded form, comparing, rounding, Roman numerals.</p>
-            <span class="chapter-card__badge">Full chapter</span>
-          </a>
-
-          <a class="chapter-card" href="chapters/ch02-four-operations.html">
-            <div class="chapter-card__num">02</div>
-            <h3 class="chapter-card__title">The Four Operations</h3>
-            <p class="chapter-card__desc">+, −, ×, ÷ with larger numbers and word problems.</p>
-            <span class="chapter-card__badge">Practice ready</span>
-          </a>
-
-          <a class="chapter-card" href="chapters/ch03-multiples-factors.html">
-            <div class="chapter-card__num">03</div>
-            <h3 class="chapter-card__title">Multiples & Factors</h3>
-            <p class="chapter-card__desc">LCM, HCF, primes, divisibility rules.</p>
-            <span class="chapter-card__badge">Practice ready</span>
-          </a>
-
-          <a class="chapter-card" href="chapters/ch04-geometry.html">
-            <div class="chapter-card__num">04</div>
-            <h3 class="chapter-card__title">Geometry</h3>
-            <p class="chapter-card__desc">Lines, angles, shapes, symmetry.</p>
-            <span class="chapter-card__badge">Practice ready</span>
-          </a>
-
-          <a class="chapter-card" href="chapters/ch05-decimals.html">
-            <div class="chapter-card__num">05</div>
-            <h3 class="chapter-card__title">Decimal Numbers</h3>
-            <p class="chapter-card__desc">Place value, addition, comparison, rounding.</p>
-            <span class="chapter-card__badge">Practice ready</span>
-          </a>
-
-          <a class="chapter-card" href="chapters/ch06-perimeter-area-volume.html">
-            <div class="chapter-card__num">06</div>
-            <h3 class="chapter-card__title">Perimeter, Area, Volume</h3>
-            <p class="chapter-card__desc">Measure shapes and spaces.</p>
-            <span class="chapter-card__badge">Practice ready</span>
-          </a>
-
-          <a class="chapter-card" href="chapters/ch07-speed-temperature.html">
-            <div class="chapter-card__num">07</div>
-            <h3 class="chapter-card__title">Speed & Temperature</h3>
-            <p class="chapter-card__desc">Real-world measurements and conversions.</p>
-            <span class="chapter-card__badge">Practice ready</span>
-          </a>
-
-          <a class="chapter-card" href="chapters/ch08-data-handling.html">
-            <div class="chapter-card__num">08</div>
-            <h3 class="chapter-card__title">Data Handling</h3>
-            <p class="chapter-card__desc">Tables, graphs, mean, mode, range.</p>
-            <span class="chapter-card__badge">Practice ready</span>
-          </a>
-
-          <a class="chapter-card" href="chapters/ch09-measurement.html">
-            <div class="chapter-card__num">09</div>
-            <h3 class="chapter-card__title">Measurement</h3>
-            <p class="chapter-card__desc">Length, mass, capacity — metric system.</p>
-            <span class="chapter-card__badge">Practice ready</span>
-          </a>
-
-          <a class="chapter-card" href="chapters/ch10-time-money.html">
-            <div class="chapter-card__num">10</div>
-            <h3 class="chapter-card__title">Time & Money</h3>
-            <p class="chapter-card__desc">Reading time, money math, BHD and rupees.</p>
-            <span class="chapter-card__badge">Practice ready</span>
-          </a>
-
+        <div class="bento__tile no-hover mesh-cool span-4">
+          <span class="bento__bg-emoji">💡</span>
+          <p class="bento__eyebrow">Daily tip</p>
+          <p style="margin:0; font-size:1rem; color:var(--ink); line-height:1.5;" id="daily-tip">Loading…</p>
         </div>
       </section>
 
-      <section class="section card">
-        <h2>💡 Daily Maths Tip</h2>
-        <p id="daily-tip" style="font-size:1.1rem;">Loading…</p>
+      <!-- Chapter bento -->
+      <h2 class="section-title">All chapters</h2>
+      <section class="bento">
+
+        <a class="bento__tile mesh-purple span-6 row-2" href="chapters/ch01-numbers.html">
+          <span class="bento__bg-emoji">🔢</span>
+          <span class="tag tag--purple">Full chapter · Ready</span>
+          <h2 class="bento__title bento__title--big">01 · Numbers 1 to 10,000</h2>
+          <p class="bento__desc">Place value, expanded form, comparing, rounding, Roman numerals, number names. Lessons + 8 practice exercises + 120-Q quiz + worksheet + exam.</p>
+          <span class="bento__cta">Open chapter</span>
+        </a>
+
+        <a class="bento__tile mesh-mint span-3" href="chapters/ch02-four-operations.html">
+          <span class="bento__bg-emoji">➕</span>
+          <span class="tag tag--mint">Practice + Exam</span>
+          <h2 class="bento__title">02 · Four Operations</h2>
+          <p class="bento__desc">+, −, ×, ÷ with larger numbers and word problems.</p>
+          <span class="bento__cta">Open</span>
+        </a>
+
+        <a class="bento__tile mesh-warm span-3" href="chapters/ch03-multiples-factors.html">
+          <span class="bento__bg-emoji">✖️</span>
+          <span class="tag tag--coral">Practice + Exam</span>
+          <h2 class="bento__title">03 · Multiples &amp; Factors</h2>
+          <p class="bento__desc">LCM, HCF, primes, divisibility rules.</p>
+          <span class="bento__cta">Open</span>
+        </a>
+
+        <a class="bento__tile mesh-cool span-4" href="chapters/ch04-geometry.html">
+          <span class="bento__bg-emoji">📐</span>
+          <span class="tag">Practice + Exam</span>
+          <h2 class="bento__title">04 · Geometry</h2>
+          <p class="bento__desc">Lines, angles, shapes, symmetry.</p>
+          <span class="bento__cta">Open</span>
+        </a>
+
+        <a class="bento__tile mesh-sunset span-4" href="chapters/ch05-decimals.html">
+          <span class="bento__bg-emoji">🔢</span>
+          <span class="tag tag--amber">Practice + Exam</span>
+          <h2 class="bento__title">05 · Decimal Numbers</h2>
+          <p class="bento__desc">Place value, addition, comparison, rounding.</p>
+          <span class="bento__cta">Open</span>
+        </a>
+
+        <a class="bento__tile mesh-purple span-4" href="chapters/ch06-perimeter-area-volume.html">
+          <span class="bento__bg-emoji">📏</span>
+          <span class="tag tag--purple">Practice + Exam</span>
+          <h2 class="bento__title">06 · Perimeter, Area, Volume</h2>
+          <p class="bento__desc">Measure shapes and spaces.</p>
+          <span class="bento__cta">Open</span>
+        </a>
+
+        <a class="bento__tile mesh-mint span-4" href="chapters/ch07-speed-temperature.html">
+          <span class="bento__bg-emoji">🌡️</span>
+          <span class="tag tag--mint">Practice + Exam</span>
+          <h2 class="bento__title">07 · Speed &amp; Temperature</h2>
+          <p class="bento__desc">D=ST, conversions, real-world maths.</p>
+          <span class="bento__cta">Open</span>
+        </a>
+
+        <a class="bento__tile mesh-warm span-4" href="chapters/ch08-data-handling.html">
+          <span class="bento__bg-emoji">📊</span>
+          <span class="tag tag--coral">Practice + Exam</span>
+          <h2 class="bento__title">08 · Data Handling</h2>
+          <p class="bento__desc">Tables, graphs, mean, mode, range.</p>
+          <span class="bento__cta">Open</span>
+        </a>
+
+        <a class="bento__tile mesh-cool span-4" href="chapters/ch09-measurement.html">
+          <span class="bento__bg-emoji">⚖️</span>
+          <span class="tag">Practice + Exam</span>
+          <h2 class="bento__title">09 · Measurement</h2>
+          <p class="bento__desc">Length, mass, capacity — metric system.</p>
+          <span class="bento__cta">Open</span>
+        </a>
+
+        <a class="bento__tile mesh-sunset span-4" href="chapters/ch10-time-money.html">
+          <span class="bento__bg-emoji">⏰</span>
+          <span class="tag tag--amber">Practice + Exam</span>
+          <h2 class="bento__title">10 · Time &amp; Money</h2>
+          <p class="bento__desc">Time, calendar, BHD, rupees.</p>
+          <span class="bento__cta">Open</span>
+        </a>
+
       </section>
 
     </div>
@@ -133,18 +143,18 @@
     Progress.renderGamebar();
 
     const tips = [
-      "When you read a number, always say the place values from left to right: thousands, hundreds, tens, ones.",
-      "Rounding rule: if the next digit is 5 or more, round up. If it's less, round down.",
-      "Roman numerals: I=1, V=5, X=10, L=50, C=100. Put a smaller before bigger to subtract (IV = 4).",
-      "In the Indian system, we group from the right: first 3 digits, then every 2 after that — 1,23,456.",
-      "The successor of a number is just +1. The predecessor is just −1. Easy!",
+      "When you read a number, say the place values from left to right: thousands, hundreds, tens, ones.",
+      "Rounding: if the next digit is 5 or more, round up. Less than 5, round down.",
+      "Roman numerals — I=1, V=5, X=10, L=50, C=100. Smaller before bigger to subtract (IV = 4).",
+      "Indian system groups from the right: 3 digits, then 2s — 1,23,456.",
+      "Successor = +1. Predecessor = −1. Easy to remember.",
       "Zero is special — it keeps the place but has no value on its own.",
-      "To compare numbers, count the digits first. More digits = bigger number.",
-      "Ronaldo checks the goal before shooting. You check the place value before answering!",
-      "Write numbers in words patiently — break them into groups of thousands, then hundreds.",
-      "BODMAS: Brackets, Of, Division, Multiplication, Addition, Subtraction.",
-      "1 km = 1,000 m. 1 m = 100 cm. 1 cm = 10 mm. Always × by 10s.",
-      "Mean = average. Mode = most common. Range = highest minus lowest. Easy."
+      "More digits = bigger number. Always count digits first when comparing.",
+      "Ronaldo checks the goal before shooting. You check place value before answering!",
+      "BODMAS: Brackets, Of, Division, Multiplication, Addition, Subtraction — in that order.",
+      "1 km = 1,000 m. 1 m = 100 cm. Always × by 10s.",
+      "Mean = average. Mode = most common. Range = highest minus lowest.",
+      "Perimeter is the distance around. Area is the space inside. Volume is the room within."
     ];
     const seed = App.todayKey();
     const rand = App.seededRand(seed);

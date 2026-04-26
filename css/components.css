@@ -751,6 +751,383 @@
 .badge-chip__desc { font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; }
 
 /* ============================================================
+   BENTO SYSTEM (2026 refresh)
+   Asymmetric tiles, gradient meshes, big rounded corners.
+   ============================================================ */
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: minmax(120px, auto);
+  gap: var(--space-4);
+}
+@media (max-width: 900px) {
+  .bento { grid-template-columns: repeat(6, 1fr); }
+}
+@media (max-width: 540px) {
+  .bento { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Span helpers — works on a 12-column grid, halves on tablet */
+.bento__tile { grid-column: span 4; }
+.bento__tile.span-3  { grid-column: span 3; }
+.bento__tile.span-4  { grid-column: span 4; }
+.bento__tile.span-5  { grid-column: span 5; }
+.bento__tile.span-6  { grid-column: span 6; }
+.bento__tile.span-7  { grid-column: span 7; }
+.bento__tile.span-8  { grid-column: span 8; }
+.bento__tile.span-12 { grid-column: span 12; }
+.bento__tile.row-2   { grid-row: span 2; }
+.bento__tile.row-3   { grid-row: span 3; }
+
+@media (max-width: 900px) {
+  .bento__tile,
+  .bento__tile.span-3,
+  .bento__tile.span-4 { grid-column: span 3; }
+  .bento__tile.span-5,
+  .bento__tile.span-6,
+  .bento__tile.span-7,
+  .bento__tile.span-8 { grid-column: span 6; }
+  .bento__tile.span-12 { grid-column: span 6; }
+}
+@media (max-width: 540px) {
+  .bento__tile,
+  .bento__tile.span-3,
+  .bento__tile.span-4,
+  .bento__tile.span-5,
+  .bento__tile.span-6,
+  .bento__tile.span-7,
+  .bento__tile.span-8 { grid-column: span 2; }
+  .bento__tile.span-12 { grid-column: span 2; }
+  .bento__tile.row-2,
+  .bento__tile.row-3 { grid-row: span 1; }
+}
+
+/* Base tile look */
+.bento__tile {
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--line);
+  cursor: pointer;
+  isolation: isolate;
+}
+a.bento__tile:hover, .bento__tile:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+  color: var(--ink);
+}
+.bento__tile.no-hover:hover { transform: none; box-shadow: var(--shadow-sm); }
+
+/* Title / desc inside tile */
+.bento__emoji {
+  font-size: 2.4rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12));
+}
+.bento__emoji--xl { font-size: 4.5rem; filter: drop-shadow(0 12px 24px rgba(0,0,0,0.15)); }
+.bento__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0;
+  color: var(--ink);
+}
+.bento__title--big {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  letter-spacing: -0.03em;
+}
+.bento__desc {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+.bento__eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 700;
+  margin: 0;
+}
+.bento__cta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 0.92rem;
+  align-self: flex-start;
+}
+.bento__cta::after {
+  content: '→';
+  transition: transform 0.2s;
+  display: inline-block;
+}
+a.bento__tile:hover .bento__cta::after { transform: translateX(4px); }
+
+/* Mesh-gradient backgrounds */
+.bento__tile.mesh-warm {
+  background:
+    radial-gradient(at 0% 0%, #FBCFE8 0%, transparent 60%),
+    radial-gradient(at 100% 100%, #FDE68A 0%, transparent 60%),
+    #FFF7ED;
+  border-color: rgba(244, 114, 182, 0.18);
+}
+.bento__tile.mesh-cool {
+  background:
+    radial-gradient(at 0% 100%, #BBF7D0 0%, transparent 60%),
+    radial-gradient(at 100% 0%, #BFDBFE 0%, transparent 60%),
+    #F0F9FF;
+  border-color: rgba(20, 184, 166, 0.18);
+}
+.bento__tile.mesh-purple {
+  background:
+    radial-gradient(at 30% 0%, #DDD6FE 0%, transparent 65%),
+    radial-gradient(at 100% 100%, #C4B5FD 0%, transparent 60%),
+    #FAF5FF;
+  border-color: rgba(124, 58, 237, 0.2);
+}
+.bento__tile.mesh-sunset {
+  background:
+    radial-gradient(at 0% 50%, #FED7AA 0%, transparent 60%),
+    radial-gradient(at 100% 0%, #FBCFE8 0%, transparent 60%),
+    radial-gradient(at 100% 100%, #FCD34D 0%, transparent 60%),
+    #FFFBEB;
+  border-color: rgba(251, 146, 60, 0.18);
+}
+.bento__tile.mesh-mint {
+  background:
+    radial-gradient(at 100% 0%, #A7F3D0 0%, transparent 65%),
+    radial-gradient(at 0% 100%, #FDE68A 0%, transparent 60%),
+    #F0FDF4;
+  border-color: rgba(52, 211, 153, 0.2);
+}
+.bento__tile.mesh-ink {
+  background:
+    radial-gradient(at 0% 0%, #4C1D95 0%, transparent 60%),
+    radial-gradient(at 100% 100%, #BE185D 0%, transparent 60%),
+    #14142B;
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.bento__tile.mesh-ink .bento__title,
+.bento__tile.mesh-ink .bento__desc,
+.bento__tile.mesh-ink .bento__cta { color: #FFFFFF; }
+.bento__tile.mesh-ink .bento__eyebrow { color: rgba(255,255,255,0.7); }
+
+/* Floating "3D" emoji background — huge, fades into the tile */
+.bento__bg-emoji {
+  position: absolute;
+  bottom: -20px; right: -10px;
+  font-size: 7rem;
+  opacity: 0.12;
+  pointer-events: none;
+  transform: rotate(-12deg);
+  z-index: 0;
+  line-height: 1;
+}
+.bento__tile.mesh-ink .bento__bg-emoji { opacity: 0.2; }
+
+/* Locked / coming-soon variant */
+.bento__tile.is-locked {
+  opacity: 0.65;
+  cursor: not-allowed;
+  pointer-events: auto;
+}
+.bento__tile.is-locked:hover { transform: none; box-shadow: var(--shadow-sm); }
+.bento__tile.is-locked::after {
+  content: '🔒';
+  position: absolute;
+  top: 14px; right: 14px;
+  font-size: 1.1rem;
+  opacity: 0.6;
+}
+
+/* Pill / tag inside a tile */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(20, 20, 43, 0.06);
+  color: var(--ink);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  align-self: flex-start;
+}
+.tag--purple { background: rgba(124, 58, 237, 0.12); color: var(--purple-dark); }
+.tag--coral  { background: rgba(244, 114, 182, 0.14); color: var(--coral-dark); }
+.tag--mint   { background: rgba(52, 211, 153, 0.16); color: var(--pitch-dark); }
+.tag--amber  { background: rgba(251, 191, 36, 0.16); color: var(--yellow-dark); }
+.tag--live { background: var(--coral-dark); color: white; }
+.tag--live::before { content: '●'; animation: pulse-red 1.4s ease-in-out infinite; }
+
+/* Big numeric value (for stat tiles) */
+.bento__big-num {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+  font-weight: 700;
+}
+.bento__big-num--colour { background: linear-gradient(135deg, var(--purple), var(--coral)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+/* Hero section wrapper (above the bento) */
+.bento-hero {
+  margin-bottom: var(--space-7);
+  padding-top: var(--space-5);
+}
+.bento-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+  box-shadow: var(--shadow-xs);
+}
+.bento-hero__eyebrow::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--pitch);
+  box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.2);
+  animation: pulse-mint 1.6s ease-in-out infinite;
+}
+@keyframes pulse-mint {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.2); }
+  50% { box-shadow: 0 0 0 7px rgba(52, 211, 153, 0); }
+}
+.bento-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  margin: 0 0 var(--space-3);
+  color: var(--ink);
+  max-width: 920px;
+}
+.bento-hero__title .accent {
+  background: linear-gradient(135deg, var(--purple) 0%, var(--coral) 50%, var(--yellow) 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.bento-hero__sub {
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  color: var(--ink-soft);
+  max-width: 720px;
+  line-height: 1.55;
+  margin: 0 0 var(--space-4);
+}
+
+/* Avatar badge inside a tile (for Crispin) */
+.crispin-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: rgba(255,255,255,0.65);
+  border-radius: var(--radius-lg);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+}
+.crispin-card__avatar {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FBBF24, #F59E0B);
+  padding: 3px;
+  flex-shrink: 0;
+  position: relative;
+}
+.crispin-card__avatar img {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 22%;
+}
+.crispin-card__avatar::after {
+  content: '7';
+  position: absolute;
+  bottom: -3px; right: -3px;
+  background: var(--coral-dark);
+  color: white;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 2.5px solid white;
+}
+.crispin-card__name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 2px;
+  letter-spacing: -0.02em;
+}
+.crispin-card__sub {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* Modern button refresh */
+.btn-modern {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--ink);
+  color: white;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  transition: transform 0.15s, background 0.18s;
+  text-decoration: none;
+}
+.btn-modern:hover { transform: translateY(-2px); background: var(--purple); color: white; text-decoration: none; }
+.btn-modern--soft {
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-xs);
+}
+.btn-modern--soft:hover { border-color: var(--ink); color: var(--ink); background: var(--surface); }
+
+/* ============================================================
+   END bento system
+   ============================================================ */
+
+/* ============================================================
    EXAM MODE — competitive-exam UI (sticky timer + question palette)
    ============================================================ */
 .exam-shell {

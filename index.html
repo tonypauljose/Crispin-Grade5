@@ -4,199 +4,154 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Crispin's World — Grade 5 Learning Portal</title>
-  <meta name="description" content="Crispin's interactive Grade 5 learning portal — Mathematics, riddles, penalty shootout, and more. Asian School Bahrain, CBSE.">
-  <meta name="theme-color" content="#FFFDF5">
+  <meta name="description" content="Crispin's interactive Grade 5 learning portal — Mathematics, English, riddles, penalty shootout, and timed exams. Asian School Bahrain, CBSE.">
+  <meta name="theme-color" content="#FAF7F0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Kalam:wght@400;700&family=Patrick+Hand&family=Permanent+Marker&family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/animations.css">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%BD%3C/text%3E%3C/svg%3E">
-  <style>
-    body { background: #F3EBD3; background-image: radial-gradient(ellipse at top, #FEF3C7 0%, #FDE68A 100%); }
-  </style>
 </head>
 <body>
   <main class="page">
     <div class="container">
 
-      <!-- ======================================================
-           SCRAPBOOK HERO — Crispin's notebook page
-           ====================================================== -->
-      <section class="scrapbook">
-
-        <!-- Doodles scattered around -->
-        <svg class="doodle doodle--football-1" width="54" height="54" viewBox="0 0 60 60" aria-hidden="true">
-          <circle cx="30" cy="30" r="25" fill="none" stroke="#1F2937" stroke-width="2.5"/>
-          <polygon points="30,18 40,24 36,36 24,36 20,24" fill="#1F2937"/>
-          <line x1="30" y1="18" x2="30" y2="6"  stroke="#1F2937" stroke-width="2"/>
-          <line x1="40" y1="24" x2="50" y2="20" stroke="#1F2937" stroke-width="2"/>
-          <line x1="36" y1="36" x2="44" y2="48" stroke="#1F2937" stroke-width="2"/>
-          <line x1="24" y1="36" x2="16" y2="48" stroke="#1F2937" stroke-width="2"/>
-          <line x1="20" y1="24" x2="10" y2="20" stroke="#1F2937" stroke-width="2"/>
-        </svg>
-
-        <svg class="doodle doodle--star-1" width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
-          <path d="M 20 3 L 25 15 L 37 15 L 27 23 L 31 36 L 20 28 L 9 36 L 13 23 L 3 15 L 15 15 Z"
-                fill="#FACC15" stroke="#F59E0B" stroke-width="2" stroke-linejoin="round"/>
-        </svg>
-
-        <svg class="doodle doodle--lightning-1" width="32" height="42" viewBox="0 0 32 42" aria-hidden="true">
-          <path d="M 14 3 L 4 22 L 14 22 L 10 39 L 28 17 L 18 17 L 22 3 Z"
-                fill="#FBBF24" stroke="#1F2937" stroke-width="2" stroke-linejoin="round"/>
-        </svg>
-
-        <svg class="doodle doodle--heart-1" width="36" height="32" viewBox="0 0 36 32" aria-hidden="true">
-          <path d="M 18 28 C 8 20 2 14 2 8 C 2 4 5 2 9 2 C 13 2 15 4 18 8 C 21 4 23 2 27 2 C 31 2 34 4 34 8 C 34 14 28 20 18 28 Z"
-                fill="#EF4444" stroke="#7F1D1D" stroke-width="2"/>
-        </svg>
-
-        <svg class="doodle doodle--arrow-1" width="110" height="60" viewBox="0 0 110 60" aria-hidden="true">
-          <path d="M 5 30 Q 40 10 75 30" stroke="#DC2626" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <path d="M 65 22 L 76 30 L 65 38" stroke="#DC2626" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          <text x="10" y="56" font-family="Caveat, cursive" font-size="18" fill="#DC2626" transform="rotate(-5 55 50)">look it's me!</text>
-        </svg>
-
-        <!-- Title -->
-        <div class="scrapbook__title-wrap">
-          <h1 class="scrapbook__title">
-            <span>CRISPIN'S</span>
-            <span>AWESOME</span>
-            <span>NOTEBOOK!</span>
-          </h1>
-          <div>
-            <span class="scrapbook__subtitle">grade 5 · maths · football · siiuuu!!</span>
-          </div>
+      <!-- Hero header -->
+      <section class="bento-hero">
+        <div class="bento-hero__eyebrow">
+          <span id="hero-greeting">Welcome</span>
+          <span style="color:var(--ink-muted);">·</span>
+          <span id="hero-date"></span>
         </div>
-
-        <!-- Main grid: polaroid + introduction -->
-        <div class="scrapbook__grid">
-
-          <div style="display:flex; flex-direction:column; gap:var(--space-3); align-items:center;">
-            <div class="polaroid">
-              <div class="polaroid__tape polaroid__tape--tl"></div>
-              <div class="polaroid__tape polaroid__tape--tr"></div>
-              <div class="polaroid__seven">7</div>
-              <img class="polaroid__img" src="assets/crispin-avatar-source.jpeg" alt="Crispin">
-              <div class="polaroid__caption">that's me ⚽</div>
-              <div class="polaroid__tape polaroid__tape--br"></div>
-            </div>
-
-            <div class="hand-scorecard" style="width: 100%; max-width: 220px;">
-              <div class="hand-scorecard__title">⭐ my stats</div>
-              <div class="hand-scorecard__row"><span class="hand-scorecard__label">level</span><span class="hand-scorecard__val" id="sb-level">Beginner</span></div>
-              <div class="hand-scorecard__row"><span class="hand-scorecard__label">XP</span><span class="hand-scorecard__val" id="sb-xp">0</span></div>
-              <div class="hand-scorecard__row"><span class="hand-scorecard__label">streak 🔥</span><span class="hand-scorecard__val" id="sb-streak">0d</span></div>
-              <div class="hand-scorecard__row"><span class="hand-scorecard__label">badges</span><span class="hand-scorecard__val" id="sb-badges">0/21</span></div>
-            </div>
-          </div>
-
-          <div>
-            <div class="hand-header">hey! it's me 👋</div>
-            <p class="hand" style="font-size:1.25rem; line-height:1.6; color:var(--ink-blue); margin-bottom:var(--space-3);">
-              my name is <strong style="color:var(--marker-red);">CRISPIN</strong> and i'm in grade 5 at asian school bahrain. i LOVE <span class="siuuu">football</span> and ronaldo (obvs). this is MY notebook where i do maths and play games and stuff.
-            </p>
-            <p class="hand" style="font-size:1.15rem; color:var(--ink-blue); margin-bottom:var(--space-3);">
-              <span class="scribble-underline"><strong>today's mission:</strong></span> chapter 1 → numbers 1 to 10,000 📚
-            </p>
-
-            <ul class="hand-list">
-              <li class="strike">show up (done ✅)</li>
-              <li>open today's maths chapter</li>
-              <li>score at least 3/5 in penalty shootout</li>
-              <li>crack the riddle of the day 🧠</li>
-            </ul>
-          </div>
-
-        </div>
-
-        <!-- Section: "things i can do" -->
-        <div style="margin-top: var(--space-5);">
-          <div class="hand-header" style="margin-bottom:var(--space-4);">things i can do on this page 👇</div>
-          <div class="grid" style="grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap: var(--space-4);">
-            <a class="sticky-note" href="maths.html">
-              <span class="sticky-note__icon">🧮</span>
-              <span class="sticky-note__title">MATHS!</span>
-              <span class="sticky-note__sub">chapter 1 open →</span>
-            </a>
-            <a class="sticky-note sticky-note--pink" href="#shootout-section">
-              <span class="sticky-note__icon">⚽</span>
-              <span class="sticky-note__title">PENALTY!</span>
-              <span class="sticky-note__sub">5 shots · siuuu</span>
-            </a>
-            <a class="sticky-note sticky-note--blue" href="fun.html">
-              <span class="sticky-note__icon">🧠</span>
-              <span class="sticky-note__title">RIDDLES</span>
-              <span class="sticky-note__sub">33 brain teasers</span>
-            </a>
-            <a class="sticky-note sticky-note--green" href="learning.html">
-              <span class="sticky-note__icon">🎓</span>
-              <span class="sticky-note__title">SUBJECTS</span>
-              <span class="sticky-note__sub">english · evs · more</span>
-            </a>
-            <a class="sticky-note sticky-note--orange" href="exam.html" style="background: linear-gradient(180deg, #FECACA 0%, #FCA5A5 100%);">
-              <span class="sticky-note__icon">📝</span>
-              <span class="sticky-note__title">EXAM!</span>
-              <span class="sticky-note__sub">30 min · timed · sent to mum</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- PS note -->
-        <div style="text-align: right; margin-top: var(--space-5);">
-          <div class="ps-note">p.s. cristiano ronaldo is the GOAT 🐐 pls no haters ok bye</div>
-        </div>
-
-      </section>
-
-      <!-- ======================================================
-           Shootout (notebook-framed)
-           ====================================================== -->
-      <section class="notebook-frame" id="shootout-section">
-        <div class="hand-header" style="margin-bottom: var(--space-2);">tonight's match ⚽🔥</div>
-        <p class="hand" style="font-size: 1.1rem; color: var(--ink-blue); margin-bottom: var(--space-4);">
-          pick a corner, hold to charge (not too much!!), release to shoot. score <span class="siuuu">3 out of 5</span> to win. keeper gets trickier each round. <span class="hand" style="color:var(--marker-green);">good luck champ</span> 🍀
+        <h1 class="bento-hero__title">
+          Hey <span class="accent" id="hero-name">there</span>,<br>
+          ready to <span class="accent">learn &amp; play?</span>
+        </h1>
+        <p class="bento-hero__sub">
+          Crispin's personal Grade 5 portal — Maths, English, riddles, penalty shootouts, and 30-minute exams. Pick a tile to dive in.
         </p>
-        <div id="shootout-host"></div>
       </section>
 
-      <!-- ======================================================
-           Riddle of the day (speech bubble)
-           ====================================================== -->
+      <!-- Bento grid -->
+      <section class="bento" style="margin-bottom: var(--space-7);">
+
+        <!-- Crispin's player card (large, ink mesh) -->
+        <a class="bento__tile mesh-ink span-5 row-2" href="learning.html">
+          <span class="bento__bg-emoji">⚽</span>
+          <p class="bento__eyebrow" style="color:rgba(255,255,255,0.7);">Player profile</p>
+          <h2 class="bento__title bento__title--big">Crispin · #7</h2>
+          <p class="bento__desc" style="color:rgba(255,255,255,0.85);">Grade 5 · Asian School Bahrain · CBSE</p>
+          <div class="crispin-card" style="background:rgba(255,255,255,0.1); margin-top:var(--space-3);">
+            <div class="crispin-card__avatar"><img src="assets/crispin-avatar-source.jpeg" alt="Crispin"></div>
+            <div>
+              <p class="crispin-card__name" style="color:white;">Crispin</p>
+              <p class="crispin-card__sub" style="color:rgba(255,255,255,0.75);">⚡ <span id="hero-level">Beginner</span> · 🔥 <span id="hero-streak">0</span>d streak · ⭐ <span id="hero-xp">0</span> XP</p>
+            </div>
+          </div>
+          <span class="bento__cta" style="color:white;">View progress</span>
+        </a>
+
+        <!-- Maths (purple mesh, large) -->
+        <a class="bento__tile mesh-purple span-4 row-2" href="maths.html">
+          <span class="bento__bg-emoji">🧮</span>
+          <span class="tag tag--purple">Subject</span>
+          <h2 class="bento__title bento__title--big">Mathematics</h2>
+          <p class="bento__desc">10 chapters · CBSE Grade 5. Place value, four operations, geometry, decimals, time &amp; money — practice every chapter.</p>
+          <span class="bento__cta">Open Maths</span>
+        </a>
+
+        <!-- Exam (coral mesh, tall) -->
+        <a class="bento__tile mesh-warm span-3 row-2" href="exam.html">
+          <span class="bento__bg-emoji">📝</span>
+          <span class="tag tag--coral tag--live">Exam</span>
+          <h2 class="bento__title">30-min<br>Chapter Exam</h2>
+          <p class="bento__desc">Pick a chapter, take a timed exam. See your score with rationales for every question.</p>
+          <span class="bento__cta">Start exam</span>
+        </a>
+
+        <!-- English (mint mesh) -->
+        <a class="bento__tile mesh-mint span-4" href="english.html">
+          <span class="bento__bg-emoji">📖</span>
+          <span class="tag tag--mint">Subject</span>
+          <h2 class="bento__title">English</h2>
+          <p class="bento__desc">11 topics. Currently learning <strong>Nouns</strong>.</p>
+          <span class="bento__cta">Open English</span>
+        </a>
+
+        <!-- Penalty shootout (sunset mesh) -->
+        <a class="bento__tile mesh-sunset span-4" href="fun.html#shootout">
+          <span class="bento__bg-emoji">⚽</span>
+          <span class="tag tag--amber">Game</span>
+          <h2 class="bento__title">Penalty Shootout</h2>
+          <p class="bento__desc">5 rounds, score 3+ to win. Streaks multiply rewards.</p>
+          <span class="bento__cta">Play</span>
+        </a>
+
+        <!-- Riddles (cool mesh) -->
+        <a class="bento__tile mesh-cool span-4" href="fun.html">
+          <span class="bento__bg-emoji">🧠</span>
+          <span class="tag">Brain</span>
+          <h2 class="bento__title">Riddles</h2>
+          <p class="bento__desc">33+ brain teasers — math, word, logic, football.</p>
+          <span class="bento__cta">Open archive</span>
+        </a>
+
+      </section>
+
+      <!-- Stats row -->
+      <section class="bento" style="margin-bottom: var(--space-7);">
+        <div class="bento__tile no-hover span-3">
+          <p class="bento__eyebrow">Chapters</p>
+          <div class="bento__big-num bento__big-num--colour">10</div>
+          <p class="bento__desc">Practice ready</p>
+        </div>
+        <div class="bento__tile no-hover span-3">
+          <p class="bento__eyebrow">Exam questions</p>
+          <div class="bento__big-num bento__big-num--colour">240+</div>
+          <p class="bento__desc">Across Maths &amp; English</p>
+        </div>
+        <div class="bento__tile no-hover span-3">
+          <p class="bento__eyebrow">Riddles</p>
+          <div class="bento__big-num bento__big-num--colour">33</div>
+          <p class="bento__desc">In the brain-teaser archive</p>
+        </div>
+        <div class="bento__tile no-hover span-3">
+          <p class="bento__eyebrow">Days on portal</p>
+          <div class="bento__big-num bento__big-num--colour" id="hero-days">0</div>
+          <p class="bento__desc">Keep the streak alive</p>
+        </div>
+      </section>
+
+      <!-- Riddle of the day -->
       <section class="section">
-        <div class="hand-header" style="display:block; margin-bottom:var(--space-3);">
-          riddle of the day 🧠
-        </div>
-        <div style="display:flex; align-items:flex-start; gap: 16px;">
-          <div style="flex-shrink:0; font-size: 3.5rem; line-height: 1;">🤔</div>
-          <div style="flex:1;">
-            <div id="riddle-teaser"></div>
-            <div style="margin-top: 12px;">
-              <a class="sticky-note sticky-note--orange" style="display:inline-flex; min-height: 0; padding: 12px 22px; font-size: 1rem;" href="fun.html">
-                📚 see all 33 riddles →
-              </a>
-            </div>
-          </div>
+        <h2 class="section-title">🧠 Riddle of the Day</h2>
+        <div id="riddle-teaser"></div>
+        <div style="margin-top: var(--space-3);">
+          <a class="btn-modern btn-modern--soft" href="fun.html">See all riddles →</a>
         </div>
       </section>
 
-      <!-- ======================================================
-           About (handwritten footer notes)
-           ====================================================== -->
-      <section class="section" style="text-align:center; padding-top: var(--space-5);">
-        <p class="hand" style="font-size: 1.2rem; color: var(--ink-blue);">
-          built by my dad <span class="siuuu" style="font-size:1em;">🛠️</span> with lots of ❤️
-          <br>
-          <span class="sketch" style="font-size: 1.4rem; color: var(--marker-pink);">for crispin, grade 5, asian school bahrain</span>
-        </p>
+      <!-- About -->
+      <section class="bento">
+        <div class="bento__tile no-hover mesh-warm span-12" style="padding: var(--space-6);">
+          <p class="bento__eyebrow">About</p>
+          <h2 class="bento__title bento__title--big">Crispin's personal Grade 5 portal.</h2>
+          <p class="bento__desc" style="font-size:1.05rem; max-width:680px;">
+            Built by dad with ❤️ and ⚽. Follows the CBSE syllabus used at Asian School Bahrain.
+            Every chapter has practice and a 30-min timed exam. Friends and family welcome — try the
+            <a href="fun.html" style="color:var(--coral-dark); font-weight:700;">Fun Zone</a>.
+          </p>
+        </div>
       </section>
 
     </div>
 
     <footer class="footer">
       <div class="container">
-        <p class="hand" style="font-size: 1.1rem;">last updated <span id="last-updated"></span> · © <span id="year"></span> crispin's world · <a href="https://crispintony.com">crispintony.com</a></p>
+        <p>Made with ❤️ and ⚽ for Crispin · Last updated <span id="last-updated"></span></p>
+        <p class="muted">© <span id="year"></span> Crispin's World · <a href="https://crispintony.com">crispintony.com</a></p>
       </div>
     </footer>
   </main>
@@ -205,44 +160,34 @@
   <script src="js/progress.js"></script>
   <script src="data/riddles.js"></script>
   <script src="js/riddles.js"></script>
-  <script src="js/penalty-shootout.js"></script>
   <script>
     (function () {
       App.renderTopBar('home');
       Progress.markVisit();
       Progress.renderGamebar();
 
-      // Name prompt on first visit
+      // Personalised greeting
+      const apply = (name) => {
+        document.getElementById('hero-greeting').textContent = App.greeting();
+        document.getElementById('hero-name').textContent = name || 'champ';
+      };
       const existing = App.getProfile();
-      if (!existing) App.askName(() => {});
+      if (existing) apply(existing.name); else App.askName(p => apply(p.name));
 
-      // Scorecard update
-      const s = Progress.getStats();
-      document.getElementById('sb-level').textContent = s.level.curr.name;
-      document.getElementById('sb-xp').textContent = s.xp;
-      document.getElementById('sb-streak').textContent = s.streak + 'd';
-      document.getElementById('sb-badges').textContent = s.badges + '/' + s.totalBadges;
-
-      // Riddle of the day
-      if (window.Riddles) window.Riddles.renderDaily(document.getElementById('riddle-teaser'));
-
-      // Penalty shootout
-      new PenaltyGame('shootout-host');
-
-      // Footer
-      document.getElementById('year').textContent = new Date().getFullYear();
+      // Date
+      document.getElementById('hero-date').textContent = App.formatDateDMY(new Date());
       document.getElementById('last-updated').textContent = App.formatDateDMY(new Date());
+      document.getElementById('year').textContent = new Date().getFullYear();
 
-      // Polaroid click — fun interaction
-      document.querySelector('.polaroid').addEventListener('click', () => {
-        App.Audio.playClick();
-        App.showToast("Hey! That's me 😎", 'football', 1800);
-      });
+      // Stats
+      const s = Progress.getStats();
+      document.getElementById('hero-level').textContent = s.level.curr.name;
+      document.getElementById('hero-streak').textContent = s.streak;
+      document.getElementById('hero-xp').textContent = s.xp;
+      document.getElementById('hero-days').textContent = s.days;
 
-      // Sticky notes — marker "squeak" on hover
-      document.querySelectorAll('.sticky-note').forEach(n => {
-        n.addEventListener('mouseenter', () => App.Audio.playClick());
-      });
+      // Riddle teaser
+      if (window.Riddles) window.Riddles.renderDaily(document.getElementById('riddle-teaser'));
     })();
   </script>
 </body>

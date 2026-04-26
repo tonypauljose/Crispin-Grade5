@@ -4,126 +4,68 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>English — Crispin's World</title>
-  <meta name="theme-color" content="#FFFDF5">
+  <meta name="theme-color" content="#FAF7F0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Kalam:wght@400;700&family=Patrick+Hand&family=Permanent+Marker&family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/animations.css">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E">
-  <style>
-    body { background: #F3EBD3; background-image: radial-gradient(ellipse at top, #FEF3C7 0%, #FDE68A 100%); }
-  </style>
 </head>
 <body>
   <main class="page">
     <div class="container">
 
-      <section class="scrapbook">
-
-        <div class="scrapbook__title-wrap">
-          <h1 class="scrapbook__title">
-            <span>MY ENGLISH</span>
-            <span>NOTEBOOK</span>
-            <span>📖 ✏️</span>
-          </h1>
-          <div>
-            <span class="scrapbook__subtitle">grade 5 · 11 topics · mostly nouns rn lol</span>
-          </div>
+      <section class="bento-hero">
+        <div class="bento-hero__eyebrow">
+          <span>English</span><span style="color:var(--ink-muted);">·</span><span>Grade 5 · CBSE</span>
         </div>
+        <h1 class="bento-hero__title">11 topics.<br>Currently <span class="accent">Nouns.</span></h1>
+        <p class="bento-hero__sub">Asian School Bahrain syllabus. Topics 2-11 unlock as the school year progresses.</p>
+      </section>
 
-        <p class="hand" style="font-size:1.2rem; color:var(--ink-blue); max-width:620px; margin: 0 auto var(--space-4); text-align:center;">
-          these are all the english topics i have to learn this year. i'm on <span class="siuuu" style="font-size:1.1em;">NOUNS</span> right now. tap a sticky note to jump in 👇
-        </p>
-
-        <!-- 11 topic tiles as sticky notes -->
-        <div class="grid" style="grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-4);">
-
-          <a class="sticky-note" href="chapters/eng01-nouns.html">
-            <span class="sticky-note__icon">🧾</span>
-            <span class="sticky-note__title">1. NOUNS</span>
-            <span class="sticky-note__sub">open · learning now</span>
-          </a>
-
-          <a class="sticky-note sticky-note--pink" href="#" onclick="event.preventDefault(); App.showToast('coming soon 📚', 'info');">
-            <span class="sticky-note__icon">📜</span>
-            <span class="sticky-note__title">2. OUTLINE STORY</span>
-            <span class="sticky-note__sub">coming soon</span>
-          </a>
-
-          <a class="sticky-note sticky-note--blue" href="#" onclick="event.preventDefault(); App.showToast('coming soon 🎨', 'info');">
-            <span class="sticky-note__icon">🎨</span>
-            <span class="sticky-note__title">3. ADJECTIVES</span>
-            <span class="sticky-note__sub">coming soon</span>
-          </a>
-
-          <a class="sticky-note sticky-note--green" href="#" onclick="event.preventDefault(); App.showToast('coming soon ⏰', 'info');">
-            <span class="sticky-note__icon">⏱️</span>
-            <span class="sticky-note__title">4. TENSE</span>
-            <span class="sticky-note__sub">coming soon</span>
-          </a>
-
-          <a class="sticky-note sticky-note--orange" href="#" onclick="event.preventDefault(); App.showToast('coming soon ✍️', 'info');">
-            <span class="sticky-note__icon">✍️</span>
-            <span class="sticky-note__title">5. CREATIVE WRITING</span>
-            <span class="sticky-note__sub">coming soon</span>
-          </a>
-
-          <a class="sticky-note" href="#" onclick="event.preventDefault(); App.showToast('coming soon 🔗', 'info');">
-            <span class="sticky-note__icon">🔗</span>
-            <span class="sticky-note__title">6. CONJUNCTIONS</span>
-            <span class="sticky-note__sub">coming soon</span>
-          </a>
-
-          <a class="sticky-note sticky-note--pink" href="#" onclick="event.preventDefault(); App.showToast('coming soon ⚡', 'info');">
-            <span class="sticky-note__icon">⚡</span>
-            <span class="sticky-note__title">7. ADVERBS</span>
-            <span class="sticky-note__sub">coming soon</span>
-          </a>
-
-          <a class="sticky-note sticky-note--blue" href="#" onclick="event.preventDefault(); App.showToast('coming soon ⚙️', 'info');">
-            <span class="sticky-note__icon">⚙️</span>
-            <span class="sticky-note__title">8. TRANS/INTRANS VERBS</span>
-            <span class="sticky-note__sub">coming soon</span>
-          </a>
-
-          <a class="sticky-note sticky-note--green" href="#" onclick="event.preventDefault(); App.showToast('coming soon 💌', 'info');">
-            <span class="sticky-note__icon">💌</span>
-            <span class="sticky-note__title">9. LETTER WRITING</span>
-            <span class="sticky-note__sub">coming soon</span>
-          </a>
-
-          <a class="sticky-note sticky-note--orange" href="#" onclick="event.preventDefault(); App.showToast('coming soon 💬', 'info');">
-            <span class="sticky-note__icon">💬</span>
-            <span class="sticky-note__title">10. REPORTED SPEECH</span>
-            <span class="sticky-note__sub">coming soon</span>
-          </a>
-
-          <a class="sticky-note" href="#" onclick="event.preventDefault(); App.showToast('coming soon 🗣️', 'info');">
-            <span class="sticky-note__icon">🗣️</span>
-            <span class="sticky-note__title">11. DIALOGUE WRITING</span>
-            <span class="sticky-note__sub">coming soon</span>
-          </a>
-
+      <!-- Word of the day -->
+      <section class="bento" style="margin-bottom: var(--space-7);">
+        <div class="bento__tile no-hover mesh-sunset span-12">
+          <span class="bento__bg-emoji">📚</span>
+          <p class="bento__eyebrow">Word of the day</p>
+          <h2 class="bento__title bento__title--big" id="wotd-word">…</h2>
+          <p class="bento__desc"><em id="wotd-type"></em> · <span id="wotd-meaning"></span></p>
         </div>
+      </section>
 
-        <!-- Word of the day -->
-        <div style="margin-top: var(--space-5);">
-          <div class="hand-header">word of the day 📚</div>
-          <div class="speech-bubble" id="wotd-bubble">
-            <strong id="wotd-word">...</strong> <em id="wotd-type" style="color:var(--marker-purple);"></em><br>
-            <span class="hand" id="wotd-meaning"></span>
-          </div>
-        </div>
+      <!-- Topics bento -->
+      <h2 class="section-title">All topics</h2>
+      <section class="bento">
+
+        <a class="bento__tile mesh-mint span-6 row-2" href="chapters/eng01-nouns.html">
+          <span class="bento__bg-emoji">🧾</span>
+          <span class="tag tag--mint">Active · Full chapter</span>
+          <h2 class="bento__title bento__title--big">01 · Nouns</h2>
+          <p class="bento__desc">Common &amp; proper, plurals (regular &amp; irregular), countable / uncountable, collective, abstract, gender, possessives. Lessons + practice + 122-Q quiz + worksheet + exam.</p>
+          <span class="bento__cta">Open chapter</span>
+        </a>
+
+        <div class="bento__tile no-hover is-locked span-3"><span class="bento__bg-emoji">📜</span><span class="tag">Coming soon</span><h2 class="bento__title">02 · Outline Story</h2><p class="bento__desc">Plot, sequencing, summary writing.</p></div>
+        <div class="bento__tile no-hover is-locked span-3"><span class="bento__bg-emoji">🎨</span><span class="tag">Coming soon</span><h2 class="bento__title">03 · Adjectives</h2><p class="bento__desc">Describing words, comparison, order.</p></div>
+        <div class="bento__tile no-hover is-locked span-3"><span class="bento__bg-emoji">⏱️</span><span class="tag">Coming soon</span><h2 class="bento__title">04 · Tense</h2><p class="bento__desc">Past, present, future, perfect tenses.</p></div>
+        <div class="bento__tile no-hover is-locked span-3"><span class="bento__bg-emoji">✍️</span><span class="tag">Coming soon</span><h2 class="bento__title">05 · Creative Writing</h2><p class="bento__desc">Stories, descriptions, prompts.</p></div>
+
+        <div class="bento__tile no-hover is-locked span-3"><span class="bento__bg-emoji">🔗</span><span class="tag">Coming soon</span><h2 class="bento__title">06 · Conjunctions</h2><p class="bento__desc">Joining words: and, but, because…</p></div>
+        <div class="bento__tile no-hover is-locked span-3"><span class="bento__bg-emoji">⚡</span><span class="tag">Coming soon</span><h2 class="bento__title">07 · Adverbs</h2><p class="bento__desc">Words that describe verbs.</p></div>
+        <div class="bento__tile no-hover is-locked span-3"><span class="bento__bg-emoji">⚙️</span><span class="tag">Coming soon</span><h2 class="bento__title">08 · Trans / Intrans Verbs</h2><p class="bento__desc">Verbs that take an object — or don't.</p></div>
+        <div class="bento__tile no-hover is-locked span-3"><span class="bento__bg-emoji">💌</span><span class="tag">Coming soon</span><h2 class="bento__title">09 · Letter Writing</h2><p class="bento__desc">Formal &amp; informal letter formats.</p></div>
+
+        <div class="bento__tile no-hover is-locked span-6"><span class="bento__bg-emoji">💬</span><span class="tag">Coming soon</span><h2 class="bento__title">10 · Reported Speech</h2><p class="bento__desc">Direct vs indirect speech, tense changes.</p></div>
+        <div class="bento__tile no-hover is-locked span-6"><span class="bento__bg-emoji">🗣️</span><span class="tag">Coming soon</span><h2 class="bento__title">11 · Dialogue Writing</h2><p class="bento__desc">Punctuating conversations between characters.</p></div>
 
       </section>
 
     </div>
-
     <footer class="footer">
       <div class="container">
-        <p class="hand" style="font-size:1.05rem;">back to <a href="index.html">home</a> · <a href="learning.html">all subjects</a></p>
+        <p>Back to <a href="index.html">home</a> · <a href="learning.html">all subjects</a></p>
       </div>
     </footer>
   </main>
@@ -135,7 +77,6 @@
     Progress.markVisit();
     Progress.renderGamebar();
 
-    // Word of the day — deterministic by date
     const words = [
       { w: 'serendipity', t: 'noun', m: 'finding something nice by accident — like finding money in your old jacket pocket.' },
       { w: 'gobsmacked',  t: 'adjective', m: 'super surprised, like your jaw dropped on the floor.' },
@@ -151,7 +92,7 @@
     const rand = App.seededRand(App.todayKey() + 'eng');
     const pick = words[Math.floor(rand() * words.length)];
     document.getElementById('wotd-word').textContent = pick.w;
-    document.getElementById('wotd-type').textContent = '(' + pick.t + ')';
+    document.getElementById('wotd-type').textContent = pick.t;
     document.getElementById('wotd-meaning').textContent = pick.m;
   </script>
 </body>

@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Learning Hub — Crispin's World</title>
-  <meta name="theme-color" content="#6B21A8">
+  <meta name="theme-color" content="#FAF7F0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/common.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/animations.css">
@@ -17,57 +17,83 @@
   <main class="page">
     <div class="container">
 
-      <section class="section">
-        <h1>🎓 Learning Hub</h1>
-        <p class="lead">Pick a subject. Right now Mathematics is ready — other subjects land later this term.</p>
+      <section class="bento-hero">
+        <div class="bento-hero__eyebrow">
+          <span>Learning Hub</span><span style="color:var(--ink-muted);">·</span><span>Grade 5</span>
+        </div>
+        <h1 class="bento-hero__title">Pick a <span class="accent">subject.</span></h1>
+        <p class="bento-hero__sub">Mathematics and English are live. The rest land later this term.</p>
       </section>
 
-      <section class="section">
-        <div class="grid grid-2">
+      <section class="bento" style="margin-bottom: var(--space-7);">
 
-          <a class="action-tile action-tile--maths" href="maths.html">
-            <span class="action-tile__emoji">🧮</span>
-            <h3 class="action-tile__title">Mathematics</h3>
-            <p class="action-tile__desc">10 chapters · CBSE Grade 5 workbook · Chapter 1 live now.</p>
-            <span class="chapter-card__badge" style="margin-top:auto;">Active</span>
-          </a>
+        <a class="bento__tile mesh-purple span-6 row-2" href="maths.html">
+          <span class="bento__bg-emoji">🧮</span>
+          <span class="tag tag--purple">Active</span>
+          <h2 class="bento__title bento__title--big">Mathematics</h2>
+          <p class="bento__desc">10 chapters · CBSE Grade 5 workbook. Practice every chapter, take a 30-minute exam any time.</p>
+          <span class="bento__cta">Open Maths</span>
+        </a>
 
-          <a class="action-tile action-tile--learning" href="english.html">
-            <span class="action-tile__emoji">📖</span>
-            <h3 class="action-tile__title">English</h3>
-            <p class="action-tile__desc">11 topics · Nouns open now · grammar &amp; writing.</p>
-            <span class="chapter-card__badge" style="margin-top:auto;">Active</span>
-          </a>
+        <a class="bento__tile mesh-mint span-6 row-2" href="english.html">
+          <span class="bento__bg-emoji">📖</span>
+          <span class="tag tag--mint">Active</span>
+          <h2 class="bento__title bento__title--big">English</h2>
+          <p class="bento__desc">11 topics. Currently learning <strong>Nouns</strong> — full lessons, practice, quiz, worksheet, exam.</p>
+          <span class="bento__cta">Open English</span>
+        </a>
 
-          <a class="action-tile action-tile--fun" href="#" onclick="event.preventDefault(); App.showToast('EVS / Science coming soon! 🌱', 'info');">
-            <span class="action-tile__emoji">🌍</span>
-            <h3 class="action-tile__title">Science / EVS</h3>
-            <p class="action-tile__desc">Our world, life, and how things work.</p>
-            <span class="chapter-card__badge soon" style="margin-top:auto;">Coming soon</span>
-          </a>
+        <div class="bento__tile no-hover is-locked span-4">
+          <span class="bento__bg-emoji">🌍</span>
+          <span class="tag">Coming soon</span>
+          <h2 class="bento__title">Science / EVS</h2>
+          <p class="bento__desc">Our world, life, and how things work.</p>
+        </div>
 
-          <a class="action-tile action-tile--progress" href="#" onclick="event.preventDefault(); App.showToast('Hindi / Arabic coming soon! 🗣️', 'info');">
-            <span class="action-tile__emoji">🗣️</span>
-            <h3 class="action-tile__title">Hindi / Arabic</h3>
-            <p class="action-tile__desc">Second language practice and vocabulary.</p>
-            <span class="chapter-card__badge soon" style="margin-top:auto;">Coming soon</span>
-          </a>
+        <div class="bento__tile no-hover is-locked span-4">
+          <span class="bento__bg-emoji">🗣️</span>
+          <span class="tag">Coming soon</span>
+          <h2 class="bento__title">Hindi / Arabic</h2>
+          <p class="bento__desc">Second-language practice and vocabulary.</p>
+        </div>
 
+        <a class="bento__tile mesh-warm span-4" href="exam.html">
+          <span class="bento__bg-emoji">📝</span>
+          <span class="tag tag--coral tag--live">Exam Mode</span>
+          <h2 class="bento__title">30-min Exams</h2>
+          <p class="bento__desc">Pick any chapter, get a timed exam with full review.</p>
+          <span class="bento__cta">Start an exam</span>
+        </a>
+
+      </section>
+
+      <!-- Snapshot -->
+      <section class="bento">
+        <div class="bento__tile no-hover span-3">
+          <p class="bento__eyebrow">Total XP</p>
+          <div class="bento__big-num bento__big-num--colour" id="st-xp">0</div>
+          <p class="bento__desc">Earn points from lessons, practice, exams</p>
+        </div>
+        <div class="bento__tile no-hover span-3">
+          <p class="bento__eyebrow">Level</p>
+          <div class="bento__big-num bento__big-num--colour" id="st-level">🌱</div>
+          <p class="bento__desc" id="st-level-name">Beginner</p>
+        </div>
+        <div class="bento__tile no-hover span-3">
+          <p class="bento__eyebrow">Badges</p>
+          <div class="bento__big-num bento__big-num--colour" id="st-badges">0/21</div>
+          <p class="bento__desc">Unlock more by completing chapters</p>
+        </div>
+        <div class="bento__tile no-hover span-3">
+          <p class="bento__eyebrow">Streak</p>
+          <div class="bento__big-num bento__big-num--colour" id="st-streak">🔥 0</div>
+          <p class="bento__desc">Days in a row on the portal</p>
         </div>
       </section>
 
-      <section class="section card card--flat">
-        <h2>🏆 Your learning snapshot</h2>
-        <div class="stats-strip" style="margin-top:8px;">
-          <div class="stat"><div class="stat__value" id="st-xp">0</div><div class="stat__label">Total XP</div></div>
-          <div class="stat"><div class="stat__value" id="st-level">🌱</div><div class="stat__label" id="st-level-name">Beginner</div></div>
-          <div class="stat"><div class="stat__value" id="st-badges">0/21</div><div class="stat__label">Badges</div></div>
-          <div class="stat"><div class="stat__value" id="st-streak">🔥 0</div><div class="stat__label">Day Streak</div></div>
-        </div>
-        <div class="text-center" style="margin-top:16px;">
-          <button class="btn btn-primary" id="open-progress">Open full progress →</button>
-        </div>
-      </section>
+      <div style="text-align:center; margin-top: var(--space-5);">
+        <button class="btn-modern" id="open-progress">Open full progress →</button>
+      </div>
 
     </div>
     <footer class="footer">
