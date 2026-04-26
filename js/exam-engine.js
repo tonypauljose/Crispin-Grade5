@@ -420,7 +420,7 @@
           <h2>📊 Exam Results</h2>
           <div class="exam-result__stars">${stars}</div>
           <div class="exam-result__big">${correct} <span class="of">/ ${total}</span></div>
-          <div class="exam-result__pct">${pct}%</div>
+          <div class="exam-result__marks100">📏 <strong>${pct}</strong> / 100 marks <span class="muted" style="font-weight:600;">· ${pct}%</span></div>
           <div class="exam-result__verdict">${verdict}</div>
           <div class="exam-result__chapter">${this.subject} · ${this.chapterTitle}</div>
         </div>
@@ -519,7 +519,7 @@
       student: this.studentName,
       subject: this.subject,
       chapter: this.chapterTitle,
-      score: `${correct} / ${total} (${pct}%)`,
+      score: `${correct} / ${total} (${pct} / 100 marks · ${pct}%)`,
       time_taken: `${mins} min ${secs} sec`,
       total_questions: total,
       correct_answers: correct,

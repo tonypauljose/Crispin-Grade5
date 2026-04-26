@@ -19,19 +19,21 @@
     <p class="lead">Reading clocks, calendars, BHD, fils, rupees — and word problems.</p>
   </section>
 
-  <div class="grid grid-2" style="margin-bottom: var(--space-5);">
-    <a class="exam-tile" href="../exam.html?ch=ch10">
-      <span class="exam-tile__pulse">30 MIN ⏱</span>
-      <span class="exam-tile__title">📝 Take the Chapter Exam</span>
-      <p class="exam-tile__desc">25 questions, timed. Score emailed to mum.</p>
-    </a>
-    <div class="card card--flat">
-      <h3 style="color: var(--purple); margin-bottom: 8px;">📖 Lessons coming soon</h3>
-      <p class="muted" style="margin: 0;">Practice & Exam are ready now.</p>
-    </div>
+  <!-- Tabs -->
+  <div class="tabs" role="tablist">
+    <button class="tab-btn" data-target="tab-learn">📖 Learn</button>
+    <button class="tab-btn active" data-target="tab-practice">✍️ Practice</button>
+    <button class="tab-btn" data-target="tab-exam">📝 Exam</button>
   </div>
 
-  <section class="section">
+  <section id="tab-learn" class="tab-panel">
+    <div class="card card--flat">
+      <h3 style="color: var(--purple); margin-bottom: 8px;">📖 Lessons coming soon</h3>
+      <p style="margin: 0;">Full lesson content unlocks when class reaches this chapter. <strong>Practice</strong> and <strong>Exam</strong> are ready right now — give them a go!</p>
+    </div>
+  </section>
+
+  <section id="tab-practice" class="tab-panel active">
     <h2>✍️ Practice</h2>
 
     <div class="exercise" id="ex-1" data-ex="1">
@@ -107,6 +109,21 @@
     </div>
 
   </section>
+
+  <section id="tab-exam" class="tab-panel">
+    <h2>📝 30-Minute Chapter Exam</h2>
+    <div class="card">
+      <p style="font-size:1.05rem;">25 mixed questions, hard 30-minute timer. Navigate freely between questions, mark for review, and submit when ready.</p>
+      <ul style="line-height:1.7;">
+        <li>✓ All answers reviewed at the end with the correct answer + 💡 rationale</li>
+        <li>✓ Optional email delivery to a parent at submission</li>
+        <li>✓ Star rating + XP awarded based on your score</li>
+      </ul>
+      <div class="text-center" style="margin-top:16px;">
+        <a class="btn btn-primary btn-lg" href="../exam.html?ch=ch10">📝 Start the 30-min Exam →</a>
+      </div>
+    </div>
+  </section>
 </div></main>
 <footer class="footer"><div class="container">
   <p>Made with ❤️ and ⚽ for Crispin · <a href="../maths.html">All chapters</a> · <a href="../index.html">Home</a></p>
@@ -118,6 +135,7 @@
   App.renderTopBar('maths');
   Progress.markVisit();
   Progress.renderGamebar();
+  App.wireTabs();
 </script>
 </body>
 </html>

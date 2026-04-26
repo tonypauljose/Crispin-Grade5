@@ -1232,6 +1232,24 @@
   font-size: 1.6rem;
   margin-bottom: 8px;
 }
+.exam-result__marks100 {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: white;
+  border: 2px solid var(--yellow-dark);
+  border-radius: var(--radius-full);
+  padding: 8px 18px;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  color: var(--purple-dark);
+  margin-bottom: 8px;
+  box-shadow: 0 4px 12px rgba(250, 204, 21, 0.25);
+}
+.exam-result__marks100 strong {
+  font-size: 1.4rem;
+  color: var(--purple);
+}
 .exam-result__verdict {
   font-family: var(--font-heading);
   color: var(--purple);
