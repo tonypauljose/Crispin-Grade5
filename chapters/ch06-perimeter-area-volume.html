@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ch 6 · Perimeter, Area, Volume — Crispin's World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body>
+<main class="page"><div class="container">
+  <section class="section">
+    <p class="muted"><a href="../maths.html">← Back to Mathematics</a></p>
+    <h1>📘 Chapter 6 · Perimeter, Area, Volume</h1>
+    <p class="lead">Measure the length around, the space inside, and the room within.</p>
+  </section>
+
+  <div class="grid grid-2" style="margin-bottom: var(--space-5);">
+    <a class="exam-tile" href="../exam.html?ch=ch06">
+      <span class="exam-tile__pulse">30 MIN ⏱</span>
+      <span class="exam-tile__title">📝 Take the Chapter Exam</span>
+      <p class="exam-tile__desc">25 questions, timed. Score emailed to mum.</p>
+    </a>
+    <div class="card card--flat">
+      <h3 style="color: var(--purple); margin-bottom: 8px;">📖 Lessons coming soon</h3>
+      <p class="muted" style="margin: 0;">Practice & Exam are ready now.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <h2>✍️ Practice</h2>
+
+    <div class="exercise" id="ex-1" data-ex="1">
+      <h3 class="exercise__title">1. Perimeter</h3>
+      <p class="muted">Number only — no units.</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="20"><span class="ex-item__q">Square, side 5 cm. P = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="20"><span class="ex-item__q">Rectangle 6×4 cm. P = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="40"><span class="ex-item__q">Square, side 10 m. P = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="12"><span class="ex-item__q">Triangle 3-4-5 cm. P = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(1)">Check</button>
+      <div class="ex-feedback" id="fb-1"></div>
+    </div>
+
+    <div class="exercise" id="ex-2" data-ex="2">
+      <h3 class="exercise__title">2. Area of squares &amp; rectangles</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="49"><span class="ex-item__q">Square, side 7 cm. A = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="24"><span class="ex-item__q">Rectangle 8×3 cm. A = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="60"><span class="ex-item__q">Rectangle 12×5 m. A = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="100"><span class="ex-item__q">Square, side 10 cm. A = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(2)">Check</button>
+      <div class="ex-feedback" id="fb-2"></div>
+    </div>
+
+    <div class="exercise" id="ex-3" data-ex="3">
+      <h3 class="exercise__title">3. Volume</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="27"><span class="ex-item__q">Cube, side 3 cm. V = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="64"><span class="ex-item__q">Cube, side 4 cm. V = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="24"><span class="ex-item__q">Cuboid 4×3×2. V = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="60"><span class="ex-item__q">Cuboid 5×4×3. V = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(3)">Check</button>
+      <div class="ex-feedback" id="fb-3"></div>
+    </div>
+
+    <div class="exercise" id="ex-4" data-ex="4">
+      <h3 class="exercise__title">4. Find the side</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="6"><span class="ex-item__q">Square area = 36 sq m. Side = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="4"><span class="ex-item__q">Cube volume = 64 cu cm. Side = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="6"><span class="ex-item__q">Square perimeter = 24 cm. Side = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="8"><span class="ex-item__q">Square perimeter = 32 m. Side = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(4)">Check</button>
+      <div class="ex-feedback" id="fb-4"></div>
+    </div>
+
+    <div class="exercise" id="ex-5" data-ex="5">
+      <h3 class="exercise__title">5. Units</h3>
+      <p class="muted">Type: cm / sq cm / cu cm</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="cm"><span class="ex-item__q">Perimeter is measured in </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="sq cm|cm²"><span class="ex-item__q">Area is measured in </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="cu cm|cm³"><span class="ex-item__q">Volume is measured in </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="100"><span class="ex-item__q">1 m = __ cm </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(5)">Check</button>
+      <div class="ex-feedback" id="fb-5"></div>
+    </div>
+
+    <div class="exercise" id="ex-6" data-ex="6">
+      <h3 class="exercise__title">6. Word problems</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="36"><span class="ex-item__q">A garden 9×4 m. Area = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="24"><span class="ex-item__q">A football pitch model 8×3 m. Perimeter = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="125"><span class="ex-item__q">A box 5×5×5 cm. Volume = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="20"><span class="ex-item__q">A square room, side 5 m. Perimeter = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(6)">Check</button>
+      <div class="ex-feedback" id="fb-6"></div>
+    </div>
+
+  </section>
+</div></main>
+<footer class="footer"><div class="container">
+  <p>Made with ❤️ and ⚽ for Crispin · <a href="../maths.html">All chapters</a> · <a href="../index.html">Home</a></p>
+</div></footer>
+<script src="../js/common.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/practice-runner.js"></script>
+<script>
+  App.renderTopBar('maths');
+  Progress.markVisit();
+  Progress.renderGamebar();
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+/* Chapter 8 — Data Handling · exam bank */
+window.CH08_BANK = [
+  { type: 'fill', q: 'Mean (average) of 4, 6, 8, 10?', answer: ['7'], explain: '(4+6+8+10) ÷ 4 = 28 ÷ 4 = 7.' },
+  { type: 'fill', q: 'Mean of 5, 10, 15, 20, 25?', answer: ['15'], explain: 'Sum = 75, ÷5 = 15.' },
+  { type: 'fill', q: 'Mean of 2, 4, 6?', answer: ['4'], explain: '(2+4+6) ÷ 3 = 4.' },
+  { type: 'mcq', q: '"Mode" of a data set is:', options: ['The biggest value', 'The most common (most frequently appearing) value', 'The average', 'The smallest value'], answer: 1, explain: 'Mode = value that appears the most.' },
+  { type: 'fill', q: 'Mode of 2, 3, 3, 4, 5?', answer: ['3'], explain: '3 appears twice — most common.' },
+  { type: 'fill', q: 'Mode of 7, 8, 8, 8, 9, 10?', answer: ['8'], explain: '8 appears 3 times.' },
+  { type: 'fill', q: 'Range of 5, 8, 12, 15? (max − min)', answer: ['10'], explain: '15 − 5 = 10.' },
+  { type: 'fill', q: 'Range of 3, 7, 9, 2, 11?', answer: ['9'], explain: '11 − 2 = 9.' },
+  { type: 'mcq', q: '"Range" means:', options: ['The total', 'Difference between highest and lowest', 'The middle value', 'The average'], answer: 1, explain: 'Range = max − min.' },
+  { type: 'mcq', q: 'A bar graph uses __ to show data:', options: ['Lines', 'Bars (rectangles)', 'Slices', 'Dots'], answer: 1, explain: 'Bar graphs use bars.' },
+  { type: 'mcq', q: 'A pie chart shows data as:', options: ['Circular slices', 'Bars', 'Lines', 'Tables'], answer: 0, explain: 'Pie charts use slices.' },
+  { type: 'mcq', q: 'A pictograph uses __ to show data:', options: ['Numbers only', 'Pictures or symbols', 'Bars', 'Slices'], answer: 1, explain: 'Pictures, e.g. ⚽⚽⚽ for goals.' },
+  { type: 'fill', q: 'If 1 ⚽ = 5 goals, how many goals does ⚽⚽⚽⚽ show?', answer: ['20'], explain: '4 × 5 = 20 goals.' },
+  { type: 'fill', q: '5 students scored: 6, 7, 8, 9, 10. Mean score?', answer: ['8'], explain: '(6+7+8+9+10) ÷ 5 = 40 ÷ 5 = 8.' },
+  { type: 'fill', q: 'In: 3, 5, 5, 7, 9 — what is the mode?', answer: ['5'], explain: '5 appears twice.' },
+  { type: 'fill', q: 'What is the range of: 12, 4, 18, 6, 9?', answer: ['14'], explain: '18 − 4 = 14.' },
+  { type: 'tf', q: 'Mean and average are the same thing.', answer: 0, explain: 'True — same calculation.' },
+  { type: 'tf', q: 'A data set can have more than one mode.', answer: 0, explain: 'True — if two values tie for most common, both are modes (bimodal).' },
+  { type: 'mcq', q: 'Crispin scored: 5, 8, 10, 7, 5 in 5 quizzes. What is his MEAN score?', options: ['7', '8', '5', '10'], answer: 0, explain: '(5+8+10+7+5)÷5 = 35÷5 = 7.' },
+  { type: 'mcq', q: 'Same scores: 5, 8, 10, 7, 5 — what is the MODE?', options: ['5', '7', '10', '8'], answer: 0, explain: '5 appears twice.' },
+  { type: 'mcq', q: 'For 5, 8, 10, 7, 5 — what is the RANGE?', options: ['3', '5', '8', '10'], answer: 1, explain: '10 − 5 = 5.' },
+  { type: 'fill', q: 'Mean of 10, 20, 30, 40, 50?', answer: ['30'], explain: '150÷5 = 30.' },
+  { type: 'mcq', q: 'A tally mark of |||| crossed by another | shows the number:', options: ['4', '5', '6', '10'], answer: 1, explain: 'A bundle of 5 in tally marks.' },
+  { type: 'fill', q: 'How many marks: ||||  |||  ?', answer: ['8'], explain: '4 + 3 = 8 (assuming first is unbundled).' },
+  { type: 'tf', q: 'Mean is always one of the values in the data set.', answer: 1, explain: 'False — the mean can be any number, even decimals not in the set.' }
+];

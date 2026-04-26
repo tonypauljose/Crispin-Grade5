@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ch 7 · Speed & Temperature — Crispin's World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body>
+<main class="page"><div class="container">
+  <section class="section">
+    <p class="muted"><a href="../maths.html">← Back to Mathematics</a></p>
+    <h1>📘 Chapter 7 · Speed & Temperature</h1>
+    <p class="lead">How fast? How hot? Real-world maths.</p>
+  </section>
+
+  <div class="grid grid-2" style="margin-bottom: var(--space-5);">
+    <a class="exam-tile" href="../exam.html?ch=ch07">
+      <span class="exam-tile__pulse">30 MIN ⏱</span>
+      <span class="exam-tile__title">📝 Take the Chapter Exam</span>
+      <p class="exam-tile__desc">25 questions, timed. Score emailed to mum.</p>
+    </a>
+    <div class="card card--flat">
+      <h3 style="color: var(--purple); margin-bottom: 8px;">📖 Lessons coming soon</h3>
+      <p class="muted" style="margin: 0;">Practice & Exam are ready now.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <h2>✍️ Practice</h2>
+
+    <div class="exercise" id="ex-1" data-ex="1">
+      <h3 class="exercise__title">1. Speed = Distance ÷ Time</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="60"><span class="ex-item__q">120 km in 2 h. Speed (km/h) = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="30"><span class="ex-item__q">90 km in 3 h. Speed = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="40"><span class="ex-item__q">200 km in 5 h. Speed = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="80"><span class="ex-item__q">240 km in 3 h. Speed = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(1)">Check</button>
+      <div class="ex-feedback" id="fb-1"></div>
+    </div>
+
+    <div class="exercise" id="ex-2" data-ex="2">
+      <h3 class="exercise__title">2. Distance = Speed × Time</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="60"><span class="ex-item__q">15 km/h × 4 h = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="300"><span class="ex-item__q">50 km/h × 6 h = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="160"><span class="ex-item__q">80 km/h × 2 h = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="40"><span class="ex-item__q">80 km/h for 30 min = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(2)">Check</button>
+      <div class="ex-feedback" id="fb-2"></div>
+    </div>
+
+    <div class="exercise" id="ex-3" data-ex="3">
+      <h3 class="exercise__title">3. Time = Distance ÷ Speed</h3>
+      <p class="muted">Answer in hours.</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="4"><span class="ex-item__q">100 km at 25 km/h = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="3"><span class="ex-item__q">60 km at 20 km/h = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="5"><span class="ex-item__q">200 km at 40 km/h = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="2"><span class="ex-item__q">100 km at 50 km/h = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(3)">Check</button>
+      <div class="ex-feedback" id="fb-3"></div>
+    </div>
+
+    <div class="exercise" id="ex-4" data-ex="4">
+      <h3 class="exercise__title">4. Temperature basics</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="0"><span class="ex-item__q">Water freezes at __ °C </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="100"><span class="ex-item__q">Water boils at __ °C </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="37"><span class="ex-item__q">Body temp ≈ __ °C </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="celsius"><span class="ex-item__q">°C stands for __ </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(4)">Check</button>
+      <div class="ex-feedback" id="fb-4"></div>
+    </div>
+
+    <div class="exercise" id="ex-5" data-ex="5">
+      <h3 class="exercise__title">5. Temperature change</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="17"><span class="ex-item__q">35°C − 18°C = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="8"><span class="ex-item__q">22°C → 30°C, change = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="12"><span class="ex-item__q">40°C − 28°C = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="15"><span class="ex-item__q">25°C − 10°C = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(5)">Check</button>
+      <div class="ex-feedback" id="fb-5"></div>
+    </div>
+
+    <div class="exercise" id="ex-6" data-ex="6">
+      <h3 class="exercise__title">6. Real-world</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="12"><span class="ex-item__q">Walk 4 km/h for 3 h. Distance = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="300"><span class="ex-item__q">Plane: 600 km in 2 h. Speed = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="3"><span class="ex-item__q">Train at 60 km/h covers 180 km in __ h </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="45"><span class="ex-item__q">Bahrain summer noon ≈ __ °C </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(6)">Check</button>
+      <div class="ex-feedback" id="fb-6"></div>
+    </div>
+
+  </section>
+</div></main>
+<footer class="footer"><div class="container">
+  <p>Made with ❤️ and ⚽ for Crispin · <a href="../maths.html">All chapters</a> · <a href="../index.html">Home</a></p>
+</div></footer>
+<script src="../js/common.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/practice-runner.js"></script>
+<script>
+  App.renderTopBar('maths');
+  Progress.markVisit();
+  Progress.renderGamebar();
+</script>
+</body>
+</html>

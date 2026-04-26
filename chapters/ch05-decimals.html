@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ch 5 · Decimal Numbers — Crispin's World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body>
+<main class="page"><div class="container">
+  <section class="section">
+    <p class="muted"><a href="../maths.html">← Back to Mathematics</a></p>
+    <h1>📘 Chapter 5 · Decimal Numbers</h1>
+    <p class="lead">Tenths, hundredths, thousandths — numbers between the whole numbers.</p>
+  </section>
+
+  <div class="grid grid-2" style="margin-bottom: var(--space-5);">
+    <a class="exam-tile" href="../exam.html?ch=ch05">
+      <span class="exam-tile__pulse">30 MIN ⏱</span>
+      <span class="exam-tile__title">📝 Take the Chapter Exam</span>
+      <p class="exam-tile__desc">25 questions, timed. Score emailed to mum.</p>
+    </a>
+    <div class="card card--flat">
+      <h3 style="color: var(--purple); margin-bottom: 8px;">📖 Lessons coming soon</h3>
+      <p class="muted" style="margin: 0;">Practice & Exam are ready now.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <h2>✍️ Practice</h2>
+
+    <div class="exercise" id="ex-1" data-ex="1">
+      <h3 class="exercise__title">1. Place value</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="0.2|.2"><span class="ex-item__q">In 4.27, value of 2 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="0.07|.07"><span class="ex-item__q">In 3.07, value of 7 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="hundredths"><span class="ex-item__q">In 7.085, 8 is in __ place: </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="tenths"><span class="ex-item__q">In 2.5, 5 is in __ place: </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(1)">Check</button>
+      <div class="ex-feedback" id="fb-1"></div>
+    </div>
+
+    <div class="exercise" id="ex-2" data-ex="2">
+      <h3 class="exercise__title">2. Fractions ↔ Decimals</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="0.5|.5"><span class="ex-item__q">1/2 as decimal = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="0.75|.75"><span class="ex-item__q">3/4 as decimal = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="0.25|.25"><span class="ex-item__q">1/4 as decimal = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="0.1|.1"><span class="ex-item__q">1/10 as decimal = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(2)">Check</button>
+      <div class="ex-feedback" id="fb-2"></div>
+    </div>
+
+    <div class="exercise" id="ex-3" data-ex="3">
+      <h3 class="exercise__title">3. Add decimals</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="0.7|.7"><span class="ex-item__q">0.4 + 0.3 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="4.2"><span class="ex-item__q">2.5 + 1.7 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="1|1.0"><span class="ex-item__q">0.6 + 0.4 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="9.27"><span class="ex-item__q">5.42 + 3.85 = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(3)">Check</button>
+      <div class="ex-feedback" id="fb-3"></div>
+    </div>
+
+    <div class="exercise" id="ex-4" data-ex="4">
+      <h3 class="exercise__title">4. Subtract decimals</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="3.3"><span class="ex-item__q">5.6 − 2.3 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="6.6"><span class="ex-item__q">7 − 0.4 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="0.45|.45"><span class="ex-item__q">1 − 0.55 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="3.5"><span class="ex-item__q">4.5 − 1 = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(4)">Check</button>
+      <div class="ex-feedback" id="fb-4"></div>
+    </div>
+
+    <div class="exercise" id="ex-5" data-ex="5">
+      <h3 class="exercise__title">5. Round decimals</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="5"><span class="ex-item__q">Round 4.67 to whole = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="8"><span class="ex-item__q">Round 8.42 to whole = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="3.5"><span class="ex-item__q">Round 3.456 to nearest tenth = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="2.7"><span class="ex-item__q">Round 2.68 to nearest tenth = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(5)">Check</button>
+      <div class="ex-feedback" id="fb-5"></div>
+    </div>
+
+    <div class="exercise" id="ex-6" data-ex="6">
+      <h3 class="exercise__title">6. Compare</h3>
+      <p class="muted">Type the bigger one.</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="0.5|.5"><span class="ex-item__q">0.5 or 0.45? </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="0.77|.77"><span class="ex-item__q">0.77 or 0.7? </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="3.05"><span class="ex-item__q">3.05 or 3.005? </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="0.9|.9"><span class="ex-item__q">0.9 or 0.099? </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(6)">Check</button>
+      <div class="ex-feedback" id="fb-6"></div>
+    </div>
+
+  </section>
+</div></main>
+<footer class="footer"><div class="container">
+  <p>Made with ❤️ and ⚽ for Crispin · <a href="../maths.html">All chapters</a> · <a href="../index.html">Home</a></p>
+</div></footer>
+<script src="../js/common.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/practice-runner.js"></script>
+<script>
+  App.renderTopBar('maths');
+  Progress.markVisit();
+  Progress.renderGamebar();
+</script>
+</body>
+</html>

@@ -19,89 +19,94 @@
 
       <section class="section">
         <h1>🧮 Mathematics — Grade 5</h1>
-        <p class="lead">CBSE syllabus · Asian School Bahrain. Follow the workbook, chapter by chapter.</p>
+        <p class="lead">CBSE syllabus · Asian School Bahrain. Every chapter has practice now. Take a 30-minute timed exam any time.</p>
       </section>
 
+      <!-- Exam mode call-out -->
+      <section class="section" style="margin-bottom: var(--space-5);">
+        <a class="exam-tile" href="exam.html" style="display:flex; flex-direction:row; gap:var(--space-4); align-items:center; padding: var(--space-5) var(--space-5);">
+          <div style="font-size:3rem;">📝</div>
+          <div style="flex:1;">
+            <span class="exam-tile__title" style="display:block; font-size:1.5rem; margin-bottom:6px;">Take a 30-Minute Chapter Exam</span>
+            <p class="exam-tile__desc" style="margin:0;">Pick any chapter, 25 questions, hard timer. Results emailed to mum at the end.</p>
+          </div>
+          <div style="font-size: 1.5rem; color: var(--yellow);">›</div>
+          <span class="exam-tile__pulse">NEW</span>
+        </a>
+      </section>
+
+      <h2 class="section-title">All chapters · practice ready</h2>
       <section class="section">
         <div class="grid grid-3" id="chapter-grid">
-          <!-- Chapter 1 — OPEN -->
+
           <a class="chapter-card" href="chapters/ch01-numbers.html">
             <div class="chapter-card__num">01</div>
             <h3 class="chapter-card__title">Numbers 1 to 10,000</h3>
-            <p class="chapter-card__desc">Place value, expanded form, comparing, rounding, Roman numerals, number names.</p>
-            <span class="chapter-card__badge">Ready now</span>
+            <p class="chapter-card__desc">Place value, expanded form, comparing, rounding, Roman numerals.</p>
+            <span class="chapter-card__badge">Full chapter</span>
           </a>
 
-          <a class="chapter-card locked" href="#" onclick="event.preventDefault(); App.showToast('Chapter 2 is coming soon! 🚧', 'info');">
-            <div class="chapter-card__lock">🔒</div>
+          <a class="chapter-card" href="chapters/ch02-four-operations.html">
             <div class="chapter-card__num">02</div>
             <h3 class="chapter-card__title">The Four Operations</h3>
-            <p class="chapter-card__desc">Addition, subtraction, multiplication, division with larger numbers.</p>
-            <span class="chapter-card__badge soon">Coming soon</span>
+            <p class="chapter-card__desc">+, −, ×, ÷ with larger numbers and word problems.</p>
+            <span class="chapter-card__badge">Practice ready</span>
           </a>
 
-          <a class="chapter-card locked" href="#" onclick="event.preventDefault(); App.showToast('Chapter 3 is coming soon! 🚧', 'info');">
-            <div class="chapter-card__lock">🔒</div>
+          <a class="chapter-card" href="chapters/ch03-multiples-factors.html">
             <div class="chapter-card__num">03</div>
             <h3 class="chapter-card__title">Multiples & Factors</h3>
-            <p class="chapter-card__desc">LCM, HCF, prime numbers, divisibility rules.</p>
-            <span class="chapter-card__badge soon">Coming soon</span>
+            <p class="chapter-card__desc">LCM, HCF, primes, divisibility rules.</p>
+            <span class="chapter-card__badge">Practice ready</span>
           </a>
 
-          <a class="chapter-card locked" href="#" onclick="event.preventDefault(); App.showToast('Chapter 4 is coming soon! 🚧', 'info');">
-            <div class="chapter-card__lock">🔒</div>
+          <a class="chapter-card" href="chapters/ch04-geometry.html">
             <div class="chapter-card__num">04</div>
             <h3 class="chapter-card__title">Geometry</h3>
             <p class="chapter-card__desc">Lines, angles, shapes, symmetry.</p>
-            <span class="chapter-card__badge soon">Coming soon</span>
+            <span class="chapter-card__badge">Practice ready</span>
           </a>
 
-          <a class="chapter-card locked" href="#" onclick="event.preventDefault(); App.showToast('Chapter 5 is coming soon! 🚧', 'info');">
-            <div class="chapter-card__lock">🔒</div>
+          <a class="chapter-card" href="chapters/ch05-decimals.html">
             <div class="chapter-card__num">05</div>
             <h3 class="chapter-card__title">Decimal Numbers</h3>
-            <p class="chapter-card__desc">Place value with decimals, addition, comparison.</p>
-            <span class="chapter-card__badge soon">Coming soon</span>
+            <p class="chapter-card__desc">Place value, addition, comparison, rounding.</p>
+            <span class="chapter-card__badge">Practice ready</span>
           </a>
 
-          <a class="chapter-card locked" href="#" onclick="event.preventDefault(); App.showToast('Chapter 6 is coming soon! 🚧', 'info');">
-            <div class="chapter-card__lock">🔒</div>
+          <a class="chapter-card" href="chapters/ch06-perimeter-area-volume.html">
             <div class="chapter-card__num">06</div>
             <h3 class="chapter-card__title">Perimeter, Area, Volume</h3>
             <p class="chapter-card__desc">Measure shapes and spaces.</p>
-            <span class="chapter-card__badge soon">Coming soon</span>
+            <span class="chapter-card__badge">Practice ready</span>
           </a>
 
-          <a class="chapter-card locked" href="#" onclick="event.preventDefault(); App.showToast('Chapter 7 is coming soon! 🚧', 'info');">
-            <div class="chapter-card__lock">🔒</div>
+          <a class="chapter-card" href="chapters/ch07-speed-temperature.html">
             <div class="chapter-card__num">07</div>
             <h3 class="chapter-card__title">Speed & Temperature</h3>
             <p class="chapter-card__desc">Real-world measurements and conversions.</p>
-            <span class="chapter-card__badge soon">Coming soon</span>
+            <span class="chapter-card__badge">Practice ready</span>
           </a>
 
-          <a class="chapter-card locked" href="#" onclick="event.preventDefault(); App.showToast('Chapter 8 is coming soon! 🚧', 'info');">
-            <div class="chapter-card__lock">🔒</div>
+          <a class="chapter-card" href="chapters/ch08-data-handling.html">
             <div class="chapter-card__num">08</div>
             <h3 class="chapter-card__title">Data Handling</h3>
-            <p class="chapter-card__desc">Tables, graphs, averages.</p>
-            <span class="chapter-card__badge soon">Coming soon</span>
+            <p class="chapter-card__desc">Tables, graphs, mean, mode, range.</p>
+            <span class="chapter-card__badge">Practice ready</span>
           </a>
 
-          <a class="chapter-card locked" href="#" onclick="event.preventDefault(); App.showToast('Chapter 9 is coming soon! 🚧', 'info');">
-            <div class="chapter-card__lock">🔒</div>
+          <a class="chapter-card" href="chapters/ch09-measurement.html">
             <div class="chapter-card__num">09</div>
             <h3 class="chapter-card__title">Measurement</h3>
             <p class="chapter-card__desc">Length, mass, capacity — metric system.</p>
-            <span class="chapter-card__badge soon">Coming soon</span>
+            <span class="chapter-card__badge">Practice ready</span>
           </a>
 
-          <a class="chapter-card locked" href="#" onclick="event.preventDefault(); App.showToast('Chapter 10 is coming soon! 🚧', 'info');">
-            <div class="chapter-card__lock">🔒</div>
+          <a class="chapter-card" href="chapters/ch10-time-money.html">
             <div class="chapter-card__num">10</div>
             <h3 class="chapter-card__title">Time & Money</h3>
             <p class="chapter-card__desc">Reading time, money math, BHD and rupees.</p>
-            <span class="chapter-card__badge soon">Coming soon</span>
+            <span class="chapter-card__badge">Practice ready</span>
           </a>
 
         </div>
@@ -115,7 +120,7 @@
     </div>
     <footer class="footer">
       <div class="container">
-        <p>Made with ❤️ and ⚽ for Crispin · <a href="index.html">Home</a></p>
+        <p>Made with ❤️ and ⚽ for Crispin · <a href="index.html">Home</a> · <a href="exam.html">Exam mode</a></p>
       </div>
     </footer>
   </main>
@@ -136,7 +141,10 @@
       "Zero is special — it keeps the place but has no value on its own.",
       "To compare numbers, count the digits first. More digits = bigger number.",
       "Ronaldo checks the goal before shooting. You check the place value before answering!",
-      "Write numbers in words patiently — break them into groups of thousands, then hundreds."
+      "Write numbers in words patiently — break them into groups of thousands, then hundreds.",
+      "BODMAS: Brackets, Of, Division, Multiplication, Addition, Subtraction.",
+      "1 km = 1,000 m. 1 m = 100 cm. 1 cm = 10 mm. Always × by 10s.",
+      "Mean = average. Mode = most common. Range = highest minus lowest. Easy."
     ];
     const seed = App.todayKey();
     const rand = App.seededRand(seed);

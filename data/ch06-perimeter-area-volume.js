@@ -1,0 +1,28 @@
+/* Chapter 6 — Perimeter, Area, Volume · exam bank */
+window.CH06_BANK = [
+  { type: 'fill', q: 'Perimeter of a square with side 5 cm?', answer: ['20', '20cm', '20 cm'], explain: 'P = 4 × side = 4×5 = 20 cm.' },
+  { type: 'fill', q: 'Perimeter of a rectangle 6 cm × 4 cm?', answer: ['20', '20cm', '20 cm'], explain: 'P = 2(L+W) = 2(6+4) = 20 cm.' },
+  { type: 'fill', q: 'Area of a square with side 7 cm?', answer: ['49', '49 sq cm', '49 cm²'], explain: 'A = side × side = 7×7 = 49 sq cm.' },
+  { type: 'fill', q: 'Area of a rectangle 8 cm × 3 cm?', answer: ['24', '24 sq cm', '24 cm²'], explain: 'A = L × W = 8×3 = 24 sq cm.' },
+  { type: 'fill', q: 'Volume of a cube with side 3 cm?', answer: ['27', '27 cu cm', '27 cm³'], explain: 'V = side³ = 27 cubic cm.' },
+  { type: 'fill', q: 'Volume of a cuboid 4×3×2 cm?', answer: ['24', '24 cu cm', '24 cm³'], explain: 'V = L×W×H = 4×3×2 = 24 cu cm.' },
+  { type: 'mcq', q: 'Perimeter is measured in:', options: ['cm', 'cm²', 'cm³', 'kg'], answer: 0, explain: 'Perimeter is a length → cm, m, etc.' },
+  { type: 'mcq', q: 'Area is measured in:', options: ['cm', 'cm²', 'cm³', 'L'], answer: 1, explain: 'Area is square units.' },
+  { type: 'mcq', q: 'Volume is measured in:', options: ['cm', 'cm²', 'cm³', 'g'], answer: 2, explain: 'Volume is cubic units.' },
+  { type: 'fill', q: 'A square garden has side 10 m. Perimeter?', answer: ['40', '40m', '40 m'], explain: 'P = 4×10 = 40 m.' },
+  { type: 'fill', q: 'A rectangle is 12 m long and 5 m wide. Area?', answer: ['60', '60 sq m', '60 m²'], explain: '12×5 = 60 sq m.' },
+  { type: 'fill', q: 'A square room has area 36 sq m. What is its side?', answer: ['6', '6m', '6 m'], explain: '√36 = 6 m.' },
+  { type: 'fill', q: 'A cube has volume 64 cu cm. What is its side?', answer: ['4', '4cm', '4 cm'], explain: '∛64 = 4 cm.' },
+  { type: 'tf', q: 'A bigger perimeter always means a bigger area.', answer: 1, explain: 'False — a long thin rectangle can have big perimeter but small area.' },
+  { type: 'fill', q: 'How many small 1 cm cubes fit in a 2×2×2 cm box?', answer: ['8'], explain: '2³ = 8 small cubes.' },
+  { type: 'fill', q: 'Perimeter of a triangle with sides 3, 4, 5 cm?', answer: ['12', '12cm', '12 cm'], explain: '3+4+5 = 12 cm.' },
+  { type: 'fill', q: 'Perimeter of a regular pentagon with side 6 cm?', answer: ['30', '30cm', '30 cm'], explain: '5 × 6 = 30 cm.' },
+  { type: 'mcq', q: 'Area of a 1m × 1m square = ?', options: ['1 cm²', '1 m²', '100 m²', '10 cm²'], answer: 1, explain: '1 m × 1 m = 1 sq m.' },
+  { type: 'fill', q: '1 m = ? cm', answer: ['100'], explain: '1 m = 100 cm.' },
+  { type: 'fill', q: '1 sq m = ? sq cm', answer: ['10000', '10,000'], explain: '1 m × 1 m = 100 cm × 100 cm = 10,000 sq cm.' },
+  { type: 'fill', q: 'Volume of a 5×5×5 cube?', answer: ['125', '125 cu cm', '125 cm³'], explain: '5³ = 125 cu cm.' },
+  { type: 'fill', q: 'Area of a square if perimeter is 24 cm?', answer: ['36', '36 sq cm'], explain: 'Side = 24÷4 = 6, area = 36.' },
+  { type: 'fill', q: 'Perimeter of a rectangle 9 m × 6 m = ?', answer: ['30', '30m', '30 m'], explain: '2(9+6) = 30 m.' },
+  { type: 'tf', q: 'A square with side 2 cm has area 4 sq cm.', answer: 0, explain: 'True — 2×2 = 4.' },
+  { type: 'tf', q: 'Volume measures the surface of a 3D shape.', answer: 1, explain: 'False — volume measures the SPACE inside it.' }
+];

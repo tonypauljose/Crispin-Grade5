@@ -737,6 +737,187 @@
 .badge-chip__desc { font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; }
 
 /* ============================================================
+   EXAM MODE
+   ============================================================ */
+.exam-stage {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-md);
+  max-width: 760px;
+  margin: 0 auto;
+}
+.exam-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid var(--border);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.exam-bar__title {
+  font-family: var(--font-heading);
+  color: var(--purple);
+  font-size: 1.1rem;
+}
+.exam-bar__meta {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+.exam-bar__counter {
+  background: var(--purple);
+  color: white;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.exam-bar__timer {
+  background: var(--teal);
+  color: white;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-family: 'Fira Code', ui-monospace, monospace;
+  font-size: 1.05rem;
+  min-width: 84px;
+  text-align: center;
+}
+.exam-bar__timer--warn { background: var(--yellow-dark); animation: pulse-yellow 1.2s ease-in-out infinite; }
+.exam-bar__timer--danger { background: var(--coral-dark); animation: shake 0.4s linear infinite; }
+
+.exam-progress {
+  height: 6px;
+  background: var(--gray-200);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-4);
+  overflow: hidden;
+}
+.exam-progress__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--pitch));
+  transition: width 0.3s ease;
+}
+
+.exam-question__text {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--purple);
+  margin-bottom: var(--space-4);
+  line-height: 1.4;
+}
+
+.exam-actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+  margin-top: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.exam-banner {
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  margin-bottom: var(--space-3);
+  text-align: center;
+}
+.exam-banner--warn { background: #FEF3C7; color: #92400E; border-left: 4px solid var(--yellow-dark); }
+
+.exam-result {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-md);
+  max-width: 760px;
+  margin: 0 auto;
+}
+.exam-result__big {
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  color: var(--purple);
+  line-height: 1.1;
+  margin: var(--space-3) 0;
+}
+.exam-result__meta {
+  text-align: center;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+}
+
+.exam-email-status {
+  background: var(--gray-50);
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
+  border-left: 4px solid var(--purple);
+}
+.exam-email-status--ok { border-color: var(--teal); background: #D1FAE5; color: var(--teal-dark); }
+.exam-email-status--warn { border-color: var(--yellow-dark); background: #FEF3C7; color: #92400E; }
+
+.exam-review { margin-top: var(--space-3); }
+.exam-review summary {
+  font-family: var(--font-heading);
+  color: var(--purple);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 8px 0;
+}
+.exam-review-list { padding-left: var(--space-5); }
+.exam-review-list li { margin-bottom: var(--space-3); padding: 10px 14px; border-radius: var(--radius-md); }
+.exam-review-li--ok { background: #ECFDF5; border-left: 4px solid var(--teal); }
+.exam-review-li--bad { background: #FEF2F2; border-left: 4px solid var(--coral); }
+.exam-review-q { font-weight: 700; margin-bottom: 4px; }
+.exam-review-yours { font-size: 0.9rem; color: var(--text-secondary); }
+.exam-review-correct { font-size: 0.9rem; color: var(--teal-dark); margin-top: 4px; }
+.exam-review-explain { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; font-style: italic; }
+
+/* Exam picker tile */
+.exam-tile {
+  background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+  color: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.exam-tile:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  text-decoration: none;
+  color: white;
+}
+.exam-tile__title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  color: var(--yellow);
+}
+.exam-tile__desc { color: rgba(255,255,255,0.85); font-size: 0.95rem; margin: 0; }
+.exam-tile__pulse {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: var(--yellow);
+  color: var(--coral-dark);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  animation: pulse-yellow 2s infinite;
+}
+
+/* ============================================================
    NOTEBOOK / SCRAPBOOK AESTHETIC
    (Diary of a Wimpy Kid feel — hand-made, not polished)
    ============================================================ */

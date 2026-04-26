@@ -1,0 +1,28 @@
+/* Chapter 5 — Decimal Numbers · exam bank */
+window.CH05_BANK = [
+  { type: 'mcq', q: 'In 4.27, what is the value of 2?', options: ['2', '0.2', '0.02', '20'], answer: 1, explain: '2 is in the tenths place → 0.2.' },
+  { type: 'mcq', q: 'In 7.085, the digit 8 is in which place?', options: ['Tenths', 'Hundredths', 'Thousandths', 'Ones'], answer: 1, explain: '8 sits in the hundredths place.' },
+  { type: 'fill', q: '1/2 as a decimal = ?', answer: ['0.5', '.5'], explain: '1÷2 = 0.5.' },
+  { type: 'fill', q: '3/4 as a decimal = ?', answer: ['0.75', '.75'], explain: '3÷4 = 0.75.' },
+  { type: 'fill', q: '1/10 as a decimal = ?', answer: ['0.1', '.1'], explain: '1÷10 = 0.1.' },
+  { type: 'mcq', q: 'Which is the bigger decimal?', options: ['0.45', '0.5'], answer: 1, explain: '0.5 = 0.50 > 0.45.', hint: 'Add a trailing zero to compare.' },
+  { type: 'mcq', q: 'Which is the smallest?', options: ['0.7', '0.07', '0.77'], answer: 1, explain: '0.07 < 0.7 < 0.77.' },
+  { type: 'fill', q: '0.4 + 0.3 = ?', answer: ['0.7', '.7'], explain: '4 tenths + 3 tenths = 7 tenths.' },
+  { type: 'fill', q: '2.5 + 1.7 = ?', answer: ['4.2'], explain: 'Add column by column.' },
+  { type: 'fill', q: '5.6 − 2.3 = ?', answer: ['3.3'], explain: '5.6 − 2.3 = 3.3.' },
+  { type: 'fill', q: '7 − 0.4 = ?', answer: ['6.6'], explain: 'Think 7.0 − 0.4 = 6.6.' },
+  { type: 'fill', q: 'Round 4.67 to the nearest whole number.', answer: ['5'], explain: '0.67 ≥ 0.5 → round up.' },
+  { type: 'fill', q: 'Round 8.42 to the nearest whole number.', answer: ['8'], explain: '0.42 < 0.5 → round down.' },
+  { type: 'fill', q: 'Round 3.456 to the nearest tenth.', answer: ['3.5'], explain: 'Hundredths digit 5 → round up.' },
+  { type: 'mcq', q: '0.5 = ?', options: ['1/2', '1/5', '5/100', '5'], answer: 0, explain: '0.5 = 5/10 = 1/2.' },
+  { type: 'mcq', q: 'Which decimal equals 1/4?', options: ['0.4', '0.25', '0.5', '0.14'], answer: 1, explain: '1÷4 = 0.25.' },
+  { type: 'tf', q: '0.30 and 0.3 are equal.', answer: 0, explain: 'True — trailing zeros after the decimal point don\'t change the value.' },
+  { type: 'tf', q: '0.5 < 0.50.', answer: 1, explain: 'False — they\'re equal.' },
+  { type: 'fill', q: 'Write "two and three tenths" as a decimal.', answer: ['2.3'], explain: '2 wholes and 3 tenths = 2.3.' },
+  { type: 'fill', q: 'Write "0.07" in words.', answer: ['seven hundredths', 'zero point zero seven'], explain: '7 in the hundredths place.' },
+  { type: 'fill', q: '0.6 + 0.4 = ?', answer: ['1', '1.0'], explain: '0.6+0.4 = 1.0.' },
+  { type: 'fill', q: '10 × 0.5 = ?', answer: ['5', '5.0'], explain: '10 × 0.5 = 5.' },
+  { type: 'mcq', q: 'Which is in correct ascending order?', options: ['0.5, 0.25, 0.75', '0.25, 0.5, 0.75', '0.75, 0.5, 0.25', '0.5, 0.75, 0.25'], answer: 1, explain: 'Smallest first: 0.25 < 0.5 < 0.75.' },
+  { type: 'fill', q: '4.5 − 1 = ?', answer: ['3.5'], explain: '4.5 − 1 = 3.5.' },
+  { type: 'fill', q: 'How many tenths in 1?', answer: ['10'], explain: '1 = 10 tenths.' }
+];

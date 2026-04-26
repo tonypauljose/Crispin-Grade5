@@ -1,0 +1,28 @@
+/* Chapter 2 — The Four Operations · exam bank */
+window.CH02_BANK = [
+  { type: 'fill', q: '4,567 + 2,834 = ?', answer: ['7401', '7,401'], explain: 'Add column by column.' },
+  { type: 'fill', q: '8,512 − 3,789 = ?', answer: ['4723', '4,723'], explain: 'Subtract with borrowing.' },
+  { type: 'fill', q: '345 × 6 = ?', answer: ['2070', '2,070'], explain: '345 × 6 = 2,070.' },
+  { type: 'fill', q: '24 × 25 = ?', answer: ['600'], explain: '24 × 25 = 600.' },
+  { type: 'fill', q: '936 ÷ 4 = ?', answer: ['234'], explain: '936 ÷ 4 = 234.' },
+  { type: 'fill', q: '725 ÷ 5 = ?', answer: ['145'], explain: '725 ÷ 5 = 145.' },
+  { type: 'mcq', q: 'Which is the biggest? 4,500 / 4,050 / 4,005', options: ['4,500', '4,050', '4,005'], answer: 0, explain: '4,500 has the most hundreds.' },
+  { type: 'mcq', q: 'What comes first in BODMAS?', options: ['Brackets', 'Order', 'Division', 'Add'], answer: 0, explain: 'B-O-D-M-A-S: Brackets first.' },
+  { type: 'fill', q: '(8 + 4) × 3 = ?', answer: ['36'], explain: 'Brackets first: 12, then ×3 = 36.' },
+  { type: 'fill', q: '20 − 6 + 4 = ?', answer: ['18'], explain: 'Left to right: 20−6=14, 14+4=18.' },
+  { type: 'fill', q: '6 × 7 + 3 = ?', answer: ['45'], explain: 'Multiply first: 42, then +3 = 45.' },
+  { type: 'fill', q: 'What is 1,000 − 437?', answer: ['563'], explain: '1000−437=563.' },
+  { type: 'mcq', q: 'Which is correct?', options: ['8 ÷ 2 × 3 = 1', '8 ÷ 2 × 3 = 12', '8 ÷ 2 × 3 = 16'], answer: 1, explain: '÷ and × left-to-right: 8÷2=4, 4×3=12.' },
+  { type: 'fill', q: 'Crispin scored 124, 138, and 159 in three games. Total runs?', answer: ['421'], explain: '124+138+159 = 421.' },
+  { type: 'fill', q: 'A box has 24 chocolates. How many in 8 boxes?', answer: ['192'], explain: '24×8 = 192.' },
+  { type: 'fill', q: '5 friends share 85 stickers equally. Each gets?', answer: ['17'], explain: '85÷5=17.' },
+  { type: 'fill', q: 'What is 6 × 0?', answer: ['0'], explain: 'Anything × 0 = 0.' },
+  { type: 'fill', q: 'What is 6 ÷ 1?', answer: ['6'], explain: 'Anything ÷ 1 = itself.' },
+  { type: 'tf', q: '450 × 1 = 450 is true.', answer: 0, explain: 'True — multiplying by 1 keeps the number.' },
+  { type: 'tf', q: '7 + 3 = 3 + 7 (you can swap order in addition).', answer: 0, explain: 'True — addition is commutative.' },
+  { type: 'tf', q: '10 − 3 = 3 − 10 (you can swap order in subtraction).', answer: 1, explain: 'False — subtraction is NOT commutative.' },
+  { type: 'fill', q: 'What is the remainder when 47 is divided by 6?', answer: ['5'], explain: '6×7=42, 47−42=5.' },
+  { type: 'mcq', q: '"Product" means the result of which operation?', options: ['Addition', 'Subtraction', 'Multiplication', 'Division'], answer: 2, explain: '"Product" = multiplication result.' },
+  { type: 'mcq', q: '"Quotient" means the result of which operation?', options: ['Addition', 'Subtraction', 'Multiplication', 'Division'], answer: 3, explain: '"Quotient" = division result.' },
+  { type: 'fill', q: '999 + 1 = ?', answer: ['1000', '1,000'], explain: '999+1 = 1,000.' }
+];

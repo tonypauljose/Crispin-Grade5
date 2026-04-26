@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ch 2 · The Four Operations — Crispin's World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body>
+<main class="page"><div class="container">
+  <section class="section">
+    <p class="muted"><a href="../maths.html">← Back to Mathematics</a></p>
+    <h1>📘 Chapter 2 · The Four Operations</h1>
+    <p class="lead">Addition, subtraction, multiplication and division — the four power-tools of maths.</p>
+  </section>
+
+  <div class="grid grid-2" style="margin-bottom: var(--space-5);">
+    <a class="exam-tile" href="../exam.html?ch=ch02">
+      <span class="exam-tile__pulse">30 MIN ⏱</span>
+      <span class="exam-tile__title">📝 Take the Chapter Exam</span>
+      <p class="exam-tile__desc">25 questions, timed. Score is emailed to mum at the end.</p>
+    </a>
+    <div class="card card--flat">
+      <h3 style="color: var(--purple); margin-bottom: 8px;">📖 Lessons coming soon</h3>
+      <p class="muted" style="margin: 0;">Full lessons unlock when class reaches this chapter. Practice & Exam are ready now.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <h2>✍️ Practice</h2>
+    <p class="lead">Auto-scored. Hover wrong items to see the correct answer.</p>
+
+    <div class="exercise" id="ex-1" data-ex="1">
+      <h3 class="exercise__title">1. Addition</h3>
+      <p class="muted">Numbers only — no commas needed.</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="7401"><span class="ex-item__q">4,567 + 2,834 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="9000"><span class="ex-item__q">3,500 + 5,500 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="6320"><span class="ex-item__q">1,250 + 5,070 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="4321"><span class="ex-item__q">1,234 + 3,087 = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(1)">Check</button>
+      <div class="ex-feedback" id="fb-1"></div>
+    </div>
+
+    <div class="exercise" id="ex-2" data-ex="2">
+      <h3 class="exercise__title">2. Subtraction</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="4723"><span class="ex-item__q">8,512 − 3,789 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="563"><span class="ex-item__q">1,000 − 437 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="2486"><span class="ex-item__q">9,000 − 6,514 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="7349"><span class="ex-item__q">9,999 − 2,650 = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(2)">Check</button>
+      <div class="ex-feedback" id="fb-2"></div>
+    </div>
+
+    <div class="exercise" id="ex-3" data-ex="3">
+      <h3 class="exercise__title">3. Multiplication</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="2070"><span class="ex-item__q">345 × 6 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="600"><span class="ex-item__q">24 × 25 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="3024"><span class="ex-item__q">126 × 24 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="105"><span class="ex-item__q">15 × 7 = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(3)">Check</button>
+      <div class="ex-feedback" id="fb-3"></div>
+    </div>
+
+    <div class="exercise" id="ex-4" data-ex="4">
+      <h3 class="exercise__title">4. Division</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="234"><span class="ex-item__q">936 ÷ 4 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="145"><span class="ex-item__q">725 ÷ 5 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="78"><span class="ex-item__q">468 ÷ 6 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="125"><span class="ex-item__q">1,000 ÷ 8 = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(4)">Check</button>
+      <div class="ex-feedback" id="fb-4"></div>
+    </div>
+
+    <div class="exercise" id="ex-5" data-ex="5">
+      <h3 class="exercise__title">5. Order of Operations (BODMAS)</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="36"><span class="ex-item__q">(8 + 4) × 3 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="18"><span class="ex-item__q">20 − 6 + 4 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="45"><span class="ex-item__q">6 × 7 + 3 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="12"><span class="ex-item__q">8 ÷ 2 × 3 = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(5)">Check</button>
+      <div class="ex-feedback" id="fb-5"></div>
+    </div>
+
+    <div class="exercise" id="ex-6" data-ex="6">
+      <h3 class="exercise__title">6. Word Problems</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="421"><span class="ex-item__q">Crispin scored 124, 138, 159 in three games. Total = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="192"><span class="ex-item__q">A box has 24 chocolates. 8 boxes = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="17"><span class="ex-item__q">5 friends share 85 stickers. Each gets = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="850"><span class="ex-item__q">Tickets cost ₹50. 17 sold = ₹</span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(6)">Check</button>
+      <div class="ex-feedback" id="fb-6"></div>
+    </div>
+
+  </section>
+</div></main>
+<footer class="footer"><div class="container">
+  <p>Made with ❤️ and ⚽ for Crispin · <a href="../maths.html">All chapters</a> · <a href="../index.html">Home</a></p>
+</div></footer>
+<script src="../js/common.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/practice-runner.js"></script>
+<script>
+  App.renderTopBar('maths');
+  Progress.markVisit();
+  Progress.renderGamebar();
+</script>
+</body>
+</html>

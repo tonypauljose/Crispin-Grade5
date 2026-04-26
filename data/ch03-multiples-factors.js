@@ -1,0 +1,28 @@
+/* Chapter 3 — Multiples & Factors · exam bank */
+window.CH03_BANK = [
+  { type: 'fill', q: 'First 5 multiples of 4 (smallest first, comma-separated)', answer: ['4,8,12,16,20', '4, 8, 12, 16, 20'], explain: '4, 8, 12, 16, 20.' },
+  { type: 'fill', q: 'First 4 multiples of 7?', answer: ['7,14,21,28', '7, 14, 21, 28'], explain: '7, 14, 21, 28.' },
+  { type: 'fill', q: 'Smallest multiple of 9?', answer: ['9'], explain: 'Every number\'s smallest multiple is itself.' },
+  { type: 'mcq', q: 'Is 24 a multiple of 6?', options: ['Yes', 'No'], answer: 0, explain: '24 = 6 × 4, so yes.' },
+  { type: 'mcq', q: 'Is 35 a multiple of 4?', options: ['Yes', 'No'], answer: 1, explain: '4×8=32, 4×9=36 — so 35 is not a multiple of 4.' },
+  { type: 'fill', q: 'List all factors of 12 (smallest first, comma-separated)', answer: ['1,2,3,4,6,12', '1, 2, 3, 4, 6, 12'], explain: '1×12, 2×6, 3×4 → factors are 1, 2, 3, 4, 6, 12.' },
+  { type: 'fill', q: 'List all factors of 18.', answer: ['1,2,3,6,9,18', '1, 2, 3, 6, 9, 18'], explain: '1, 2, 3, 6, 9, 18.' },
+  { type: 'fill', q: 'How many factors does 7 have? (just the number)', answer: ['2'], explain: '7 is prime → factors are 1 and 7.' },
+  { type: 'mcq', q: 'Which of these is a prime number?', options: ['9', '15', '11', '21'], answer: 2, explain: '11 has only 2 factors (1 and 11) — prime.' },
+  { type: 'mcq', q: 'Which is NOT a prime number?', options: ['2', '3', '5', '9'], answer: 3, explain: '9 = 3 × 3, so it has more than 2 factors.' },
+  { type: 'fill', q: 'LCM of 4 and 6 = ?', answer: ['12'], explain: 'Multiples of 4: 4,8,12... Multiples of 6: 6,12... LCM = 12.' },
+  { type: 'fill', q: 'LCM of 3 and 5 = ?', answer: ['15'], explain: '3×5 = 15 (no common factor).' },
+  { type: 'fill', q: 'HCF of 12 and 18 = ?', answer: ['6'], explain: 'Common factors of 12 (1,2,3,4,6,12) and 18 (1,2,3,6,9,18) → biggest = 6.' },
+  { type: 'fill', q: 'HCF of 8 and 12 = ?', answer: ['4'], explain: '4 is the highest common factor.' },
+  { type: 'tf', q: '1 is a prime number.', answer: 1, explain: 'False — 1 has only one factor (itself), so it is NOT prime.' },
+  { type: 'tf', q: 'Every number is a multiple of 1.', answer: 0, explain: 'True — N = N × 1 for any N.' },
+  { type: 'mcq', q: 'A number ending in 0 is divisible by:', options: ['Only 5', 'Only 10', 'Both 2 and 5 (so by 10)', 'Only 2'], answer: 2, explain: 'Numbers ending in 0 are divisible by 2, 5 and 10.' },
+  { type: 'mcq', q: 'A number ending in 5 is always divisible by:', options: ['2', '5', '10', '3'], answer: 1, explain: 'Numbers ending in 5 are divisible by 5.' },
+  { type: 'mcq', q: 'Sum of digits of 246 = 12 → is 246 divisible by 3?', options: ['Yes', 'No'], answer: 0, explain: 'If the digit sum is divisible by 3, the number is too.' },
+  { type: 'fill', q: 'Common factors of 8 and 12 (comma-separated, smallest first)', answer: ['1,2,4', '1, 2, 4'], explain: '1, 2, 4 are common.' },
+  { type: 'mcq', q: 'Which is an even number?', options: ['17', '23', '34', '51'], answer: 2, explain: '34 ends in 4 → even.' },
+  { type: 'mcq', q: 'Which is an odd number?', options: ['10', '14', '21', '38'], answer: 2, explain: '21 ends in 1 → odd.' },
+  { type: 'fill', q: 'Smallest prime number = ?', answer: ['2'], explain: '2 is the smallest prime (and the only even prime).' },
+  { type: 'tf', q: '2 is the only even prime number.', answer: 0, explain: 'True — every other even number is divisible by 2.' },
+  { type: 'fill', q: 'Is 51 prime? (yes / no)', answer: ['no'], explain: '51 = 3 × 17 → not prime.' }
+];

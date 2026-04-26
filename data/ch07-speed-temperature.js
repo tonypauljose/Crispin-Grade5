@@ -1,0 +1,28 @@
+/* Chapter 7 — Speed & Temperature · exam bank */
+window.CH07_BANK = [
+  { type: 'fill', q: 'Speed = distance ÷ ?', answer: ['time'], explain: 'Speed = Distance ÷ Time.' },
+  { type: 'fill', q: 'A car covers 120 km in 2 hours. Speed = ?', answer: ['60', '60 km/h', '60 kmph'], explain: '120 ÷ 2 = 60 km/h.' },
+  { type: 'fill', q: 'A train moves 90 km in 3 hours. Speed?', answer: ['30', '30 km/h', '30 kmph'], explain: '90 ÷ 3 = 30 km/h.' },
+  { type: 'fill', q: 'A cyclist rides at 15 km/h for 4 hours. Distance?', answer: ['60', '60 km'], explain: 'Distance = Speed × Time = 15 × 4 = 60 km.' },
+  { type: 'fill', q: 'A bus runs at 50 km/h for 6 hours. Distance covered?', answer: ['300', '300 km'], explain: '50 × 6 = 300 km.' },
+  { type: 'fill', q: 'How long to travel 100 km at 25 km/h? (hours)', answer: ['4', '4 hours'], explain: 'Time = D ÷ S = 100 ÷ 25 = 4 hours.' },
+  { type: 'fill', q: 'How long to travel 60 km at 20 km/h?', answer: ['3', '3 hours'], explain: '60 ÷ 20 = 3 hours.' },
+  { type: 'mcq', q: 'Speed is measured in:', options: ['km only', 'hours only', 'km/h or m/s', 'kg'], answer: 2, explain: 'Speed = distance per unit time.' },
+  { type: 'mcq', q: 'Temperature is measured in:', options: ['Celsius (°C) or Fahrenheit (°F)', 'Metres', 'Kilograms', 'Litres'], answer: 0, explain: '°C and °F are the most common.' },
+  { type: 'fill', q: 'Water freezes at __ °C.', answer: ['0', '0°C', '0 °C'], explain: 'Water freezes at 0°C.' },
+  { type: 'fill', q: 'Water boils at __ °C.', answer: ['100', '100°C', '100 °C'], explain: 'Water boils at 100°C.' },
+  { type: 'fill', q: 'Normal human body temperature is about __ °C.', answer: ['37', '37°C', '37 °C'], explain: 'About 37°C (98.6°F).' },
+  { type: 'mcq', q: 'Which is hotter?', options: ['10°C', '25°C', '0°C'], answer: 1, explain: '25°C is the warmest of these.' },
+  { type: 'mcq', q: 'In Bahrain summer, midday temperature can reach about:', options: ['10°C', '25°C', '45°C', '60°C'], answer: 2, explain: 'Around 40-45°C in peak summer.' },
+  { type: 'fill', q: 'Difference between 35°C and 18°C?', answer: ['17', '17°C', '17 °C'], explain: '35 − 18 = 17°C.' },
+  { type: 'fill', q: 'If the temperature rose from 22°C to 30°C, by how many degrees?', answer: ['8', '8°C', '8 °C'], explain: '30 − 22 = 8°C.' },
+  { type: 'tf', q: '°F (Fahrenheit) is colder than °C at the same number.', answer: 1, explain: 'False — units differ. 0°C = 32°F, 100°C = 212°F.' },
+  { type: 'fill', q: 'A plane flies 600 km in 2 hours. Speed?', answer: ['300', '300 km/h'], explain: '600 ÷ 2 = 300 km/h.' },
+  { type: 'fill', q: 'Crispin walks 4 km in 1 hour. At this speed, how far in 3 hours?', answer: ['12', '12 km'], explain: '4 × 3 = 12 km.' },
+  { type: 'fill', q: 'A car runs at 80 km/h. How far in 30 minutes?', answer: ['40', '40 km'], explain: 'Half hour → half speed: 40 km.' },
+  { type: 'mcq', q: 'Which is faster?', options: ['10 km/h', '50 km/h', '100 km/h'], answer: 2, explain: 'Higher speed = faster.' },
+  { type: 'fill', q: 'Light\'s speed is the fastest of all. About __ km/sec (very large number, hint: 3 lakh).', answer: ['300000', '3,00,000', '300,000'], explain: 'Speed of light ≈ 300,000 km/sec.' },
+  { type: 'tf', q: 'Hotter water has a higher temperature.', answer: 0, explain: 'True — temperature measures hotness.' },
+  { type: 'fill', q: 'A train at 60 km/h covers 180 km in __ hours.', answer: ['3', '3 hours'], explain: '180 ÷ 60 = 3 hours.' },
+  { type: 'mcq', q: 'Negative temperatures (below 0°C) mean:', options: ['Very hot', 'Below freezing — very cold', 'Just chilly'], answer: 1, explain: 'Below 0°C means below freezing.' }
+];

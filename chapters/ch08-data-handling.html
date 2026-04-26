@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ch 8 · Data Handling — Crispin's World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body>
+<main class="page"><div class="container">
+  <section class="section">
+    <p class="muted"><a href="../maths.html">← Back to Mathematics</a></p>
+    <h1>📘 Chapter 8 · Data Handling</h1>
+    <p class="lead">Tables, graphs, mean, mode, range — how to read what numbers tell you.</p>
+  </section>
+
+  <div class="grid grid-2" style="margin-bottom: var(--space-5);">
+    <a class="exam-tile" href="../exam.html?ch=ch08">
+      <span class="exam-tile__pulse">30 MIN ⏱</span>
+      <span class="exam-tile__title">📝 Take the Chapter Exam</span>
+      <p class="exam-tile__desc">25 questions, timed. Score emailed to mum.</p>
+    </a>
+    <div class="card card--flat">
+      <h3 style="color: var(--purple); margin-bottom: 8px;">📖 Lessons coming soon</h3>
+      <p class="muted" style="margin: 0;">Practice & Exam are ready now.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <h2>✍️ Practice</h2>
+
+    <div class="exercise" id="ex-1" data-ex="1">
+      <h3 class="exercise__title">1. Mean (average)</h3>
+      <p class="muted">Add them, divide by how many.</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="7"><span class="ex-item__q">Mean of 4, 6, 8, 10 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="15"><span class="ex-item__q">Mean of 5, 10, 15, 20, 25 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="4"><span class="ex-item__q">Mean of 2, 4, 6 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="8"><span class="ex-item__q">Mean of 6, 7, 8, 9, 10 = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(1)">Check</button>
+      <div class="ex-feedback" id="fb-1"></div>
+    </div>
+
+    <div class="exercise" id="ex-2" data-ex="2">
+      <h3 class="exercise__title">2. Mode (most common)</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="3"><span class="ex-item__q">Mode of 2, 3, 3, 4, 5 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="8"><span class="ex-item__q">Mode of 7, 8, 8, 8, 9, 10 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="5"><span class="ex-item__q">Mode of 3, 5, 5, 7, 9 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="4"><span class="ex-item__q">Mode of 4, 4, 6, 7, 4, 8 = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(2)">Check</button>
+      <div class="ex-feedback" id="fb-2"></div>
+    </div>
+
+    <div class="exercise" id="ex-3" data-ex="3">
+      <h3 class="exercise__title">3. Range (max − min)</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="10"><span class="ex-item__q">Range of 5, 8, 12, 15 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="9"><span class="ex-item__q">Range of 3, 7, 9, 2, 11 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="14"><span class="ex-item__q">Range of 12, 4, 18, 6, 9 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="0"><span class="ex-item__q">Range of 5, 5, 5, 5 = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(3)">Check</button>
+      <div class="ex-feedback" id="fb-3"></div>
+    </div>
+
+    <div class="exercise" id="ex-4" data-ex="4">
+      <h3 class="exercise__title">4. Graph types</h3>
+      <p class="muted">Type: bar / pie / line / pictograph</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="bar"><span class="ex-item__q">Uses rectangles to show data: </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="pie"><span class="ex-item__q">Uses circular slices: </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="pictograph"><span class="ex-item__q">Uses pictures or symbols: </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="line"><span class="ex-item__q">Uses connected dots to show changes over time: </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(4)">Check</button>
+      <div class="ex-feedback" id="fb-4"></div>
+    </div>
+
+    <div class="exercise" id="ex-5" data-ex="5">
+      <h3 class="exercise__title">5. Crispin's quiz scores: 5, 8, 10, 7, 5</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="7"><span class="ex-item__q">Mean = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="5"><span class="ex-item__q">Mode = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="5"><span class="ex-item__q">Range = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="35"><span class="ex-item__q">Total score = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(5)">Check</button>
+      <div class="ex-feedback" id="fb-5"></div>
+    </div>
+
+    <div class="exercise" id="ex-6" data-ex="6">
+      <h3 class="exercise__title">6. Pictograph (1 ⚽ = 5 goals)</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="20"><span class="ex-item__q">⚽⚽⚽⚽ = __ goals </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="35"><span class="ex-item__q">⚽⚽⚽⚽⚽⚽⚽ = __ goals </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="10"><span class="ex-item__q">⚽⚽ = __ goals </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="50"><span class="ex-item__q">⚽⚽⚽⚽⚽⚽⚽⚽⚽⚽ = __ goals </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(6)">Check</button>
+      <div class="ex-feedback" id="fb-6"></div>
+    </div>
+
+  </section>
+</div></main>
+<footer class="footer"><div class="container">
+  <p>Made with ❤️ and ⚽ for Crispin · <a href="../maths.html">All chapters</a> · <a href="../index.html">Home</a></p>
+</div></footer>
+<script src="../js/common.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/practice-runner.js"></script>
+<script>
+  App.renderTopBar('maths');
+  Progress.markVisit();
+  Progress.renderGamebar();
+</script>
+</body>
+</html>

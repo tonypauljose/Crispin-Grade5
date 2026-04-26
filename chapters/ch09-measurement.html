@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ch 9 · Measurement — Crispin's World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body>
+<main class="page"><div class="container">
+  <section class="section">
+    <p class="muted"><a href="../maths.html">← Back to Mathematics</a></p>
+    <h1>📘 Chapter 9 · Measurement</h1>
+    <p class="lead">Length, mass, capacity — and converting between units.</p>
+  </section>
+
+  <div class="grid grid-2" style="margin-bottom: var(--space-5);">
+    <a class="exam-tile" href="../exam.html?ch=ch09">
+      <span class="exam-tile__pulse">30 MIN ⏱</span>
+      <span class="exam-tile__title">📝 Take the Chapter Exam</span>
+      <p class="exam-tile__desc">25 questions, timed. Score emailed to mum.</p>
+    </a>
+    <div class="card card--flat">
+      <h3 style="color: var(--purple); margin-bottom: 8px;">📖 Lessons coming soon</h3>
+      <p class="muted" style="margin: 0;">Practice & Exam are ready now.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <h2>✍️ Practice</h2>
+
+    <div class="exercise" id="ex-1" data-ex="1">
+      <h3 class="exercise__title">1. Length conversions</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="100"><span class="ex-item__q">1 m = __ cm </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="1000"><span class="ex-item__q">1 km = __ m </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="500"><span class="ex-item__q">5 m = __ cm </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="3"><span class="ex-item__q">300 cm = __ m </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(1)">Check</button>
+      <div class="ex-feedback" id="fb-1"></div>
+    </div>
+
+    <div class="exercise" id="ex-2" data-ex="2">
+      <h3 class="exercise__title">2. Mass conversions</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="1000"><span class="ex-item__q">1 kg = __ g </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="3000"><span class="ex-item__q">3 kg = __ g </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="0.5|.5"><span class="ex-item__q">500 g = __ kg </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="2.5"><span class="ex-item__q">2500 g = __ kg </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(2)">Check</button>
+      <div class="ex-feedback" id="fb-2"></div>
+    </div>
+
+    <div class="exercise" id="ex-3" data-ex="3">
+      <h3 class="exercise__title">3. Capacity conversions</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="1000"><span class="ex-item__q">1 L = __ mL </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="4000"><span class="ex-item__q">4 L = __ mL </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="0.75|.75"><span class="ex-item__q">750 mL = __ L </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="2"><span class="ex-item__q">2000 mL = __ L </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(3)">Check</button>
+      <div class="ex-feedback" id="fb-3"></div>
+    </div>
+
+    <div class="exercise" id="ex-4" data-ex="4">
+      <h3 class="exercise__title">4. Mixed units</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="145"><span class="ex-item__q">1 m 45 cm in cm = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="1250"><span class="ex-item__q">1 kg 250 g in g = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="2500"><span class="ex-item__q">2 L 500 mL in mL = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="380"><span class="ex-item__q">2 m 30 cm + 1 m 50 cm in cm = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(4)">Check</button>
+      <div class="ex-feedback" id="fb-4"></div>
+    </div>
+
+    <div class="exercise" id="ex-5" data-ex="5">
+      <h3 class="exercise__title">5. Compare measurements</h3>
+      <p class="muted">Type the LARGER one (e.g. "1 km" vs "500 m" → "1 km").</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="1 km|1km"><span class="ex-item__q">1 km vs 500 m → </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="2 kg|2kg"><span class="ex-item__q">2 kg vs 1500 g → </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="1 l|1l"><span class="ex-item__q">1 L vs 750 mL → </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="1 m|1m"><span class="ex-item__q">1 m vs 90 cm → </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(5)">Check</button>
+      <div class="ex-feedback" id="fb-5"></div>
+    </div>
+
+    <div class="exercise" id="ex-6" data-ex="6">
+      <h3 class="exercise__title">6. Word problems</h3>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="4000"><span class="ex-item__q">A car covers 4 km in metres = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="125"><span class="ex-item__q">1 m 75 cm − 50 cm in cm = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="6000"><span class="ex-item__q">6 km = __ m </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="1500"><span class="ex-item__q">1 L 500 mL in mL = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(6)">Check</button>
+      <div class="ex-feedback" id="fb-6"></div>
+    </div>
+
+  </section>
+</div></main>
+<footer class="footer"><div class="container">
+  <p>Made with ❤️ and ⚽ for Crispin · <a href="../maths.html">All chapters</a> · <a href="../index.html">Home</a></p>
+</div></footer>
+<script src="../js/common.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/practice-runner.js"></script>
+<script>
+  App.renderTopBar('maths');
+  Progress.markVisit();
+  Progress.renderGamebar();
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+/* Chapter 4 — Geometry · exam bank */
+window.CH04_BANK = [
+  { type: 'mcq', q: 'How many sides does a triangle have?', options: ['2', '3', '4', '5'], answer: 1, explain: 'Triangle = 3 sides.' },
+  { type: 'mcq', q: 'How many sides does a hexagon have?', options: ['5', '6', '7', '8'], answer: 1, explain: 'Hexagon = 6 sides.' },
+  { type: 'mcq', q: 'A square has __ sides of equal length.', options: ['2', '3', '4', '5'], answer: 2, explain: 'A square has 4 equal sides.' },
+  { type: 'mcq', q: 'How many vertices does a cube have?', options: ['4', '6', '8', '12'], answer: 2, explain: 'A cube has 8 vertices (corners).' },
+  { type: 'mcq', q: 'A right angle measures:', options: ['45°', '90°', '180°', '360°'], answer: 1, explain: 'A right angle = 90°.' },
+  { type: 'mcq', q: 'An angle less than 90° is called:', options: ['Right', 'Acute', 'Obtuse', 'Straight'], answer: 1, explain: 'Acute = less than 90°.' },
+  { type: 'mcq', q: 'An angle between 90° and 180° is:', options: ['Right', 'Acute', 'Obtuse', 'Reflex'], answer: 2, explain: 'Obtuse = between 90° and 180°.' },
+  { type: 'mcq', q: 'A straight angle measures:', options: ['90°', '180°', '270°', '360°'], answer: 1, explain: 'Straight = 180°.' },
+  { type: 'fill', q: 'Lines that never meet are called __ lines.', answer: ['parallel'], explain: 'Parallel lines stay the same distance apart.' },
+  { type: 'fill', q: 'Lines that meet at 90° are called __ lines.', answer: ['perpendicular'], explain: 'Perpendicular = meet at right angle.' },
+  { type: 'mcq', q: 'A circle has how many lines of symmetry?', options: ['1', '4', '8', 'Infinite'], answer: 3, explain: 'A circle has infinite lines of symmetry.' },
+  { type: 'mcq', q: 'A square has __ lines of symmetry.', options: ['1', '2', '4', '8'], answer: 2, explain: 'A square has 4 lines of symmetry.' },
+  { type: 'mcq', q: 'A rectangle (not square) has __ lines of symmetry.', options: ['1', '2', '3', '4'], answer: 1, explain: 'Just 2 — through the middle horizontally and vertically.' },
+  { type: 'mcq', q: 'How many faces does a cube have?', options: ['4', '6', '8', '12'], answer: 1, explain: 'A cube has 6 faces.' },
+  { type: 'mcq', q: 'How many edges does a cube have?', options: ['6', '8', '10', '12'], answer: 3, explain: 'A cube has 12 edges.' },
+  { type: 'mcq', q: 'A cylinder has __ flat circular faces.', options: ['1', '2', '3', '4'], answer: 1, explain: 'A cylinder has 2 flat circular faces (top and bottom).' },
+  { type: 'mcq', q: 'A pyramid (square base) has __ triangular faces.', options: ['3', '4', '5', '6'], answer: 1, explain: 'Square pyramid has 4 triangular faces + 1 square base = 5 total.' },
+  { type: 'fill', q: 'The distance from the centre of a circle to its edge is the __ .', answer: ['radius'], explain: 'Radius = centre to edge.' },
+  { type: 'fill', q: 'The distance straight across a circle through the centre is the __ .', answer: ['diameter'], explain: 'Diameter = 2 × radius.' },
+  { type: 'fill', q: 'If radius = 5 cm, diameter = ?', answer: ['10', '10cm', '10 cm'], explain: 'Diameter = 2 × radius = 10 cm.' },
+  { type: 'tf', q: 'A square is also a rectangle.', answer: 0, explain: 'True — a square is a special rectangle with all sides equal.' },
+  { type: 'tf', q: 'A triangle can have a 95° angle.', answer: 0, explain: 'True — that\'s an obtuse triangle.' },
+  { type: 'mcq', q: 'Sum of all angles in a triangle?', options: ['90°', '180°', '270°', '360°'], answer: 1, explain: 'Always 180° in a triangle.' },
+  { type: 'mcq', q: 'Sum of all angles in a square or rectangle?', options: ['180°', '270°', '360°', '720°'], answer: 2, explain: '4 right angles = 4 × 90 = 360°.' },
+  { type: 'mcq', q: 'Which shape has 5 sides?', options: ['Quadrilateral', 'Pentagon', 'Hexagon', 'Octagon'], answer: 1, explain: 'Penta = 5 → pentagon.' }
+];

@@ -1,0 +1,28 @@
+/* Chapter 9 — Measurement · exam bank */
+window.CH09_BANK = [
+  { type: 'fill', q: '1 m = ? cm', answer: ['100'], explain: '1 m = 100 cm.' },
+  { type: 'fill', q: '1 km = ? m', answer: ['1000', '1,000'], explain: '1 km = 1,000 m.' },
+  { type: 'fill', q: '5 m = ? cm', answer: ['500'], explain: '5 × 100 = 500 cm.' },
+  { type: 'fill', q: '300 cm = ? m', answer: ['3'], explain: '300 ÷ 100 = 3 m.' },
+  { type: 'fill', q: '2 km = ? m', answer: ['2000', '2,000'], explain: '2 × 1000 = 2,000 m.' },
+  { type: 'fill', q: '4500 m = ? km (in decimal)', answer: ['4.5', '4.5 km'], explain: '4500 ÷ 1000 = 4.5 km.' },
+  { type: 'fill', q: '1 kg = ? g', answer: ['1000', '1,000'], explain: '1 kg = 1,000 g.' },
+  { type: 'fill', q: '3 kg = ? g', answer: ['3000', '3,000'], explain: '3 × 1000 = 3,000 g.' },
+  { type: 'fill', q: '500 g = ? kg', answer: ['0.5', '.5'], explain: '500 ÷ 1000 = 0.5 kg.' },
+  { type: 'fill', q: '2500 g = ? kg', answer: ['2.5'], explain: '2500 ÷ 1000 = 2.5 kg.' },
+  { type: 'fill', q: '1 L = ? mL', answer: ['1000', '1,000'], explain: '1 L = 1,000 mL.' },
+  { type: 'fill', q: '4 L = ? mL', answer: ['4000', '4,000'], explain: '4 × 1000 = 4,000 mL.' },
+  { type: 'fill', q: '750 mL = ? L', answer: ['0.75'], explain: '750 ÷ 1000 = 0.75 L.' },
+  { type: 'fill', q: 'Add: 2 m 30 cm + 1 m 50 cm = ? cm (just the number)', answer: ['380'], explain: '230 + 150 = 380 cm.' },
+  { type: 'fill', q: 'Crispin\'s height is 1 m 45 cm. How many cm?', answer: ['145'], explain: '100 + 45 = 145 cm.' },
+  { type: 'fill', q: 'A bag weighs 1 kg 250 g. How many grams?', answer: ['1250', '1,250'], explain: '1000 + 250 = 1,250 g.' },
+  { type: 'fill', q: 'A water bottle = 2 L 500 mL. In mL?', answer: ['2500', '2,500'], explain: '2000 + 500 = 2,500 mL.' },
+  { type: 'mcq', q: 'Which is the largest?', options: ['1 km', '500 m', '2000 cm', '5 m'], answer: 0, explain: '1 km = 1000 m → biggest.' },
+  { type: 'mcq', q: 'Which weighs the most?', options: ['500 g', '2 kg', '1500 g', '0.5 kg'], answer: 1, explain: '2 kg = 2000 g → heaviest.' },
+  { type: 'mcq', q: 'Which holds the most water?', options: ['250 mL', '1 L', '750 mL', '500 mL'], answer: 1, explain: '1 L = 1000 mL → biggest.' },
+  { type: 'fill', q: 'A car covers 4 km. In metres?', answer: ['4000', '4,000'], explain: '4 × 1000 = 4,000 m.' },
+  { type: 'fill', q: '1 m 75 cm − 50 cm = ? cm', answer: ['125'], explain: '175 − 50 = 125 cm.' },
+  { type: 'tf', q: '1.5 kg is the same as 1500 g.', answer: 0, explain: 'True — 1.5 × 1000 = 1500 g.' },
+  { type: 'tf', q: '1 m is shorter than 90 cm.', answer: 1, explain: 'False — 1 m = 100 cm > 90 cm.' },
+  { type: 'fill', q: '6 km = __ m', answer: ['6000', '6,000'], explain: '6 × 1000 = 6,000 m.' }
+];
