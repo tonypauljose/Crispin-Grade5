@@ -21,14 +21,21 @@
         <div class="bento-hero__eyebrow">
           <span>Fun Zone</span><span style="color:var(--ink-muted);">·</span><span>Take a break</span>
         </div>
-        <h1 class="bento-hero__title">Riddles &amp;<br><span class="accent">a penalty kick.</span></h1>
-        <p class="bento-hero__sub">33+ brain teasers in math, word, logic and football flavours, plus a full penalty shootout to play between lessons.</p>
+        <h1 class="bento-hero__title">Football Run,<br><span class="accent">riddles &amp; more.</span></h1>
+        <p class="bento-hero__sub">Sprint through a stadium dodging defenders, crack 33 brain-teaser riddles, or take a penalty kick. Pick a game and play.</p>
       </section>
 
-      <!-- Penalty Shootout -->
+      <!-- Featured: Football Run -->
+      <section class="section" id="run">
+        <h2 class="section-title">⚽ Football Run</h2>
+        <p class="muted" style="margin-bottom: var(--space-4);">A Roblox-style obby: <strong>jump</strong> over cones &amp; defenders, <strong>slide</strong> under banners, grab the coins. Speed grows with every 80 points. Beat your high score.</p>
+        <div id="run-host"></div>
+      </section>
+
+      <!-- Penalty Shootout (smaller, secondary) -->
       <section class="section" id="shootout">
-        <h2 class="section-title">⚽ Penalty Shootout</h2>
-        <p class="muted" style="margin-bottom: var(--space-4);">Pick a corner. Hold to charge — sweet spot is the amber zone. Score 3 of 5 to win. The keeper gets sharper every round.</p>
+        <h2 class="section-title">🥅 Penalty Shootout</h2>
+        <p class="muted" style="margin-bottom: var(--space-4);">A quieter game when you just want to take a few kicks. Pick a corner, hold to charge, release to shoot.</p>
         <div id="shootout-host"></div>
       </section>
 
@@ -59,10 +66,12 @@
   <script src="data/riddles.js"></script>
   <script src="js/riddles.js"></script>
   <script src="js/penalty-shootout.js"></script>
+  <script src="js/football-run.js"></script>
   <script>
     App.renderTopBar('fun');
     Progress.markVisit();
     Progress.renderGamebar();
+    new FootballRun('run-host');
     new PenaltyGame('shootout-host');
     Riddles.renderDaily(document.getElementById('daily-riddle-host'));
     Riddles.renderArchive(document.getElementById('archive-host'));

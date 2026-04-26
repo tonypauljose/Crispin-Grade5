@@ -1128,6 +1128,202 @@ a.bento__tile:hover .bento__cta::after { transform: translateX(4px); }
    ============================================================ */
 
 /* ============================================================
+   FOOTBALL RUN — Roblox-style runner game
+   ============================================================ */
+.run-stage {
+  position: relative;
+  background: #14142B;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  max-width: 880px;
+  margin: 0 auto;
+  aspect-ratio: 800 / 360;
+  -webkit-user-select: none;
+  user-select: none;
+  isolation: isolate;
+}
+
+.run-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #0B0820;
+  cursor: pointer;
+  outline: none;
+}
+
+/* HUD overlay top */
+.run-hud {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0));
+  color: white;
+  z-index: 10;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  pointer-events: none;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.run-hud__hearts { font-size: 1.05rem; letter-spacing: 2px; }
+.run-hud__stats {
+  display: flex;
+  gap: 14px;
+  background: rgba(0,0,0,0.45);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+}
+.run-hud__stats strong { color: var(--yellow); }
+.run-hud__hi { color: var(--yellow); }
+
+/* Mobile button row below */
+.run-controls {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  z-index: 10;
+  pointer-events: auto;
+  justify-content: space-between;
+}
+.run-btn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.18);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 10px 16px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  font-weight: 700;
+}
+.run-btn:hover { background: rgba(255,255,255,0.3); }
+.run-btn:active { transform: scale(0.96); background: rgba(250, 204, 21, 0.4); }
+
+@media (min-width: 720px) {
+  .run-controls { display: none; } /* desktop uses keyboard */
+}
+
+/* Start / End overlays */
+.run-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 20, 43, 0.85);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  padding: 20px;
+}
+.run-overlay--end { display: none; }
+.run-card {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: 24px 28px;
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+.run-card h2 {
+  font-family: var(--font-display);
+  background: linear-gradient(135deg, var(--purple), var(--coral), var(--yellow));
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.8rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.run-card p { color: var(--ink-soft); font-size: 0.95rem; }
+.run-rules {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0;
+  font-size: 0.88rem;
+  text-align: left;
+  color: var(--ink);
+}
+.run-rules li {
+  padding: 6px 12px;
+  background: var(--bg-soft);
+  border-radius: var(--radius-md);
+  margin-bottom: 6px;
+}
+.run-rules kbd {
+  display: inline-block;
+  background: var(--ink);
+  color: white;
+  padding: 1px 8px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  margin: 0 2px;
+}
+
+.run-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--purple), var(--coral));
+  color: white;
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(124, 58, 237, 0.45);
+  transition: transform 0.15s;
+  letter-spacing: -0.01em;
+}
+.run-cta:hover { transform: translateY(-2px); }
+.run-cta:active { transform: translateY(0) scale(0.97); }
+
+.run-end-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 14px;
+}
+.run-end-stats > div {
+  background: var(--bg-soft);
+  padding: 10px;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.run-end-stats > div span {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 700;
+}
+.run-end-stats > div strong {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--purple);
+  margin-top: 2px;
+}
+
+/* ============================================================
    EXAM MODE — competitive-exam UI (sticky timer + question palette)
    ============================================================ */
 .exam-shell {
