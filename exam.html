@@ -27,19 +27,14 @@
           <ul class="hand-list" style="font-size: 1rem;">
             <li>25 questions, mixed types (multiple-choice, true/false, fill-in-the-blank).</li>
             <li>Hard timer: <strong>30 minutes</strong>. Auto-submits at 0:00.</li>
-            <li>You can <em>skip</em> a question, but you can't go back to it.</li>
-            <li>Hold an answer in your head before clicking — once submitted, it's locked.</li>
-            <li>At the end, results + a review of every question are shown <em>and emailed to your parent</em>.</li>
+            <li>You can navigate freely between questions, mark some for review, and change answers any time before final Submit.</li>
+            <li>At the end you'll see a full review of every question with the correct answer and a "Why?" rationale.</li>
+            <li><strong>Optional:</strong> at submit time you can enter an email address to receive the results — leave blank to skip emailing.</li>
           </ul>
         </div>
 
         <h2 style="margin-bottom: var(--space-3);">Pick a chapter</h2>
         <div class="grid grid-3" id="chapter-grid"></div>
-
-        <p class="muted" style="margin-top: var(--space-5); text-align: center;">
-          Results will be emailed to <strong id="parent-email-display">…</strong>.
-          The very first time, your parent gets a one-time confirmation email — they click "Confirm" once and from then on every exam result lands in their inbox automatically.
-        </p>
       </section>
 
       <!-- Exam runner (filled when exam starts) -->
@@ -63,9 +58,6 @@
     App.renderTopBar('exam');
     Progress.markVisit();
     Progress.renderGamebar();
-
-    const PARENT_EMAIL = 'marytreesajose@gmail.com';
-    document.getElementById('parent-email-display').textContent = PARENT_EMAIL;
 
     // Chapters available for exam — must match data/chXX-*.js files
     const CHAPTERS = [
@@ -144,8 +136,8 @@
         bank: flat,
         count: 25,
         durationSec: 30 * 60,
-        studentName,
-        parentEmail: PARENT_EMAIL
+        studentName
+        // parentEmail is collected from the user in the submit modal
       });
       exam.start();
       App.Audio.playWhistle();

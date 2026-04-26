@@ -13,10 +13,20 @@
   'use strict';
   const App = window.App;
 
-  const PARENT_EMAIL = 'marytreesajose@gmail.com';
-  const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/' + PARENT_EMAIL;
+  const FORMSUBMIT_BASE = 'https://formsubmit.co/ajax/';
+  const EMAIL_LS_KEY = 'crispin_exam_parent_email';
   const DEFAULT_DURATION_SEC = 30 * 60;
   const DEFAULT_QUESTION_COUNT = 25;
+
+  function isValidEmail(s) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((s || '').trim());
+  }
+  function loadSavedEmail() {
+    try { return localStorage.getItem(EMAIL_LS_KEY) || ''; } catch (_) { return ''; }
+  }
+  function saveEmail(e) {
+    try { localStorage.setItem(EMAIL_LS_KEY, e); } catch (_) {}
+  }
 
   function ExamEngine(opts) {
     this.host = document.getElementById(opts.containerId);
@@ -27,7 +37,7 @@
     this.count = Math.min(opts.count || DEFAULT_QUESTION_COUNT, this.bank.length);
     this.durationSec = opts.durationSec || DEFAULT_DURATION_SEC;
     this.studentName = opts.studentName || 'Crispin';
-    this.parentEmail = opts.parentEmail || PARENT_EMAIL;
+    this.parentEmail = opts.parentEmail || ''; // collected at submit-time
 
     this.qs = (App && App.shuffle ? App.shuffle(this.bank) : this.bank.slice()).slice(0, this.count);
     this.answers = new Array(this.qs.length).fill(null);
@@ -294,24 +304,47 @@
     const total = this.qs.length;
     const unanswered = total - ok;
     const marked = this.markedReview.filter(Boolean).length;
+    const savedEmail = this.parentEmail || loadSavedEmail();
 
     let warn = '';
-    if (unanswered > 0) warn += `<p style="color:var(--coral-dark);"><strong>${unanswered}</strong> question${unanswered === 1 ? '' : 's'} still unanswered.</p>`;
-    if (marked > 0) warn += `<p style="color:var(--purple);"><strong>${marked}</strong> marked for review.</p>`;
+    if (unanswered > 0) warn += `<p style="color:var(--coral-dark); margin: 4px 0;"><strong>${unanswered}</strong> question${unanswered === 1 ? '' : 's'} still unanswered.</p>`;
+    if (marked > 0) warn += `<p style="color:var(--purple); margin: 4px 0;"><strong>${marked}</strong> marked for review.</p>`;
 
     const html = `
       <h2 class="modal__title">Submit your exam?</h2>
       <div class="modal__body">
+        <p>You answered <strong>${ok} / ${total}</strong> questions. After submitting, your answers are locked and the results are shown.</p>
         ${warn}
-        <p>You answered <strong>${ok} / ${total}</strong> questions. After submitting, you can't change anything and your score is sent to your parent.</p>
+        <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border);">
+          <label for="exam-email-input" style="display:block; font-weight:700; color:var(--purple); margin-bottom:6px;">📧 Email results to (optional):</label>
+          <input type="email" id="exam-email-input" class="qz-fill-input" autocomplete="email"
+                 placeholder="parent@example.com"
+                 value="${savedEmail.replace(/"/g, '&quot;')}" />
+          <p class="muted" style="font-size:0.78rem; margin-top: 6px; line-height: 1.4;">
+            We'll save this on this device for next time. Leave blank to skip emailing — you'll still see the results on screen.
+            <br>First submission to a new address triggers a one-time confirmation email from FormSubmit (free, no account); click confirm once and future results arrive silently.
+          </p>
+        </div>
       </div>
       <div class="modal__footer">
         <button class="btn btn-outline" data-close>Keep working</button>
-        <button class="btn btn-coral btn-lg" id="confirm-submit-btn">📤 Submit now</button>
+        <button class="btn btn-coral btn-lg" id="confirm-submit-btn">📤 Submit</button>
       </div>
     `;
     const { close } = App.openModal(html);
+    const input = document.getElementById('exam-email-input');
+    input.focus();
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); document.getElementById('confirm-submit-btn').click(); }
+    });
     document.getElementById('confirm-submit-btn').addEventListener('click', () => {
+      const entered = (input.value || '').trim();
+      if (entered && !isValidEmail(entered)) {
+        if (App && App.showToast) App.showToast('That email looks off — check it (or leave blank to skip).', 'warn');
+        return;
+      }
+      this.parentEmail = entered;
+      if (entered) saveEmail(entered);
       close();
       this.finish(false);
     });
@@ -415,7 +448,7 @@
           </div>
         </div>
 
-        <div id="email-status" class="exam-email-status">Sending results to <strong>${this.parentEmail}</strong>…</div>
+        <div id="email-status" class="exam-email-status">${this.parentEmail ? `Sending results to <strong>${this.parentEmail}</strong>…` : '✏️ Email not sent (no address entered). Results are shown below.'}</div>
 
         <h3 class="exam-review-heading">📋 Question-by-Question Review</h3>
         <p class="exam-review-help">Read every rationale — even on the ones you got right. That's how the next exam goes higher.</p>
@@ -467,10 +500,13 @@
       window.Progress.addXP(xp, `Exam · ${this.chapterTitle} · ${pct}%`);
     }
 
-    this._sendEmail({ correct, total, pct, mins, secs, timedOut, review });
+    if (this.parentEmail) {
+      this._sendEmail({ correct, total, pct, mins, secs, timedOut, review });
+    }
   };
 
   ExamEngine.prototype._sendEmail = function ({ correct, total, pct, mins, secs, timedOut, review }) {
+    if (!this.parentEmail) return;
     const wrongList = review.filter(a => !a.isCorrect);
     const wrongSummary = wrongList.length === 0
       ? 'All correct! 🎉'
@@ -494,7 +530,7 @@
     };
 
     const status = document.getElementById('email-status');
-    fetch(FORMSUBMIT_URL, {
+    fetch(FORMSUBMIT_BASE + encodeURIComponent(this.parentEmail), {
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -522,7 +558,7 @@ Date: ${App.formatDateDMY(new Date())}
 ${wrongSummary}`);
         const subject = encodeURIComponent(payload._subject);
         status.innerHTML = `
-          ⚠️ Auto-email didn't go through (probably the first time — FormSubmit needs a one-time confirmation at <strong>${this.parentEmail}</strong>).<br>
+          ⚠️ Auto-email didn't go through (probably the first time — FormSubmit needs a one-time confirmation at <strong>${this.parentEmail}</strong>, sent to that inbox).<br>
           You can also <a href="mailto:${this.parentEmail}?subject=${subject}&body=${body}" class="btn btn-outline btn-sm" style="margin-top:6px;">📧 Open email manually</a>.
         `;
         status.classList.add('exam-email-status--warn');
