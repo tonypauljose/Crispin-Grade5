@@ -425,6 +425,7 @@
         <a href="${root}index.html" ${current === 'home' ? 'class="active"' : ''}>Home</a>
         <a href="${root}learning.html" ${current === 'learning' ? 'class="active"' : ''}>Learning</a>
         <a href="${root}maths.html" ${current === 'maths' ? 'class="active"' : ''}>Maths</a>
+        <a href="${root}exam.html" ${current === 'exam' ? 'class="active"' : ''} style="background:rgba(220,38,38,0.4);">📝 Exam</a>
         <a href="${root}fun.html" ${current === 'fun' ? 'class="active"' : ''}>Fun Zone</a>
       </nav>
       <div class="topbar__clock" aria-live="polite" aria-label="Bahrain time">
