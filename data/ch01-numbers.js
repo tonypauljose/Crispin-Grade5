@@ -75,7 +75,7 @@ window.CH01_BANK = {
     { type: 'fill', q: 'Write 8,060 in words.', answer: ['eight thousand sixty', 'eight thousand and sixty'], explain: '8 thousand 0 hundred 6 tens 0 ones.' },
     { type: 'fill', q: 'Write 2,999 in words.', answer: ['two thousand nine hundred ninety-nine', 'two thousand nine hundred and ninety-nine', 'two thousand nine hundred ninety nine'], explain: '2 thousand 9 hundred 9 tens 9 ones.' },
     { type: 'fill', q: 'Write 1,001 in words.', answer: ['one thousand one', 'one thousand and one'], explain: 'One thousand plus one.' },
-    { type: 'fill', q: 'Write 6,500 in words.', answer: ['six thousand five hundred'], explain: 'Six thousand five hundred — straightforward.' },
+    { type: 'fill', q: 'Write 6,500 in words.', answer: ['six thousand five hundred', 'six thousand and five hundred'], explain: 'Six thousand five hundred — straightforward.' },
 
     // Fill — numerals from words
     { type: 'fill', q: 'Write "three thousand four hundred eight" in numerals.', answer: ['3408', '3,408'], explain: '3 thousand 4 hundred 0 tens 8 ones.' },

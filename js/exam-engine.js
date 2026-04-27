@@ -358,6 +358,44 @@
     return '';
   };
 
+  // ---------- Lenient matching (parity with js/practice-runner.js) ----------
+  function _normalise(s) {
+    return (s || '').toString().toLowerCase().trim()
+      .replace(/[,]/g, '')
+      .replace(/[.!?]+$/g, '')
+      .replace(/\bthe\b/g, '')
+      .replace(/\band\b/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+  function _expandPlaceValue(s) {
+    if (!s) return s;
+    let v = s.replace(/\bones\b/g, '').replace(/\bplace\b/g, '').replace(/\s+/g, ' ').trim();
+    let m;
+    if ((m = /^(\d+)\s*thousand[s]?$/.exec(v))) return String(parseInt(m[1], 10) * 1000);
+    if ((m = /^(\d+)\s*hundred[s]?$/.exec(v))) return String(parseInt(m[1], 10) * 100);
+    if ((m = /^(\d+)\s*ten[s]?$/.exec(v))) return String(parseInt(m[1], 10) * 10);
+    return v;
+  }
+  function _numericMatch(a, b) {
+    const na = Number(a), nb = Number(b);
+    if (!isFinite(na) || !isFinite(nb)) return false;
+    return Math.abs(na - nb) < 1e-9;
+  }
+  function _isFillMatch(givenRaw, expectedRaw) {
+    const given = _normalise(givenRaw);
+    const expected = _normalise(expectedRaw);
+    if (given === expected) return true;
+    if (_numericMatch(given, expected)) return true;
+    const expandedG = _expandPlaceValue(given);
+    if (expandedG === expected) return true;
+    if (_numericMatch(expandedG, expected)) return true;
+    const expandedE = _expandPlaceValue(expected);
+    if (given === expandedE) return true;
+    if (_numericMatch(given, expandedE)) return true;
+    return false;
+  }
+
   ExamEngine.prototype._scoreAll = function () {
     return this.qs.map((q, i) => {
       const stored = this.answers[i];
@@ -372,9 +410,8 @@
         isCorrect = (stored === q.answer);
       } else if (q.type === 'fill') {
         given = String(stored);
-        const norm = given.toLowerCase().trim().replace(/\s+/g, ' ').replace(/,/g, '');
         const acceptable = Array.isArray(q.answer) ? q.answer : [q.answer];
-        isCorrect = acceptable.some(a => String(a).toLowerCase().trim().replace(/\s+/g, ' ').replace(/,/g, '') === norm);
+        isCorrect = acceptable.some(a => _isFillMatch(given, a));
       }
       return {
         q: q.q, type: q.type, given,
