@@ -83,9 +83,9 @@ window.CH01_BANK = {
     { type: 'fill', q: 'Write "five thousand five" in numerals.', answer: ['5005', '5,005'], explain: '5 thousand + 0 + 0 + 5.' },
 
     // Fill — place value
-    { type: 'fill', q: 'What is the place value of 6 in 5,623?', answer: ['600', '6 hundreds'], explain: '6 is in the hundreds place → 600.' },
-    { type: 'fill', q: 'What is the place value of 4 in 4,392?', answer: ['4000', '4,000', '4 thousands'], explain: '4 is in the thousands place.' },
-    { type: 'fill', q: 'What is the place value of 8 in 1,480?', answer: ['80', '8 tens'], explain: '8 is in the tens place.' },
+    { type: 'fill', q: 'What is the place value of 6 in 5,623?', answer: ['600', '6 hundreds', '6 hundred', 'hundreds', 'hundreds place', 'the hundreds place'], explain: '6 sits in the hundreds place. Strictly, "place value" = digit × position = 6 × 100 = 600. Both "hundreds" (the place name) and "600" (the numeric value) count here.' },
+    { type: 'fill', q: 'What is the place value of 4 in 4,392?', answer: ['4000', '4,000', '4 thousands', '4 thousand', 'thousands', 'thousands place', 'the thousands place'], explain: '4 sits in the thousands place. Place value = 4 × 1,000 = 4,000. Either "thousands" or "4,000" is fine.' },
+    { type: 'fill', q: 'What is the place value of 8 in 1,480?', answer: ['80', '8 tens', '8 ten', 'tens', 'tens place', 'the tens place'], explain: '8 sits in the tens place. Place value = 8 × 10 = 80. Either "tens" or "80" is fine.' },
 
     // Fill — expanded form
     { type: 'fill', q: 'Expanded form of 3,728. (Write like 3000 + 700 + 20 + 8)', answer: ['3000 + 700 + 20 + 8', '3,000 + 700 + 20 + 8'], explain: 'Just split each digit by its place value.' },
