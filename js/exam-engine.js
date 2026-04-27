@@ -15,7 +15,7 @@
 
   const FORMSUBMIT_BASE = 'https://formsubmit.co/ajax/';
   const EMAIL_LS_KEY = 'crispin_exam_parent_email';
-  const DEFAULT_DURATION_SEC = 30 * 60;
+  const SEC_PER_QUESTION = 30; // 30 seconds per question, total scales with count
   const DEFAULT_QUESTION_COUNT = 25;
 
   function isValidEmail(s) {
@@ -35,7 +35,6 @@
     this.chapterTitle = opts.chapterTitle || opts.chapter;
     this.bank = opts.bank || [];
     this.count = Math.min(opts.count || DEFAULT_QUESTION_COUNT, this.bank.length);
-    this.durationSec = opts.durationSec || DEFAULT_DURATION_SEC;
     this.studentName = opts.studentName || 'Crispin';
     this.parentEmail = opts.parentEmail || ''; // collected at submit-time
 
@@ -44,6 +43,9 @@
     this.markedReview = new Array(this.qs.length).fill(false);
     this.visited = new Array(this.qs.length).fill(false);
     this.idx = 0;
+
+    // Timer = 30 seconds per question, unless explicitly overridden
+    this.durationSec = opts.durationSec || (this.qs.length * SEC_PER_QUESTION);
 
     this.startTime = Date.now();
     this.endTime = this.startTime + this.durationSec * 1000;

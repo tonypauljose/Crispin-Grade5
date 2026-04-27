@@ -21,10 +21,10 @@
       <section id="picker-section">
         <div class="bento-hero">
           <div class="bento-hero__eyebrow">
-            <span>Exam Mode</span><span style="color:var(--ink-muted);">·</span><span>30 minutes · timed</span>
+            <span>Exam Mode</span><span style="color:var(--ink-muted);">·</span><span>30 sec per question · timed</span>
           </div>
           <h1 class="bento-hero__title">Pick a chapter,<br><span class="accent">take an exam.</span></h1>
-          <p class="bento-hero__sub">25 questions, hard 30-minute timer. Navigate freely between questions, mark for review, change answers any time. Score is calculated only when you submit.</p>
+          <p class="bento-hero__sub">25 questions, <strong>30 seconds per question</strong> (so 25 Qs = 12 min 30 sec). Navigate freely, mark for review, change answers any time. Score is calculated only when you submit.</p>
         </div>
 
         <!-- Rules tile -->
@@ -34,7 +34,7 @@
             <p class="bento__eyebrow">Quick rules</p>
             <ul style="margin: var(--space-2) 0 0; padding-left: 20px; line-height: 1.7; color: var(--ink); font-size: 1rem;">
               <li>25 questions, mixed types (multiple-choice, true/false, fill-in-the-blank).</li>
-              <li><strong>30-minute hard timer.</strong> Auto-submits at 0:00.</li>
+              <li><strong>30 seconds per question</strong> — 25 questions = 12 min 30 sec total. Hard timer; auto-submits at 0:00.</li>
               <li>Navigate freely between questions, mark some for review, change answers any time before final Submit.</li>
               <li>At the end you'll see a full review of every question with the correct answer + 💡 rationale, plus marks out of 100.</li>
               <li><strong>Optional:</strong> at submit time you can enter an email to receive the results — leave blank to skip.</li>
@@ -89,7 +89,7 @@
           <span class="bento__bg-emoji">${c.emoji}</span>
           <span class="tag ${c.subj === 'English' ? 'tag--mint' : 'tag--purple'}">${c.subj}</span>
           <h2 class="bento__title">${c.title}</h2>
-          <p class="bento__desc">25 questions · 30 min · ${c.subj === 'English' ? 'Grammar' : 'Maths'} exam</p>
+          <p class="bento__desc">25 questions · 30 sec each · ${c.subj === 'English' ? 'Grammar' : 'Maths'} exam</p>
           <span class="bento__cta">Start exam</span>
         </a>
       `).join('');
@@ -122,7 +122,7 @@
         chapterTitle: ch.title,
         bank: flat,
         count: 25,
-        durationSec: 30 * 60,
+        // durationSec auto-computed: 25 × 30 = 750 sec (12 min 30 sec)
         studentName: (visitor && visitor.name) || 'Crispin'
       });
       exam.start();
