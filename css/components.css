@@ -1337,11 +1337,27 @@ a.bento__tile:hover .bento__cta::after { transform: translateX(4px); }
   margin: 0 auto;
 }
 
-/* Sticky top bar — always visible during scroll. Sits BELOW the site
-   nav (which is fixed at top: 0 with height var(--topbar-h)). */
+/* While an exam is running, hide the site nav + gamebar so the exam
+   topbar can stick to the very top of the viewport without overlap.
+   Removed when exam finishes (both endings clear the body class). */
+body.exam-running .topbar,
+body.exam-running .gamebar,
+body.exam-running .sound-menu {
+  display: none !important;
+}
+body.exam-running .page {
+  padding-top: var(--space-3);
+}
+body.exam-running {
+  /* Calmer background during exam */
+  background-image: none;
+}
+
+/* Sticky top bar — always visible during scroll. Sticks to top:0 of
+   the viewport since the site nav is hidden during exams. */
 .exam-topbar {
   position: sticky;
-  top: var(--topbar-h);
+  top: 0;
   z-index: 50;
   background: linear-gradient(135deg, #4C1D95 0%, #6B21A8 100%);
   color: white;
@@ -1410,8 +1426,8 @@ a.bento__tile:hover .bento__cta::after { transform: translateX(4px); }
     border-bottom: 2px solid var(--yellow);
     padding: 14px 16px 12px;
     position: sticky;
-    /* Sit just under the sticky topbar (which sits under the site nav) */
-    top: calc(var(--topbar-h) + 64px);
+    /* Sit just under the sticky exam topbar — site nav is hidden during exam */
+    top: 64px;
     z-index: 30;
     background: var(--gray-50);
   }
@@ -1476,7 +1492,7 @@ a.bento__tile:hover .bento__cta::after { transform: translateX(4px); }
   .exam-topbar__center { display: none; }
   .exam-topbar__title { font-size: 0.9rem; }
   .exam-topbar__timer { font-size: 1.2rem; padding: 5px 12px; min-width: 95px; }
-  .exam-palette { top: calc(var(--topbar-h) + 56px); padding: 12px 14px 10px; }
+  .exam-palette { top: 56px; padding: 12px 14px 10px; }
   .palette-grid { grid-template-columns: repeat(auto-fill, minmax(34px, 1fr)); gap: 4px; }
   .palette-tile { font-size: 0.78rem; }
   .palette-legend { font-size: 0.68rem; gap: 10px; }

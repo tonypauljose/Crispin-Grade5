@@ -55,6 +55,9 @@
 
   ExamEngine.prototype.start = function () {
     if (!this.host) return;
+    // Hide the site nav + gamebar during the exam so the exam topbar
+    // can stick to the very top of the viewport without overlap.
+    document.body.classList.add('exam-running');
     this.host.innerHTML = `
       <div class="exam-shell">
         <div class="exam-topbar">
@@ -427,6 +430,7 @@
   ExamEngine.prototype.finish = function (timedOut) {
     if (this.finished) return;
     this.finished = true;
+    document.body.classList.remove('exam-running');
     if (this.tickHandle) clearTimeout(this.tickHandle);
     window.removeEventListener('beforeunload', this._beforeunload);
 
