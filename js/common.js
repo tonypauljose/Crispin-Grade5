@@ -144,11 +144,22 @@
     return a;
   };
   App.seededRand = function (seed) {
-    let s = 0;
-    for (let i = 0; i < seed.length; i++) s = (s * 31 + seed.charCodeAt(i)) >>> 0;
+    // FNV-1a hash: mixes each character thoroughly so adjacent seeds (e.g.
+    // "2026-04-27" vs "2026-04-28") diverge across the full 32-bit range
+    // instead of differing by 1.
+    let s = 2166136261 >>> 0;
+    for (let i = 0; i < seed.length; i++) {
+      s ^= seed.charCodeAt(i);
+      s = Math.imul(s, 16777619) >>> 0;
+    }
+    // MurmurHash3 finalizer — extra avalanche so the first rand() call
+    // already reflects the full seed, not just its low bits.
+    s ^= s >>> 16; s = Math.imul(s, 2246822507) >>> 0;
+    s ^= s >>> 13; s = Math.imul(s, 3266489909) >>> 0;
+    s ^= s >>> 16;
     return () => {
-      s = (s * 1664525 + 1013904223) >>> 0;
-      return s / 0xffffffff;
+      s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+      return s / 0x100000000;
     };
   };
 

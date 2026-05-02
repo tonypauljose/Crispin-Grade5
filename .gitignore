@@ -31,3 +31,6 @@ build/
 # ── Logs ──
 *.log
 npm-debug.log*
+
+# ── Birthday slideshow source media (local only — not pushed to GH Pages) ──
+Crispin Photos and Videos/
