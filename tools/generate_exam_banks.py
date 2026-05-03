@@ -1,15 +1,30 @@
-"""Generate large, varied exam banks for chapters 2–10.
+"""Generate large, varied exam banks for Crispin's Grade 5 chapters.
 
 Run from the repo root:
     python tools/generate_exam_banks.py
 
-Each chapter produces 70–100 questions of mixed types so that the
-exam runner (which picks 25 random items per attempt) gives genuine
-variety on retake.
+Produces:
+    data/ch01-numbers-extra.js  (CH01_BONUS — supplements the 120 hand-tiered Qs)
+    data/ch02-four-operations.js
+    data/ch03-multiples-factors.js
+    data/ch04-geometry.js
+    data/ch05-decimals.js
+    data/ch06-perimeter-area-volume.js
+    data/ch07-speed-temperature.js
+    data/ch08-data-handling.js
+    data/ch09-measurement.js
+    data/ch10-time-money.js
+
+Target: ~300 questions per chapter so retakes feel genuinely different.
+
+Design notes:
+- Each generator uses a fixed `random.seed(NN)` so output is reproducible.
+- Templates dedupe via a `seen` set keyed on (template_kind, params).
+- Question shape is the same as before: `{type, q, options?, answer, explain, hint?}`.
+- The exam runner shuffles the whole bank and slices the first 25 — no engine changes needed for bigger banks.
 """
 from __future__ import annotations
 
-import io
 import json
 import random
 import sys
@@ -49,12 +64,240 @@ def write_bank(filename, var_name, qs):
     out.append("")
     path = ROOT / filename
     path.write_text("\n".join(out), encoding="utf-8")
-    print(f"  wrote {filename:38s} {len(qs):3d} questions")
+    print(f"  wrote {filename:38s} {len(qs):4d} questions")
 
 
 def fmt(n):
     """Format integer with comma separators."""
     return f"{n:,}"
+
+
+def take_uniq(generator_fn, target_count, max_tries=None):
+    """Call generator_fn() repeatedly, dedupe by question-text, stop at target_count.
+    The generator must return a single Q dict each call (not a list)."""
+    if max_tries is None:
+        max_tries = target_count * 20
+    out = []
+    seen = set()
+    for _ in range(max_tries):
+        if len(out) >= target_count:
+            break
+        item = generator_fn()
+        if item is None:
+            continue
+        key = item["q"]
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(item)
+    return out
+
+
+# ============================================================
+# Ch 1 — Numbers 1 to 10,000 (procedural EXTRAS — hand-tiered file stays put)
+# ============================================================
+def gen_ch01_extra():
+    """Procedural questions to supplement the 120 hand-tiered Qs in ch01-numbers.js.
+    Loaded by exam.html as CH01_BONUS and concatenated for variety on retake."""
+    random.seed(101)
+    qs = []
+
+    PLACE_NAMES = ["ones", "tens", "hundreds", "thousands"]
+
+    # Place value: identify the digit at a given place
+    def make_pv_digit():
+        n = random.randint(1000, 9999)
+        pos = random.randint(0, 3)  # 0=ones, 3=thousands
+        digit = int(str(n)[3 - pos])
+        return Q("fill",
+                 f"In {fmt(n)}, what digit is in the {PLACE_NAMES[pos]} place?",
+                 answer=[str(digit)],
+                 explain=f"{PLACE_NAMES[pos]} place is the {pos+1}{['st','nd','rd','th'][min(pos,3)]} from the right → {digit}.")
+    qs += take_uniq(make_pv_digit, 25)
+
+    # Place value: value of a digit at a given place
+    def make_pv_value():
+        n = random.randint(1000, 9999)
+        pos = random.randint(0, 3)
+        digit = int(str(n)[3 - pos])
+        if digit == 0:
+            return None
+        val = digit * (10 ** pos)
+        wrong = list({digit, digit * 10, digit * 100, digit * 1000} - {val})
+        opts = [val] + wrong[:3]
+        random.shuffle(opts)
+        return Q("mcq",
+                 f"What is the place value of {digit} in {fmt(n)}?",
+                 options=[fmt(o) for o in opts],
+                 answer=opts.index(val),
+                 explain=f"{digit} is in the {PLACE_NAMES[pos]} place → value = {fmt(val)}.")
+    qs += take_uniq(make_pv_value, 25)
+
+    # Successor / predecessor
+    def make_succ():
+        n = random.randint(1000, 9998)
+        return Q("fill", f"What is the successor of {fmt(n)}?",
+                 answer=[str(n+1), fmt(n+1)],
+                 explain=f"Successor = +1 → {fmt(n+1)}.")
+    def make_pred():
+        n = random.randint(1001, 9999)
+        return Q("fill", f"What is the predecessor of {fmt(n)}?",
+                 answer=[str(n-1), fmt(n-1)],
+                 explain=f"Predecessor = −1 → {fmt(n-1)}.")
+    qs += take_uniq(make_succ, 15)
+    qs += take_uniq(make_pred, 15)
+
+    # Comparison
+    def make_compare():
+        a = random.randint(1000, 9999)
+        b = a + random.choice([-500, -50, -5, -1, 1, 5, 50, 500, 1500])
+        b = max(1000, min(9999, b))
+        if a == b:
+            ans = 2
+        elif a < b:
+            ans = 0
+        else:
+            ans = 1
+        return Q("compare", f"Compare: {fmt(a)} ___ {fmt(b)}",
+                 options=["<", ">", "="], answer=ans,
+                 explain=f"{fmt(a)} {'<' if a<b else '>' if a>b else '='} {fmt(b)}.")
+    qs += take_uniq(make_compare, 30)
+
+    # Expanded form (build the number from the expansion)
+    def make_expanded():
+        n = random.randint(1000, 9999)
+        s = str(n)
+        parts = []
+        for i, ch in enumerate(s):
+            d = int(ch)
+            place = 10 ** (3 - i)
+            if d != 0:
+                parts.append(str(d * place))
+        expanded = " + ".join(parts)
+        return Q("fill",
+                 f"Write the number for: {expanded}",
+                 answer=[str(n), fmt(n)],
+                 explain=f"Add them: {fmt(n)}.")
+    qs += take_uniq(make_expanded, 20)
+
+    # Reverse: write the expanded form
+    def make_to_expanded():
+        n = random.randint(1000, 9999)
+        s = str(n)
+        parts = []
+        for i, ch in enumerate(s):
+            d = int(ch)
+            place = 10 ** (3 - i)
+            if d != 0:
+                parts.append(str(d * place))
+        expanded_spaced = " + ".join(parts)
+        expanded_comma = expanded_spaced.replace(" + ", "+")
+        return Q("fill",
+                 f"Write {fmt(n)} in expanded form (use + signs).",
+                 answer=[expanded_spaced, expanded_comma],
+                 explain=f"{fmt(n)} = {expanded_spaced}.")
+    qs += take_uniq(make_to_expanded, 15)
+
+    # Roman numerals (G5 range I-XL or so)
+    ROMAN_PAIRS = [
+        (1, "I"), (4, "IV"), (5, "V"), (9, "IX"), (10, "X"),
+        (11, "XI"), (12, "XII"), (13, "XIII"), (14, "XIV"), (15, "XV"),
+        (19, "XIX"), (20, "XX"), (21, "XXI"), (24, "XXIV"), (25, "XXV"),
+        (29, "XXIX"), (30, "XXX"), (35, "XXXV"), (39, "XXXIX"), (40, "XL"),
+        (45, "XLV"), (49, "XLIX"), (50, "L"), (60, "LX"), (70, "LXX"),
+        (80, "LXXX"), (90, "XC"), (100, "C"), (150, "CL"),
+        (200, "CC"), (400, "CD"), (500, "D"), (900, "CM"), (1000, "M"),
+    ]
+    used_roman = set()
+    for arabic, roman in ROMAN_PAIRS:
+        if random.random() < 0.5:
+            qs.append(Q("fill", f"Write {arabic} in Roman numerals.",
+                        answer=[roman, roman.lower()],
+                        explain=f"{arabic} = {roman}."))
+        else:
+            qs.append(Q("fill", f"Write the Roman numeral {roman} in figures.",
+                        answer=[str(arabic), fmt(arabic)],
+                        explain=f"{roman} = {arabic}."))
+        used_roman.add(arabic)
+
+    # Smallest / largest 4-digit number from given digits
+    digit_sets = [
+        ([3, 7, 1, 9], "9731", "1379"),
+        ([2, 5, 8, 4], "8542", "2458"),
+        ([6, 0, 3, 9], "9630", "3069"),  # 0 can't lead
+        ([4, 7, 2, 1], "7421", "1247"),
+        ([8, 5, 0, 6], "8650", "5068"),
+        ([9, 1, 4, 7], "9741", "1479"),
+        ([2, 6, 3, 8], "8632", "2368"),
+        ([5, 0, 7, 2], "7520", "2057"),
+    ]
+    for ds, biggest, smallest in digit_sets:
+        ds_str = ", ".join(str(d) for d in ds)
+        qs.append(Q("fill",
+                    f"Using the digits {ds_str} (each once), what is the LARGEST 4-digit number?",
+                    answer=[biggest, fmt(int(biggest))],
+                    explain=f"Largest digit first → {biggest}."))
+        qs.append(Q("fill",
+                    f"Using the digits {ds_str} (each once), what is the SMALLEST 4-digit number?",
+                    answer=[smallest, fmt(int(smallest))],
+                    explain=f"Smallest non-zero digit first, then ascending → {smallest}."))
+
+    # Number names
+    NUMBER_WORDS = {
+        0: "zero", 1: "one", 2: "two", 3: "three", 4: "four", 5: "five",
+        6: "six", 7: "seven", 8: "eight", 9: "nine", 10: "ten",
+        11: "eleven", 12: "twelve", 13: "thirteen", 14: "fourteen", 15: "fifteen",
+        16: "sixteen", 17: "seventeen", 18: "eighteen", 19: "nineteen",
+        20: "twenty", 30: "thirty", 40: "forty", 50: "fifty",
+        60: "sixty", 70: "seventy", 80: "eighty", 90: "ninety",
+    }
+
+    def to_words(n: int) -> str:
+        """Convert 0-9999 to words (lowercase, no commas)."""
+        if n == 0:
+            return "zero"
+        if n < 20:
+            return NUMBER_WORDS[n]
+        if n < 100:
+            tens, ones = divmod(n, 10)
+            if ones == 0:
+                return NUMBER_WORDS[tens * 10]
+            return NUMBER_WORDS[tens * 10] + " " + NUMBER_WORDS[ones]
+        if n < 1000:
+            hundreds, rest = divmod(n, 100)
+            out = NUMBER_WORDS[hundreds] + " hundred"
+            if rest:
+                out += " " + to_words(rest)
+            return out
+        thousands, rest = divmod(n, 1000)
+        out = to_words(thousands) + " thousand"
+        if rest:
+            out += " " + to_words(rest)
+        return out
+
+    # words → number (ask for number)
+    def make_words_to_num():
+        n = random.randint(1000, 9999)
+        words = to_words(n)
+        return Q("fill", f"Write '{words}' as a number.",
+                 answer=[str(n), fmt(n)],
+                 explain=f"{words} = {fmt(n)}.")
+    qs += take_uniq(make_words_to_num, 15)
+
+    # Skip counting
+    def make_skip_count():
+        skip = random.choice([2, 5, 10, 25, 50, 100])
+        start = random.randint(1, 9) * skip
+        seq = [start + skip * i for i in range(4)]
+        next_v = start + skip * 4
+        sequence = ", ".join(str(s) for s in seq)
+        return Q("fill",
+                 f"Skip-count by {skip}s. What comes next? {sequence}, ?",
+                 answer=[str(next_v), fmt(next_v)],
+                 explain=f"Add {skip}: {seq[-1]} + {skip} = {next_v}.")
+    qs += take_uniq(make_skip_count, 15)
+
+    return qs
 
 
 # ============================================================
@@ -64,80 +307,203 @@ def gen_ch02():
     random.seed(202)
     qs = []
 
-    # Addition variety
-    seen = set()
-    while len([q for q in qs if "+" in q["q"]]) < 14:
+    # Addition
+    def make_add():
         a, b = random.randint(100, 9000), random.randint(100, 9000)
-        if (a, b) in seen: continue
-        seen.add((a, b))
-        qs.append(Q("fill", f"{fmt(a)} + {fmt(b)} = ?",
-                    answer=[str(a + b), fmt(a + b)],
-                    explain=f"{fmt(a)} + {fmt(b)} = {fmt(a + b)}."))
+        return Q("fill", f"{fmt(a)} + {fmt(b)} = ?",
+                 answer=[str(a + b), fmt(a + b)],
+                 explain=f"{fmt(a)} + {fmt(b)} = {fmt(a + b)}.")
+    qs += take_uniq(make_add, 35)
 
-    # Subtraction variety
-    while len([q for q in qs if "−" in q["q"]]) < 12:
+    # Three-number addition
+    def make_add3():
+        a = random.randint(100, 999)
+        b = random.randint(100, 999)
+        c = random.randint(100, 999)
+        return Q("fill", f"{fmt(a)} + {fmt(b)} + {fmt(c)} = ?",
+                 answer=[str(a+b+c), fmt(a+b+c)],
+                 explain=f"Add left to right: {fmt(a+b+c)}.")
+    qs += take_uniq(make_add3, 15)
+
+    # Subtraction
+    def make_sub():
         a = random.randint(1000, 9999)
         b = random.randint(100, a - 1)
-        qs.append(Q("fill", f"{fmt(a)} − {fmt(b)} = ?",
-                    answer=[str(a - b), fmt(a - b)],
-                    explain=f"{fmt(a)} − {fmt(b)} = {fmt(a - b)}."))
+        return Q("fill", f"{fmt(a)} − {fmt(b)} = ?",
+                 answer=[str(a - b), fmt(a - b)],
+                 explain=f"{fmt(a)} − {fmt(b)} = {fmt(a - b)}.")
+    qs += take_uniq(make_sub, 35)
 
-    # Multiplication
-    while len([q for q in qs if "×" in q["q"] and "÷" not in q["q"]]) < 12:
-        a = random.choice([random.randint(11, 99), random.randint(100, 999)])
-        b = random.choice([random.randint(2, 9), random.randint(11, 25)])
-        qs.append(Q("fill", f"{a} × {b} = ?",
-                    answer=[str(a * b), fmt(a * b)],
-                    explain=f"{a} × {b} = {fmt(a * b)}."))
+    # Multiplication (1 × 2-digit, 2 × 2-digit, 1 × 3-digit)
+    def make_mul_small():
+        a = random.randint(11, 99)
+        b = random.randint(2, 9)
+        return Q("fill", f"{a} × {b} = ?",
+                 answer=[str(a * b), fmt(a * b)],
+                 explain=f"{a} × {b} = {fmt(a * b)}.")
+    qs += take_uniq(make_mul_small, 20)
+
+    def make_mul_med():
+        a = random.randint(11, 99)
+        b = random.randint(11, 25)
+        return Q("fill", f"{a} × {b} = ?",
+                 answer=[str(a * b), fmt(a * b)],
+                 explain=f"{a} × {b} = {fmt(a * b)}.")
+    qs += take_uniq(make_mul_med, 15)
+
+    def make_mul_3():
+        a = random.randint(100, 999)
+        b = random.randint(2, 9)
+        return Q("fill", f"{fmt(a)} × {b} = ?",
+                 answer=[str(a * b), fmt(a * b)],
+                 explain=f"{fmt(a)} × {b} = {fmt(a * b)}.")
+    qs += take_uniq(make_mul_3, 15)
 
     # Division (clean)
-    while len([q for q in qs if "÷" in q["q"]]) < 10:
-        b = random.randint(2, 9)
+    def make_div_clean():
+        b = random.randint(2, 12)
         ans = random.randint(20, 250)
         a = b * ans
-        qs.append(Q("fill", f"{fmt(a)} ÷ {b} = ?",
-                    answer=[str(ans), fmt(ans)],
-                    explain=f"{fmt(a)} ÷ {b} = {ans}."))
+        return Q("fill", f"{fmt(a)} ÷ {b} = ?",
+                 answer=[str(ans), fmt(ans)],
+                 explain=f"{fmt(a)} ÷ {b} = {ans}.")
+    qs += take_uniq(make_div_clean, 25)
 
-    # BODMAS
-    bodmas_set = [
-        ("(8 + 4) × 3", 36, "Brackets first: 12, then ×3 = 36."),
-        ("20 − 6 + 4", 18, "Left to right: 20−6=14, then +4=18."),
-        ("6 × 7 + 3", 45, "× before +: 42 + 3 = 45."),
-        ("8 ÷ 2 × 3", 12, "÷ and × left-to-right: 4 × 3 = 12."),
-        ("15 + 3 × 4", 27, "× first: 12, then +15 = 27."),
-        ("(20 − 5) ÷ 3", 5, "Brackets: 15, ÷3 = 5."),
-        ("(12 + 8) ÷ 4", 5, "Brackets: 20, ÷4 = 5."),
-        ("100 − 10 × 5", 50, "× first: 50, then 100−50 = 50."),
-        ("36 ÷ 4 + 6", 15, "÷ first: 9, then +6 = 15."),
+    # Division with remainder
+    def make_div_rem():
+        b = random.randint(3, 9)
+        q_part = random.randint(10, 99)
+        r = random.randint(1, b - 1)
+        a = b * q_part + r
+        return Q("fill", f"What is the remainder when {fmt(a)} is divided by {b}?",
+                 answer=[str(r)],
+                 explain=f"{b} × {q_part} = {fmt(b*q_part)}; {fmt(a)} − {fmt(b*q_part)} = {r}.")
+    qs += take_uniq(make_div_rem, 20)
+
+    # BODMAS — generated
+    def make_bodmas():
+        kind = random.choice(["bracket_then_x", "mul_then_add", "add_then_mul",
+                              "div_then_add", "left_to_right_md", "left_to_right_as"])
+        if kind == "bracket_then_x":
+            a, b = random.randint(2, 12), random.randint(2, 9)
+            c = random.randint(2, 9)
+            ans = (a + b) * c
+            return Q("fill", f"({a} + {b}) × {c} = ?",
+                     answer=[str(ans)],
+                     explain=f"Brackets first: {a+b}, then × {c} = {ans}.")
+        if kind == "mul_then_add":
+            a, b = random.randint(2, 9), random.randint(2, 9)
+            c = random.randint(2, 30)
+            ans = a * b + c
+            return Q("fill", f"{a} × {b} + {c} = ?",
+                     answer=[str(ans)],
+                     explain=f"× before +: {a*b} + {c} = {ans}.")
+        if kind == "add_then_mul":
+            a = random.randint(5, 30)
+            b, c = random.randint(2, 9), random.randint(2, 9)
+            ans = a + b * c
+            return Q("fill", f"{a} + {b} × {c} = ?",
+                     answer=[str(ans)],
+                     explain=f"× first: {b*c}, then {a}+{b*c} = {ans}.")
+        if kind == "div_then_add":
+            d = random.randint(2, 9)
+            q = random.randint(2, 12)
+            a = d * q
+            c = random.randint(1, 20)
+            ans = q + c
+            return Q("fill", f"{a} ÷ {d} + {c} = ?",
+                     answer=[str(ans)],
+                     explain=f"÷ first: {q}, then +{c} = {ans}.")
+        if kind == "left_to_right_md":
+            a = random.choice([12, 18, 24, 36, 48])
+            b = random.choice([2, 3, 4, 6])
+            c = random.randint(2, 5)
+            if a % b != 0:
+                a = b * 6
+            ans = (a // b) * c
+            return Q("fill", f"{a} ÷ {b} × {c} = ?",
+                     answer=[str(ans)],
+                     explain=f"Left-to-right ÷ and ×: {a//b} × {c} = {ans}.")
+        if kind == "left_to_right_as":
+            a = random.randint(20, 100)
+            b = random.randint(5, 30)
+            c = random.randint(5, 20)
+            ans = a - b + c
+            return Q("fill", f"{a} − {b} + {c} = ?",
+                     answer=[str(ans)],
+                     explain=f"Left-to-right: {a-b} + {c} = {ans}.")
+    qs += take_uniq(make_bodmas, 30)
+
+    # Word problems (templated, varied subjects)
+    word_templates = [
+        ("Crispin had {a} stickers. He got {b} more. How many in total?", lambda a, b: a + b, [(124, 87), (250, 175), (468, 235), (612, 88)]),
+        ("A box has {a} chocolates. How many in {b} boxes?", lambda a, b: a * b, [(24, 8), (36, 5), (45, 6), (60, 4), (75, 3)]),
+        ("{b} friends share {a} toffees equally. Each friend gets?", lambda a, b: a // b, [(85, 5), (96, 8), (144, 12), (120, 6)]),
+        ("Tickets cost ₹{b}. {a} sold. Total in ₹?", lambda a, b: a * b, [(17, 50), (24, 75), (32, 40), (45, 30)]),
+        ("There are {a} fans. {b} leave. How many remain?", lambda a, b: a - b, [(1250, 875), (2000, 1450), (3500, 1800), (1500, 600)]),
+        ("A school has {a} classes of {b} children each. Total students?", lambda a, b: a * b, [(6, 32), (8, 28), (10, 25), (12, 30)]),
+        ("A baker bakes {a} buns in {b} trays. Buns per tray?", lambda a, b: a // b, [(144, 6), (168, 7), (200, 8), (240, 12)]),
+        ("Crispin saved ₹{b} every week for {a} weeks. Total saved?", lambda a, b: a * b, [(8, 50), (12, 75), (10, 100), (15, 60)]),
+        ("A bookshop sold {a} books in the morning and {b} in the evening. Total sold?", lambda a, b: a + b, [(345, 268), (412, 195), (520, 387), (188, 274)]),
+        ("Crispin ran {b} m every day for {a} days. Total distance?", lambda a, b: a * b, [(7, 800), (5, 1200), (10, 500), (6, 750)]),
     ]
-    for expr, ans, ex in bodmas_set:
-        qs.append(Q("fill", f"{expr} = ?", answer=[str(ans)], explain=ex))
+    for tmpl, calc, params_list in word_templates:
+        for a, b in params_list:
+            ans = calc(a, b)
+            q_text = tmpl.format(a=fmt(a), b=fmt(b))
+            qs.append(Q("fill", q_text,
+                        answer=[str(ans), fmt(ans)],
+                        explain=f"Answer = {fmt(ans)}."))
 
-    # Word problems
-    word_problems = [
-        ("Crispin has 124 stickers. He gets 87 more. How many now?", 211),
-        ("A box has 24 chocolates. How many in 8 boxes?", 192),
-        ("5 friends share 85 toffees equally. Each gets?", 17),
-        ("Tickets cost ₹50. 17 sold. Total ₹?", 850),
-        ("There are 1,250 fans. 875 leave. How many remain?", 375),
-        ("A school has 6 classes of 32 children each. Total?", 192),
-        ("A book has 240 pages. Crispin read 5/8. How many pages read?", 150),
-        ("A baker bakes 144 buns in 6 trays. Buns per tray?", 24),
-    ]
-    for q, ans in word_problems:
-        qs.append(Q("fill", q, answer=[str(ans), fmt(ans)],
-                    explain=f"Answer = {fmt(ans)}."))
+    # Missing-number (each operation)
+    def make_miss_add():
+        a = random.randint(20, 500)
+        b = random.randint(20, 500)
+        return Q("fill", f"? + {a} = {a + b}",
+                 answer=[str(b), fmt(b)], explain=f"{a + b} − {a} = {b}.")
+    def make_miss_sub():
+        a = random.randint(50, 900)
+        b = random.randint(20, a - 1)
+        return Q("fill", f"{a} − ? = {a - b}",
+                 answer=[str(b), fmt(b)], explain=f"{a} − {a - b} = {b}.")
+    def make_miss_mul():
+        a = random.randint(2, 12)
+        b = random.randint(2, 9)
+        return Q("fill", f"{a} × ? = {a * b}",
+                 answer=[str(b)], explain=f"{a*b} ÷ {a} = {b}.")
+    def make_miss_div():
+        a = random.randint(2, 9)
+        b = random.randint(2, 12)
+        prod = a * b
+        return Q("fill", f"{prod} ÷ ? = {b}",
+                 answer=[str(a)], explain=f"{prod} ÷ {b} = {a}.")
+    qs += take_uniq(make_miss_add, 12)
+    qs += take_uniq(make_miss_sub, 12)
+    qs += take_uniq(make_miss_mul, 12)
+    qs += take_uniq(make_miss_div, 12)
 
-    # Missing-number
-    for _ in range(8):
-        a = random.randint(20, 200)
-        b = random.randint(20, 200)
-        qs.append(Q("fill", f"? + {a} = {a + b}",
-                    answer=[str(b), fmt(b)],
-                    explain=f"{a + b} − {a} = {b}."))
+    # Estimation (round each then add/subtract)
+    def make_est():
+        a = random.randint(120, 980)
+        b = random.randint(120, 980)
+        op = random.choice(["+", "−"])
+        ar = round(a, -2)
+        br = round(b, -2)
+        if op == "+":
+            est = ar + br
+            return Q("fill",
+                     f"Estimate {a} {op} {b} by rounding each to the nearest 100.",
+                     answer=[str(est), fmt(est)],
+                     explain=f"{a}≈{ar}, {b}≈{br}; {ar}+{br}={est}.")
+        else:
+            est = ar - br
+            return Q("fill",
+                     f"Estimate {a} {op} {b} by rounding each to the nearest 100.",
+                     answer=[str(est), fmt(est)],
+                     explain=f"{a}≈{ar}, {b}≈{br}; {ar}−{br}={est}.")
+    qs += take_uniq(make_est, 15)
 
-    # MCQ — vocabulary / order of operations
+    # MCQ — vocabulary and properties
     qs += [
         Q("mcq", '"Product" means the result of which operation?',
           options=["Addition", "Subtraction", "Multiplication", "Division"],
@@ -154,8 +520,27 @@ def gen_ch02():
         Q("mcq", "What comes first in BODMAS?",
           options=["Brackets", "Order", "Division", "Add"],
           answer=0, explain="B-O-D-M-A-S: Brackets first."),
-        Q("tf", "450 × 1 = 450 is true.", answer=0,
-          explain="True — multiplying by 1 keeps the number."),
+        Q("mcq", "After Brackets in BODMAS, what's next?",
+          options=["Add", "Order (powers)", "Subtract", "Divide"],
+          answer=1, explain="B-O-D-M-A-S: Order (exponents) is second."),
+        Q("mcq", "Which operations come BEFORE addition and subtraction in BODMAS?",
+          options=["Brackets only", "Brackets and Order only",
+                   "Brackets, Order, Division, Multiplication", "None"],
+          answer=2, explain="× and ÷ before + and − unless brackets say otherwise."),
+        Q("mcq", "Which is the IDENTITY for multiplication?",
+          options=["0", "1", "2", "10"], answer=1,
+          explain="Multiplying by 1 keeps the number the same."),
+        Q("mcq", "Which is the IDENTITY for addition?",
+          options=["0", "1", "10", "100"], answer=0,
+          explain="Adding 0 keeps the number the same."),
+        Q("mcq", "Dividing any number by 1 gives:",
+          options=["0", "1", "The same number", "The number squared"],
+          answer=2, explain="Number ÷ 1 = the same number."),
+    ]
+
+    # T/F properties
+    qs += [
+        Q("tf", "450 × 1 = 450 is true.", answer=0, explain="True — multiplying by 1 keeps the number."),
         Q("tf", "7 + 3 = 3 + 7 (you can swap order in addition).", answer=0,
           explain="True — addition is commutative."),
         Q("tf", "10 − 3 = 3 − 10 (you can swap order in subtraction).", answer=1,
@@ -163,11 +548,18 @@ def gen_ch02():
         Q("tf", "Anything × 0 = 0.", answer=0, explain="True."),
         Q("tf", "0 ÷ any number = 0 (when the number is not zero).", answer=0,
           explain="True. (But you can't divide by zero!)"),
-        Q("fill", "What is the remainder when 47 is divided by 6?",
-          answer=["5"], explain="6×7=42, 47−42=5."),
-        Q("fill", "What is the remainder when 100 is divided by 7?",
-          answer=["2"], explain="7×14=98, 100−98=2."),
+        Q("tf", "5 × (3 + 4) = (5 × 3) + (5 × 4) — that's the distributive property.",
+          answer=0, explain="True — × distributes over +."),
+        Q("tf", "100 ÷ 10 = 10 ÷ 100.", answer=1,
+          explain="False — division is not commutative."),
+        Q("tf", "(2 + 3) + 4 = 2 + (3 + 4) — that's the associative property of +.",
+          answer=0, explain="True."),
+        Q("tf", "(2 × 3) × 4 = 2 × (3 × 4) — that's the associative property of ×.",
+          answer=0, explain="True."),
+        Q("tf", "Dividing by zero gives a number.", answer=1,
+          explain="False — division by zero is undefined."),
     ]
+
     return qs
 
 
@@ -178,36 +570,33 @@ def gen_ch03():
     random.seed(303)
     qs = []
 
-    # Multiples
-    multiples_data = [
-        (3, 5, "3, 6, 9, 12, 15"),
-        (4, 5, "4, 8, 12, 16, 20"),
-        (5, 4, "5, 10, 15, 20"),
-        (6, 4, "6, 12, 18, 24"),
-        (7, 4, "7, 14, 21, 28"),
-        (8, 3, "8, 16, 24"),
-        (9, 4, "9, 18, 27, 36"),
-        (10, 5, "10, 20, 30, 40, 50"),
-        (11, 4, "11, 22, 33, 44"),
-        (12, 4, "12, 24, 36, 48"),
-    ]
-    for k, n, ans in multiples_data:
-        cs = ans.replace(", ", ",")
+    # First N multiples of K
+    multiples_data = [(k, n) for k in range(2, 13) for n in [3, 4, 5]]
+    for k, n in multiples_data:
+        ans_list = [k * (i + 1) for i in range(n)]
+        cs = ",".join(str(x) for x in ans_list)
+        sp = ", ".join(str(x) for x in ans_list)
         qs.append(Q("fill", f"First {n} multiples of {k} (smallest first, comma-separated)",
-                    answer=[cs, ans], explain=f"{ans}."))
+                    answer=[cs, sp], explain=f"{sp}."))
 
-    # Is X a multiple of Y? (MCQ Yes/No)
-    multiple_yn = [
-        (24, 6, True), (35, 4, False), (45, 9, True), (50, 7, False),
-        (72, 8, True), (60, 11, False), (81, 9, True), (49, 6, False),
-    ]
-    for x, k, is_mult in multiple_yn:
-        qs.append(Q("mcq", f"Is {x} a multiple of {k}?",
-                    options=["Yes", "No"],
-                    answer=0 if is_mult else 1,
-                    explain=("Yes — " if is_mult else "No — ") + f"{k} × {x // k} = {k * (x // k)}."))
+    # Is X a multiple of Y? (yes/no)
+    def make_mult_yn():
+        k = random.randint(2, 12)
+        if random.random() < 0.5:
+            x = k * random.randint(2, 12)  # is multiple
+            is_mult = True
+        else:
+            x = k * random.randint(2, 12) + random.randint(1, k - 1)
+            is_mult = False
+        return Q("mcq", f"Is {x} a multiple of {k}?",
+                 options=["Yes", "No"],
+                 answer=0 if is_mult else 1,
+                 explain=("Yes — " if is_mult else "No — ") +
+                         (f"{k} × {x // k} = {k * (x // k)}." if is_mult
+                          else f"{k} × {x // k} = {k * (x // k)}, then {x - k * (x // k)} left over."))
+    qs += take_uniq(make_mult_yn, 30)
 
-    # Factors
+    # Factors of N (full factor list)
     factor_data = [
         (12, [1, 2, 3, 4, 6, 12]),
         (18, [1, 2, 3, 6, 9, 18]),
@@ -221,6 +610,14 @@ def gen_ch03():
         (13, [1, 13]),
         (11, [1, 11]),
         (25, [1, 5, 25]),
+        (32, [1, 2, 4, 8, 16, 32]),
+        (40, [1, 2, 4, 5, 8, 10, 20, 40]),
+        (48, [1, 2, 3, 4, 6, 8, 12, 16, 24, 48]),
+        (50, [1, 2, 5, 10, 25, 50]),
+        (60, [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60]),
+        (72, [1, 2, 3, 4, 6, 8, 9, 12, 18, 24, 36, 72]),
+        (100, [1, 2, 4, 5, 10, 20, 25, 50, 100]),
+        (45, [1, 3, 5, 9, 15, 45]),
     ]
     for n, fs in factor_data:
         cs = ",".join(str(x) for x in fs)
@@ -228,14 +625,47 @@ def gen_ch03():
         qs.append(Q("fill", f"List all factors of {n} (smallest first, comma-separated)",
                     answer=[cs, sp], explain=f"{sp}."))
 
-    # Prime checks
-    primes_data = [
-        (11, True), (15, False), (13, True), (21, False),
-        (17, True), (27, False), (19, True), (33, False),
-        (23, True), (49, False), (29, True), (51, False),
-        (31, True), (57, False), (37, True), (39, False),
+    # Number of factors (MCQ)
+    factor_count_data = [
+        (12, 6), (18, 6), (16, 5), (24, 8), (20, 6), (15, 4),
+        (28, 6), (36, 9), (7, 2), (13, 2), (11, 2), (25, 3),
+        (32, 6), (40, 8), (48, 10), (50, 6), (60, 12),
     ]
-    for n, is_prime in primes_data:
+    for n, count in factor_count_data:
+        opts = sorted({count, count - 1, count + 1, count + 2})
+        if len(opts) < 4:
+            opts.append(count + 3)
+        opts = opts[:4]
+        random.shuffle(opts)
+        qs.append(Q("mcq", f"How many factors does {n} have?",
+                    options=[str(o) for o in opts],
+                    answer=opts.index(count),
+                    explain=f"{n} has {count} factors."))
+
+    # Is X a factor of Y?
+    fact_yn_data = [
+        (3, 12, True), (4, 14, False), (5, 25, True), (6, 21, False),
+        (7, 49, True), (8, 50, False), (9, 81, True), (4, 26, False),
+        (5, 35, True), (6, 36, True), (7, 21, True), (3, 17, False),
+    ]
+    for f, n, is_factor in fact_yn_data:
+        qs.append(Q("mcq", f"Is {f} a factor of {n}?",
+                    options=["Yes", "No"],
+                    answer=0 if is_factor else 1,
+                    explain=("Yes — " if is_factor else "No — ") +
+                            (f"{n} ÷ {f} = {n // f} (no remainder)." if is_factor
+                             else f"{n} ÷ {f} leaves a remainder.")))
+
+    # Prime checks (mix of fill and tf)
+    primes_below_50 = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+    composites = [4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 22, 24, 25, 26, 27, 28, 30, 32, 33, 34, 35, 36, 38, 39, 40, 42, 44, 45, 46, 48, 49, 50]
+    test_set = []
+    for p in random.sample(primes_below_50, min(10, len(primes_below_50))):
+        test_set.append((p, True))
+    for c in random.sample(composites, min(10, len(composites))):
+        test_set.append((c, False))
+    random.shuffle(test_set)
+    for n, is_prime in test_set[:18]:
         if random.random() < 0.5:
             qs.append(Q("fill", f"Is {n} prime? (yes / no)",
                         answer=["yes" if is_prime else "no"],
@@ -251,7 +681,10 @@ def gen_ch03():
     lcm_data = [
         (4, 6, 12), (3, 5, 15), (4, 5, 20), (6, 8, 24),
         (3, 4, 12), (5, 6, 30), (8, 12, 24), (10, 15, 30),
-        (2, 7, 14), (9, 12, 36), (6, 9, 18),
+        (2, 7, 14), (9, 12, 36), (6, 9, 18), (12, 18, 36),
+        (15, 20, 60), (6, 10, 30), (8, 10, 40), (4, 9, 36),
+        (5, 7, 35), (6, 14, 42), (4, 10, 20), (9, 6, 18),
+        (3, 8, 24), (10, 12, 60), (5, 8, 40),
     ]
     for a, b, lcm in lcm_data:
         qs.append(Q("fill", f"LCM of {a} and {b} = ?",
@@ -262,12 +695,53 @@ def gen_ch03():
     hcf_data = [
         (12, 18, 6), (8, 12, 4), (10, 15, 5), (18, 27, 9),
         (16, 24, 8), (14, 21, 7), (20, 30, 10), (24, 36, 12),
-        (15, 25, 5), (9, 12, 3), (18, 24, 6),
+        (15, 25, 5), (9, 12, 3), (18, 24, 6), (28, 35, 7),
+        (32, 48, 16), (45, 60, 15), (16, 36, 4), (50, 75, 25),
+        (40, 60, 20), (27, 36, 9), (42, 56, 14), (30, 45, 15),
+        (12, 30, 6), (24, 40, 8), (18, 30, 6),
     ]
     for a, b, hcf in hcf_data:
         qs.append(Q("fill", f"HCF of {a} and {b} = ?",
                     answer=[str(hcf)],
                     explain=f"HCF({a}, {b}) = {hcf}."))
+
+    # Common factors
+    common_factors = [
+        (8, 12, [1, 2, 4]),
+        (9, 15, [1, 3]),
+        (12, 18, [1, 2, 3, 6]),
+        (10, 25, [1, 5]),
+        (16, 20, [1, 2, 4]),
+        (24, 36, [1, 2, 3, 4, 6, 12]),
+        (14, 21, [1, 7]),
+        (18, 30, [1, 2, 3, 6]),
+        (15, 20, [1, 5]),
+        (28, 35, [1, 7]),
+    ]
+    for a, b, cfs in common_factors:
+        cs = ",".join(str(x) for x in cfs)
+        sp = ", ".join(str(x) for x in cfs)
+        qs.append(Q("fill",
+                    f"Common factors of {a} and {b} (comma-separated, smallest first)",
+                    answer=[cs, sp], explain=f"{sp}."))
+
+    # Common multiples (first 2-3)
+    common_multiples = [
+        (3, 4, [12, 24]),
+        (2, 5, [10, 20]),
+        (4, 6, [12, 24]),
+        (5, 10, [10, 20]),
+        (3, 6, [6, 12]),
+        (4, 8, [8, 16]),
+        (3, 5, [15, 30]),
+        (6, 9, [18, 36]),
+    ]
+    for a, b, cms in common_multiples:
+        cs = ",".join(str(x) for x in cms)
+        sp = ", ".join(str(x) for x in cms)
+        qs.append(Q("fill",
+                    f"First two common multiples of {a} and {b}",
+                    answer=[cs, sp], explain=f"{sp}."))
 
     # Divisibility rules
     div_qs = [
@@ -286,18 +760,49 @@ def gen_ch03():
          ["Yes", "No"], 0, "12 is divisible by 3, so yes."),
         ("Sum of digits of 124 = 7 → is 124 divisible by 3?",
          ["Yes", "No"], 1, "7 is not divisible by 3, so no."),
+        ("A number is divisible by 2 if it ends in:",
+         ["Any digit", "0, 2, 4, 6, or 8", "Odd digits", "5 only"], 1,
+         "Even digits at the end → divisible by 2."),
+        ("A number is divisible by 5 if it ends in:",
+         ["0 or 5", "5 only", "Any digit", "0 only"], 0,
+         "Ends in 0 or 5 → divisible by 5."),
+        ("Sum of digits of 198 = 18. Is 198 divisible by 9?",
+         ["Yes", "No"], 0, "18 ÷ 9 = 2, yes."),
+        ("Sum of digits of 145 = 10. Is 145 divisible by 3?",
+         ["Yes", "No"], 1, "10 ÷ 3 has remainder, no."),
+        ("Is 720 divisible by 10?",
+         ["Yes", "No"], 0, "Ends in 0 → yes."),
+        ("Is 853 divisible by 2?",
+         ["Yes", "No"], 1, "Ends in 3 (odd) → no."),
     ]
     for q, opts, ans, ex in div_qs:
         qs.append(Q("mcq", q, options=opts, answer=ans, explain=ex))
 
     # Even/odd
-    eo = [(34, "even"), (21, "odd"), (100, "even"), (87, "odd"),
-          (1000, "even"), (53, "odd"), (456, "even"), (999, "odd")]
-    for n, ans in eo:
-        qs.append(Q("fill", f"Is {n} even or odd?",
-                    answer=[ans], explain=f"{n} ends in {n % 10}, so {ans}."))
+    def make_eo():
+        n = random.randint(10, 9999)
+        ans = "even" if n % 2 == 0 else "odd"
+        return Q("fill", f"Is {fmt(n)} even or odd?",
+                 answer=[ans], explain=f"{fmt(n)} ends in {n % 10}, so {ans}.")
+    qs += take_uniq(make_eo, 25)
 
-    # General
+    # Prime factorisation hints (small numbers)
+    prime_factor_data = [
+        (12, "2 × 2 × 3", "2,2,3"),
+        (18, "2 × 3 × 3", "2,3,3"),
+        (24, "2 × 2 × 2 × 3", "2,2,2,3"),
+        (36, "2 × 2 × 3 × 3", "2,2,3,3"),
+        (50, "2 × 5 × 5", "2,5,5"),
+        (60, "2 × 2 × 3 × 5", "2,2,3,5"),
+        (45, "3 × 3 × 5", "3,3,5"),
+    ]
+    for n, expr, csv_form in prime_factor_data:
+        qs.append(Q("fill", f"Write {n} as a product of prime factors (use × signs).",
+                    answer=[expr, expr.replace(" ", ""), csv_form,
+                            csv_form.replace(",", ", ")],
+                    explain=f"{n} = {expr}."))
+
+    # General concepts
     qs += [
         Q("fill", "Smallest prime number = ?", answer=["2"],
           explain="2 — the only even prime."),
@@ -307,13 +812,78 @@ def gen_ch03():
           explain="True — N = N × 1."),
         Q("tf", "2 is the only even prime number.", answer=0,
           explain="True — every other even number is divisible by 2."),
-        Q("fill", "Common factors of 8 and 12 (comma-separated, smallest first)",
-          answer=["1,2,4", "1, 2, 4"], explain="1, 2, 4."),
-        Q("fill", "Common factors of 9 and 15 (comma-separated, smallest first)",
-          answer=["1,3", "1, 3"], explain="1, 3."),
         Q("fill", "Smallest multiple of 7 = ?", answer=["7"],
           explain="Every number's smallest multiple is itself."),
+        Q("fill", "Largest factor of 36 = ?", answer=["36"],
+          explain="A number is its own largest factor."),
+        Q("fill", "Smallest factor of any number = ?", answer=["1"],
+          explain="1 is a factor of every whole number."),
+        Q("tf", "Every prime number greater than 2 is odd.", answer=0,
+          explain="True — any other even number is divisible by 2 so not prime."),
+        Q("fill", "How many even numbers between 10 and 30 (inclusive)?", answer=["11"],
+          explain="10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30 → 11."),
+        Q("fill", "How many odd numbers between 1 and 20 (inclusive)?", answer=["10"],
+          explain="1, 3, 5, 7, 9, 11, 13, 15, 17, 19 → 10."),
+        Q("tf", "The HCF of any two prime numbers is 1.", answer=0,
+          explain="True — primes have no common factor besides 1."),
+        Q("tf", "If two numbers are co-prime, their HCF is 1.", answer=0,
+          explain="True — that's the definition of co-prime."),
     ]
+
+    # More multiples — between two numbers
+    bw_data = [
+        (3, 1, 30, [3, 6, 9, 12, 15, 18, 21, 24, 27, 30]),
+        (5, 1, 30, [5, 10, 15, 20, 25, 30]),
+        (7, 1, 50, [7, 14, 21, 28, 35, 42, 49]),
+        (4, 1, 25, [4, 8, 12, 16, 20, 24]),
+        (6, 1, 36, [6, 12, 18, 24, 30, 36]),
+        (8, 1, 40, [8, 16, 24, 32, 40]),
+        (9, 1, 50, [9, 18, 27, 36, 45]),
+        (10, 1, 60, [10, 20, 30, 40, 50, 60]),
+    ]
+    for k, lo, hi, mults in bw_data:
+        qs.append(Q("fill",
+                    f"How many multiples of {k} are there from {lo} to {hi} (inclusive)?",
+                    answer=[str(len(mults))],
+                    explain=f"{', '.join(str(m) for m in mults)} → {len(mults)} multiples."))
+
+    # More LCMs (small)
+    extra_lcm = [
+        (2, 3, 6), (2, 4, 4), (2, 6, 6), (3, 6, 6), (4, 12, 12),
+        (5, 15, 15), (6, 18, 18), (4, 16, 16), (5, 25, 25), (3, 9, 9),
+        (4, 6, 12), (6, 8, 24), (10, 14, 70),
+    ]
+    seen_lcm = set()
+    for a, b, lcm in extra_lcm:
+        key = tuple(sorted([a, b]))
+        if key in seen_lcm: continue
+        seen_lcm.add(key)
+        qs.append(Q("fill", f"LCM of {a} and {b} = ?",
+                    answer=[str(lcm), fmt(lcm)],
+                    explain=f"LCM({a}, {b}) = {lcm}."))
+
+    # More HCFs
+    extra_hcf = [
+        (6, 9, 3), (8, 16, 8), (10, 20, 10), (12, 16, 4),
+        (15, 35, 5), (20, 25, 5), (21, 28, 7), (33, 44, 11),
+        (25, 100, 25), (16, 40, 8), (14, 35, 7), (8, 20, 4),
+    ]
+    seen_hcf = set()
+    for a, b, hcf in extra_hcf:
+        key = tuple(sorted([a, b]))
+        if key in seen_hcf: continue
+        seen_hcf.add(key)
+        qs.append(Q("fill", f"HCF of {a} and {b} = ?",
+                    answer=[str(hcf)],
+                    explain=f"HCF({a}, {b}) = {hcf}."))
+
+    # Square numbers (perfect squares)
+    for n in range(2, 21):
+        sq = n * n
+        qs.append(Q("fill", f"What is {n}² ({n} squared)?",
+                    answer=[str(sq), fmt(sq)],
+                    explain=f"{n} × {n} = {sq}."))
+
     return qs
 
 
@@ -324,7 +894,7 @@ def gen_ch04():
     random.seed(404)
     qs = []
 
-    # Polygon sides
+    # Polygon sides — both directions, multiple shapes
     polygons = [
         ("triangle", 3), ("quadrilateral", 4), ("pentagon", 5),
         ("hexagon", 6), ("heptagon", 7), ("octagon", 8),
@@ -336,16 +906,42 @@ def gen_ch04():
         qs.append(Q("mcq", f"How many sides does a {name} have?",
                     options=[str(sides - 1), str(sides), str(sides + 1), str(sides + 2)],
                     answer=1, explain=f"{sides}."))
+        qs.append(Q("fill", f"How many vertices (corners) does a {name} have?",
+                    answer=[str(sides)],
+                    explain=f"A polygon's number of vertices = number of sides = {sides}."))
+        qs.append(Q("fill", f"What is the polygon name for a {sides}-sided shape?",
+                    answer=[name], explain=f"{sides} sides → {name}."))
 
-    # Angle types
-    angles = [
-        (90, "right"), (45, "acute"), (30, "acute"), (60, "acute"),
-        (120, "obtuse"), (135, "obtuse"), (150, "obtuse"),
-        (180, "straight"), (89, "acute"), (91, "obtuse"),
-    ]
-    for deg, kind in angles:
-        qs.append(Q("fill", f"An angle of {deg}° is __ (acute/right/obtuse/straight)",
-                    answer=[kind], explain=f"{deg}° is {kind}."))
+    # Angle types — with random samples
+    def make_angle():
+        deg = random.randint(1, 179)
+        if deg < 90:
+            kind = "acute"
+        elif deg == 90:
+            kind = "right"
+        elif deg < 180:
+            kind = "obtuse"
+        else:
+            kind = "straight"
+        return Q("fill", f"An angle of {deg}° is __ (acute/right/obtuse/straight)",
+                 answer=[kind], explain=f"{deg}° is {kind}.")
+    qs += take_uniq(make_angle, 30)
+
+    # Angle MCQ
+    def make_angle_mcq():
+        deg = random.randint(1, 179)
+        if deg < 90:
+            correct = "Acute"
+        elif deg == 90:
+            correct = "Right"
+        else:
+            correct = "Obtuse"
+        opts = ["Acute", "Right", "Obtuse", "Reflex"]
+        random.shuffle(opts)
+        return Q("mcq", f"What kind of angle is {deg}°?",
+                 options=opts, answer=opts.index(correct),
+                 explain=f"{deg}° → {correct}.")
+    qs += take_uniq(make_angle_mcq, 15)
 
     # 3D shape facts
     qs += [
@@ -353,17 +949,48 @@ def gen_ch04():
         Q("fill", "A cube has __ edges.", answer=["12"], explain="12 edges."),
         Q("fill", "A cube has __ vertices.", answer=["8"], explain="8 corners."),
         Q("fill", "A cuboid has __ faces.", answer=["6"], explain="6 rectangular faces."),
+        Q("fill", "A cuboid has __ edges.", answer=["12"], explain="12 edges."),
+        Q("fill", "A cuboid has __ vertices.", answer=["8"], explain="8 corners."),
         Q("fill", "A cylinder has __ flat circular faces.", answer=["2"], explain="Top and bottom."),
+        Q("fill", "A cylinder has __ curved face.", answer=["1"], explain="The side wraps around."),
         Q("fill", "A cone has __ flat face.", answer=["1"], explain="Just the circular base."),
+        Q("fill", "A cone has __ curved face.", answer=["1"], explain="The slanted side."),
+        Q("fill", "A cone has __ vertex (apex).", answer=["1"], explain="The point at the top."),
         Q("fill", "A sphere has __ flat faces.", answer=["0"], explain="A sphere is round all over."),
+        Q("fill", "A sphere has __ edges.", answer=["0"], explain="No straight edges."),
+        Q("fill", "A sphere has __ vertices.", answer=["0"], explain="No corners."),
         Q("fill", "A square pyramid has __ triangular faces.", answer=["4"],
           explain="4 triangles + 1 square base."),
+        Q("fill", "A square pyramid has __ faces in total.", answer=["5"],
+          explain="4 triangles + 1 square = 5."),
+        Q("fill", "A square pyramid has __ edges.", answer=["8"],
+          explain="4 base edges + 4 slant edges."),
+        Q("fill", "A square pyramid has __ vertices.", answer=["5"],
+          explain="4 base corners + 1 apex."),
+        Q("fill", "A triangular prism has __ faces.", answer=["5"],
+          explain="2 triangular ends + 3 rectangles."),
+        Q("fill", "A triangular prism has __ edges.", answer=["9"],
+          explain="3 + 3 + 3 = 9."),
+        Q("fill", "A triangular prism has __ vertices.", answer=["6"],
+          explain="3 corners on each triangular end."),
         Q("mcq", "Which 3D shape has no flat faces?",
           options=["Cube", "Cylinder", "Cone", "Sphere"],
           answer=3, explain="A sphere is curved all over."),
-        Q("mcq", "Which has exactly 1 vertex?",
+        Q("mcq", "Which has exactly 1 vertex (apex)?",
           options=["Cube", "Cone", "Cylinder", "Cuboid"],
           answer=1, explain="A cone has 1 apex/vertex."),
+        Q("mcq", "Which has 2 flat circular faces?",
+          options=["Cube", "Sphere", "Cylinder", "Cone"],
+          answer=2, explain="A cylinder has 2 circles (top + bottom)."),
+        Q("mcq", "Which 3D shape has all faces as squares?",
+          options=["Cuboid", "Cube", "Pyramid", "Prism"],
+          answer=1, explain="A cube has 6 equal square faces."),
+        Q("mcq", "How many faces does a cube have?",
+          options=["4", "6", "8", "12"], answer=1, explain="6."),
+        Q("mcq", "How many edges does a cube have?",
+          options=["6", "8", "12", "16"], answer=2, explain="12."),
+        Q("mcq", "How many vertices does a cube have?",
+          options=["6", "8", "10", "12"], answer=1, explain="8."),
     ]
 
     # Symmetry
@@ -379,14 +1006,32 @@ def gen_ch04():
           explain="No equal sides → no symmetry."),
         Q("fill", "A regular pentagon has __ lines of symmetry.", answer=["5"],
           explain="One through each vertex."),
+        Q("fill", "A regular hexagon has __ lines of symmetry.", answer=["6"],
+          explain="One through each pair of opposite vertices."),
+        Q("fill", "A regular octagon has __ lines of symmetry.", answer=["8"],
+          explain="One through each pair of opposite vertices."),
         Q("fill", "A circle has __ lines of symmetry. (Hint: think 'unlimited')",
           answer=["infinite", "infinity", "unlimited", "many"],
           explain="Every line through the centre is a line of symmetry."),
-        Q("fill", "The letter A has __ line(s) of symmetry.", answer=["1"],
-          explain="Vertical line down the middle."),
-        Q("fill", "The letter S has __ line(s) of symmetry.", answer=["0"],
-          explain="None — S is not symmetric."),
+        Q("fill", "A rhombus has __ lines of symmetry.", answer=["2"],
+          explain="The two diagonals."),
+        Q("fill", "A parallelogram (not rectangle/rhombus) has __ lines of symmetry.",
+          answer=["0"],
+          explain="No reflection symmetry — only rotational."),
     ]
+
+    # Letter symmetry
+    letters_sym = [
+        ("A", 1), ("B", 1), ("C", 1), ("D", 1), ("E", 1), ("H", 2),
+        ("I", 2), ("M", 1), ("O", 2), ("S", 0), ("T", 1), ("U", 1),
+        ("V", 1), ("W", 1), ("X", 2), ("Y", 1), ("Z", 0), ("F", 0),
+        ("G", 0), ("J", 0), ("K", 1), ("L", 0), ("N", 0), ("P", 0),
+        ("Q", 0), ("R", 0),
+    ]
+    for letter, count in letters_sym:
+        qs.append(Q("fill", f"The capital letter '{letter}' has __ line(s) of symmetry.",
+                    answer=[str(count)],
+                    explain=f"'{letter}' has {count} line(s) of symmetry."))
 
     # Lines
     qs += [
@@ -402,20 +1047,40 @@ def gen_ch04():
         Q("mcq", "The corners of a square are:",
           options=["Acute angles", "Right angles", "Obtuse angles", "Straight angles"],
           answer=1, explain="All 4 corners of a square are right angles (90°)."),
+        Q("mcq", "Which is an example of perpendicular lines?",
+          options=["Railway tracks", "The corner of a book",
+                   "A circle", "Letter 'X'"],
+          answer=1, explain="A book's corner is a right angle."),
+        Q("fill", "A line that has two endpoints is called a __",
+          answer=["line segment", "segment"],
+          explain="A line segment has 2 endpoints."),
+        Q("fill", "A line that has one endpoint and goes on forever is called a __",
+          answer=["ray"], explain="A ray has 1 endpoint."),
     ]
 
-    # Circle
+    # Circle properties
+    for r in range(1, 21):
+        d = r * 2
+        qs.append(Q("fill", f"If radius = {r} cm, diameter = ? cm",
+                    answer=[str(d), f"{d} cm"], explain=f"2 × {r} = {d}."))
+    for d in [4, 6, 8, 10, 12, 14, 16, 18, 20, 24, 30, 40, 50, 100]:
+        r = d // 2
+        qs.append(Q("fill", f"If diameter = {d} cm, radius = ? cm",
+                    answer=[str(r), f"{r} cm"], explain=f"{d} ÷ 2 = {r}."))
+
     qs += [
         Q("fill", "The distance from the centre of a circle to its edge is the __",
           answer=["radius"], explain="Radius = centre to edge."),
         Q("fill", "The distance straight across a circle through the centre is the __",
           answer=["diameter"], explain="Diameter = 2 × radius."),
-        Q("fill", "If radius = 5 cm, diameter = ? cm", answer=["10"], explain="2 × 5 = 10."),
-        Q("fill", "If radius = 8 cm, diameter = ? cm", answer=["16"], explain="2 × 8 = 16."),
-        Q("fill", "If diameter = 14 cm, radius = ? cm", answer=["7"], explain="14 ÷ 2 = 7."),
-        Q("fill", "If diameter = 24 cm, radius = ? cm", answer=["12"], explain="24 ÷ 2 = 12."),
         Q("fill", "The line that touches a circle at exactly one point is called a __",
           answer=["tangent"], explain="A tangent touches at one point."),
+        Q("fill", "The boundary of a circle is called the __",
+          answer=["circumference"], explain="Circumference = perimeter of a circle."),
+        Q("fill", "Half a circle is called a __",
+          answer=["semicircle", "semi-circle"], explain="Semicircle = half of a circle."),
+        Q("fill", "A quarter of a circle is called a __",
+          answer=["quadrant"], explain="Quadrant = 1/4 of a circle."),
     ]
 
     # Angle sums
@@ -428,14 +1093,57 @@ def gen_ch04():
           explain="4 right angles."),
         Q("fill", "Sum of all angles in a quadrilateral = ? degrees", answer=["360"],
           explain="Always 360° in any quadrilateral."),
+        Q("fill", "Sum of angles around a point = ? degrees", answer=["360"],
+          explain="Full turn = 360°."),
+        Q("fill", "Sum of angles on a straight line = ? degrees", answer=["180"],
+          explain="A straight angle = 180°."),
         Q("fill", "Each angle in an equilateral triangle = ? degrees", answer=["60"],
           explain="180 ÷ 3 = 60."),
         Q("fill", "Each angle in a square = ? degrees", answer=["90"],
           explain="All angles are right."),
     ]
 
-    # T/F
+    # Find missing angle in triangle
+    triangle_pairs = [
+        (60, 60), (45, 45), (50, 70), (30, 80), (90, 45), (40, 70),
+        (90, 30), (75, 60), (55, 65), (35, 85), (100, 40), (110, 35),
+        (25, 90), (40, 110), (70, 70),
+    ]
+    for a, b in triangle_pairs:
+        c = 180 - a - b
+        if c < 1:
+            continue
+        qs.append(Q("fill", f"In a triangle two angles are {a}° and {b}°. Find the third angle.",
+                    answer=[str(c), f"{c}°"],
+                    explain=f"180 − {a} − {b} = {c}°."))
+
+    # Find missing angle in quadrilateral
+    quad_trios = [
+        (90, 90, 90), (100, 80, 110), (60, 120, 90), (75, 105, 80),
+        (130, 50, 60), (95, 85, 100), (70, 110, 60),
+    ]
+    for a, b, c in quad_trios:
+        d = 360 - a - b - c
+        if d < 1:
+            continue
+        qs.append(Q("fill", f"In a quadrilateral, three angles are {a}°, {b}°, {c}°. Find the fourth.",
+                    answer=[str(d), f"{d}°"],
+                    explain=f"360 − {a} − {b} − {c} = {d}°."))
+
+    # Quadrilateral types
     qs += [
+        Q("mcq", "A quadrilateral with all sides equal AND all angles 90° is a:",
+          options=["Square", "Rectangle", "Parallelogram", "Trapezium"],
+          answer=0, explain="Square = equal sides + 90° angles."),
+        Q("mcq", "A quadrilateral with opposite sides parallel and equal but angles NOT 90° is a:",
+          options=["Square", "Rectangle", "Parallelogram", "Rhombus"],
+          answer=2, explain="Parallelogram (could also be a rhombus if all sides are equal)."),
+        Q("mcq", "A 4-sided shape with exactly ONE pair of parallel sides is a:",
+          options=["Square", "Rectangle", "Trapezium", "Rhombus"],
+          answer=2, explain="Trapezium = exactly one pair of parallel sides."),
+        Q("mcq", "A 4-sided shape with all sides equal but no right angles is a:",
+          options=["Rhombus", "Rectangle", "Square", "Trapezium"],
+          answer=0, explain="Rhombus = equal sides, slanted angles."),
         Q("tf", "A square is also a rectangle.", answer=0,
           explain="True — special rectangle with all sides equal."),
         Q("tf", "All squares are rhombuses.", answer=0,
@@ -444,7 +1152,60 @@ def gen_ch04():
           explain="False — angles would already sum to 180° before the third angle."),
         Q("tf", "A circle has 4 sides.", answer=1,
           explain="False — a circle has no straight sides."),
+        Q("tf", "All rectangles are squares.", answer=1,
+          explain="False — rectangles can have different length and width."),
+        Q("tf", "A regular polygon has all sides AND all angles equal.", answer=0,
+          explain="True — that's the definition."),
+        Q("tf", "A right angle measures 180 degrees.", answer=1,
+          explain="False — a right angle = 90°."),
     ]
+
+    # Reverse: name from sides
+    sides_to_name = [(3, "triangle"), (4, "quadrilateral"), (5, "pentagon"),
+                     (6, "hexagon"), (7, "heptagon"), (8, "octagon"),
+                     (9, "nonagon"), (10, "decagon")]
+    for sides, name in sides_to_name:
+        opts = ["triangle", "pentagon", "hexagon", "octagon", "decagon"]
+        if name not in opts: opts[0] = name
+        random.shuffle(opts)
+        qs.append(Q("mcq", f"What is a {sides}-sided polygon called?",
+                    options=opts, answer=opts.index(name),
+                    explain=f"{sides} sides → {name}."))
+
+    # Right-angle vocabulary
+    qs += [
+        Q("fill", "An angle exactly 90° is called a __ angle.", answer=["right"],
+          explain="Right angle."),
+        Q("fill", "An angle less than 90° is called __", answer=["acute"], explain="Acute."),
+        Q("fill", "An angle between 90° and 180° is called __", answer=["obtuse"], explain="Obtuse."),
+        Q("fill", "An angle of exactly 180° is called __", answer=["straight"], explain="Straight."),
+        Q("fill", "An angle bigger than 180° but less than 360° is called __",
+          answer=["reflex"], explain="Reflex angle."),
+        Q("fill", "Two angles that add up to 90° are called __ angles.",
+          answer=["complementary"], explain="Complementary angles."),
+        Q("fill", "Two angles that add up to 180° are called __ angles.",
+          answer=["supplementary"], explain="Supplementary angles."),
+    ]
+
+    # Find the missing complementary/supplementary
+    for a in [10, 20, 30, 40, 45, 50, 55, 60, 70, 80]:
+        c = 90 - a
+        qs.append(Q("fill", f"Find the angle that is complementary to {a}°.",
+                    answer=[str(c), f"{c}°"], explain=f"90 − {a} = {c}°."))
+    for a in [30, 45, 60, 75, 90, 100, 120, 135, 150]:
+        s = 180 - a
+        qs.append(Q("fill", f"Find the angle that is supplementary to {a}°.",
+                    answer=[str(s), f"{s}°"], explain=f"180 − {a} = {s}°."))
+
+    # More circle radius/diameter pairs
+    for r in range(21, 41):
+        qs.append(Q("fill", f"If radius = {r} cm, diameter = ? cm",
+                    answer=[str(r*2), f"{r*2} cm", fmt(r*2)],
+                    explain=f"2 × {r} = {r*2}."))
+    for d in [22, 26, 28, 32, 36, 38, 42, 44, 46, 48, 60, 70, 80, 90]:
+        qs.append(Q("fill", f"If diameter = {d} cm, radius = ? cm",
+                    answer=[str(d//2), f"{d//2} cm"], explain=f"{d} ÷ 2 = {d//2}."))
+
     return qs
 
 
@@ -455,146 +1216,222 @@ def gen_ch05():
     random.seed(505)
     qs = []
 
-    # Place value identification (mcq)
-    pv_data = [
-        (4.27, "2", 0.2, "tenths"),
-        (3.07, "7", 0.07, "hundredths"),
-        (7.085, "8", 0.08, "hundredths"),
-        (6.21, "1", 0.01, "hundredths"),
-        (5.43, "3", 0.03, "hundredths"),
-        (9.6, "6", 0.6, "tenths"),
-        (2.137, "7", 0.007, "thousandths"),
-        (1.4, "4", 0.4, "tenths"),
-    ]
-    for num, digit, val, place in pv_data:
+    PLACE_NAMES = ["tenths", "hundredths", "thousandths"]
+
+    # Place value MCQ — generated
+    def make_pv_mcq():
+        # Build a decimal like 6.327
+        whole = random.randint(0, 9)
+        digits = [random.randint(1, 9) for _ in range(random.choice([2, 3]))]
+        num_str = str(whole) + "." + "".join(str(d) for d in digits)
+        pos = random.randint(0, len(digits) - 1)
+        digit = digits[pos]
+        val = digit / (10 ** (pos + 1))
+        place = PLACE_NAMES[pos]
         # Build distractors
-        opts = sorted({val, val * 10, val / 10, float(digit), float(digit) * 10}, key=str)
+        opts = sorted({val, val * 10, val / 10, float(digit)}, key=str)
         if len(opts) < 4:
-            opts.append(0)
+            opts.append(0.0)
         opts = list(opts)[:4]
-        if val not in opts: opts[0] = val
+        if val not in opts:
+            opts[0] = val
         random.shuffle(opts)
         idx = opts.index(val)
-        # Format options
-        opts_s = [str(o) if o == int(o) else str(o) for o in opts]
-        qs.append(Q("mcq", f"In {num}, what is the value of {digit}?",
-                    options=opts_s, answer=idx,
-                    explain=f"{digit} is in the {place} place → {val}."))
+        opts_s = []
+        for o in opts:
+            if o == int(o):
+                opts_s.append(str(int(o)))
+            else:
+                opts_s.append(str(round(o, 4)))
+        return Q("mcq", f"In {num_str}, what is the value of the digit {digit}?",
+                 options=opts_s, answer=idx,
+                 explain=f"{digit} is in the {place} place → {val}.")
+    qs += take_uniq(make_pv_mcq, 30)
 
-    # Place value (fill — bidirectional, accept place name OR value)
-    pv_fill = [
-        (4.27, "2", "0.2", "tenths"),
-        (3.07, "7", "0.07", "hundredths"),
-        (7.085, "8", "0.08", "hundredths"),
-        (6.21, "1", "0.01", "hundredths"),
-        (9.6, "6", "0.6", "tenths"),
-        (8.142, "4", "0.04", "hundredths"),
-    ]
-    for num, digit, val, place in pv_fill:
-        qs.append(Q("fill", f"In {num}, what is the place value of {digit}?",
-                    answer=[val, val.lstrip("0"),
-                            f"{digit} {place}", place, f"{place} place"],
-                    explain=f"{digit} sits in the {place} place. Place value = {val}. Either '{place}' or '{val}' is fine."))
+    # Place value fill — accept place name OR value
+    def make_pv_fill():
+        whole = random.randint(0, 9)
+        digits = [random.randint(1, 9) for _ in range(random.choice([2, 3]))]
+        num_str = str(whole) + "." + "".join(str(d) for d in digits)
+        pos = random.randint(0, len(digits) - 1)
+        digit = digits[pos]
+        val = digit / (10 ** (pos + 1))
+        place = PLACE_NAMES[pos]
+        val_str = str(val) if val < 1 else str(int(val) if val == int(val) else val)
+        return Q("fill",
+                 f"In {num_str}, what is the place value of {digit}?",
+                 answer=[val_str, val_str.lstrip("0"),
+                         f"{digit} {place}", place, f"{place} place"],
+                 explain=f"{digit} sits in the {place} place. Place value = {val_str}.")
+    qs += take_uniq(make_pv_fill, 25)
 
     # Fraction → decimal
     fd_data = [
         ("1/2", "0.5"), ("1/4", "0.25"), ("3/4", "0.75"),
         ("1/5", "0.2"), ("2/5", "0.4"), ("3/5", "0.6"), ("4/5", "0.8"),
-        ("1/10", "0.1"), ("3/10", "0.3"), ("7/10", "0.7"), ("9/10", "0.9"),
-        ("1/8", "0.125"), ("1/100", "0.01"),
+        ("1/10", "0.1"), ("2/10", "0.2"), ("3/10", "0.3"), ("4/10", "0.4"),
+        ("5/10", "0.5"), ("6/10", "0.6"), ("7/10", "0.7"), ("8/10", "0.8"),
+        ("9/10", "0.9"),
+        ("1/8", "0.125"), ("3/8", "0.375"), ("5/8", "0.625"), ("7/8", "0.875"),
+        ("1/100", "0.01"), ("5/100", "0.05"), ("25/100", "0.25"), ("50/100", "0.5"),
+        ("75/100", "0.75"), ("99/100", "0.99"),
     ]
     for frac, dec in fd_data:
         bare = dec.lstrip("0")
         qs.append(Q("fill", f"{frac} as a decimal = ?",
                     answer=[dec, bare], explain=f"{frac} = {dec}."))
 
-    # Decimal → fraction (MCQ to keep simple)
-    df = [
-        ("0.5", "1/2"), ("0.25", "1/4"), ("0.75", "3/4"),
-        ("0.1", "1/10"), ("0.2", "1/5"), ("0.4", "2/5"),
-    ]
-    for dec, frac in df:
-        opts = ["1/2", "1/4", "3/4", "1/10", "1/5", "2/5"]
-        random.shuffle(opts)
-        if frac not in opts: opts[0] = frac
-        opts = opts[:4]
-        if frac not in opts: opts[0] = frac
-        random.shuffle(opts)
-        qs.append(Q("mcq", f"{dec} = which fraction?",
-                    options=opts, answer=opts.index(frac),
-                    explain=f"{dec} = {frac}."))
-
     # Addition
-    for _ in range(8):
+    def make_add():
         a = round(random.uniform(0.1, 9.9), 1)
         b = round(random.uniform(0.1, 9.9), 1)
         s = round(a + b, 2)
-        qs.append(Q("fill", f"{a} + {b} = ?",
-                    answer=[str(s), str(s).lstrip("0")],
-                    explain=f"{a} + {b} = {s}."))
+        s_str = str(s)
+        return Q("fill", f"{a} + {b} = ?",
+                 answer=[s_str, s_str.lstrip("0")],
+                 explain=f"{a} + {b} = {s_str}.")
+    qs += take_uniq(make_add, 30)
+
+    # Two-decimal-place addition
+    def make_add2():
+        a = round(random.uniform(0.10, 9.99), 2)
+        b = round(random.uniform(0.10, 9.99), 2)
+        s = round(a + b, 2)
+        s_str = str(s)
+        return Q("fill", f"{a} + {b} = ?",
+                 answer=[s_str, s_str.lstrip("0")],
+                 explain=f"Align decimal points: {s_str}.")
+    qs += take_uniq(make_add2, 15)
 
     # Subtraction
-    for _ in range(8):
+    def make_sub():
         a = round(random.uniform(2, 10), 1)
         b = round(random.uniform(0.1, a - 0.1), 1)
         d = round(a - b, 2)
-        qs.append(Q("fill", f"{a} − {b} = ?",
-                    answer=[str(d), str(d).lstrip("0")],
-                    explain=f"{a} − {b} = {d}."))
+        d_str = str(d)
+        return Q("fill", f"{a} − {b} = ?",
+                 answer=[d_str, d_str.lstrip("0")],
+                 explain=f"{a} − {b} = {d_str}.")
+    qs += take_uniq(make_sub, 30)
 
-    # Rounding
-    rounds = [
-        ("Round 4.67 to whole = ?", "5", "0.67 ≥ 0.5 → up."),
-        ("Round 8.42 to whole = ?", "8", "0.42 < 0.5 → down."),
-        ("Round 3.456 to nearest tenth = ?", "3.5", "Hundredths digit 5 → up."),
-        ("Round 2.68 to nearest tenth = ?", "2.7", "Hundredths digit 8 → up."),
-        ("Round 9.51 to whole = ?", "10", "0.51 ≥ 0.5 → up."),
-        ("Round 0.83 to nearest tenth = ?", "0.8", "Hundredths 3 < 5 → down."),
-        ("Round 1.99 to nearest tenth = ?", "2", "Hundredths 9 → up. Carry over to whole 2."),
-    ]
-    for q, ans, ex in rounds:
-        qs.append(Q("fill", q, answer=[ans, ans.lstrip("0")], explain=ex))
+    # Two-decimal subtraction
+    def make_sub2():
+        a = round(random.uniform(3, 10), 2)
+        b = round(random.uniform(0.1, a - 0.05), 2)
+        d = round(a - b, 2)
+        d_str = str(d)
+        return Q("fill", f"{a} − {b} = ?",
+                 answer=[d_str, d_str.lstrip("0")],
+                 explain=f"Align decimal points: {d_str}.")
+    qs += take_uniq(make_sub2, 15)
+
+    # Rounding to whole, tenth, hundredth
+    def make_round_whole():
+        n = round(random.uniform(1, 50), 2)
+        r = round(n)
+        return Q("fill", f"Round {n} to the nearest whole number = ?",
+                 answer=[str(r), fmt(r)],
+                 explain=f"Look at tenths digit. Result: {r}.")
+    qs += take_uniq(make_round_whole, 15)
+
+    def make_round_tenth():
+        n = round(random.uniform(0.01, 9.99), 2)
+        r = round(n, 1)
+        r_str = str(r)
+        return Q("fill", f"Round {n} to the nearest tenth = ?",
+                 answer=[r_str, r_str.lstrip("0")],
+                 explain=f"Look at hundredths digit. Result: {r_str}.")
+    qs += take_uniq(make_round_tenth, 15)
 
     # Compare
-    pairs = [
-        ("0.5", "0.45", "0.5"), ("0.7", "0.07", "0.7"),
-        ("3.05", "3.005", "3.05"), ("0.9", "0.099", "0.9"),
-        ("1.5", "1.50", "equal"), ("2.3", "2.30", "equal"),
-    ]
-    for a, b, larger in pairs:
-        if larger == "equal":
-            qs.append(Q("compare", f"Compare: {a} ___ {b}",
-                        options=["<", ">", "="], answer=2,
-                        explain=f"{a} = {b} (trailing zeros don't change value)."))
+    def make_cmp():
+        a = round(random.uniform(0.01, 9.99), 2)
+        b_diff = random.choice([-0.5, -0.1, -0.05, -0.01, 0, 0.01, 0.05, 0.1, 0.5])
+        b = round(a + b_diff, 2)
+        if a == b:
+            ans = 2
+        elif a < b:
+            ans = 0
         else:
-            sign = 0 if larger == b else 1
-            qs.append(Q("compare", f"Compare: {a} ___ {b}",
-                        options=["<", ">", "="], answer=sign,
-                        explain=f"{larger} is larger."))
+            ans = 1
+        return Q("compare", f"Compare: {a} ___ {b}",
+                 options=["<", ">", "="], answer=ans,
+                 explain=f"{a} {'<' if a<b else '>' if a>b else '='} {b}.")
+    qs += take_uniq(make_cmp, 25)
 
-    # ×/÷ by powers of 10
+    # Multiply by powers of 10
+    for n in [0.5, 0.7, 0.25, 1.5, 2.3, 0.04, 3.7, 0.8, 1.25]:
+        for p in [10, 100, 1000]:
+            res = n * p
+            res_str = str(res) if res != int(res) else str(int(res))
+            qs.append(Q("fill", f"{n} × {p} = ?",
+                        answer=[res_str, res_str.lstrip("0")],
+                        explain=f"Move decimal {len(str(p))-1} place(s) right → {res_str}."))
+
+    # Divide by powers of 10
+    for n in [3, 12, 25, 7, 50, 100, 8, 4]:
+        for p in [10, 100, 1000]:
+            res = n / p
+            res_str = str(res) if res != int(res) else str(int(res))
+            qs.append(Q("fill", f"{n} ÷ {p} = ?",
+                        answer=[res_str, res_str.lstrip("0"), "." + res_str.lstrip("0").lstrip(".")],
+                        explain=f"Move decimal {len(str(p))-1} place(s) left → {res_str}."))
+
+    # Word problems
+    word_dec = [
+        ("Crispin runs 1.5 km on Monday and 2.25 km on Tuesday. Total km?", "3.75"),
+        ("A bottle holds 1.5 L. How much in 4 bottles?", "6"),
+        ("A pencil costs ₹3.50. Cost of 6 pencils?", "21"),
+        ("Crispin's height is 1.45 m. His sister is 0.32 m taller. Her height?", "1.77"),
+        ("Total weight 8.5 kg. Box weighs 2.25 kg. Weight of contents?", "6.25"),
+        ("3 oranges weigh 0.75 kg. One orange weighs?", "0.25"),
+        ("A jug holds 2.5 L. Pour out 1.75 L. How much remains?", "0.75"),
+        ("Cake recipe needs 0.4 kg flour. For 5 cakes?", "2"),
+    ]
+    for q, a in word_dec:
+        qs.append(Q("fill", q, answer=[a, a.lstrip("0")], explain=f"= {a}."))
+
+    # Number names of decimals
     qs += [
-        Q("fill", "0.5 × 10 = ?", answer=["5"], explain="Move decimal 1 right."),
-        Q("fill", "0.5 × 100 = ?", answer=["50"], explain="Move decimal 2 right."),
-        Q("fill", "3 ÷ 10 = ?", answer=["0.3", ".3"], explain="Move decimal 1 left."),
-        Q("fill", "12 ÷ 100 = ?", answer=["0.12", ".12"], explain="Move decimal 2 left."),
-        Q("fill", "2.5 × 10 = ?", answer=["25"], explain="Move decimal 1 right."),
+        Q("fill", 'Write "two and three tenths" as a decimal.', answer=["2.3"],
+          explain="2 + 3/10."),
+        Q("fill", 'Write "five and seven hundredths" as a decimal.', answer=["5.07"],
+          explain="5 + 7/100."),
+        Q("fill", 'Write "one and twenty-five hundredths" as a decimal.', answer=["1.25"],
+          explain="1 + 25/100."),
+        Q("fill", 'Write "ten and five tenths" as a decimal.', answer=["10.5"],
+          explain="10 + 5/10."),
+        Q("fill", 'Write "0.07" in words.',
+          answer=["seven hundredths", "zero point zero seven", "point zero seven"],
+          explain="7 in the hundredths place."),
+        Q("fill", 'Write "0.4" in words.',
+          answer=["four tenths", "zero point four", "point four"],
+          explain="4 in the tenths place."),
+        Q("fill", 'Write "3.5" in words.',
+          answer=["three and five tenths", "three point five"],
+          explain="Three whole and five tenths."),
     ]
 
-    # T/F & word
+    # T/F & concept
     qs += [
         Q("tf", "0.30 and 0.3 are equal.", answer=0,
           explain="True — trailing zeros after the decimal don't change value."),
         Q("tf", "0.5 < 0.50.", answer=1, explain="False — equal."),
         Q("tf", "0.9 is bigger than 0.91.", answer=1,
           explain="False — 0.91 has more in the hundredths."),
+        Q("tf", "0.1 is one-tenth.", answer=0, explain="True — 0.1 = 1/10."),
+        Q("tf", "0.001 is one-hundredth.", answer=1,
+          explain="False — 0.001 is one-thousandth."),
         Q("fill", "How many tenths in 1?", answer=["10"], explain="1 = 10/10."),
         Q("fill", "How many hundredths in 0.1?", answer=["10"], explain="0.1 = 10/100."),
-        Q("fill", 'Write "two and three tenths" as a decimal.', answer=["2.3"], explain="2 + 3/10."),
-        Q("fill", 'Write "0.07" in words.',
-          answer=["seven hundredths", "zero point zero seven", "point zero seven"],
-          explain="7 in the hundredths place."),
+        Q("fill", "How many hundredths in 1?", answer=["100"], explain="1 = 100/100."),
+        Q("fill", "How many thousandths in 0.01?", answer=["10"],
+          explain="0.01 = 10/1000."),
+        Q("fill", "1 + 0.5 + 0.05 = ?", answer=["1.55"], explain="Add column-wise."),
+        Q("fill", "10 − 0.1 = ?", answer=["9.9"], explain="10 − 0.1 = 9.9."),
+        Q("fill", "100 × 0.01 = ?", answer=["1"], explain="0.01 × 100 = 1."),
     ]
+
     return qs
 
 
@@ -605,70 +1442,112 @@ def gen_ch06():
     random.seed(606)
     qs = []
 
-    # Square perimeter
-    for s in [3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20]:
+    # Square perimeter — many sizes
+    for s in list(range(2, 41)) + [45, 50, 60]:
         qs.append(Q("fill", f"Perimeter of a square with side {s} cm?",
                     answer=[str(4 * s), f"{4*s} cm", f"{4*s}cm"],
                     explain=f"P = 4 × {s} = {4*s} cm."))
 
-    # Rectangle perimeter
-    for L, W in [(6, 4), (8, 3), (10, 5), (12, 7), (15, 8), (9, 6), (20, 10), (7, 4)]:
+    # Rectangle perimeter — varied
+    rectangles = [(L, W) for L in range(3, 26) for W in range(2, L)]
+    random.shuffle(rectangles)
+    for L, W in rectangles[:50]:
         p = 2 * (L + W)
         qs.append(Q("fill", f"Perimeter of a rectangle {L} × {W} cm?",
                     answer=[str(p), f"{p} cm", f"{p}cm"],
                     explain=f"P = 2(L+W) = 2({L}+{W}) = {p} cm."))
 
     # Square area
-    for s in [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15]:
+    for s in list(range(2, 36)) + [40, 50]:
         qs.append(Q("fill", f"Area of a square with side {s} cm?",
                     answer=[str(s * s), f"{s*s} sq cm", f"{s*s} cm²"],
                     explain=f"A = s² = {s*s} sq cm."))
 
     # Rectangle area
-    for L, W in [(8, 3), (12, 5), (10, 4), (15, 6), (9, 7), (20, 8), (11, 5), (14, 9)]:
+    rect_area = [(L, W) for L in range(3, 26) for W in range(2, L)]
+    random.shuffle(rect_area)
+    for L, W in rect_area[:50]:
         a = L * W
         qs.append(Q("fill", f"Area of a rectangle {L} × {W} cm?",
                     answer=[str(a), f"{a} sq cm", f"{a} cm²"],
                     explain=f"A = L×W = {a} sq cm."))
 
     # Cube volume
-    for s in [2, 3, 4, 5, 6, 7, 8, 10]:
+    for s in range(2, 16):
         v = s ** 3
         qs.append(Q("fill", f"Volume of a cube with side {s} cm?",
                     answer=[str(v), f"{v} cu cm", f"{v} cm³"],
                     explain=f"V = s³ = {v} cu cm."))
 
     # Cuboid volume
-    for L, W, H in [(4, 3, 2), (5, 4, 3), (6, 4, 2), (7, 5, 3), (8, 6, 4), (10, 5, 2), (3, 3, 5)]:
+    cuboid = [(L, W, H) for L in [3, 4, 5, 6, 8, 10] for W in [2, 3, 4, 5] for H in [2, 3, 4, 5] if L > W >= H]
+    random.shuffle(cuboid)
+    for L, W, H in cuboid[:20]:
         v = L * W * H
         qs.append(Q("fill", f"Volume of a cuboid {L}×{W}×{H} cm?",
                     answer=[str(v), f"{v} cu cm", f"{v} cm³"],
                     explain=f"V = {L}×{W}×{H} = {v} cu cm."))
 
-    # Find side from area
-    for a in [9, 16, 25, 36, 49, 64, 81, 100, 144]:
+    # Find side from area (perfect squares)
+    perfect_squares = [a*a for a in range(2, 16)]
+    for a in perfect_squares:
         s = int(a ** 0.5)
         qs.append(Q("fill", f"Square area = {a} sq cm. Side = ?",
                     answer=[str(s), f"{s} cm", f"{s}cm"],
                     explain=f"√{a} = {s} cm."))
 
-    # Find side from cube volume
-    for s in [2, 3, 4, 5, 6, 7]:
+    # Find side from cube volume (perfect cubes)
+    for s in range(2, 11):
         v = s ** 3
         qs.append(Q("fill", f"Cube volume = {v} cu cm. Side = ?",
                     answer=[str(s), f"{s} cm"], explain=f"∛{v} = {s} cm."))
 
-    # Triangle/polygon perimeters
-    qs += [
-        Q("fill", "Perimeter of a triangle with sides 3, 4, 5 cm?", answer=["12", "12 cm"], explain="3+4+5=12."),
-        Q("fill", "Perimeter of a triangle with sides 6, 8, 10 cm?", answer=["24", "24 cm"], explain="6+8+10=24."),
-        Q("fill", "Perimeter of a regular pentagon with side 6 cm?",
-          answer=["30", "30 cm"], explain="5 × 6 = 30."),
-        Q("fill", "Perimeter of a regular hexagon with side 4 cm?",
-          answer=["24", "24 cm"], explain="6 × 4 = 24."),
-        Q("fill", "Perimeter of a regular octagon with side 3 cm?",
-          answer=["24", "24 cm"], explain="8 × 3 = 24."),
+    # Find length given area & width (or vice versa)
+    for W, A in [(4, 24), (5, 35), (3, 21), (6, 48), (8, 32), (4, 48), (5, 60), (7, 49)]:
+        L = A // W
+        if L * W != A:
+            continue
+        qs.append(Q("fill", f"Rectangle area = {A} sq cm, width = {W} cm. Length = ?",
+                    answer=[str(L), f"{L} cm"],
+                    explain=f"L = A ÷ W = {A} ÷ {W} = {L} cm."))
+
+    # Triangle perimeters
+    triangle_sets = [
+        (3, 4, 5), (5, 12, 13), (6, 8, 10), (8, 15, 17), (9, 12, 15),
+        (5, 5, 5), (6, 6, 6), (7, 7, 10), (8, 8, 12), (10, 10, 10),
+        (4, 5, 6), (5, 7, 9), (6, 7, 8), (7, 8, 9), (3, 5, 7),
     ]
+    for a, b, c in triangle_sets:
+        p = a + b + c
+        qs.append(Q("fill", f"Perimeter of a triangle with sides {a}, {b}, {c} cm?",
+                    answer=[str(p), f"{p} cm"], explain=f"{a}+{b}+{c}={p}."))
+
+    # Regular polygon perimeters
+    for sides, side_len in [(3, 5), (4, 6), (5, 6), (5, 8), (6, 4), (6, 7), (7, 5),
+                             (8, 3), (8, 6), (9, 4), (10, 5), (12, 3)]:
+        p = sides * side_len
+        names = {3: "triangle", 4: "square", 5: "pentagon", 6: "hexagon",
+                 7: "heptagon", 8: "octagon", 9: "nonagon", 10: "decagon", 12: "dodecagon"}
+        name = names[sides]
+        qs.append(Q("fill", f"Perimeter of a regular {name} with side {side_len} cm?",
+                    answer=[str(p), f"{p} cm"],
+                    explain=f"{sides} × {side_len} = {p}."))
+
+    # Word problems
+    word_paV = [
+        ("A garden is 12 m × 8 m. What is its area?", 96, "sq m"),
+        ("A swimming pool is 25 m × 10 m. Perimeter?", 70, "m"),
+        ("A photo frame is 30 cm × 20 cm. Perimeter?", 100, "cm"),
+        ("A box of side 4 cm. Volume?", 64, "cu cm"),
+        ("A football pitch is 100 m × 60 m. Area?", 6000, "sq m"),
+        ("A square room has side 5 m. Perimeter?", 20, "m"),
+        ("A book is 25 cm × 18 cm. Area of cover?", 450, "sq cm"),
+        ("A cube of side 6 cm. Volume?", 216, "cu cm"),
+    ]
+    for q, ans, unit in word_paV:
+        qs.append(Q("fill", q,
+                    answer=[str(ans), f"{ans} {unit}", fmt(ans)],
+                    explain=f"= {fmt(ans)} {unit}."))
 
     # Units MCQ
     qs += [
@@ -678,6 +1557,10 @@ def gen_ch06():
           options=["cm", "cm²", "cm³", "L"], answer=1, explain="Square units."),
         Q("mcq", "Volume is measured in:",
           options=["cm", "cm²", "cm³", "g"], answer=2, explain="Cubic units."),
+        Q("mcq", "Which is a unit of area?",
+          options=["m", "m²", "m³", "kg"], answer=1, explain="m² (square metres)."),
+        Q("mcq", "Which is a unit of volume?",
+          options=["mm", "mm²", "mm³", "g"], answer=2, explain="mm³."),
     ]
 
     # Conversions
@@ -686,6 +1569,11 @@ def gen_ch06():
         Q("fill", "1 sq m = ? sq cm", answer=["10000", "10,000"], explain="100 × 100."),
         Q("fill", "1 cu m = ? cu cm",
           answer=["1000000", "1,000,000"], explain="100 × 100 × 100."),
+        Q("fill", "1 km = ? m", answer=["1000", "1,000"], explain="1 km = 1000 m."),
+        Q("fill", "Perimeter of a rectangle 50 cm × 30 cm in cm?",
+          answer=["160", "160 cm"], explain="2(50+30)=160."),
+        Q("fill", "Perimeter of a square with side 1 m, in cm?",
+          answer=["400", "400 cm"], explain="Side 100 cm × 4 = 400."),
     ]
 
     # T/F
@@ -696,7 +1584,14 @@ def gen_ch06():
           explain="False — that's surface area. Volume is the SPACE inside."),
         Q("tf", "All squares are rectangles.", answer=0,
           explain="True — square = special rectangle with equal sides."),
+        Q("tf", "Perimeter and circumference both mean 'distance around'.", answer=0,
+          explain="True — circumference is the term used for circles."),
+        Q("tf", "Area of a square with side 5 cm is 20 sq cm.", answer=1,
+          explain="False — area = 5×5 = 25 sq cm."),
+        Q("tf", "Volume of a cube with side 3 cm is 27 cu cm.", answer=0,
+          explain="True — 3³ = 27."),
     ]
+
     return qs
 
 
@@ -707,29 +1602,63 @@ def gen_ch07():
     random.seed(707)
     qs = []
 
-    # S = D/T
-    for d, t in [(120, 2), (90, 3), (200, 5), (240, 3), (150, 5), (180, 6),
-                 (100, 4), (60, 2), (300, 5), (240, 4), (320, 8), (175, 5)]:
+    # S = D / T
+    seen_s = set()
+    sdt_pairs = [(d, t) for d in [60, 80, 100, 120, 150, 180, 200, 210, 240, 270, 280, 300, 320, 360, 400, 420, 480, 500, 600, 720]
+                  for t in [2, 3, 4, 5, 6, 7, 8] if d % t == 0]
+    random.shuffle(sdt_pairs)
+    for d, t in sdt_pairs:
+        if (d, t) in seen_s: continue
+        seen_s.add((d, t))
         s = d // t
         qs.append(Q("fill", f"{d} km in {t} h. Speed (km/h) = ?",
                     answer=[str(s), f"{s} km/h"],
                     explain=f"S = D/T = {d}/{t} = {s} km/h."))
+        if len(seen_s) >= 60: break
 
     # D = S × T
-    for s, t in [(15, 4), (50, 6), (80, 2), (60, 3), (40, 5), (25, 4),
-                 (90, 2), (35, 3), (45, 4), (100, 2), (70, 3), (55, 6)]:
+    sd_pairs = [(s, t) for s in [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 90, 100, 120]
+                for t in [2, 3, 4, 5, 6, 7, 8]]
+    random.shuffle(sd_pairs)
+    for s, t in sd_pairs[:60]:
         d = s * t
         qs.append(Q("fill", f"{s} km/h × {t} h = ? km",
                     answer=[str(d), f"{d} km"],
                     explain=f"D = S×T = {s}×{t} = {d} km."))
 
-    # T = D/S
-    for d, s in [(100, 25), (60, 20), (200, 40), (100, 50), (180, 60),
-                 (90, 30), (120, 40), (240, 60), (150, 50), (300, 50)]:
+    # T = D / S
+    seen_t = set()
+    ts_pairs = [(d, s) for s in [10, 20, 25, 30, 40, 50, 60, 75, 80, 90, 100, 120, 150]
+                 for d in [s*t for t in [2, 3, 4, 5, 6, 7, 8]]]
+    random.shuffle(ts_pairs)
+    for d, s in ts_pairs:
+        if (d, s) in seen_t: continue
+        seen_t.add((d, s))
         t = d // s
         qs.append(Q("fill", f"{d} km at {s} km/h = ? hours",
                     answer=[str(t), f"{t} hours", f"{t}h"],
                     explain=f"T = D/S = {d}/{s} = {t} hours."))
+        if len(seen_t) >= 50: break
+
+    # Speed comparisons (which is faster?)
+    speed_compares = [
+        (60, 50, "60 km/h"),
+        (45, 80, "80 km/h"),
+        (30, 35, "35 km/h"),
+        (90, 100, "100 km/h"),
+        (25, 40, "40 km/h"),
+        (60, 60, "equal"),
+    ]
+    for a, b, ans in speed_compares:
+        if ans == "equal":
+            qs.append(Q("mcq", f"Which is faster: {a} km/h or {b} km/h?",
+                        options=[f"{a} km/h", f"{b} km/h", "Equal"],
+                        answer=2, explain="They're equal."))
+        else:
+            opts = [f"{a} km/h", f"{b} km/h"]
+            qs.append(Q("mcq", f"Which is faster: {a} km/h or {b} km/h?",
+                        options=opts, answer=opts.index(ans),
+                        explain=f"{ans} is faster."))
 
     # Temperature basics
     qs += [
@@ -737,6 +1666,8 @@ def gen_ch07():
         Q("fill", "Water boils at __ °C", answer=["100"], explain="Boiling point of water."),
         Q("fill", "Normal body temperature ≈ __ °C", answer=["37"],
           explain="About 37°C (98.6°F)."),
+        Q("fill", "Room temperature ≈ __ °C (give a number near 22)",
+          answer=["20", "22", "25"], explain="About 20-25°C."),
         Q("mcq", "Bahrain summer noon ≈ how many °C?",
           options=["10°C", "25°C", "45°C", "70°C"], answer=2,
           explain="Around 40-45°C in peak summer."),
@@ -745,28 +1676,97 @@ def gen_ch07():
           explain="-5°C is below freezing → coldest."),
         Q("mcq", "Which is hotter?",
           options=["20°C", "35°C", "5°C"], answer=1, explain="35°C is the warmest."),
+        Q("mcq", "Refrigerator temperature is usually around:",
+          options=["-30°C", "0°C", "4°C", "30°C"], answer=2, explain="Around 2-4°C."),
+        Q("mcq", "Freezer temperature is usually around:",
+          options=["10°C", "0°C", "-18°C", "100°C"], answer=2, explain="Around -18°C."),
     ]
 
     # Temperature differences
-    for a, b in [(35, 18), (40, 22), (28, 15), (50, 25), (38, 20),
-                 (30, 10), (45, 30), (25, 5), (37, 22), (55, 38)]:
-        d = a - b
-        qs.append(Q("fill", f"{a}°C − {b}°C = ?", answer=[str(d), f"{d}°C"],
-                    explain=f"Difference = {d}°C."))
+    def make_temp_diff():
+        a = random.randint(15, 60)
+        b = random.randint(0, a - 1)
+        return Q("fill", f"{a}°C − {b}°C = ?", answer=[str(a-b), f"{a-b}°C"],
+                 explain=f"Difference = {a-b}°C.")
+    qs += take_uniq(make_temp_diff, 60)
 
-    # T/F & word
+    # Temperature additions (warmer)
+    def make_temp_add():
+        a = random.randint(5, 40)
+        rise = random.randint(2, 15)
+        return Q("fill", f"It was {a}°C and rose by {rise}°C. New temperature?",
+                 answer=[str(a+rise), f"{a+rise}°C"],
+                 explain=f"{a} + {rise} = {a+rise}°C.")
+    qs += take_uniq(make_temp_add, 25)
+
+    # Temperature with negatives
+    neg_temp = [
+        (10, -5, 15), (5, -10, 15), (20, -3, 23), (0, -8, 8), (-2, -10, 8),
+        (15, -5, 20), (-1, -7, 6),
+    ]
+    for a, b, diff in neg_temp:
+        qs.append(Q("fill", f"Temperature rose from {b}°C to {a}°C. By how much?",
+                    answer=[str(diff), f"{diff}°C"],
+                    explain=f"{a} − ({b}) = {a-b} = {diff}°C."))
+
+    # Word problems on speed
+    word_speed = [
+        ("A car travels 240 km in 4 hours. Speed?", 60, "km/h"),
+        ("A train goes 100 km in 2 hours. Speed?", 50, "km/h"),
+        ("A cyclist goes 36 km in 3 hours. Speed?", 12, "km/h"),
+        ("Crispin walks 6 km in 2 hours. Speed?", 3, "km/h"),
+        ("A bus goes 50 km/h for 4 hours. Distance?", 200, "km"),
+        ("A taxi goes 80 km/h for 2.5 hours. Distance?", 200, "km"),
+        ("A plane goes 600 km/h for 3 hours. Distance?", 1800, "km"),
+        ("A car goes 240 km at 60 km/h. Time?", 4, "hours"),
+        ("A train covers 150 km at 75 km/h. Time?", 2, "hours"),
+        ("A scooter does 80 km at 40 km/h. Time?", 2, "hours"),
+        ("If a car travels 80 km/h for 30 min, it covers __ km.", 40, "km"),
+        ("Crispin runs 100 m in 20 sec. Speed?", 5, "m/sec"),
+    ]
+    for q, ans, unit in word_speed:
+        qs.append(Q("fill", q,
+                    answer=[str(ans), f"{ans} {unit}", fmt(ans)],
+                    explain=f"= {ans} {unit}."))
+
+    # T/F
     qs += [
         Q("tf", "Negative temperatures (like -3°C) mean below freezing.", answer=0,
           explain="True — below 0°C is freezing cold."),
         Q("tf", "1 hour and 60 minutes are the same.", answer=0, explain="True."),
-        Q("fill", "If a car travels 80 km/h for 30 min, it covers __ km.",
-          answer=["40", "40 km"], explain="Half hour at 80 = 40 km."),
+        Q("tf", "Faster speed means less time for the same distance.", answer=0,
+          explain="True — D/S = T, bigger S → smaller T."),
+        Q("tf", "Boiling water is colder than ice.", answer=1,
+          explain="False — boiling water is much hotter."),
+        Q("tf", "0°C means there is no temperature.", answer=1,
+          explain="False — 0°C is the freezing point of water; below 0 is colder."),
+        Q("tf", "Speed is distance per unit time.", answer=0,
+          explain="True — that's the definition."),
+        Q("tf", "If two cars travel at 60 km/h for 1 hour each, they go the same distance.",
+          answer=0, explain="True — same speed, same time, same distance."),
+    ]
+
+    # Speed unit conversions
+    qs += [
+        Q("fill", "1 km/h = how many m/h?", answer=["1000", "1,000"],
+          explain="1 km = 1000 m."),
+        Q("fill", "If speed is 36 km/h, in 2 h distance = __ km",
+          answer=["72"], explain="36 × 2 = 72."),
         Q("fill", "Light's speed is about __ km/sec (hint: 3 lakh).",
           answer=["300000", "3,00,000", "300,000"],
           explain="≈ 300,000 km/sec."),
-        Q("fill", "If the temperature rose from 22°C to 30°C, the rise is __ °C.",
-          answer=["8"], explain="30 − 22 = 8."),
     ]
+
+    # Mixed conceptual MCQs
+    qs += [
+        Q("mcq", "Speed = distance ÷ time. If distance increases and time stays the same:",
+          options=["Speed increases", "Speed decreases", "Speed stays same", "Cannot tell"],
+          answer=0, explain="More distance, same time → faster."),
+        Q("mcq", "Time = distance ÷ speed. If speed increases (distance fixed):",
+          options=["Time increases", "Time decreases", "Time stays same", "Cannot tell"],
+          answer=1, explain="Faster speed → less time for same distance."),
+    ]
+
     return qs
 
 
@@ -777,55 +1777,95 @@ def gen_ch08():
     random.seed(808)
     qs = []
 
-    # Mean — generate diverse sets
-    def mean_q():
+    # Mean — generate many sets
+    def make_mean():
         n = random.choice([3, 4, 5, 6])
         nums = [random.randint(2, 25) for _ in range(n)]
-        # Force integer mean by adjusting
         s = sum(nums)
         if s % n != 0:
             nums[-1] += (n - (s % n))
             s = sum(nums)
         m = s // n
         nums_s = ", ".join(str(x) for x in nums)
-        qs.append(Q("fill", f"Mean of {nums_s} = ?",
-                    answer=[str(m)], explain=f"Sum = {s}, divide by {n} = {m}."))
-    for _ in range(15):
-        mean_q()
+        return Q("fill", f"Mean of {nums_s} = ?",
+                 answer=[str(m)], explain=f"Sum = {s}, divide by {n} = {m}.")
+    qs += take_uniq(make_mean, 50)
 
     # Mode
-    def mode_q():
+    def make_mode():
         common = random.randint(2, 9)
         others = random.sample([x for x in range(2, 15) if x != common], 3)
         nums = [common] * random.randint(2, 3) + others
         random.shuffle(nums)
         nums_s = ", ".join(str(x) for x in nums)
-        qs.append(Q("fill", f"Mode of {nums_s} = ?",
-                    answer=[str(common)], explain=f"{common} appears most often."))
-    for _ in range(12):
-        mode_q()
+        return Q("fill", f"Mode of {nums_s} = ?",
+                 answer=[str(common)], explain=f"{common} appears most often.")
+    qs += take_uniq(make_mode, 40)
 
     # Range
-    def range_q():
+    def make_range():
         nums = [random.randint(1, 30) for _ in range(random.randint(4, 6))]
         r = max(nums) - min(nums)
         nums_s = ", ".join(str(x) for x in nums)
-        qs.append(Q("fill", f"Range of {nums_s} = ?",
-                    answer=[str(r)], explain=f"Max {max(nums)} − min {min(nums)} = {r}."))
-    for _ in range(12):
-        range_q()
+        return Q("fill", f"Range of {nums_s} = ?",
+                 answer=[str(r)], explain=f"Max {max(nums)} − min {min(nums)} = {r}.")
+    qs += take_uniq(make_range, 40)
+
+    # Median (middle value when sorted, odd n)
+    def make_median_odd():
+        n = random.choice([3, 5])
+        nums = sorted(random.sample(range(2, 30), n))
+        mid = nums[n // 2]
+        scrambled = nums[:]
+        random.shuffle(scrambled)
+        nums_s = ", ".join(str(x) for x in scrambled)
+        return Q("fill", f"Median of {nums_s} = ?",
+                 answer=[str(mid)],
+                 explain=f"Sort first: {', '.join(str(x) for x in nums)}. Middle = {mid}.")
+    qs += take_uniq(make_median_odd, 35)
+
+    # Maximum and minimum
+    def make_max():
+        nums = random.sample(range(5, 100), random.randint(4, 6))
+        m = max(nums)
+        nums_s = ", ".join(str(x) for x in nums)
+        return Q("fill", f"Largest of {nums_s} = ?",
+                 answer=[str(m)], explain=f"Largest is {m}.")
+    qs += take_uniq(make_max, 25)
+    def make_min():
+        nums = random.sample(range(5, 100), random.randint(4, 6))
+        m = min(nums)
+        nums_s = ", ".join(str(x) for x in nums)
+        return Q("fill", f"Smallest of {nums_s} = ?",
+                 answer=[str(m)], explain=f"Smallest is {m}.")
+    qs += take_uniq(make_min, 25)
+
+    # Sum of values
+    def make_sum():
+        nums = [random.randint(2, 25) for _ in range(random.randint(3, 5))]
+        s = sum(nums)
+        nums_s = ", ".join(str(x) for x in nums)
+        return Q("fill", f"Sum of {nums_s} = ?",
+                 answer=[str(s)], explain=f"Add them: {s}.")
+    qs += take_uniq(make_sum, 25)
 
     # Pictograph (1 ⚽ = 5 goals)
-    for n in [2, 3, 4, 5, 6, 7, 8, 10]:
-        symbols = "⚽" * n
-        qs.append(Q("fill", f"If 1 ⚽ = 5 goals, {symbols} = __ goals",
+    for n in [2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15]:
+        symbols = "⚽" * min(n, 12)  # cap visual repetition
+        qs.append(Q("fill", f"If 1 ⚽ = 5 goals, {symbols} = __ goals (count the ⚽: {n})",
                     answer=[str(n * 5)], explain=f"{n} × 5 = {n*5}."))
 
     # Pictograph (1 ⭐ = 10 books)
-    for n in [2, 3, 4, 5, 6]:
+    for n in [2, 3, 4, 5, 6, 7, 8]:
         symbols = "⭐" * n
         qs.append(Q("fill", f"If 1 ⭐ = 10 books, {symbols} = __ books",
                     answer=[str(n * 10)], explain=f"{n} × 10 = {n*10}."))
+
+    # Pictograph (1 🚗 = 4 cars)
+    for n in [2, 3, 4, 5, 6, 7]:
+        symbols = "🚗" * n
+        qs.append(Q("fill", f"If 1 🚗 = 4 cars, {symbols} = __ cars",
+                    answer=[str(n * 4)], explain=f"{n} × 4 = {n*4}."))
 
     # Tally
     qs += [
@@ -836,7 +1876,30 @@ def gen_ch08():
           answer=["8"], explain="4 + 3 = 8."),
         Q("fill", "If one bundle = 5, two bundles + 3 = __",
           answer=["13"], explain="5+5+3=13."),
+        Q("fill", "If one bundle = 5, three bundles + 4 = __",
+          answer=["19"], explain="5+5+5+4=19."),
+        Q("fill", "If one bundle = 5, four bundles + 2 = __",
+          answer=["22"], explain="5×4+2=22."),
+        Q("fill", "Tally |||| || represents the number __",
+          answer=["7"], explain="4 + 2 + 1 (the cross is the 5th)? Wait — || alone is just 2. So 4+2 ≠ 7. Actually marks: |||| (4) + || (2) = 6."),
     ]
+    # Drop the broken one — replace with a clean version
+    qs[-1] = Q("fill", "Tally |||| (one bundle of 5) plus || represents __",
+               answer=["7"], explain="5 + 2 = 7.")
+
+    # Bar graph reading (text-described)
+    bar_qs = [
+        ("In a bar graph, Crispin scored 5 goals, Ali 3, Hamad 7, Yusuf 2. Who scored most?",
+         "Hamad", "Hamad scored 7 — the highest bar."),
+        ("Same data: who scored fewest?",
+         "Yusuf", "Yusuf scored 2 — the shortest bar."),
+        ("Same data: total goals scored by all four?",
+         "17", "5 + 3 + 7 + 2 = 17."),
+        ("Same data: how many more goals did Hamad score than Ali?",
+         "4", "7 − 3 = 4."),
+    ]
+    for q, ans, ex in bar_qs:
+        qs.append(Q("fill", q, answer=[ans], explain=ex))
 
     # Concept MCQs
     qs += [
@@ -851,6 +1914,10 @@ def gen_ch08():
           options=["Total", "Difference between highest and lowest",
                    "Middle value", "Average"],
           answer=1, explain="Range = max − min."),
+        Q("mcq", '"Median" is:',
+          options=["The most common", "Average",
+                   "The middle value (when sorted)", "The largest"],
+          answer=2, explain="Median = middle value when data is sorted."),
         Q("mcq", "A bar graph uses:",
           options=["Lines", "Bars (rectangles)", "Slices", "Dots"],
           answer=1, explain="Bars."),
@@ -863,6 +1930,12 @@ def gen_ch08():
         Q("mcq", "A line graph is best for showing:",
           options=["Static counts", "Changes over time", "Categories", "Slices"],
           answer=1, explain="Trends over time."),
+        Q("mcq", "Which graph would best show your monthly heights as you grow?",
+          options=["Bar graph", "Pie chart", "Line graph", "Pictograph"],
+          answer=2, explain="Line graph — change over time."),
+        Q("mcq", "Which graph would best show favourite ice-cream flavours of your class?",
+          options=["Line graph", "Bar graph", "Pictograph", "Either bar or pie"],
+          answer=3, explain="Bar or pie chart both work for category data."),
     ]
 
     # T/F
@@ -872,7 +1945,14 @@ def gen_ch08():
           explain="True — bimodal sets exist."),
         Q("tf", "Mean is always one of the values in the data set.", answer=1,
           explain="False — can be a non-listed value (even a decimal)."),
+        Q("tf", "If all values in a data set are equal, the range is 0.", answer=0,
+          explain="True — max − min = 0."),
+        Q("tf", "Median is found by adding all values and dividing by count.", answer=1,
+          explain="False — that's the mean. Median is the middle value when sorted."),
+        Q("tf", "A pictograph key tells you what each symbol stands for.", answer=0,
+          explain="True."),
     ]
+
     return qs
 
 
@@ -884,13 +1964,13 @@ def gen_ch09():
     qs = []
 
     # Length: m → cm
-    for m in [1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 15, 20, 25]:
+    for m in list(range(1, 31)) + [35, 40, 45, 50, 60, 75, 100]:
         qs.append(Q("fill", f"{m} m = ? cm",
                     answer=[str(m * 100), fmt(m * 100)],
                     explain=f"× 100: {m * 100} cm."))
 
     # cm → m
-    for cm in [100, 200, 300, 500, 750, 1500, 250, 1000, 2000]:
+    for cm in [100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 700, 750, 800, 900, 1000, 1250, 1500, 1750, 2000, 2500, 3000, 4000, 5000]:
         m = cm / 100
         m_str = str(int(m)) if m == int(m) else str(m)
         qs.append(Q("fill", f"{cm} cm = ? m",
@@ -898,27 +1978,41 @@ def gen_ch09():
                     explain=f"÷ 100: {m_str} m."))
 
     # km → m
-    for km in [1, 2, 3, 4, 5, 6, 8, 10]:
+    for km in list(range(1, 16)) + [20, 25, 30]:
         qs.append(Q("fill", f"{km} km = ? m",
                     answer=[str(km * 1000), fmt(km * 1000)],
                     explain=f"× 1000: {fmt(km * 1000)} m."))
 
     # m → km
-    for m in [1000, 2000, 3500, 4500, 5000, 7500, 10000]:
+    for m in [1000, 1250, 1500, 1750, 2000, 2250, 2500, 3000, 3250, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000, 7500, 8000, 9000, 10000]:
         km = m / 1000
         km_s = str(int(km)) if km == int(km) else str(km)
         qs.append(Q("fill", f"{m} m = ? km",
                     answer=[km_s, km_s.lstrip("0")],
                     explain=f"÷ 1000: {km_s} km."))
 
+    # cm → mm
+    for cm in list(range(1, 21)) + [25, 30, 40, 50]:
+        qs.append(Q("fill", f"{cm} cm = ? mm",
+                    answer=[str(cm * 10), fmt(cm * 10)],
+                    explain=f"× 10: {cm * 10} mm."))
+
+    # mm → cm
+    for mm in [10, 20, 30, 50, 75, 100, 150, 200, 250, 350, 500, 750, 1000]:
+        cm = mm / 10
+        cm_s = str(int(cm)) if cm == int(cm) else str(cm)
+        qs.append(Q("fill", f"{mm} mm = ? cm",
+                    answer=[cm_s, cm_s.lstrip("0")],
+                    explain=f"÷ 10: {cm_s} cm."))
+
     # kg → g
-    for kg in [1, 2, 3, 5, 7, 10, 15]:
+    for kg in list(range(1, 16)) + [18, 20, 25, 30, 50, 100]:
         qs.append(Q("fill", f"{kg} kg = ? g",
                     answer=[str(kg * 1000), fmt(kg * 1000)],
                     explain=f"× 1000: {fmt(kg * 1000)} g."))
 
     # g → kg
-    for g in [500, 750, 1000, 1500, 2500, 3000, 4500, 6000]:
+    for g in [500, 750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 7000, 7500, 8000, 9000, 10000]:
         kg = g / 1000
         kg_s = str(int(kg)) if kg == int(kg) else str(kg)
         qs.append(Q("fill", f"{g} g = ? kg",
@@ -926,13 +2020,13 @@ def gen_ch09():
                     explain=f"÷ 1000: {kg_s} kg."))
 
     # L → mL
-    for L in [1, 2, 3, 4, 5, 7, 10]:
+    for L in list(range(1, 16)) + [18, 20, 25, 50]:
         qs.append(Q("fill", f"{L} L = ? mL",
                     answer=[str(L * 1000), fmt(L * 1000)],
                     explain=f"× 1000: {fmt(L * 1000)} mL."))
 
     # mL → L
-    for ml in [500, 750, 1000, 1500, 2000, 2500, 3500, 4000]:
+    for ml in [500, 750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 7000, 7500, 8000, 10000]:
         L = ml / 1000
         L_s = str(int(L)) if L == int(L) else str(L)
         qs.append(Q("fill", f"{ml} mL = ? L",
@@ -941,30 +2035,51 @@ def gen_ch09():
 
     # Mixed units
     mixed = [
-        ("1 m 45 cm in cm", "145"),
-        ("2 m 30 cm in cm", "230"),
-        ("1 m 75 cm in cm", "175"),
-        ("3 m 8 cm in cm", "308"),
-        ("1 kg 250 g in g", "1250"),
-        ("2 kg 500 g in g", "2500"),
-        ("3 kg 100 g in g", "3100"),
-        ("2 L 500 mL in mL", "2500"),
-        ("1 L 750 mL in mL", "1750"),
-        ("3 L 250 mL in mL", "3250"),
+        ("1 m 45 cm in cm", 145),
+        ("2 m 30 cm in cm", 230),
+        ("1 m 75 cm in cm", 175),
+        ("3 m 8 cm in cm", 308),
+        ("2 m 60 cm in cm", 260),
+        ("4 m 15 cm in cm", 415),
+        ("5 m 5 cm in cm", 505),
+        ("1 km 500 m in m", 1500),
+        ("2 km 250 m in m", 2250),
+        ("3 km 100 m in m", 3100),
+        ("1 kg 250 g in g", 1250),
+        ("2 kg 500 g in g", 2500),
+        ("3 kg 100 g in g", 3100),
+        ("4 kg 50 g in g", 4050),
+        ("1 kg 750 g in g", 1750),
+        ("2 L 500 mL in mL", 2500),
+        ("1 L 750 mL in mL", 1750),
+        ("3 L 250 mL in mL", 3250),
+        ("4 L 100 mL in mL", 4100),
+        ("5 L 50 mL in mL", 5050),
     ]
     for q, ans in mixed:
-        qs.append(Q("fill", q, answer=[ans, fmt(int(ans))], explain=f"= {fmt(int(ans))}."))
+        qs.append(Q("fill", q, answer=[str(ans), fmt(ans)], explain=f"= {fmt(ans)}."))
 
-    # Comparisons
+    # Comparisons (text answer)
     cmp = [
-        ("1 km", "500 m", "1 km"), ("2 kg", "1500 g", "2 kg"),
-        ("1 L", "750 mL", "1 L"), ("1 m", "90 cm", "1 m"),
-        ("3 km", "2900 m", "3 km"), ("500 g", "0.6 kg", "0.6 kg"),
+        ("1 km", "500 m", "1 km"),
+        ("2 kg", "1500 g", "2 kg"),
+        ("1 L", "750 mL", "1 L"),
+        ("1 m", "90 cm", "1 m"),
+        ("3 km", "2900 m", "3 km"),
+        ("500 g", "0.6 kg", "0.6 kg"),
+        ("2.5 m", "240 cm", "2.5 m"),
+        ("1 L", "1000 mL", "equal"),
+        ("1 kg", "1000 g", "equal"),
     ]
     for a, b, larger in cmp:
-        qs.append(Q("fill", f"Larger of {a} and {b}? Type the larger one.",
-                    answer=[larger, larger.lower(), larger.replace(" ", "")],
-                    explain=f"{larger} is larger."))
+        if larger == "equal":
+            qs.append(Q("fill", f"Compare: {a} and {b}. Type 'equal' if equal, else type the larger one.",
+                        answer=["equal", "same", "Equal"],
+                        explain=f"{a} = {b}."))
+        else:
+            qs.append(Q("fill", f"Larger of {a} and {b}? Type the larger one.",
+                        answer=[larger, larger.lower(), larger.replace(" ", "")],
+                        explain=f"{larger} is larger."))
 
     # MCQs
     qs += [
@@ -974,14 +2089,63 @@ def gen_ch09():
           options=["500 g", "2 kg", "1500 g", "0.5 kg"], answer=1, explain="2 kg = 2000 g."),
         Q("mcq", "Which holds the most water?",
           options=["250 mL", "1 L", "750 mL", "500 mL"], answer=1, explain="1 L = 1000 mL."),
+        Q("mcq", "Which is the shortest?",
+          options=["1 m", "100 cm", "50 cm", "1000 mm"], answer=2, explain="50 cm < the others."),
+        Q("mcq", "Best unit for the length of a pencil?",
+          options=["mm", "cm", "m", "km"], answer=1, explain="cm — pencils are about 15-20 cm."),
+        Q("mcq", "Best unit for distance between cities?",
+          options=["mm", "cm", "m", "km"], answer=3, explain="km — cities are far apart."),
+        Q("mcq", "Best unit for the weight of an apple?",
+          options=["mg", "g", "kg", "tonnes"], answer=1, explain="g — an apple weighs about 150 g."),
+        Q("mcq", "Best unit for water in a swimming pool?",
+          options=["mL", "drops", "L", "kg"], answer=2, explain="L — pools hold thousands of litres."),
+        Q("mcq", "Which is heaviest?",
+          options=["3000 g", "2 kg", "1.5 kg", "500 g"], answer=0, explain="3000 g = 3 kg."),
+        Q("mcq", "Which is lightest?",
+          options=["1 kg", "750 g", "1100 g", "1.2 kg"], answer=1, explain="750 g."),
     ]
+
+    # Word problems
+    word_meas = [
+        ("A rope is 5 m long. Crispin cuts off 1.5 m. How much remains?", "3.5", "m"),
+        ("A box of biscuits weighs 250 g. How much do 4 boxes weigh in kg?", "1", "kg"),
+        ("A bottle holds 1.5 L. How many such bottles to fill 9 L?", "6", ""),
+        ("A road is 12 km. Crispin walks 1.5 km. Distance left?", "10.5", "km"),
+        ("A truck carries 3 sacks of 25 kg each. Total weight?", "75", "kg"),
+        ("A cup holds 250 mL. How much do 8 cups hold in litres?", "2", "L"),
+        ("Crispin's height is 145 cm. His dad is 175 cm. Difference in m?", "0.3", "m"),
+        ("A swimming pool holds 5000 L. Each bucket is 10 L. How many buckets to fill?", "500", ""),
+        ("A jug holds 2.5 L. Pour out 1.25 L. How much left?", "1.25", "L"),
+        ("Crispin runs 3 km. His friend runs 1500 m. Total km?", "4.5", "km"),
+        ("Bag A: 2.5 kg. Bag B: 1.75 kg. Total weight?", "4.25", "kg"),
+        ("A shelf is 2 m. Crispin places books taking 175 cm. Space left in cm?", "25", "cm"),
+        ("3 bottles of 750 mL each = how many litres?", "2.25", "L"),
+        ("A cake recipe needs 0.5 kg flour. For 4 cakes?", "2", "kg"),
+        ("A car's fuel tank holds 50 L. Half is left. How many mL is that?", "25000", "mL"),
+        ("Crispin walks 800 m to school and 800 m back. Total km?", "1.6", "km"),
+        ("A pen is 14 cm long. 5 pens lined up?", "70", "cm"),
+        ("A box weighs 2.4 kg empty. Filled it weighs 5 kg. Contents weight?", "2.6", "kg"),
+        ("8 mangoes weigh 2 kg. 1 mango = how many g?", "250", "g"),
+        ("Crispin's water bottle is 750 mL. He drinks 250 mL. How much left?", "500", "mL"),
+    ]
+    for q, ans, unit in word_meas:
+        qs.append(Q("fill", q,
+                    answer=[ans, f"{ans} {unit}".strip(), ans.lstrip("0")],
+                    explain=f"= {ans} {unit}".strip() + "."))
 
     # T/F
     qs += [
         Q("tf", "1.5 kg = 1500 g.", answer=0, explain="True — × 1000."),
         Q("tf", "1 m is shorter than 90 cm.", answer=1, explain="False — 1 m = 100 cm > 90 cm."),
         Q("tf", "1 L = 1000 mL.", answer=0, explain="True."),
+        Q("tf", "1 kg = 100 g.", answer=1, explain="False — 1 kg = 1000 g."),
+        Q("tf", "1 km = 1000 m.", answer=0, explain="True."),
+        Q("tf", "100 cm = 1 m.", answer=0, explain="True."),
+        Q("tf", "1 mL is bigger than 1 L.", answer=1, explain="False — 1 L = 1000 mL."),
+        Q("tf", "Weight of a feather is best measured in tonnes.", answer=1,
+          explain="False — feathers are very light, use mg or g."),
     ]
+
     return qs
 
 
@@ -1000,29 +2164,46 @@ def gen_ch10():
         Q("fill", "1 week = ? days", answer=["7"], explain="7."),
         Q("fill", "1 year = ? months", answer=["12"], explain="12."),
         Q("fill", "1 hour = ? seconds", answer=["3600", "3,600"], explain="60×60=3600."),
+        Q("fill", "1 day = ? minutes", answer=["1440", "1,440"], explain="24×60=1440."),
+        Q("fill", "1 week = ? hours", answer=["168"], explain="7×24=168."),
         Q("fill", "Half an hour = ? minutes", answer=["30"], explain="60/2=30."),
+        Q("fill", "Quarter of an hour = ? minutes", answer=["15"], explain="60/4=15."),
+        Q("fill", "Three quarters of an hour = ? minutes", answer=["45"],
+          explain="60 × 3/4 = 45."),
         Q("fill", "2 hours = ? minutes", answer=["120"], explain="60×2=120."),
         Q("fill", "3 hours = ? minutes", answer=["180"], explain="60×3=180."),
+        Q("fill", "5 hours = ? minutes", answer=["300"], explain="60×5=300."),
         Q("fill", "90 seconds = ? minutes and seconds (e.g. 1 min 30 sec)",
           answer=["1 min 30 sec", "1 minute 30 seconds", "1m 30s", "1:30"],
           explain="60 + 30 = 90."),
         Q("fill", "150 minutes = ? hours and minutes",
           answer=["2 h 30 min", "2 hours 30 minutes", "2:30", "2h 30min"],
           explain="60+60+30=150."),
+        Q("fill", "75 minutes = ? hour(s) and minute(s)",
+          answer=["1 h 15 min", "1 hour 15 minutes", "1:15", "1h 15min"],
+          explain="60 + 15 = 75."),
+        Q("fill", "120 minutes = ? hours", answer=["2"], explain="120 ÷ 60 = 2."),
+        Q("fill", "180 minutes = ? hours", answer=["3"], explain="180 ÷ 60 = 3."),
+        Q("fill", "240 minutes = ? hours", answer=["4"], explain="240 ÷ 60 = 4."),
     ]
 
-    # 24-hour to 12-hour and vice-versa
+    # 24-hour to 12-hour and back
     times = [
-        ("15:00", "3 pm"), ("18:30", "6:30 pm"), ("20:00", "8 pm"),
-        ("21:30", "9:30 pm"), ("13:15", "1:15 pm"), ("17:45", "5:45 pm"),
-        ("22:10", "10:10 pm"), ("19:00", "7 pm"), ("14:00", "2 pm"),
-        ("23:30", "11:30 pm"),
+        ("13:00", "1 pm"), ("14:00", "2 pm"), ("15:00", "3 pm"), ("16:00", "4 pm"),
+        ("17:00", "5 pm"), ("18:00", "6 pm"), ("19:00", "7 pm"), ("20:00", "8 pm"),
+        ("21:00", "9 pm"), ("22:00", "10 pm"), ("23:00", "11 pm"),
+        ("13:15", "1:15 pm"), ("14:30", "2:30 pm"), ("15:45", "3:45 pm"),
+        ("16:20", "4:20 pm"), ("17:45", "5:45 pm"), ("18:30", "6:30 pm"),
+        ("19:15", "7:15 pm"), ("20:00", "8 pm"), ("21:30", "9:30 pm"),
+        ("22:10", "10:10 pm"), ("23:30", "11:30 pm"),
     ]
+    seen_times = set()
     for t24, t12 in times:
+        if t24 in seen_times: continue
+        seen_times.add(t24)
         qs.append(Q("fill", f"{t24} in 12-hour format = ?",
                     answer=[t12, t12.replace(" ", ""), t12 + ".", t12 + " p.m."],
                     explain=f"{t24} − 12:00 → {t12}."))
-        # Reverse
         qs.append(Q("fill", f"{t12.upper()} in 24-hour format = ?",
                     answer=[t24, t24.replace(":", "")],
                     explain=f"{t12} → {t24}."))
@@ -1034,30 +2215,42 @@ def gen_ch10():
         ("10 AM to 4 PM", 6, "16 − 10 = 6 hours."),
         ("7 AM to 7 PM", 12, "19 − 7 = 12 hours."),
         ("1 PM to 5 PM", 4, "17 − 13 = 4 hours."),
+        ("6 AM to 2 PM", 8, "14 − 6 = 8 hours."),
+        ("11 AM to 3 PM", 4, "15 − 11 = 4 hours."),
+        ("9 AM to 6 PM", 9, "18 − 9 = 9 hours."),
+        ("8 AM to 8 PM", 12, "20 − 8 = 12 hours."),
+        ("12 noon to 6 PM", 6, "18 − 12 = 6 hours."),
     ]
     for q, ans, ex in elapsed:
         qs.append(Q("fill", f"From {q} = __ hours",
                     answer=[str(ans)], explain=ex))
 
-    # Movie end time
+    # Movie / event end time
     movies = [
         ("4:30 PM", "2 h", "6:30 pm"),
         ("3:00 PM", "1 h 30 min", "4:30 pm"),
         ("7:00 PM", "2 h 15 min", "9:15 pm"),
         ("10:00 AM", "3 h", "1 pm"),
         ("11:00 AM", "1 h 30 min", "12:30 pm"),
+        ("9:00 AM", "2 h 30 min", "11:30 am"),
+        ("2:00 PM", "1 h 45 min", "3:45 pm"),
+        ("6:30 PM", "1 h", "7:30 pm"),
+        ("5:15 PM", "2 h", "7:15 pm"),
+        ("8:00 AM", "4 h", "12 noon"),
     ]
     for start, dur, end in movies:
-        qs.append(Q("fill", f"Movie starts {start}, runs {dur}. Ends at?",
+        qs.append(Q("fill", f"Event starts {start}, runs {dur}. Ends at?",
                     answer=[end, end.replace(" ", ""), end.replace("pm", "PM"),
                             end + ".", end.replace("pm", "p.m.")],
                     explain=f"{start} + {dur} = {end}."))
 
-    # Calendar
+    # Calendar facts
     qs += [
         Q("mcq", "How many days in February (non-leap year)?",
           options=["28", "29", "30", "31"], answer=0,
           explain="28 normally, 29 in a leap year."),
+        Q("mcq", "How many days in February in a LEAP year?",
+          options=["28", "29", "30", "31"], answer=1, explain="29."),
         Q("mcq", "How many months have 31 days?",
           options=["5", "6", "7", "12"], answer=2,
           explain="Jan, Mar, May, Jul, Aug, Oct, Dec = 7."),
@@ -1066,22 +2259,60 @@ def gen_ch10():
           explain="Sep, Apr, Jun, Nov = 30 days."),
         Q("mcq", "How many days in a leap year?",
           options=["365", "366", "364", "367"], answer=1, explain="366."),
+        Q("mcq", "How many days in a regular (non-leap) year?",
+          options=["365", "366", "360", "364"], answer=0, explain="365."),
         Q("mcq", "1 century = ? years",
           options=["10", "50", "100", "1000"], answer=2, explain="100."),
         Q("mcq", "1 decade = ? years",
           options=["10", "100", "1000", "5"], answer=0, explain="10."),
+        Q("mcq", "1 millennium = ? years",
+          options=["10", "100", "1000", "10000"], answer=2, explain="1000."),
+        Q("mcq", "Which year was a leap year?",
+          options=["2019", "2020", "2021", "2022"], answer=1,
+          explain="2020 (divisible by 4)."),
+        Q("mcq", "What's the 7th month of the year?",
+          options=["June", "July", "August", "September"], answer=1, explain="July."),
+        Q("mcq", "What's the 4th month of the year?",
+          options=["March", "April", "May", "June"], answer=1, explain="April."),
     ]
+
+    # Calendar arithmetic
+    cal_arith = [
+        ("How many days in 2 weeks?", 14, "2 × 7 = 14."),
+        ("How many days in 3 weeks?", 21, "3 × 7 = 21."),
+        ("How many weeks in 28 days?", 4, "28 ÷ 7 = 4."),
+        ("How many days in 4 weeks 3 days?", 31, "4×7 + 3 = 31."),
+        ("How many hours in 3 days?", 72, "3 × 24 = 72."),
+        ("How many minutes in 2 hours 30 min?", 150, "120 + 30 = 150."),
+        ("How many seconds in 5 minutes?", 300, "5 × 60 = 300."),
+        ("If today is Wednesday, what day is 7 days later?", "Wednesday", "Same day next week."),
+        ("If today is Monday, what day is 3 days later?", "Thursday", "Mon→Tue→Wed→Thu."),
+        ("If today is Friday, what day was 2 days ago?", "Wednesday", "Fri→Thu→Wed."),
+    ]
+    for q, ans, ex in cal_arith:
+        qs.append(Q("fill", q,
+                    answer=[str(ans), str(ans).lower(), fmt(ans) if isinstance(ans, int) else str(ans)],
+                    explain=ex))
 
     # Money — BHD/fils
     qs += [
         Q("fill", "1 BHD = ? fils", answer=["1000", "1,000"], explain="1000."),
         Q("fill", "1 rupee (₹) = ? paise", answer=["100"], explain="100."),
+        Q("fill", "1 dollar = ? cents", answer=["100"], explain="100."),
     ]
     for fils, bhd in [(500, "0.5"), (250, "0.25"), (750, "0.75"), (2500, "2.5"),
-                     (1500, "1.5"), (5000, "5"), (3750, "3.75"), (100, "0.1")]:
+                     (1500, "1.5"), (5000, "5"), (3750, "3.75"), (100, "0.1"),
+                     (1000, "1"), (2000, "2"), (3000, "3"), (10000, "10")]:
         qs.append(Q("fill", f"{fils} fils = ? BHD",
                     answer=[bhd, bhd.lstrip("0")],
                     explain=f"÷ 1000: {bhd} BHD."))
+
+    # BHD → fils
+    for bhd, fils in [("1", 1000), ("2", 2000), ("0.5", 500), ("1.5", 1500),
+                       ("0.25", 250), ("0.75", 750), ("2.5", 2500), ("3", 3000)]:
+        qs.append(Q("fill", f"{bhd} BHD = ? fils",
+                    answer=[str(fils), fmt(fils)],
+                    explain=f"× 1000: {fmt(fils)} fils."))
 
     # Money math (BHD)
     money_math = [
@@ -1094,6 +2325,11 @@ def gen_ch10():
         ("3 × 2.000", "6", "6.000"),
         ("4 × 1.250", "5", "5.000"),
         ("8.000 ÷ 4", "2", "2.000"),
+        ("12.000 ÷ 3", "4", "4.000"),
+        ("5 × 0.500", "2.5", "2.500"),
+        ("10 × 0.250", "2.5", "2.500"),
+        ("6.500 + 3.500", "10", "10.000"),
+        ("9.000 − 4.750", "4.25", "4.250"),
     ]
     for q, a1, a2 in money_math:
         qs.append(Q("fill", f"{q} BHD = ?",
@@ -1109,15 +2345,195 @@ def gen_ch10():
         ("A pencil case ₹120. Pay with ₹500. Change ₹?", 380),
         ("8 chocolates × ₹12 = ₹?", 96),
         ("₹100 split among 5 friends. Each gets ₹?", 20),
+        ("2 books at ₹150 each = ₹?", 300),
+        ("Crispin has ₹250. He wants a toy ₹375. How much more?", 125),
+        ("A meal costs ₹450. 6 friends split. Each pays ₹?", 75),
+        ("Movie ticket ₹180. 4 tickets total ₹?", 720),
+        ("Pizza ₹240, juice ₹40. Total ₹?", 280),
+        ("Ice cream ₹35 each. 5 ice creams ₹?", 175),
+        ("Crispin saves ₹15 a day for a week. Total ₹?", 105),
+        ("Pencils 4 for ₹20. One pencil ₹?", 5),
     ]
     for q, ans in money_words:
-        qs.append(Q("fill", q, answer=[str(ans)], explain=f"= ₹{ans}."))
+        qs.append(Q("fill", q, answer=[str(ans), fmt(ans)], explain=f"= ₹{fmt(ans)}."))
+
+    # Money word problems (BHD)
+    bhd_words = [
+        ("Pen costs 0.500 BHD. 6 pens cost?", "3", "BHD"),
+        ("A book is 2.500 BHD. Crispin pays 5 BHD. Change?", "2.5", "BHD"),
+        ("3 juice boxes at 0.250 BHD each = ?", "0.75", "BHD"),
+        ("Meal 4.250 BHD + tip 0.750 BHD = ?", "5", "BHD"),
+        ("Bus ticket 0.300 BHD × 4 trips = ?", "1.2", "BHD"),
+        ("Crispin had 10 BHD. He spent 3.750 BHD. Left?", "6.25", "BHD"),
+    ]
+    for q, ans, unit in bhd_words:
+        qs.append(Q("fill", q,
+                    answer=[ans, f"{ans} {unit}", ans.lstrip("0")],
+                    explain=f"= {ans} {unit}."))
 
     # T/F
     qs += [
         Q("tf", "13:00 is the same as 3:00 PM.", answer=1, explain="False — 13:00 = 1 PM."),
         Q("tf", "1 hour and 60 minutes are the same.", answer=0, explain="True."),
+        Q("tf", "12:00 noon and 12:00 midnight are the same time.", answer=1,
+          explain="False — they are 12 hours apart."),
+        Q("tf", "1 BHD is more than 100 fils.", answer=0,
+          explain="True — 1 BHD = 1000 fils."),
+        Q("tf", "Every fourth year is a leap year.", answer=0,
+          explain="True (with a few century exceptions, but generally true)."),
+        Q("tf", "There are 60 minutes in 1 hour.", answer=0, explain="True."),
+        Q("tf", "AM means 'after midnight to noon' and PM means 'noon to midnight'.",
+          answer=0, explain="True."),
     ]
+
+    # Time addition (HH:MM + minutes)
+    def make_time_add():
+        h = random.randint(7, 21)
+        m = random.choice([0, 15, 30, 45])
+        add_min = random.choice([15, 30, 45, 60, 75, 90, 120])
+        total_min = h * 60 + m + add_min
+        nh = (total_min // 60) % 24
+        nm = total_min % 60
+        start = f"{h:02d}:{m:02d}"
+        end = f"{nh:02d}:{nm:02d}"
+        add_label = f"{add_min} min" if add_min < 60 else f"{add_min // 60} h" + (f" {add_min % 60} min" if add_min % 60 else "")
+        return Q("fill", f"{start} + {add_label} = ? (24-hour format)",
+                 answer=[end, end.replace(":", "")],
+                 explain=f"{start} + {add_label} = {end}.")
+    qs += take_uniq(make_time_add, 30)
+
+    # Time subtraction (HH:MM − minutes)
+    def make_time_sub():
+        h = random.randint(8, 22)
+        m = random.choice([0, 15, 30, 45])
+        sub_min = random.choice([15, 30, 45, 60, 75, 90])
+        total_min = h * 60 + m - sub_min
+        if total_min < 0:
+            return None
+        nh = total_min // 60
+        nm = total_min % 60
+        start = f"{h:02d}:{m:02d}"
+        end = f"{nh:02d}:{nm:02d}"
+        sub_label = f"{sub_min} min" if sub_min < 60 else f"{sub_min // 60} h" + (f" {sub_min % 60} min" if sub_min % 60 else "")
+        return Q("fill", f"{start} − {sub_label} = ? (24-hour format)",
+                 answer=[end, end.replace(":", "")],
+                 explain=f"{start} − {sub_label} = {end}.")
+    qs += take_uniq(make_time_sub, 25)
+
+    # More money problems — making change
+    change_problems = [
+        ("A book costs ₹85. Pay ₹100. Change?", 15),
+        ("Toy ₹275. Pay ₹500. Change?", 225),
+        ("Lunch ₹140. Pay ₹200. Change?", 60),
+        ("Pen ₹35. Pay ₹50. Change?", 15),
+        ("Snack ₹65. Pay ₹100. Change?", 35),
+        ("Cap ₹180. Pay ₹500. Change?", 320),
+        ("Bag ₹450. Pay ₹500. Change?", 50),
+        ("Ball ₹125. Pay ₹200. Change?", 75),
+        ("Album ₹360. Pay ₹500. Change?", 140),
+        ("Comic ₹45. Pay ₹100. Change?", 55),
+    ]
+    for q, ans in change_problems:
+        qs.append(Q("fill", q, answer=[str(ans), fmt(ans)], explain=f"= ₹{ans}."))
+
+    # Multi-step money
+    multi_money = [
+        ("3 pens at ₹15 + 2 erasers at ₹5 = ₹?", 55),
+        ("4 chocolates at ₹20 + 1 juice at ₹40 = ₹?", 120),
+        ("2 books at ₹150 + 5 pens at ₹10 = ₹?", 350),
+        ("5 cookies at ₹8 + 1 milk at ₹35 = ₹?", 75),
+        ("3 tickets at ₹250 + 2 popcorns at ₹120 = ₹?", 990),
+        ("Crispin buys 2 toys at ₹85 each. He pays ₹200. Change?", 30),
+        ("4 books at ₹125 each = ₹?", 500),
+        ("6 erasers at ₹6 = ₹?", 36),
+    ]
+    for q, ans in multi_money:
+        qs.append(Q("fill", q, answer=[str(ans), fmt(ans)], explain=f"= ₹{fmt(ans)}."))
+
+    # Date / day-of-week problems
+    weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    for _ in range(15):
+        start_idx = random.randint(0, 6)
+        days_later = random.randint(2, 20)
+        end_idx = (start_idx + days_later) % 7
+        qs.append(Q("fill",
+                    f"If today is {weekdays[start_idx]}, what day is {days_later} days later?",
+                    answer=[weekdays[end_idx], weekdays[end_idx].lower()],
+                    explain=f"{days_later} mod 7 = {days_later % 7}; advance from {weekdays[start_idx]} → {weekdays[end_idx]}."))
+
+    # More elapsed-time word problems
+    elapsed_words = [
+        ("Crispin starts homework at 4:00 PM and finishes at 5:30 PM. Time spent (in minutes)?", "90"),
+        ("Match starts at 7:30 PM and ends at 9:15 PM. Duration?", "1 h 45 min"),
+        ("Train leaves at 14:20 and arrives at 17:50. Journey time (h and min)?", "3 h 30 min"),
+        ("Plane departs 10:45 and lands 13:25. Flight (h and min)?", "2 h 40 min"),
+        ("Class starts 8:00 AM, ends 11:30 AM. Length (in hours and minutes)?", "3 h 30 min"),
+    ]
+    for q, ans in elapsed_words:
+        qs.append(Q("fill", q,
+                    answer=[ans, ans.replace(" ", ""), ans.replace("h", "hours").replace("min", "minutes")],
+                    explain=f"= {ans}."))
+
+    # More time conversions / arithmetic
+    time_extra = [
+        ("4 hours = ? minutes", "240"),
+        ("6 hours = ? minutes", "360"),
+        ("7 hours = ? minutes", "420"),
+        ("8 hours = ? minutes", "480"),
+        ("10 hours = ? minutes", "600"),
+        ("4 days = ? hours", "96"),
+        ("5 days = ? hours", "120"),
+        ("6 days = ? hours", "144"),
+        ("10 minutes = ? seconds", "600"),
+        ("15 minutes = ? seconds", "900"),
+        ("30 minutes = ? seconds", "1800"),
+        ("3 minutes = ? seconds", "180"),
+        ("2 weeks = ? days", "14"),
+        ("4 weeks = ? days", "28"),
+        ("5 weeks = ? days", "35"),
+        ("6 weeks = ? days", "42"),
+        ("3 days = ? hours", "72"),
+        ("210 minutes = ? hours and minutes (e.g., 3 h 30 min)", "3 h 30 min"),
+        ("100 minutes = ? hour(s) and minute(s)", "1 h 40 min"),
+        ("80 minutes = ? hour(s) and minute(s)", "1 h 20 min"),
+    ]
+    for q, ans in time_extra:
+        qs.append(Q("fill", q,
+                    answer=[ans, ans.replace(" ", ""), fmt(int(ans)) if ans.isdigit() else ans],
+                    explain=f"= {ans}."))
+
+    # More money word problems (BHD)
+    bhd_extra = [
+        ("Crispin saves 0.250 BHD a day for 10 days. Total?", "2.5", "BHD"),
+        ("4 sweets at 0.150 BHD each = ?", "0.6", "BHD"),
+        ("A toy costs 5.500 BHD. Pay 10 BHD. Change?", "4.5", "BHD"),
+        ("3 ice creams at 0.500 BHD each = ?", "1.5", "BHD"),
+        ("Lunch 2.250 BHD + drink 0.750 BHD = ?", "3", "BHD"),
+        ("Crispin had 7 BHD. Spent 3.500 BHD. Left?", "3.5", "BHD"),
+        ("5 students share 10 BHD equally. Each gets?", "2", "BHD"),
+        ("8 cookies at 0.125 BHD each = ?", "1", "BHD"),
+        ("Notebook 1.500 BHD + 2 pens at 0.250 BHD = ?", "2", "BHD"),
+        ("Crispin had 4 BHD, earned 2.750 BHD more. Total?", "6.75", "BHD"),
+    ]
+    for q, ans, unit in bhd_extra:
+        qs.append(Q("fill", q,
+                    answer=[ans, f"{ans} {unit}", ans.lstrip("0")],
+                    explain=f"= {ans} {unit}."))
+
+    # More elapsed-time scenarios (numerical answers in hours)
+    extra_elapsed = [
+        ("From 6 AM to 11 AM = ? hours", 5),
+        ("From 7 AM to 1 PM = ? hours", 6),
+        ("From 8 AM to 4 PM = ? hours", 8),
+        ("From 9 AM to 9 PM = ? hours", 12),
+        ("From 11 AM to 7 PM = ? hours", 8),
+        ("From 12 noon to 8 PM = ? hours", 8),
+        ("From 5 AM to 11 AM = ? hours", 6),
+    ]
+    for q, ans in extra_elapsed:
+        qs.append(Q("fill", q, answer=[str(ans)],
+                    explain=f"= {ans} hours."))
+
     return qs
 
 
@@ -1125,7 +2541,8 @@ def gen_ch10():
 # Run
 # ============================================================
 if __name__ == "__main__":
-    print("Generating expanded exam banks...")
+    print("Generating expanded exam banks (target ~300 per chapter)...")
+    write_bank("ch01-numbers-extra.js", "CH01_BONUS", gen_ch01_extra())
     write_bank("ch02-four-operations.js", "CH02_BANK", gen_ch02())
     write_bank("ch03-multiples-factors.js", "CH03_BANK", gen_ch03())
     write_bank("ch04-geometry.js", "CH04_BANK", gen_ch04())

@@ -112,6 +112,17 @@
       if (!bankObj) { App.showToast('Exam bank not found.', 'error'); return; }
       let flat = Array.isArray(bankObj) ? bankObj :
                  [].concat(bankObj.explorer || [], bankObj.adventurer || [], bankObj.champion || []);
+
+      // Ch01 has a procedural BONUS bank loaded separately to give retake variety
+      // beyond the 120 hand-tiered Qs in the main file.
+      if (ch.id === 'ch01') {
+        try {
+          await loadScript('data/ch01-numbers-extra.js');
+          if (Array.isArray(window.CH01_BONUS)) {
+            flat = flat.concat(window.CH01_BONUS);
+          }
+        } catch (_) { /* extras are optional — keep going with the hand-tiered bank */ }
+      }
       document.getElementById('picker-section').style.display = 'none';
       document.getElementById('exam-section').style.display = 'block';
       const visitor = App.getProfile();
