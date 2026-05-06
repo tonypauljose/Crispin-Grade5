@@ -21,19 +21,338 @@
 
   <!-- Tabs -->
   <div class="tabs" role="tablist">
-    <button class="tab-btn" data-target="tab-learn">📖 Learn</button>
-    <button class="tab-btn active" data-target="tab-practice">✍️ Practice</button>
+    <button class="tab-btn active" data-target="tab-learn">📖 Learn</button>
+    <button class="tab-btn" data-target="tab-practice">✍️ Practice</button>
     <button class="tab-btn" data-target="tab-exam">📝 Exam</button>
   </div>
 
   <section id="tab-learn" class="tab-panel">
-    <div class="card card--flat">
-      <h3 style="color: var(--purple); margin-bottom: 8px;">📖 Lessons coming soon</h3>
-      <p style="margin: 0;">Full lesson content unlocks when class reaches this chapter. <strong>Practice</strong> and <strong>Exam</strong> are ready right now — give them a go!</p>
+
+    <div class="lesson" data-lesson="l1">
+      <div class="lesson__header">
+        <span class="lesson__num">1</span>
+        <span class="lesson__title">Meet the four operations &amp; their words</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <p>The four power-tools of maths — and the special word for the answer of each:</p>
+          <table>
+            <tr><th>Operation</th><th>Symbol</th><th>Answer is called the…</th><th>Example</th></tr>
+            <tr><td>Addition</td><td>+</td><td><strong>Sum</strong></td><td>5 + 3 = <strong>8</strong> (sum)</td></tr>
+            <tr><td>Subtraction</td><td>−</td><td><strong>Difference</strong></td><td>9 − 4 = <strong>5</strong> (difference)</td></tr>
+            <tr><td>Multiplication</td><td>×</td><td><strong>Product</strong></td><td>6 × 7 = <strong>42</strong> (product)</td></tr>
+            <tr><td>Division</td><td>÷</td><td><strong>Quotient</strong></td><td>20 ÷ 4 = <strong>5</strong> (quotient)</td></tr>
+          </table>
+          <div class="example-box">
+            <strong>Division words:</strong> in <strong>20 ÷ 4 = 5</strong> we say:<br>
+            • 20 is the <strong>dividend</strong> (the number being shared)<br>
+            • 4 is the <strong>divisor</strong> (how many groups)<br>
+            • 5 is the <strong>quotient</strong> (the answer)<br>
+            • Anything left over is the <strong>remainder</strong>.
+          </div>
+          <div class="tip-box">
+            💡 If a question says <em>"find the product"</em>, you multiply. If it says <em>"find the difference"</em>, you subtract. The word tells you the operation!
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class="lesson" data-lesson="l2">
+      <div class="lesson__header">
+        <span class="lesson__num">2</span>
+        <span class="lesson__title">Addition with carrying (regrouping)</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <p>When you add, line the numbers up by their <strong>place value</strong> — ones under ones, tens under tens — and add column by column from <strong>right to left</strong>.</p>
+          <p>If a column adds to 10 or more, <strong>carry</strong> the extra to the next column on the left.</p>
+          <div class="example-box">
+            <strong>Example: 4,567 + 2,834</strong>
+            <pre style="font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; line-height: 1.4; margin: 8px 0;">  ¹ ¹ ¹
+    4 5 6 7
+  + 2 8 3 4
+  ─────────
+    7 4 0 1</pre>
+            Ones: 7+4 = 11 → write 1, carry 1.<br>
+            Tens: 6+3+1 = 10 → write 0, carry 1.<br>
+            Hundreds: 5+8+1 = 14 → write 4, carry 1.<br>
+            Thousands: 4+2+1 = 7. <strong>Answer: 7,401</strong>.
+          </div>
+          <div class="tip-box">
+            💡 Always start at the <strong>ones</strong> column. Adding from left feels natural in reading, but in maths the carries flow leftward — so right-to-left is the safe direction.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson" data-lesson="l3">
+      <div class="lesson__header">
+        <span class="lesson__num">3</span>
+        <span class="lesson__title">Subtraction with borrowing</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <p>Subtract column by column, right to left, the same way as addition. If the top digit is smaller than the bottom, <strong>borrow</strong> 1 from the next column on the left.</p>
+          <div class="example-box">
+            <strong>Example: 8,512 − 3,789</strong>
+            <pre style="font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; line-height: 1.4; margin: 8px 0;">    7  14  10  12
+    8̶  5̶  1̶  2
+  − 3  7  8  9
+  ──────────────
+    4  7  2  3</pre>
+            Ones: 2−9? Borrow! Tens lend 1 → ones become 12, tens become 0.<br>
+            12−9 = 3.<br>
+            Tens: 0−8? Borrow! Hundreds lend 1 → tens become 10, hundreds become 4.<br>
+            10−8 = 2.<br>
+            Hundreds: 4−7? Borrow! Thousands lend 1 → hundreds become 14, thousands become 7.<br>
+            14−7 = 7.<br>
+            Thousands: 7−3 = 4. <strong>Answer: 4,723</strong>.
+          </div>
+          <div class="watchout-box">
+            ⚠️ Subtraction is <strong>NOT commutative</strong>: 9 − 4 ≠ 4 − 9. The bigger number must be on top.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson" data-lesson="l4">
+      <div class="lesson__header">
+        <span class="lesson__num">4</span>
+        <span class="lesson__title">Multiplication — column method</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <p>To multiply a big number by a small one, write the bigger number on top and multiply each digit, carrying as needed.</p>
+          <div class="example-box">
+            <strong>Example: 345 × 6</strong>
+            <pre style="font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; line-height: 1.4; margin: 8px 0;">  ² ³
+    3 4 5
+  ×     6
+  ─────────
+  2 0 7 0</pre>
+            5×6 = 30 → write 0, carry 3.<br>
+            4×6 = 24, +3 = 27 → write 7, carry 2.<br>
+            3×6 = 18, +2 = 20. Write 20.<br>
+            <strong>Answer: 2,070</strong>.
+          </div>
+          <p>For <strong>2-digit × 2-digit</strong>, multiply by the ones digit, then by the tens digit (shifted one place left), then add.</p>
+          <div class="example-box">
+            <strong>Example: 24 × 25</strong>
+            <pre style="font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; line-height: 1.4; margin: 8px 0;">      2 4
+  ×   2 5
+  ─────────
+    1 2 0   ← 24 × 5
+  + 4 8     ← 24 × 2, shifted left
+  ─────────
+    6 0 0</pre>
+            <strong>Answer: 600</strong>.
+          </div>
+          <div class="tip-box">
+            💡 The shift on the second row is because the "2" in 25 is really <strong>20</strong> — so 24×2 = 48 sits in the tens, hundreds, thousands columns.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson" data-lesson="l5">
+      <div class="lesson__header">
+        <span class="lesson__num">5</span>
+        <span class="lesson__title">Long division</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <p>Long division has 4 steps that loop until the dividend is gone:</p>
+          <ol>
+            <li><strong>Divide</strong> — how many times does the divisor go in?</li>
+            <li><strong>Multiply</strong> — quotient × divisor.</li>
+            <li><strong>Subtract</strong> — bring the difference down.</li>
+            <li><strong>Bring down</strong> the next digit and repeat.</li>
+          </ol>
+          <p>Memory trick: <strong>D-M-S-B</strong> → "Daddy, Mummy, Sister, Brother".</p>
+          <div class="example-box">
+            <strong>Example: 936 ÷ 4</strong>
+            <pre style="font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; line-height: 1.4; margin: 8px 0;">       2 3 4
+     ┌─────────
+   4 │ 9 3 6
+       8        ← 4 × 2
+       ─
+       1 3      ← bring down 3
+       1 2      ← 4 × 3
+       ─
+         1 6    ← bring down 6
+         1 6    ← 4 × 4
+         ─
+           0    ← remainder 0</pre>
+            <strong>Answer: 234</strong> with remainder 0.
+          </div>
+          <div class="tip-box">
+            💡 Always <strong>check</strong> a division: quotient × divisor + remainder should equal the dividend. (234 × 4 + 0 = 936 ✓)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson" data-lesson="l6">
+      <div class="lesson__header">
+        <span class="lesson__num">6</span>
+        <span class="lesson__title">BODMAS — order of operations</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <p>When a question mixes operations, do them in this order:</p>
+          <table>
+            <tr><th>Letter</th><th>Means</th><th>Example</th></tr>
+            <tr><td><strong>B</strong></td><td>Brackets ( )</td><td>(8 + 4)</td></tr>
+            <tr><td><strong>O</strong></td><td>Order (powers / square roots)</td><td>3²</td></tr>
+            <tr><td><strong>D</strong></td><td>Division ÷</td><td>20 ÷ 5</td></tr>
+            <tr><td><strong>M</strong></td><td>Multiplication ×</td><td>6 × 7</td></tr>
+            <tr><td><strong>A</strong></td><td>Addition +</td><td>5 + 3</td></tr>
+            <tr><td><strong>S</strong></td><td>Subtraction −</td><td>9 − 4</td></tr>
+          </table>
+          <div class="example-box">
+            <strong>(8 + 4) × 3</strong> → brackets first: 12, then ×3 = <strong>36</strong>.<br>
+            <strong>6 × 7 + 3</strong> → × first: 42, then +3 = <strong>45</strong>.<br>
+            <strong>15 + 3 × 4</strong> → × first: 12, then 15+12 = <strong>27</strong>.<br>
+            <strong>(20 − 5) ÷ 3</strong> → brackets first: 15, then ÷3 = <strong>5</strong>.
+          </div>
+          <div class="watchout-box">
+            ⚠️ <strong>D and M are equal in rank</strong> — when both appear together (no brackets), do them <strong>left to right</strong>. Same for A and S.<br>
+            Example: <strong>8 ÷ 2 × 3</strong> = (8 ÷ 2) × 3 = 4 × 3 = <strong>12</strong>. Not 8 ÷ 6.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson" data-lesson="l7">
+      <div class="lesson__header">
+        <span class="lesson__num">7</span>
+        <span class="lesson__title">Properties — clever shortcuts</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <p>These rules make calculations easier (and they're great exam questions!).</p>
+          <table>
+            <tr><th>Property</th><th>Means</th><th>Example</th></tr>
+            <tr><td><strong>Commutative</strong></td><td>Swap order, same answer (+ and ×)</td><td>5+3 = 3+5 ✓ &nbsp; 6×7 = 7×6 ✓</td></tr>
+            <tr><td><strong>Associative</strong></td><td>Group differently, same answer (+ and ×)</td><td>(2+3)+4 = 2+(3+4)</td></tr>
+            <tr><td><strong>Distributive</strong></td><td>× spreads over (+ or −)</td><td>5×(3+4) = (5×3) + (5×4)</td></tr>
+            <tr><td><strong>Identity for +</strong></td><td>+0 keeps the number</td><td>78 + 0 = 78</td></tr>
+            <tr><td><strong>Identity for ×</strong></td><td>×1 keeps the number</td><td>78 × 1 = 78</td></tr>
+            <tr><td><strong>Zero of ×</strong></td><td>× 0 always = 0</td><td>78 × 0 = 0</td></tr>
+          </table>
+          <div class="watchout-box">
+            ⚠️ Subtraction and division are <strong>NOT commutative</strong>: 10 − 3 ≠ 3 − 10, and 20 ÷ 4 ≠ 4 ÷ 20.
+          </div>
+          <div class="watchout-box">
+            ⚠️ <strong>You cannot divide by zero</strong> — it's undefined. But 0 ÷ any number (not zero) = 0.
+          </div>
+          <div class="tip-box">
+            💡 Distributive in action: <strong>7 × 102</strong> = 7 × (100 + 2) = 700 + 14 = <strong>714</strong>. Much easier than long multiplication!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson" data-lesson="l8">
+      <div class="lesson__header">
+        <span class="lesson__num">8</span>
+        <span class="lesson__title">Estimation — quick checks with rounding</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <p>Before doing a big calculation, <strong>estimate</strong> the answer by rounding each number first. If your final answer is far from the estimate — recheck!</p>
+          <div class="example-box">
+            <strong>Estimate 487 + 312</strong> by rounding to the nearest 100:<br>
+            487 ≈ 500 &nbsp; · &nbsp; 312 ≈ 300 &nbsp; → estimate = <strong>800</strong>.<br>
+            Actual: 487 + 312 = <strong>799</strong>. Very close — answer is reasonable. ✓
+          </div>
+          <div class="example-box">
+            <strong>Estimate 218 × 9</strong>:<br>
+            218 ≈ 200 → 200 × 9 = <strong>~1,800</strong>.<br>
+            Actual = 1,962. Estimate is in the right ballpark. ✓
+          </div>
+          <div class="tip-box">
+            💡 Estimation is your "sanity check" superpower in exams. If you write 487 + 312 = 7,990 and the estimate says ~800, you immediately know something's wrong.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson" data-lesson="l9">
+      <div class="lesson__header">
+        <span class="lesson__num">9</span>
+        <span class="lesson__title">Word problems — a 4-step plan</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <p>Word problems hide the operation in a story. Use this 4-step plan:</p>
+          <ol>
+            <li><strong>Read</strong> the problem twice.</li>
+            <li><strong>Find</strong> the numbers and the question.</li>
+            <li><strong>Decide</strong> which operation: keywords help.</li>
+            <li><strong>Solve</strong> and check.</li>
+          </ol>
+          <table>
+            <tr><th>Keywords → operation</th></tr>
+            <tr><td><strong>+ Addition:</strong> total, altogether, sum, combined, in all, more</td></tr>
+            <tr><td><strong>− Subtraction:</strong> difference, left, remain, fewer, less, change</td></tr>
+            <tr><td><strong>× Multiplication:</strong> times, of, each, product, per, double/triple</td></tr>
+            <tr><td><strong>÷ Division:</strong> share equally, each, split, per, average, group of</td></tr>
+          </table>
+          <div class="example-box">
+            <strong>Problem:</strong> Crispin scored 124, 138 and 159 in three football matches. How many goals altogether?<br>
+            <strong>Numbers:</strong> 124, 138, 159. <strong>Keyword:</strong> "altogether" → +.<br>
+            <strong>Solve:</strong> 124 + 138 + 159 = <strong>421</strong> goals.
+          </div>
+          <div class="example-box">
+            <strong>Problem:</strong> 5 friends share 85 stickers equally. How many does each get?<br>
+            <strong>Keyword:</strong> "share equally" → ÷.<br>
+            <strong>Solve:</strong> 85 ÷ 5 = <strong>17</strong> stickers each.
+          </div>
+          <div class="watchout-box">
+            ⚠️ Two-step problems combine operations. Read carefully — the question often asks for the <em>final</em> result, not just one step.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lesson" data-lesson="l10">
+      <div class="lesson__header">
+        <span class="lesson__num">10</span>
+        <span class="lesson__title">Mental-math tricks ⚡</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <p>A few shortcuts that make you <em>look</em> like a wizard.</p>
+          <ul>
+            <li><strong>× 10, 100, 1000:</strong> just stick zeros on the end. 47 × 100 = 4,700.</li>
+            <li><strong>÷ 10, 100, 1000:</strong> remove zeros (or move the decimal point left). 5,200 ÷ 100 = 52.</li>
+            <li><strong>× 5:</strong> multiply by 10, then halve. 86 × 5 = 860 ÷ 2 = <strong>430</strong>.</li>
+            <li><strong>× 9:</strong> multiply by 10, then subtract the number. 47 × 9 = 470 − 47 = <strong>423</strong>.</li>
+            <li><strong>× 11 (2-digit):</strong> add the digits and place between them. 36 × 11 → 3 _ 6 with (3+6)=9 in the middle → <strong>396</strong>.</li>
+            <li><strong>+ near multiples of 10:</strong> 47 + 19 = 47 + 20 − 1 = <strong>66</strong>.</li>
+            <li><strong>− 99:</strong> subtract 100 then add 1. 250 − 99 = 250 − 100 + 1 = <strong>151</strong>.</li>
+          </ul>
+          <div class="tip-box">
+            💡 These shortcuts <em>do not</em> replace the column methods — they're for quick mental work. Always show working in big problems.
+          </div>
+        </div>
+      </div>
+    </div>
+
   </section>
 
-  <section id="tab-practice" class="tab-panel active">
+  <section id="tab-practice" class="tab-panel">
     <h2>✍️ Practice</h2>
     <p class="lead">Auto-scored. Hover wrong items to see the correct answer.</p>
 
@@ -138,6 +457,7 @@
   Progress.markVisit();
   Progress.renderGamebar();
   App.wireTabs();
+  App.wireLessons();
 </script>
 </body>
 </html>
