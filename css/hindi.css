@@ -189,7 +189,7 @@
   border-radius: 10px;
 }
 
-/* ── Read-along (poem stanza) ─────────────────────────────── */
+/* ── Read-along (poem stanza / story paragraph) ───────────── */
 .poem-stanza {
   background: linear-gradient(135deg, #FFFBEB, #FFF7E0);
   border-left: 4px solid #FBBF24;
@@ -197,6 +197,154 @@
   padding: 24px 28px;
   margin: 18px 0;
   position: relative;
+}
+/* Prose modifier — slightly smaller font, tighter spacing for stories */
+.poem-stanza--prose .poem-stanza__line {
+  font-size: 1.2rem;
+  line-height: 1.85;
+}
+.poem-stanza--prose {
+  border-left-color: #14B8A6;
+  background: linear-gradient(135deg, #F0FDFA, #ECFDF5);
+}
+.poem-stanza--prose .poem-stanza__header h4 { color: #115E59; }
+.poem-stanza--prose .poem-stanza__header,
+.poem-stanza--prose .poem-stanza__english {
+  border-color: rgba(20,184,166,0.4);
+}
+
+/* ── YouTube embed wrapper (responsive 16:9) ─────────────── */
+.video-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(20,20,43,0.18);
+  background: #000;
+  margin: 14px 0;
+}
+.video-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.video-card {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 18px 22px;
+  margin: 18px 0;
+}
+.video-card h3 { margin: 0 0 6px; }
+.video-card p.muted { margin: 0 0 8px; font-size: 0.95rem; }
+
+/* ── Matching pairs (click-to-reveal links) ───────────────── */
+.match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+  margin: 16px 0;
+}
+.match-grid h4 {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+}
+.match-pair {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.match-pair:hover { border-color: #F472B6; transform: translateX(2px); }
+.match-pair.revealed {
+  background: linear-gradient(135deg, #FEF3C7, #FFE4B5);
+  border-color: #FBBF24;
+}
+.match-pair__hi {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Sans Devanagari', sans-serif;
+  font-size: 1.05rem;
+  flex: 1;
+}
+.match-pair__when {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  font-style: italic;
+  display: none;
+}
+.match-pair.revealed .match-pair__when { display: block; }
+.match-pair__chevron {
+  color: var(--ink-muted);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+/* ── Feature card (object → its quality) ─────────────────── */
+.feature-card {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+.feature-card__emoji { font-size: 2.6rem; line-height: 1; }
+.feature-card__label {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Sans Devanagari', sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+.feature-card__answer {
+  display: none;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  background: var(--bg-soft);
+  padding: 6px 10px;
+  border-radius: 8px;
+  width: 100%;
+}
+.feature-card.revealed .feature-card__answer { display: block; animation: popIn 0.3s ease-out; }
+
+/* ── Dialog completion (script-style box) ────────────────── */
+.dialog-script {
+  background: linear-gradient(135deg, #F3E8FF, #FAE8FF);
+  border-left: 4px solid #A855F7;
+  border-radius: var(--radius-md);
+  padding: 18px 22px;
+  margin: 12px 0;
+  font-family: 'Tiro Devanagari Hindi', 'Noto Sans Devanagari', sans-serif;
+}
+.dialog-script .role {
+  font-weight: 700;
+  display: inline-block;
+  min-width: 70px;
+  color: #6B21A8;
+}
+.dialog-script .line {
+  display: block;
+  margin: 6px 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+.dialog-script .blank {
+  display: inline-block;
+  border-bottom: 2px dotted #A855F7;
+  min-width: 200px;
+  height: 1.4em;
+  vertical-align: bottom;
 }
 .poem-stanza__header {
   display: flex;
