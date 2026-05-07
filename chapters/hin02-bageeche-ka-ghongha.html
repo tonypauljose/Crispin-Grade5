@@ -26,16 +26,141 @@
 
   <!-- Tabs -->
   <div class="tabs" role="tablist">
-    <button class="tab-btn active" data-target="tab-warmup">🐌 चित्र देखो</button>
+    <button class="tab-btn active" data-target="tab-school">📋 स्कूल नोट्स</button>
+    <button class="tab-btn" data-target="tab-warmup">🐌 चित्र देखो</button>
     <button class="tab-btn" data-target="tab-vocab">📚 शब्दार्थ</button>
     <button class="tab-btn" data-target="tab-story">📖 कहानी</button>
     <button class="tab-btn" data-target="tab-listen">🎬 देखो / सुनो</button>
     <button class="tab-btn" data-target="tab-mcq">✅ प्रश्न</button>
+    <button class="tab-btn" data-target="tab-quiz">🎯 क्विज़</button>
     <button class="tab-btn" data-target="tab-activities">🎨 गतिविधियाँ</button>
   </div>
 
+  <!-- ═══════════ TAB 0 · SCHOOL NOTES (canonical) ═══════════ -->
+  <section id="tab-school" class="tab-panel active">
+    <div class="card" style="background: linear-gradient(135deg, #FEF3C7, #FFE4B5); border-left: 4px solid #FBBF24;">
+      <p style="margin:0 0 4px; font-size:0.9rem; letter-spacing:0.06em; text-transform:uppercase; color:#78350F; font-weight:700;">📋 The Asian School, Kingdom of Bahrain</p>
+      <h2 style="margin: 0; color:#92400E;">Grade 5 · Hindi · April Notes (2026-27)</h2>
+      <p style="margin: 6px 0 0; color:#78350F;"><strong>This is what the school marks on.</strong> Memorise this section first — everything else is supplementary.</p>
+    </div>
+
+    <h3 style="margin-top:24px;">शब्दार्थ · Word meanings</h3>
+    <div class="vocab-grid" id="school-meanings"></div>
+
+    <h3 style="margin-top:24px;">विलोम शब्द · Opposites</h3>
+    <p class="muted" style="font-size:0.95rem;">Try to recall the opposite before tapping the card.</p>
+    <div class="vocab-grid" id="school-opposites"></div>
+
+    <h3 style="margin-top:24px;">पर्यायवाची शब्द · Synonyms</h3>
+    <p class="muted" style="font-size:0.95rem;">Each word has <strong>two</strong> synonyms in the school list.</p>
+    <div class="vocab-grid" id="school-synonyms"></div>
+
+    <h3 style="margin-top:24px;">प्रश्न उत्तर · Comprehension (school's expected wording)</h3>
+    <p>Try answering each question in your head <em>using the school's exact phrasing</em>, then reveal to check.</p>
+
+    <div class="qa-card">
+      <p class="qa-card__q"><span>1.</span><span class="devanagari">घोंघा बगीचे के बाहर क्यों जाना चाहता था?</span>
+        <button class="hin-speak hin-speak--inline" data-speak="घोंघा बगीचे के बाहर क्यों जाना चाहता था?" aria-label="Speak">🔊</button>
+      </p>
+      <button class="qa-card__reveal" data-toggle-target="#sn-1"
+              data-label-show="Show school answer ▾" data-label-hide="Hide ▴">Show school answer ▾</button>
+      <div class="qa-card__a" id="sn-1">
+        <p class="devanagari" style="font-weight:600;">उत्तर — घोंघा बगीचे के बाहर वहाँ की दुनिया देखने के लिए जाना चाहता था।</p>
+        <p><em>Answer: The snail wanted to go outside the garden to see the world out there.</em></p>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <p class="qa-card__q"><span>2.</span><span class="devanagari">घोंघे को बाहर की दुनिया कैसी लगी?</span>
+        <button class="hin-speak hin-speak--inline" data-speak="घोंघे को बाहर की दुनिया कैसी लगी?" aria-label="Speak">🔊</button>
+      </p>
+      <button class="qa-card__reveal" data-toggle-target="#sn-2"
+              data-label-show="Show school answer ▾" data-label-hide="Hide ▴">Show school answer ▾</button>
+      <div class="qa-card__a" id="sn-2">
+        <p class="devanagari" style="font-weight:600;">उत्तर — घोंघा बाहर की दुनिया देखकर चकित रह गया। उसके सामने बहुत बड़ा, लंबा और चौड़ा-सा मैदान था।</p>
+        <p><em>Answer: The snail was astonished when he saw the world outside. In front of him was a vast, long and wide field.</em></p>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <p class="qa-card__q"><span>3.</span><span class="devanagari">घोंघे ने पहली बार क्या-क्या देखा?</span>
+        <button class="hin-speak hin-speak--inline" data-speak="घोंघे ने पहली बार क्या क्या देखा?" aria-label="Speak">🔊</button>
+      </p>
+      <button class="qa-card__reveal" data-toggle-target="#sn-3"
+              data-label-show="Show school answer ▾" data-label-hide="Hide ▴">Show school answer ▾</button>
+      <div class="qa-card__a" id="sn-3">
+        <p class="devanagari" style="font-weight:600;">उत्तर — घोंघे ने लाल चींटों को देखा। फुदक-फुदककर पेड़ पर चढ़ती गिलहरी को देखा। गेंद के पीछे भागता कुत्ता देखा।</p>
+        <p><em>Answer: The snail saw red ants. He saw a squirrel hopping up a tree. He saw a dog chasing a ball.</em></p>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <p class="qa-card__q"><span>4.</span><span class="devanagari">घोंघे का सिर क्या देखकर चकरा गया?</span>
+        <button class="hin-speak hin-speak--inline" data-speak="घोंघे का सिर क्या देखकर चकरा गया?" aria-label="Speak">🔊</button>
+      </p>
+      <button class="qa-card__reveal" data-toggle-target="#sn-4"
+              data-label-show="Show school answer ▾" data-label-hide="Hide ▴">Show school answer ▾</button>
+      <div class="qa-card__a" id="sn-4">
+        <p class="devanagari" style="font-weight:600;">उत्तर — घोंघे का सिर आसमान तक जाते खजूर और बड़ के लंबे पेड़ को देखकर चकरा गया।</p>
+        <p><em>Answer: The snail's head spun when he saw the date palm reaching up to the sky and the giant banyan tree.</em></p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:24px;">वाक्य बनाओ · Frame your own sentence</h3>
+    <p>Use each word in a sentence of your own. Try first, then peek at the sample.</p>
+
+    <div class="qa-card">
+      <p class="qa-card__q"><span class="devanagari">अचानक</span> — <em class="muted">/achanak/ · "suddenly"</em>
+        <button class="hin-speak hin-speak--inline" data-speak="अचानक" aria-label="Speak">🔊</button>
+      </p>
+      <button class="qa-card__reveal" data-toggle-target="#vk-1"
+              data-label-show="Sample sentences ▾" data-label-hide="Hide ▴">Sample sentences ▾</button>
+      <div class="qa-card__a" id="vk-1">
+        <p class="devanagari">• अचानक बारिश शुरू हो गई।<br>• क्रिस्पिन ने अचानक गोल कर दिया।<br>• अचानक बिजली चली गई।</p>
+        <p><em>• Suddenly it started raining. • Crispin suddenly scored a goal. • Suddenly the power went out.</em></p>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <p class="qa-card__q"><span class="devanagari">मज़ेदार</span> — <em class="muted">/mazedaar/ · "fun / interesting"</em>
+        <button class="hin-speak hin-speak--inline" data-speak="मज़ेदार" aria-label="Speak">🔊</button>
+      </p>
+      <button class="qa-card__reveal" data-toggle-target="#vk-2"
+              data-label-show="Sample sentences ▾" data-label-hide="Hide ▴">Sample sentences ▾</button>
+      <div class="qa-card__a" id="vk-2">
+        <p class="devanagari">• यह कहानी बहुत मज़ेदार है।<br>• हमने मज़ेदार खेल खेला।<br>• बगीचे में मज़ेदार समय बीता।</p>
+        <p><em>• This story is very fun. • We played a fun game. • We had a fun time in the garden.</em></p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:24px;">🧠 HOT · Higher-order thinking</h3>
+    <div class="qa-card">
+      <p class="qa-card__q"><span class="devanagari">घोंघे की उम्र की पहचान कैसे की जाती है?</span>
+        <button class="hin-speak hin-speak--inline" data-speak="घोंघे की उम्र की पहचान कैसे की जाती है?" aria-label="Speak">🔊</button>
+      </p>
+      <p class="muted" style="margin: 4px 0 8px; font-size:0.9rem;"><em>How is a snail's age identified?</em></p>
+      <button class="qa-card__reveal" data-toggle-target="#hot-1"
+              data-label-show="Show research answer ▾" data-label-hide="Hide ▴">Show research answer ▾</button>
+      <div class="qa-card__a" id="hot-1">
+        <p class="devanagari" style="font-weight:600;">घोंघे की उम्र उसके शंख (खोल) पर बने छल्लों या रेखाओं से पहचानी जाती है। जैसे-जैसे घोंघा बड़ा होता है, उसके शंख पर नए छल्ले जुड़ते जाते हैं — ठीक वैसे ही जैसे पेड़ की उम्र उसके तने में बने वलयों से पता चलती है।</p>
+        <p><em>A snail's age is identified by counting the rings or growth lines on its shell. As the snail grows, new rings get added to its shell — just like a tree's age is told by counting the rings inside its trunk.</em></p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:24px;">📝 Assignment</h3>
+    <div class="card card--flat" style="background: linear-gradient(135deg, #DBEAFE, #BFDBFE); border-left: 4px solid #3B82F6;">
+      <p class="devanagari" style="font-weight:600; margin: 0 0 6px;">रेंगकर चलने वाले दो कीड़ों के चित्र बनाइए और उनके बारे में चार पंक्तियाँ लिखिए।</p>
+      <p style="margin:0;"><em>Draw pictures of two crawling insects and write four lines about them. (Do this in your Hindi notebook — keep them ready for class.)</em></p>
+      <p style="margin:8px 0 0; font-size:0.9rem;" class="muted">Suggested insects: <span class="devanagari">चींटी (ant), गुबरैला / बीटल, घोंघा (snail), केंचुआ (earthworm), इल्ली / caterpillar</span></p>
+    </div>
+
+    <div style="margin-top:24px; text-align:center;">
+      <p class="muted" style="font-size:0.95rem;">Once you've memorised this page, head to the <strong>🎯 क्विज़</strong> tab to test yourself with auto-graded questions drawn from these notes.</p>
+    </div>
+  </section>
+
   <!-- ═══════════ TAB 1 · WARM-UP ═══════════ -->
-  <section id="tab-warmup" class="tab-panel active">
+  <section id="tab-warmup" class="tab-panel">
     <h2>Look at the picture · <span class="devanagari">चित्र को ध्यान से देखो</span></h2>
     <div class="card card--flat" style="background: linear-gradient(135deg, #FEF3C7, #FFE4B5); border:0;">
       <div style="font-size: 6rem; text-align:center; line-height:1; margin-bottom:16px;">🐌</div>
@@ -524,6 +649,21 @@
     </div>
   </section>
 
+  <!-- ═══════════ TAB · QUIZ ═══════════ -->
+  <section id="tab-quiz" class="tab-panel">
+    <h2>🎯 <span class="devanagari">क्विज़</span> · auto-graded test</h2>
+    <p class="lead">Every question here is drawn straight from the <strong>April school notes</strong> — शब्दार्थ, विलोम, पर्यायवाची, comprehension, वाक्य बनाओ, and the HOT question. 28 in the bank · 15 random per attempt · retake as many times as you like.</p>
+
+    <div class="card card--flat" style="background: linear-gradient(135deg, #FEF3C7, #FFE4B5); border-left:4px solid #FBBF24;">
+      <p style="margin:0;"><strong>📋 Tip:</strong> If you can score 80%+ on three attempts in a row, you're exam-ready for the school's questions on this chapter.</p>
+    </div>
+
+    <div id="quiz-host" style="margin-top:18px;"></div>
+    <div style="text-align:center; margin-top:18px;">
+      <button class="btn btn-primary btn-lg" id="quiz-start">🎯 Start a quiz</button>
+    </div>
+  </section>
+
   <!-- ═══════════ TAB 6 · ACTIVITIES ═══════════ -->
   <section id="tab-activities" class="tab-panel">
     <h2>🎨 <span class="devanagari">गतिविधियाँ</span> · activities</h2>
@@ -629,12 +769,85 @@
 <script src="../js/common.js"></script>
 <script src="../js/progress.js"></script>
 <script src="../js/hindi.js"></script>
+<script src="../js/quiz-engine.js"></script>
+<script src="../data/hin02-bageeche-ka-ghongha.js"></script>
 <script>
   App.renderTopBar('hindi');
   Progress.markVisit();
   Progress.renderGamebar();
   App.wireTabs();
   Hindi.checkVoiceAndWarn(document.getElementById('tts-warning-host'));
+
+  // ─── School notes — render the 3 vocab grids ──────────
+  const SCHOOL_MEANINGS = [
+    { hi: 'छोर',   tr: 'chhor',   en: 'अंतिम सिरा · last edge / end' },
+    { hi: 'अद्भुत', tr: 'adbhut',  en: 'अनोखा · unique / wondrous' },
+    { hi: 'चकित',  tr: 'chakit',  en: 'हैरान · astonished / surprised' },
+    { hi: 'ध्वनि',  tr: 'dhwani',  en: 'आवाज · sound' },
+  ];
+  const SCHOOL_OPPOSITES = [
+    { hi: 'जीवन ↔ मृत्यु',  tr: 'jeevan ↔ mrityu',  en: 'life ↔ death' },
+    { hi: 'चौड़ा ↔ तंग',    tr: 'chauda ↔ tang',    en: 'wide ↔ narrow' },
+    { hi: 'सामने ↔ पीछे',  tr: 'saamne ↔ peechhe', en: 'in front ↔ behind' },
+    { hi: 'हँसना ↔ रोना',  tr: 'hansna ↔ rona',    en: 'laugh ↔ cry' },
+    { hi: 'सूखा ↔ गीला',   tr: 'sookha ↔ geela',   en: 'dry ↔ wet' },
+  ];
+  const SCHOOL_SYNONYMS = [
+    { hi: 'दुनिया = जगत, संसार', tr: 'duniya = jagat, sansaar', en: 'world' },
+    { hi: 'आँख = नेत्र, नयन',     tr: 'aankh = netra, nayan',    en: 'eye' },
+    { hi: 'बगीचा = उपवन, बाग',   tr: 'bagicha = upvan, baag',   en: 'garden' },
+    { hi: 'आकाश = नभ, गगन',     tr: 'aakaash = nabh, gagan',   en: 'sky' },
+  ];
+  function renderSchoolGrid(hostId, list) {
+    const host = document.getElementById(hostId);
+    if (!host) return;
+    host.innerHTML = list.map(it => `
+      <div class="vocab-card" data-speak="${it.hi.replace(/[↔=]/g, ',')}">
+        <p class="vocab-card__hi devanagari" style="font-size:1.2rem;">
+          <span>${it.hi}</span>
+          <button class="hin-speak hin-speak--inline" data-speak="${it.hi.replace(/[↔=]/g, ',')}" aria-label="Speak">🔊</button>
+        </p>
+        <p class="vocab-card__tr">/${it.tr}/</p>
+        <p class="vocab-card__en">${it.en}</p>
+      </div>
+    `).join('');
+    host.querySelectorAll('.vocab-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.classList.contains('hin-speak')) return;
+        Hindi.speak(card.dataset.speak);
+      });
+    });
+    Hindi.wireSpeakButtons(host);
+  }
+  renderSchoolGrid('school-meanings',  SCHOOL_MEANINGS);
+  renderSchoolGrid('school-opposites', SCHOOL_OPPOSITES);
+  renderSchoolGrid('school-synonyms',  SCHOOL_SYNONYMS);
+
+  // ─── Quiz wiring (school-aligned bank) ─────────────────
+  const QUIZ_COUNT = 15;
+  function startQuiz() {
+    document.getElementById('quiz-start').style.display = 'none';
+    const bank = window.HIN02_BANK || [];
+    if (!bank.length) {
+      App.toast('Quiz bank failed to load — refresh the page.', 'error');
+      return;
+    }
+    const engine = new QuizEngine({
+      containerId: 'quiz-host',
+      chapter: 'hin02',
+      tier: 'school',
+      bank: bank,
+      count: Math.min(QUIZ_COUNT, bank.length),
+      onDone: () => {
+        document.getElementById('quiz-host').innerHTML = '';
+        document.getElementById('quiz-start').style.display = '';
+        document.getElementById('quiz-start').textContent = '🔁 Try another set';
+        window.scrollTo({ top: document.getElementById('tab-quiz').offsetTop - 60, behavior: 'smooth' });
+      },
+    });
+    engine.start();
+  }
+  document.getElementById('quiz-start').addEventListener('click', startQuiz);
 
   // ─── Vocabulary ─────────────────────────────────────────
   const VOCAB = {
