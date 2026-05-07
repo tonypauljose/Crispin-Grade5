@@ -23,6 +23,8 @@
   <div class="tabs" role="tablist">
     <button class="tab-btn active" data-target="tab-learn">📖 Learn</button>
     <button class="tab-btn" data-target="tab-practice">✍️ Practice</button>
+    <button class="tab-btn" data-target="tab-quiz">🎯 Quiz</button>
+    <button class="tab-btn" data-target="tab-worksheet">🖨️ Worksheet</button>
     <button class="tab-btn" data-target="tab-exam">📝 Exam</button>
   </div>
 
@@ -431,6 +433,24 @@
 
   </section>
 
+  <section id="tab-quiz" class="tab-panel">
+    <h2>🎯 Quiz</h2>
+    <p class="lead">Three tiers. Score 70% on Explorer to unlock Adventurer, 80% on Adventurer to unlock Champion.</p>
+    <div class="quiz-tier-picker" id="tier-picker"></div>
+    <div id="quiz-host"></div>
+  </section>
+
+  <section id="tab-worksheet" class="tab-panel">
+    <h2>🖨️ Printable Worksheet</h2>
+    <div class="card">
+      <p>A print-optimised A4 worksheet with randomised questions and a built-in answer key. Perfect for a quiet pencil-and-paper practice session.</p>
+      <p class="muted">Every reload generates fresh numbers — print as many as you like.</p>
+      <div class="text-center" style="margin-top:16px;">
+        <a class="btn btn-primary btn-lg" href="../worksheets/ch02-four-operations-worksheet.html" target="_blank">Open worksheet 📄</a>
+      </div>
+    </div>
+  </section>
+
   <section id="tab-exam" class="tab-panel">
     <h2>📝 Chapter Exam</h2>
     <div class="card">
@@ -452,12 +472,69 @@
 <script src="../js/common.js"></script>
 <script src="../js/progress.js"></script>
 <script src="../js/practice-runner.js"></script>
+<script src="../js/quiz-engine.js"></script>
+<script src="../data/ch02-four-operations.js"></script>
 <script>
   App.renderTopBar('maths');
   Progress.markVisit();
   Progress.renderGamebar();
   App.wireTabs();
   App.wireLessons();
+
+  // ---------- Quiz tier picker ----------
+  function renderTiers() {
+    const tiers = [
+      { id: 'explorer',   name: 'Explorer',   emoji: '🔍', desc: 'Vocabulary, simple ops, T/F properties. Always open.' },
+      { id: 'adventurer', name: 'Adventurer', emoji: '🧗', desc: '4-digit operations, BODMAS, missing-numbers. Unlock: 70% on Explorer.' },
+      { id: 'champion',   name: 'Champion',   emoji: '👑', desc: 'Word problems, remainders, estimation, tricky BODMAS. Unlock: 80% on Adventurer.' }
+    ];
+    const host = document.getElementById('tier-picker');
+    if (!host) return;
+    host.innerHTML = tiers.map(t => {
+      const unlocked = Progress.tierUnlocked('ch02', t.id);
+      const rec = Progress.state.quizRecords['ch02-' + t.id];
+      const best = rec ? ` · best: ${rec.best}%` : '';
+      return `
+        <div class="quiz-tier ${unlocked ? '' : 'locked'}" data-tier="${t.id}">
+          <div class="quiz-tier__emoji">${t.emoji}</div>
+          <div class="quiz-tier__name">${t.name}</div>
+          <div class="quiz-tier__desc">${t.desc}</div>
+          <div class="quiz-tier__badge">${unlocked ? 'Ready' + best : '🔒 Locked'}</div>
+        </div>
+      `;
+    }).join('');
+    host.querySelectorAll('.quiz-tier').forEach(el => {
+      el.addEventListener('click', () => {
+        const tier = el.dataset.tier;
+        if (!Progress.tierUnlocked('ch02', tier)) {
+          App.showToast('Unlock this tier by scoring higher in the previous one!', 'warn');
+          App.Audio.playWrong();
+          return;
+        }
+        startQuiz(tier);
+      });
+    });
+  }
+  function startQuiz(tier) {
+    document.getElementById('tier-picker').classList.add('hidden');
+    const bank = window.CH02_BANK[tier];
+    const engine = new QuizEngine({
+      containerId: 'quiz-host',
+      chapter: 'ch02',
+      tier: tier,
+      bank: bank,
+      // Cap at 25 per attempt so retakes feel different across the bigger tiers
+      count: Math.min(25, bank.length),
+      onDone: () => {
+        document.getElementById('tier-picker').classList.remove('hidden');
+        document.getElementById('quiz-host').innerHTML = '';
+        renderTiers();
+        window.scrollTo({ top: document.getElementById('tab-quiz').offsetTop - 60, behavior: 'smooth' });
+      }
+    });
+    engine.start();
+  }
+  renderTiers();
 </script>
 </body>
 </html>

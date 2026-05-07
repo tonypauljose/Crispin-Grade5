@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ch 2 Worksheet · The Four Operations — Crispin's World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/print.css">
+</head>
+<body class="worksheet-page">
+
+  <div class="no-print" style="position:sticky; top:0; background:#6B21A8; color:white; padding:12px 20px; text-align:center; z-index:10;">
+    <strong>📄 Chapter 2 Worksheet</strong> · <a href="../chapters/ch02-four-operations.html" style="color:#FACC15;">← Back to chapter</a>
+    <button class="btn btn-yellow btn-sm" onclick="window.print()" style="margin-left:12px;">🖨️ Print</button>
+    <button class="btn btn-teal btn-sm" onclick="location.reload()" style="margin-left:8px;">🔄 New questions</button>
+    <button class="btn btn-outline btn-sm" onclick="toggleAnswers()" style="margin-left:8px; background:white;">👁️ Toggle answer key</button>
+  </div>
+
+  <div class="worksheet">
+    <div class="worksheet__header">
+      <div class="worksheet__title-block">
+        <h1>📘 The Four Operations</h1>
+        <p class="subtitle">Grade 5 · CBSE · Chapter 2 · Worksheet</p>
+      </div>
+      <div class="worksheet__fields">
+        <label>Name:</label><span class="blank"></span>
+        <label>Date:</label><span class="blank" id="ws-date"></span>
+        <label>Score:</label><span class="blank">&nbsp;&nbsp;&nbsp; / 40</span>
+      </div>
+    </div>
+
+    <!-- A: Addition -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">A.</span> Addition <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <p class="worksheet__instructions">Show your working in the space below each sum.</p>
+      <ol class="ws-list" id="sec-a"></ol>
+    </section>
+
+    <!-- B: Subtraction -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">B.</span> Subtraction <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <ol class="ws-list" id="sec-b"></ol>
+    </section>
+
+    <!-- C: Multiplication -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">C.</span> Multiplication <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <ol class="ws-list" id="sec-c"></ol>
+    </section>
+
+    <!-- D: Division -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">D.</span> Division <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <p class="worksheet__instructions">If there is a remainder, write it as <em>R</em>. e.g. 23 ÷ 4 = 5 R 3.</p>
+      <ol class="ws-list" id="sec-d"></ol>
+    </section>
+
+    <!-- E: BODMAS -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">E.</span> Order of operations (BODMAS) <span style="float:right; font-size:10pt; font-weight:normal;">(6 marks)</span></h2>
+      <ol class="ws-list" id="sec-e"></ol>
+    </section>
+
+    <!-- F: Missing numbers -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">F.</span> Find the missing number <span style="float:right; font-size:10pt; font-weight:normal;">(4 marks)</span></h2>
+      <ol class="ws-list ws-grid" id="sec-f"></ol>
+    </section>
+
+    <!-- G: Word problems -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">G.</span> Word problems <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <p class="worksheet__instructions">Show: numbers, operation, working, answer.</p>
+      <ol class="ws-list" id="sec-g"></ol>
+    </section>
+
+    <!-- H: Estimation -->
+    <section class="worksheet__section">
+      <h2><span class="section-letter">H.</span> Estimation <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <p class="worksheet__instructions">Round each number to the nearest 100 first, then add or subtract.</p>
+      <ol class="ws-list" id="sec-h"></ol>
+    </section>
+
+    <!-- Answer key -->
+    <section class="answer-key" id="answer-key">
+      <h1>🗝️ Answer Key</h1>
+      <p class="muted">For teachers/parents. Students: try without peeking!</p>
+      <div class="answer-key__section"><h3>A. Addition</h3><ol class="answer-key__list" id="ans-a"></ol></div>
+      <div class="answer-key__section"><h3>B. Subtraction</h3><ol class="answer-key__list" id="ans-b"></ol></div>
+      <div class="answer-key__section"><h3>C. Multiplication</h3><ol class="answer-key__list" id="ans-c"></ol></div>
+      <div class="answer-key__section"><h3>D. Division</h3><ol class="answer-key__list" id="ans-d"></ol></div>
+      <div class="answer-key__section"><h3>E. BODMAS</h3><ol class="answer-key__list" id="ans-e"></ol></div>
+      <div class="answer-key__section"><h3>F. Missing numbers</h3><ol class="answer-key__list" id="ans-f"></ol></div>
+      <div class="answer-key__section"><h3>G. Word problems</h3><ol class="answer-key__list" id="ans-g"></ol></div>
+      <div class="answer-key__section"><h3>H. Estimation</h3><ol class="answer-key__list" id="ans-h"></ol></div>
+    </section>
+
+  </div>
+
+  <script src="../js/common.js"></script>
+  <script>
+    document.getElementById('ws-date').textContent = App.formatDateDMY(new Date());
+
+    // ---------- helpers ----------
+    function randInt(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+    function formatComma(n) { return n.toLocaleString('en-US'); }
+    function append(listId, html) {
+      document.getElementById(listId).insertAdjacentHTML('beforeend', '<li>' + html + '</li>');
+    }
+    function pickOne(arr) { return arr[randInt(0, arr.length - 1)]; }
+
+    const ANS = { a: [], b: [], c: [], d: [], e: [], f: [], g: [], h: [] };
+
+    // ---------- A: Addition (5 marks — mix of 3-digit and 4-digit) ----------
+    const addSeen = new Set();
+    for (let i = 0; i < 5; i++) {
+      let a, b;
+      do {
+        if (i < 2) { a = randInt(100, 999); b = randInt(100, 999); }
+        else       { a = randInt(1000, 9000); b = randInt(1000, 9000); }
+      } while (addSeen.has(a + '-' + b));
+      addSeen.add(a + '-' + b);
+      append('sec-a', `${formatComma(a)} + ${formatComma(b)} = <span class="ws-blank wide"></span>`);
+      ANS.a.push(`${formatComma(a)} + ${formatComma(b)} = <b>${formatComma(a + b)}</b>`);
+    }
+
+    // ---------- B: Subtraction ----------
+    const subSeen = new Set();
+    for (let i = 0; i < 5; i++) {
+      let a, b;
+      do {
+        if (i < 2) { a = randInt(500, 999); b = randInt(100, a - 50); }
+        else       { a = randInt(2000, 9999); b = randInt(500, a - 100); }
+      } while (subSeen.has(a + '-' + b));
+      subSeen.add(a + '-' + b);
+      append('sec-b', `${formatComma(a)} − ${formatComma(b)} = <span class="ws-blank wide"></span>`);
+      ANS.b.push(`${formatComma(a)} − ${formatComma(b)} = <b>${formatComma(a - b)}</b>`);
+    }
+
+    // ---------- C: Multiplication (mix: 1×2-digit, 2×2-digit, 1×3-digit) ----------
+    {
+      // Q1: 2-digit × 1-digit
+      const a1 = randInt(11, 99), b1 = randInt(2, 9);
+      append('sec-c', `${a1} × ${b1} = <span class="ws-blank"></span>`);
+      ANS.c.push(`${a1} × ${b1} = <b>${formatComma(a1 * b1)}</b>`);
+      // Q2: 2-digit × 1-digit
+      const a2 = randInt(11, 99), b2 = randInt(2, 9);
+      append('sec-c', `${a2} × ${b2} = <span class="ws-blank"></span>`);
+      ANS.c.push(`${a2} × ${b2} = <b>${formatComma(a2 * b2)}</b>`);
+      // Q3: 2-digit × 2-digit
+      const a3 = randInt(11, 99), b3 = randInt(11, 25);
+      append('sec-c', `${a3} × ${b3} = <span class="ws-blank wide"></span>`);
+      ANS.c.push(`${a3} × ${b3} = <b>${formatComma(a3 * b3)}</b>`);
+      // Q4: 3-digit × 1-digit
+      const a4 = randInt(100, 999), b4 = randInt(2, 9);
+      append('sec-c', `${formatComma(a4)} × ${b4} = <span class="ws-blank wide"></span>`);
+      ANS.c.push(`${formatComma(a4)} × ${b4} = <b>${formatComma(a4 * b4)}</b>`);
+      // Q5: 3-digit × 1-digit
+      const a5 = randInt(100, 999), b5 = randInt(2, 9);
+      append('sec-c', `${formatComma(a5)} × ${b5} = <span class="ws-blank wide"></span>`);
+      ANS.c.push(`${formatComma(a5)} × ${b5} = <b>${formatComma(a5 * b5)}</b>`);
+    }
+
+    // ---------- D: Division (mix: clean and with remainder) ----------
+    {
+      // Q1-Q3: clean division
+      for (let i = 0; i < 3; i++) {
+        const div = randInt(2, 9);
+        const ans = randInt(20, 200);
+        const dvd = div * ans;
+        append('sec-d', `${formatComma(dvd)} ÷ ${div} = <span class="ws-blank"></span>`);
+        ANS.d.push(`${formatComma(dvd)} ÷ ${div} = <b>${formatComma(ans)}</b>`);
+      }
+      // Q4-Q5: with remainder
+      for (let i = 0; i < 2; i++) {
+        const div = randInt(3, 9);
+        const q = randInt(10, 99);
+        const r = randInt(1, div - 1);
+        const dvd = div * q + r;
+        append('sec-d', `${formatComma(dvd)} ÷ ${div} = <span class="ws-blank"></span>`);
+        ANS.d.push(`${formatComma(dvd)} ÷ ${div} = <b>${q} R ${r}</b>`);
+      }
+    }
+
+    // ---------- E: BODMAS (6 marks, varied templates) ----------
+    function bodmasItem() {
+      const kinds = ['bracket_x', 'mul_add', 'add_mul', 'div_add', 'lr_md', 'lr_as'];
+      const k = pickOne(kinds);
+      if (k === 'bracket_x') {
+        const a = randInt(2, 12), b = randInt(2, 9), c = randInt(2, 9);
+        return [`(${a} + ${b}) × ${c}`, (a + b) * c];
+      }
+      if (k === 'mul_add') {
+        const a = randInt(2, 9), b = randInt(2, 9), c = randInt(2, 30);
+        return [`${a} × ${b} + ${c}`, a * b + c];
+      }
+      if (k === 'add_mul') {
+        const a = randInt(5, 30), b = randInt(2, 9), c = randInt(2, 9);
+        return [`${a} + ${b} × ${c}`, a + b * c];
+      }
+      if (k === 'div_add') {
+        const d = randInt(2, 9), q = randInt(2, 12), c = randInt(1, 20);
+        return [`${d * q} ÷ ${d} + ${c}`, q + c];
+      }
+      if (k === 'lr_md') {
+        const b = pickOne([2, 3, 4, 6]);
+        const q = randInt(3, 8);
+        const a = b * q;
+        const c = randInt(2, 5);
+        return [`${a} ÷ ${b} × ${c}`, q * c];
+      }
+      // lr_as
+      const a = randInt(20, 100), b = randInt(5, 30), c = randInt(5, 20);
+      return [`${a} − ${b} + ${c}`, a - b + c];
+    }
+    const eSeen = new Set();
+    for (let i = 0; i < 6; i++) {
+      let pair;
+      do { pair = bodmasItem(); } while (eSeen.has(pair[0]));
+      eSeen.add(pair[0]);
+      append('sec-e', `${pair[0]} = <span class="ws-blank"></span>`);
+      ANS.e.push(`${pair[0]} = <b>${pair[1]}</b>`);
+    }
+
+    // ---------- F: Missing numbers (4) ----------
+    {
+      // ?+a=t
+      const a1 = randInt(20, 500), b1 = randInt(20, 500);
+      append('sec-f', `? + ${a1} = ${formatComma(a1 + b1)}`);
+      ANS.f.push(`? + ${a1} = ${formatComma(a1 + b1)} → ? = <b>${b1}</b>`);
+      // a-?=d
+      const a2 = randInt(200, 900), b2 = randInt(50, a2 - 30);
+      append('sec-f', `${a2} − ? = ${a2 - b2}`);
+      ANS.f.push(`${a2} − ? = ${a2 - b2} → ? = <b>${b2}</b>`);
+      // a×?=p
+      const a3 = randInt(2, 12), b3 = randInt(2, 9);
+      append('sec-f', `${a3} × ? = ${a3 * b3}`);
+      ANS.f.push(`${a3} × ? = ${a3 * b3} → ? = <b>${b3}</b>`);
+      // p÷?=q
+      const a4 = randInt(2, 9), b4 = randInt(3, 12);
+      const prod = a4 * b4;
+      append('sec-f', `${prod} ÷ ? = ${b4}`);
+      ANS.f.push(`${prod} ÷ ? = ${b4} → ? = <b>${a4}</b>`);
+    }
+
+    // ---------- G: Word problems (5) ----------
+    const wordPool = [
+      () => {
+        const sticks = randInt(80, 200), more = randInt(30, 150);
+        return {
+          q: `Crispin had ${sticks} stickers and got ${more} more. How many altogether?`,
+          a: sticks + more, op: '+'
+        };
+      },
+      () => {
+        const boxes = randInt(4, 12), per = randInt(15, 30);
+        return {
+          q: `A box has ${per} chocolates. How many in ${boxes} such boxes?`,
+          a: boxes * per, op: '×'
+        };
+      },
+      () => {
+        const total = randInt(40, 200), kids = pickOne([4, 5, 6, 8, 10]);
+        const ans = Math.floor(total / kids);
+        return {
+          q: `${kids} friends share ${total - (total % kids)} toffees equally. How many does each get?`,
+          a: ans, op: '÷'
+        };
+      },
+      () => {
+        const fans = randInt(800, 2500), leave = randInt(200, fans - 100);
+        return {
+          q: `There were ${formatComma(fans)} fans at a match. ${formatComma(leave)} left at half-time. How many remain?`,
+          a: fans - leave, op: '−'
+        };
+      },
+      () => {
+        const cost = randInt(20, 80), num = randInt(8, 30);
+        return {
+          q: `Tickets cost ₹${cost} each. ${num} were sold. Total in ₹?`,
+          a: cost * num, op: '×'
+        };
+      },
+      () => {
+        const has = randInt(300, 800), spent = randInt(50, has - 50);
+        return {
+          q: `Crispin had ₹${has}. He spent ₹${spent}. Money left in ₹?`,
+          a: has - spent, op: '−'
+        };
+      },
+      () => {
+        const buns = randInt(100, 240), trays = pickOne([4, 5, 6, 8]);
+        const adj = buns - (buns % trays);
+        return {
+          q: `A baker bakes ${adj} buns in ${trays} trays. Buns per tray?`,
+          a: adj / trays, op: '÷'
+        };
+      },
+    ];
+    const wPicked = [];
+    while (wPicked.length < 5) {
+      const item = pickOne(wordPool)();
+      if (wPicked.some(w => w.q === item.q)) continue;
+      wPicked.push(item);
+    }
+    wPicked.forEach(w => {
+      append('sec-g', `${w.q} <span class="ws-blank"></span>`);
+      ANS.g.push(`${w.q} → ${w.op} → <b>${formatComma(w.a)}</b>`);
+    });
+
+    // ---------- H: Estimation (round to 100, then +/−) ----------
+    function round100(n) { return Math.round(n / 100) * 100; }
+    const hSeen = new Set();
+    for (let i = 0; i < 5; i++) {
+      let a, b, op;
+      do {
+        a = randInt(150, 950);
+        b = randInt(150, 950);
+        op = pickOne(['+', '−']);
+      } while (hSeen.has(a + op + b));
+      hSeen.add(a + op + b);
+      const ar = round100(a), br = round100(b);
+      const est = op === '+' ? ar + br : ar - br;
+      append('sec-h', `Estimate ${a} ${op} ${b} (round each to nearest 100) = <span class="ws-blank"></span>`);
+      ANS.h.push(`${a} ≈ ${ar}, ${b} ≈ ${br}; ${ar} ${op} ${br} = <b>${est}</b>`);
+    }
+
+    // ---------- render answer key ----------
+    Object.keys(ANS).forEach(key => {
+      const el = document.getElementById('ans-' + key);
+      ANS[key].forEach(item => {
+        el.insertAdjacentHTML('beforeend', '<li>' + item + '</li>');
+      });
+    });
+
+    window.toggleAnswers = function () {
+      const k = document.getElementById('answer-key');
+      k.style.display = (k.style.display === 'none') ? 'block' : 'none';
+    };
+  </script>
+</body>
+</html>
