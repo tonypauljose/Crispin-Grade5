@@ -1,16 +1,13 @@
 /* ============================================================
    Hindi · Chapter 2 · बगीचे का घोंघा
-   Quiz / exam bank derived directly from the Asian School
-   Bahrain · Grade 5 · Hindi · April Notes (2026-27).
+   ⚠️  STRICTLY school-aligned. Every question in this bank is
+   drawn from the Asian School Bahrain · Grade 5 · Hindi · April
+   2026-27 notes. NO story-detail extras, NO textbook bonus
+   questions — only what the school marks on.
 
-   These are the EXACT items the school marks on:
-     • शब्दार्थ (4 word-meanings)
-     • विलोम शब्द (5 opposite pairs)
-     • पर्यायवाची शब्द (4 synonym sets)
-     • प्रश्न-उत्तर (4 comprehension Qs with the school's
-       expected wording)
-     • वाक्य बनाओ (2 sentence-frame words)
-     • HOT question (snail-age)
+   This is the bank that powers BOTH the in-chapter Quiz tab and
+   the timed Exam runner, so retake variety stays focused on the
+   exact items Crispin's teacher tests.
    ============================================================ */
 
 window.HIN02_BANK = [
@@ -174,40 +171,17 @@ window.HIN02_BANK = [
     answer: 1,
     explain: "घोंघे की उम्र उसके शंख (खोल) पर बने छल्लों/रेखाओं से पहचानी जाती है — जैसे पेड़ की उम्र उसके तने के अंदर बने वलयों (rings) से। हर साल खोल पर एक नया छल्ला जुड़ता है।" },
 
-  // ────────── Extra recognition / vocabulary ──────────
-  { type: 'fill',
-    q: "घोंघा अपने सामान को कहाँ रखता है?",
-    answer: ['शंख', 'खोल', 'अपने शंख में'],
-    explain: "घोंघा अपने सामान को अपने शंख (खोल) में बाँध लेता है।" },
-
-  { type: 'fill',
-    q: "घोंघे को बगीचे के एक छोर से दूसरे छोर तक पहुँचने में कितने दिन लगते थे?",
-    answer: ['दो', '2', 'दो दिन', '2 दिन', 'two', 'two days'],
-    explain: "पूरे दो दिन। (HOT trick: दो दिन = 48 घंटे — दोनों एक ही हैं!)" },
-
-  { type: 'fill',
-    q: "घोंघे के ऊपर क्या आ गिरा था जिससे वह डर के मारे चिल्लाया?",
-    answer: ['सूखा पत्ता', 'पत्ता', 'सूखी-भूरी पत्ती', 'dry leaf', 'leaf'],
-    explain: "एक सूखा पत्ता उसके ऊपर आ गिरा था — खड़-खड़ की ध्वनि के साथ।" },
-
-  { type: 'fill',
-    q: "जब घोंघा पत्थर पर चढ़ा, तो उसे लगा यह क्या होगा?",
-    answer: ['पहाड़', 'mountain'],
-    explain: "घोंघे को लगा यह कोई पहाड़ होगा (क्योंकि वह बहुत छोटा है — पत्थर भी पहाड़ जैसा लगा)।" },
-
-  { type: 'tf',
-    q: "घोंघे की माँ ने उसे बाहर जाने को कहा था।",
-    answer: 1,
-    explain: "गलत — माँ ने कहा था \"वहाँ कभी मत जाना।\" लेकिन घोंघे ने अपने मन से तय कर लिया।" },
-
-  { type: 'tf',
-    q: "अंत में घोंघे ने बाहर की दुनिया में ही रहने का निर्णय लिया।",
-    answer: 0,
-    explain: "सही — \"घोंघे ने तय कर लिया कि अब तो वह इस दुनिया में ही रहेगा।\"" },
-
-  { type: 'tf',
-    q: "बगीचे में सब कुछ बहुत तेज़ी से चलता था।",
-    answer: 1,
-    explain: "गलत — बगीचे में सब कुछ धीरे-धीरे चलता था। बाहर की दुनिया में ही सब तेज़ी से चलता है।" },
-
 ];
+
+/* Bank discipline:
+   ── 4  शब्दार्थ
+   ── 5  विलोम
+   ── 4  पर्यायवाची
+   ── 4  comprehension MCQs (school's exact wording)
+   ── 1  comprehension fill-blank (Q1 free-form)
+   ── 2  वाक्य बनाओ usage MCQs
+   ── 1  HOT
+   ─────
+   Total: 21 — every single one is from the Asian School April
+   notes. NO story-detail trivia, NO textbook extras. This is the
+   bank Crispin's mum will use to verify exam-readiness. */
