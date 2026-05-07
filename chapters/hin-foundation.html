@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hindi Foundation · Alphabet &amp; Sounds — Crispin's World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700;800&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/hindi.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%A1%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<main class="page"><div class="container">
+
+  <section class="section">
+    <p class="muted"><a href="../hindi.html">← Back to Hindi</a></p>
+    <h1>🔡 Hindi Foundation</h1>
+    <p class="lead">The Devanagari script, sound by sound. Tap any letter to hear it. Spend 5 minutes a day here for 2 weeks and the textbook will stop looking like squiggles.</p>
+  </section>
+
+  <div id="tts-warning-host"></div>
+
+  <!-- Tabs -->
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" data-target="tab-vowels">स्वर · Vowels</button>
+    <button class="tab-btn" data-target="tab-consonants">व्यंजन · Consonants</button>
+    <button class="tab-btn" data-target="tab-matras">मात्रा · Vowel-marks</button>
+    <button class="tab-btn" data-target="tab-words">Survival words</button>
+    <button class="tab-btn" data-target="tab-practice">🎯 Practice</button>
+  </div>
+
+  <!-- ═══════════ VOWELS ═══════════ -->
+  <section id="tab-vowels" class="tab-panel active">
+    <h2>स्वर · The 12 vowels</h2>
+    <p>Vowels can stand alone (at the start of a word) and they're written with the full character. They're also "embedded" inside consonants as <em>matras</em> — you'll see those in tab 3.</p>
+
+    <div class="alphabet-grid" id="vowel-grid"></div>
+
+    <div class="card card--flat" style="margin-top:24px;">
+      <h3 style="color:var(--purple); margin-top:0;">💡 Memorise tip</h3>
+      <p>The vowels come in <strong>pairs</strong>: short and long. <strong>अ / आ</strong>, <strong>इ / ई</strong>, <strong>उ / ऊ</strong>. The long version is held about twice as long. <strong>ए, ऐ, ओ, औ</strong> don't have short partners — they're all "long".</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ CONSONANTS ═══════════ -->
+  <section id="tab-consonants" class="tab-panel">
+    <h2>व्यंजन · The 33 consonants</h2>
+    <p>Hindi consonants are organised into 5 groups (<em>varga</em>) based on <strong>where in your mouth</strong> the sound is made — back of throat, palate, behind the teeth, etc. This grouping is brilliant once you see it.</p>
+
+    <div class="varga-heading">
+      <h3>क-वर्ग</h3>
+      <span class="roman">k-varga · velar (back of throat)</span>
+    </div>
+    <div class="alphabet-grid" id="varga-ka"></div>
+
+    <div class="varga-heading">
+      <h3>च-वर्ग</h3>
+      <span class="roman">c-varga · palatal (palate)</span>
+    </div>
+    <div class="alphabet-grid" id="varga-cha"></div>
+
+    <div class="varga-heading">
+      <h3>ट-वर्ग</h3>
+      <span class="roman">retroflex · tongue curled back</span>
+    </div>
+    <div class="alphabet-grid" id="varga-ta-retro"></div>
+
+    <div class="varga-heading">
+      <h3>त-वर्ग</h3>
+      <span class="roman">dental · tongue on teeth</span>
+    </div>
+    <div class="alphabet-grid" id="varga-ta-dental"></div>
+
+    <div class="varga-heading">
+      <h3>प-वर्ग</h3>
+      <span class="roman">labial · lips</span>
+    </div>
+    <div class="alphabet-grid" id="varga-pa"></div>
+
+    <div class="varga-heading">
+      <h3>अंतःस्थ</h3>
+      <span class="roman">semi-vowels</span>
+    </div>
+    <div class="alphabet-grid" id="varga-antah"></div>
+
+    <div class="varga-heading">
+      <h3>ऊष्म</h3>
+      <span class="roman">sibilants &amp; aspirate</span>
+    </div>
+    <div class="alphabet-grid" id="varga-ushma"></div>
+
+    <div class="card card--flat" style="margin-top:24px;">
+      <h3 style="color:var(--purple); margin-top:0;">💡 The aspirated trick</h3>
+      <p>Within each varga, every odd letter has a "puffy" twin — the second letter is <strong>aspirated</strong> (more breath). Hold your hand in front of your mouth: <strong>क</strong> (no puff) → <strong>ख</strong> (puff!). Same with <strong>ग→घ</strong>, <strong>च→छ</strong>, <strong>त→थ</strong>, <strong>प→फ</strong>.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ MATRAS ═══════════ -->
+  <section id="tab-matras" class="tab-panel">
+    <h2>मात्रा · Vowel-marks on consonants</h2>
+    <p>Here's the most important rule: a consonant on its own (e.g. <strong class="devanagari">क</strong>) actually has the vowel <strong>अ</strong> built in — it's pronounced "ka". To put a different vowel on it, you add a <strong>matra</strong> (a hook or curve).</p>
+    <p>Below: the consonant <strong class="devanagari">क</strong> shown with every matra. The pattern is identical for every other consonant.</p>
+
+    <div class="matra-row" id="matra-grid"></div>
+
+    <div class="card card--flat" style="margin-top:24px;">
+      <h3 style="color:var(--purple); margin-top:0;">💡 The "no-vowel" sign · halant ्</h3>
+      <p>If you want a consonant with NO vowel at all (a "naked" sound at the end of a word), you add the <strong>halant</strong> ् underneath. Example: <strong class="devanagari">क्</strong> = just the "k" sound. You'll meet this in joined letters like <strong class="devanagari">क्या</strong> ("what").</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ WORDS ═══════════ -->
+  <section id="tab-words" class="tab-panel">
+    <h2>60 survival words</h2>
+    <p>The words a 10-year-old hears every day. Tap any card to hear it. Goal: be able to recognise &amp; say them all in 2 weeks.</p>
+
+    <h3 style="margin-top:24px;">👨‍👩‍👧 Family</h3>
+    <div class="vocab-grid" id="vocab-family"></div>
+
+    <h3 style="margin-top:24px;">🙋 Greetings &amp; politeness</h3>
+    <div class="vocab-grid" id="vocab-greet"></div>
+
+    <h3 style="margin-top:24px;">❓ Question words</h3>
+    <div class="vocab-grid" id="vocab-q"></div>
+
+    <h3 style="margin-top:24px;">🔢 Numbers 1-10</h3>
+    <div class="vocab-grid" id="vocab-numbers"></div>
+
+    <h3 style="margin-top:24px;">🎨 Colours</h3>
+    <div class="vocab-grid" id="vocab-colors"></div>
+
+    <h3 style="margin-top:24px;">🏫 School &amp; everyday objects</h3>
+    <div class="vocab-grid" id="vocab-school"></div>
+
+    <h3 style="margin-top:24px;">🍽️ Food</h3>
+    <div class="vocab-grid" id="vocab-food"></div>
+
+    <h3 style="margin-top:24px;">📅 Time words</h3>
+    <div class="vocab-grid" id="vocab-time"></div>
+  </section>
+
+  <!-- ═══════════ PRACTICE ═══════════ -->
+  <section id="tab-practice" class="tab-panel">
+    <h2>🎯 Flashcard practice</h2>
+    <p class="lead">Tap the card to flip it. Get the next card with <strong>Next</strong>. The button shuffles between letters and survival words.</p>
+
+    <div class="flashcard" id="flash">
+      <div class="flashcard__inner">
+        <div class="flashcard__face flashcard__face--front">
+          <p class="flashcard__hi" id="flash-hi">अ</p>
+          <p class="flashcard__hint">tap to flip</p>
+        </div>
+        <div class="flashcard__face flashcard__face--back">
+          <p class="flashcard__en" id="flash-en">a</p>
+          <p class="flashcard__tr" id="flash-tr"></p>
+          <p class="flashcard__hint">tap to flip back</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flashcard-controls">
+      <button class="btn btn-outline" id="flash-mode">Mode: Letters</button>
+      <button class="btn btn-yellow btn-sm" id="flash-speak">🔊 Hear it</button>
+      <button class="btn btn-primary" id="flash-next">Next →</button>
+    </div>
+
+    <p class="muted" style="text-align:center; margin-top:24px;">
+      ⭐ +5 XP each time you complete 10 cards in a row.
+    </p>
+  </section>
+
+</div></main>
+<footer class="footer"><div class="container">
+  <p>Made with ❤️ for Crispin · <a href="../hindi.html">All Hindi chapters</a> · <a href="../index.html">Home</a></p>
+</div></footer>
+
+<script src="../js/common.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/hindi.js"></script>
+<script>
+  App.renderTopBar('hindi');
+  Progress.markVisit();
+  Progress.renderGamebar();
+  App.wireTabs();
+  Hindi.checkVoiceAndWarn(document.getElementById('tts-warning-host'));
+
+  // ─── Vowels ───────────────────────────────────────────────
+  const VOWELS = [
+    { c: 'अ', s: 'a',   hint: 'as in "about"' },
+    { c: 'आ', s: 'aa',  hint: 'as in "father"' },
+    { c: 'इ', s: 'i',   hint: 'as in "kit"' },
+    { c: 'ई', s: 'ee',  hint: 'as in "see"' },
+    { c: 'उ', s: 'u',   hint: 'as in "put"' },
+    { c: 'ऊ', s: 'oo',  hint: 'as in "mood"' },
+    { c: 'ऋ', s: 'ri',  hint: 'rolled "ri" (rare)' },
+    { c: 'ए', s: 'e',   hint: 'as in "play" (no glide)' },
+    { c: 'ऐ', s: 'ai',  hint: 'as in "cat"' },
+    { c: 'ओ', s: 'o',   hint: 'as in "go" (no glide)' },
+    { c: 'औ', s: 'au',  hint: 'as in "now"' },
+    { c: 'अं', s: 'an', hint: 'nasal — "ang"' },
+    { c: 'अः', s: 'ah', hint: 'breathy "ah-ha"' },
+  ];
+
+  const CONSONANTS_KA = [
+    { c: 'क', s: 'ka',  hint: 'kite' },
+    { c: 'ख', s: 'kha', hint: 'k + puff' },
+    { c: 'ग', s: 'ga',  hint: 'go' },
+    { c: 'घ', s: 'gha', hint: 'g + puff' },
+    { c: 'ङ', s: 'nga', hint: 'singer' },
+  ];
+  const CONSONANTS_CHA = [
+    { c: 'च', s: 'cha', hint: 'church' },
+    { c: 'छ', s: 'chha', hint: 'ch + puff' },
+    { c: 'ज', s: 'ja',  hint: 'jam' },
+    { c: 'झ', s: 'jha', hint: 'j + puff' },
+    { c: 'ञ', s: 'nya', hint: 'canyon' },
+  ];
+  const CONSONANTS_TA_RETRO = [
+    { c: 'ट', s: 'Ta',  hint: 'curl tongue back' },
+    { c: 'ठ', s: 'Tha', hint: 'T + puff' },
+    { c: 'ड', s: 'Da',  hint: 'tongue back, voiced' },
+    { c: 'ढ', s: 'Dha', hint: 'D + puff' },
+    { c: 'ण', s: 'Na',  hint: 'tongue back N' },
+  ];
+  const CONSONANTS_TA_DENTAL = [
+    { c: 'त', s: 'ta',  hint: 'tongue on teeth' },
+    { c: 'थ', s: 'tha', hint: 't + puff (no "th" sound!)' },
+    { c: 'द', s: 'da',  hint: 'tongue on teeth, voiced' },
+    { c: 'ध', s: 'dha', hint: 'd + puff' },
+    { c: 'न', s: 'na',  hint: 'normal n' },
+  ];
+  const CONSONANTS_PA = [
+    { c: 'प', s: 'pa',  hint: 'pen' },
+    { c: 'फ', s: 'pha', hint: 'p + puff' },
+    { c: 'ब', s: 'ba',  hint: 'ball' },
+    { c: 'भ', s: 'bha', hint: 'b + puff' },
+    { c: 'म', s: 'ma',  hint: 'mum' },
+  ];
+  const CONSONANTS_ANTAH = [
+    { c: 'य', s: 'ya',  hint: 'yes' },
+    { c: 'र', s: 'ra',  hint: 'rolled r' },
+    { c: 'ल', s: 'la',  hint: 'lap' },
+    { c: 'व', s: 'va',  hint: 'between v &amp; w' },
+  ];
+  const CONSONANTS_USHMA = [
+    { c: 'श', s: 'sha', hint: 'shy' },
+    { c: 'ष', s: 'Sha', hint: 'tongue back sh' },
+    { c: 'स', s: 'sa',  hint: 'sun' },
+    { c: 'ह', s: 'ha',  hint: 'hat' },
+  ];
+
+  const MATRAS_ON_K = [
+    { c: 'क',   s: 'ka',  hint: 'no matra (अ)' },
+    { c: 'का',  s: 'kaa', hint: '+ ा (आ)' },
+    { c: 'कि',  s: 'ki',  hint: '+ ि (इ)' },
+    { c: 'की',  s: 'kee', hint: '+ ी (ई)' },
+    { c: 'कु',  s: 'ku',  hint: '+ ु (उ)' },
+    { c: 'कू',  s: 'koo', hint: '+ ू (ऊ)' },
+    { c: 'कृ',  s: 'kri', hint: '+ ृ (ऋ)' },
+    { c: 'के',  s: 'ke',  hint: '+ े (ए)' },
+    { c: 'कै',  s: 'kai', hint: '+ ै (ऐ)' },
+    { c: 'को',  s: 'ko',  hint: '+ ो (ओ)' },
+    { c: 'कौ',  s: 'kau', hint: '+ ौ (औ)' },
+  ];
+
+  function renderAlphabet(hostId, items, vargaClass) {
+    const host = document.getElementById(hostId);
+    if (!host) return;
+    host.innerHTML = items.map(it => `
+      <div class="alphabet-card ${vargaClass}" data-speak="${it.c}">
+        <button class="alphabet-card__speak" data-speak="${it.c}" aria-label="Speak">🔊</button>
+        <div class="alphabet-card__char">${it.c}</div>
+        <div class="alphabet-card__sound">${it.s}</div>
+        ${it.hint ? `<div class="alphabet-card__hint">${it.hint}</div>` : ''}
+      </div>
+    `).join('');
+    // Tapping the card itself also speaks it
+    host.querySelectorAll('.alphabet-card').forEach(card => {
+      card.addEventListener('click', () => Hindi.speak(card.dataset.speak));
+    });
+    Hindi.wireSpeakButtons(host);
+  }
+
+  renderAlphabet('vowel-grid', VOWELS, 'varga--vowel');
+  renderAlphabet('varga-ka', CONSONANTS_KA, 'varga--ka');
+  renderAlphabet('varga-cha', CONSONANTS_CHA, 'varga--cha');
+  renderAlphabet('varga-ta-retro', CONSONANTS_TA_RETRO, 'varga--ta-retro');
+  renderAlphabet('varga-ta-dental', CONSONANTS_TA_DENTAL, 'varga--ta-dental');
+  renderAlphabet('varga-pa', CONSONANTS_PA, 'varga--pa');
+  renderAlphabet('varga-antah', CONSONANTS_ANTAH, 'varga--antah');
+  renderAlphabet('varga-ushma', CONSONANTS_USHMA, 'varga--ushma');
+  renderAlphabet('matra-grid', MATRAS_ON_K, 'varga--vowel');
+
+  // ─── Vocabulary ─────────────────────────────────────────
+  const VOCAB = {
+    family: [
+      { hi: 'माँ',     tr: 'maa',     en: 'mother' },
+      { hi: 'पिता',    tr: 'pita',    en: 'father' },
+      { hi: 'भाई',     tr: 'bhai',    en: 'brother' },
+      { hi: 'बहन',     tr: 'behen',   en: 'sister' },
+      { hi: 'दादा',    tr: 'dada',    en: "grandfather (paternal)" },
+      { hi: 'दादी',    tr: 'dadi',    en: "grandmother (paternal)" },
+      { hi: 'नाना',    tr: 'nana',    en: "grandfather (maternal)" },
+      { hi: 'नानी',    tr: 'nani',    en: "grandmother (maternal)" },
+    ],
+    greet: [
+      { hi: 'नमस्ते',     tr: 'namaste',     en: 'hello / goodbye' },
+      { hi: 'धन्यवाद',    tr: 'dhanyavaad',  en: 'thank you' },
+      { hi: 'माफ़ करना',  tr: 'maaf karna',  en: 'sorry / excuse me' },
+      { hi: 'शुभ रात्रि', tr: 'shubh ratri', en: 'good night' },
+      { hi: 'कैसे हो?',   tr: 'kaise ho',    en: 'how are you?' },
+      { hi: 'ठीक हूँ',    tr: 'theek hoon',  en: "I'm fine" },
+    ],
+    q: [
+      { hi: 'क्या',   tr: 'kya',    en: 'what?' },
+      { hi: 'कौन',    tr: 'kaun',   en: 'who?' },
+      { hi: 'कहाँ',   tr: 'kahan',  en: 'where?' },
+      { hi: 'कब',     tr: 'kab',    en: 'when?' },
+      { hi: 'क्यों',  tr: 'kyon',   en: 'why?' },
+      { hi: 'कैसे',   tr: 'kaise',  en: 'how?' },
+      { hi: 'कितना',  tr: 'kitna',  en: 'how much / many?' },
+    ],
+    numbers: [
+      { hi: 'एक',    tr: 'ek',     en: '1 (one)' },
+      { hi: 'दो',    tr: 'do',     en: '2 (two)' },
+      { hi: 'तीन',   tr: 'teen',   en: '3 (three)' },
+      { hi: 'चार',   tr: 'chaar',  en: '4 (four)' },
+      { hi: 'पाँच',  tr: 'paanch', en: '5 (five)' },
+      { hi: 'छह',    tr: 'chhah',  en: '6 (six)' },
+      { hi: 'सात',   tr: 'saat',   en: '7 (seven)' },
+      { hi: 'आठ',    tr: 'aath',   en: '8 (eight)' },
+      { hi: 'नौ',    tr: 'nau',    en: '9 (nine)' },
+      { hi: 'दस',    tr: 'das',    en: '10 (ten)' },
+    ],
+    colors: [
+      { hi: 'लाल',     tr: 'laal',    en: 'red' },
+      { hi: 'नीला',    tr: 'neela',   en: 'blue' },
+      { hi: 'हरा',     tr: 'hara',    en: 'green' },
+      { hi: 'पीला',    tr: 'peela',   en: 'yellow' },
+      { hi: 'सफ़ेद',   tr: 'safed',   en: 'white' },
+      { hi: 'काला',    tr: 'kaala',   en: 'black' },
+      { hi: 'गुलाबी',  tr: 'gulabi',  en: 'pink' },
+      { hi: 'नारंगी',  tr: 'narangi', en: 'orange' },
+    ],
+    school: [
+      { hi: 'किताब',   tr: 'kitaab',  en: 'book' },
+      { hi: 'कॉपी',    tr: 'copy',    en: 'notebook' },
+      { hi: 'पेन',     tr: 'pen',     en: 'pen' },
+      { hi: 'पेंसिल',  tr: 'pencil',  en: 'pencil' },
+      { hi: 'स्कूल',   tr: 'school',  en: 'school' },
+      { hi: 'कक्षा',   tr: 'kaksha',  en: 'class' },
+      { hi: 'शिक्षक',  tr: 'shikshak', en: 'teacher (male)' },
+      { hi: 'शिक्षिका', tr: 'shikshika', en: 'teacher (female)' },
+    ],
+    food: [
+      { hi: 'रोटी',     tr: 'roti',    en: 'flatbread' },
+      { hi: 'चावल',    tr: 'chaaval', en: 'rice' },
+      { hi: 'दाल',     tr: 'daal',    en: 'lentils' },
+      { hi: 'सब्ज़ी',  tr: 'sabzi',   en: 'vegetables / curry' },
+      { hi: 'दूध',     tr: 'doodh',   en: 'milk' },
+      { hi: 'पानी',    tr: 'paani',   en: 'water' },
+      { hi: 'फल',      tr: 'phal',    en: 'fruit' },
+      { hi: 'मिठाई',   tr: 'mithai',  en: 'sweet' },
+    ],
+    time: [
+      { hi: 'आज',      tr: 'aaj',      en: 'today' },
+      { hi: 'कल',      tr: 'kal',      en: 'yesterday OR tomorrow (context!)' },
+      { hi: 'अभी',     tr: 'abhi',     en: 'now' },
+      { hi: 'सुबह',    tr: 'subah',    en: 'morning' },
+      { hi: 'शाम',     tr: 'shaam',    en: 'evening' },
+      { hi: 'रात',     tr: 'raat',     en: 'night' },
+    ],
+  };
+
+  function renderVocab(hostId, list, group) {
+    const host = document.getElementById(hostId);
+    host.innerHTML = list.map(it => `
+      <div class="vocab-card" data-speak="${it.hi}">
+        <span class="vocab-card__group">${group}</span>
+        <p class="vocab-card__hi">
+          <span>${it.hi}</span>
+          <button class="hin-speak hin-speak--inline" data-speak="${it.hi}" aria-label="Speak">🔊</button>
+        </p>
+        <p class="vocab-card__tr">/${it.tr}/</p>
+        <p class="vocab-card__en">${it.en}</p>
+      </div>
+    `).join('');
+    host.querySelectorAll('.vocab-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (e.target.classList.contains('hin-speak')) return; // button handled separately
+        Hindi.speak(card.dataset.speak);
+      });
+    });
+    Hindi.wireSpeakButtons(host);
+  }
+
+  renderVocab('vocab-family', VOCAB.family, 'family');
+  renderVocab('vocab-greet', VOCAB.greet, 'greeting');
+  renderVocab('vocab-q', VOCAB.q, 'question');
+  renderVocab('vocab-numbers', VOCAB.numbers, 'number');
+  renderVocab('vocab-colors', VOCAB.colors, 'colour');
+  renderVocab('vocab-school', VOCAB.school, 'school');
+  renderVocab('vocab-food', VOCAB.food, 'food');
+  renderVocab('vocab-time', VOCAB.time, 'time');
+
+  // ─── Flashcard practice ─────────────────────────────────
+  const allLetters = [...VOWELS, ...CONSONANTS_KA, ...CONSONANTS_CHA,
+                      ...CONSONANTS_TA_RETRO, ...CONSONANTS_TA_DENTAL,
+                      ...CONSONANTS_PA, ...CONSONANTS_ANTAH, ...CONSONANTS_USHMA]
+                      .map(it => ({ hi: it.c, en: it.s, tr: it.s }));
+  const allWords = Object.values(VOCAB).flat()
+                      .map(it => ({ hi: it.hi, en: it.en, tr: it.tr }));
+
+  let mode = 'letters';
+  let pool = allLetters.slice();
+  let streak = 0;
+  function shuffle(a) { for (let i = a.length-1; i>0; i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+  const flash = document.getElementById('flash');
+  const flashHi = document.getElementById('flash-hi');
+  const flashEn = document.getElementById('flash-en');
+  const flashTr = document.getElementById('flash-tr');
+  const modeBtn = document.getElementById('flash-mode');
+  const speakBtn = document.getElementById('flash-speak');
+  const nextBtn = document.getElementById('flash-next');
+
+  function loadCard() {
+    flash.classList.remove('flipped');
+    if (!pool.length) pool = (mode === 'letters' ? allLetters : allWords).slice();
+    shuffle(pool);
+    const card = pool.pop();
+    flashHi.textContent = card.hi;
+    flashEn.textContent = card.en;
+    flashTr.textContent = card.tr ? '/' + card.tr + '/' : '';
+    flashHi.dataset.speak = card.hi;
+  }
+  function nextCard() {
+    streak += 1;
+    if (streak % 10 === 0 && window.Progress) Progress.addXP(5, 'Hindi flashcards · 10 in a row');
+    loadCard();
+  }
+  flash.addEventListener('click', () => flash.classList.toggle('flipped'));
+  speakBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    Hindi.speak(flashHi.textContent);
+  });
+  nextBtn.addEventListener('click', nextCard);
+  modeBtn.addEventListener('click', () => {
+    mode = (mode === 'letters') ? 'words' : 'letters';
+    modeBtn.textContent = 'Mode: ' + (mode === 'letters' ? 'Letters' : 'Words');
+    pool = [];
+    loadCard();
+  });
+  loadCard();
+</script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hindi (वीणा) — Crispin's World</title>
+  <meta name="theme-color" content="#FAF7F0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700;800&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/hindi.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AA%94%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+  <main class="page">
+    <div class="container">
+
+      <section class="bento-hero">
+        <div class="bento-hero__eyebrow">
+          <span>हिंदी · Hindi</span><span style="color:var(--ink-muted);">·</span><span>Class 4 · वीणा (Veena)</span>
+        </div>
+        <h1 class="bento-hero__title">13 chapters.<br>Built for a <span class="accent">non-native speaker</span>.</h1>
+        <p class="bento-hero__sub">Every page is bilingual: tap any Hindi word to hear it spoken and see the English meaning. Start with <strong>Foundation</strong> (alphabet + sounds), then take the chapters one at a time.</p>
+      </section>
+
+      <!-- शब्द of the day -->
+      <section class="bento" style="margin-bottom: var(--space-7);">
+        <div class="bento__tile no-hover mesh-sunset span-12">
+          <span class="bento__bg-emoji">🪔</span>
+          <p class="bento__eyebrow">शब्द of the day</p>
+          <div style="display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;">
+            <h2 class="bento__title bento__title--big devanagari" id="wotd-hindi" style="margin:0;">…</h2>
+            <button class="hin-speak" id="wotd-speak" aria-label="Speak word">🔊</button>
+          </div>
+          <p class="bento__desc">
+            <strong id="wotd-translit"></strong> ·
+            <em id="wotd-pos"></em> · <span id="wotd-english"></span>
+          </p>
+          <p class="bento__desc devanagari" style="font-style:italic; margin-top:6px;" id="wotd-example"></p>
+        </div>
+      </section>
+
+      <!-- Foundation tile -->
+      <h2 class="section-title">Start here 👇</h2>
+      <section class="bento" style="margin-bottom: var(--space-7);">
+        <a class="bento__tile mesh-warm span-12" href="chapters/hin-foundation.html">
+          <span class="bento__bg-emoji">🔡</span>
+          <span class="tag tag--coral tag--live">Foundation</span>
+          <h2 class="bento__title bento__title--big">Devanagari alphabet &amp; survival words</h2>
+          <p class="bento__desc">12 vowels (स्वर) + 33 consonants (व्यंजन) + 11 vowel-marks (मात्रा) + 60 everyday words. Tap any letter or word to hear it spoken in Hindi. <strong>This unlocks every chapter</strong> — without the script, the textbook looks like squiggles.</p>
+          <span class="bento__cta">Open foundation →</span>
+        </a>
+      </section>
+
+      <!-- All chapters -->
+      <h2 class="section-title">All chapters · वीणा</h2>
+      <section class="bento">
+
+        <a class="bento__tile mesh-mint span-6 row-2" href="chapters/hin01-chidiya-ka-geet.html">
+          <span class="bento__bg-emoji">🐦</span>
+          <span class="tag tag--mint">Active · Chapter 1</span>
+          <h2 class="bento__title bento__title--big devanagari">1 · चिड़िया का गीत</h2>
+          <p class="bento__desc"><em>The bird's song</em> — a 3-stanza poem about a chick discovering how big the world is, from inside the egg → the nest → the open sky. Read-along, vocab, audio, and questions.</p>
+          <span class="bento__cta">Open chapter</span>
+        </a>
+
+        <div class="bento__tile no-hover is-locked span-3">
+          <span class="bento__bg-emoji">🐌</span>
+          <span class="tag">Coming soon</span>
+          <h2 class="bento__title devanagari">2 · बगीचे का घोंघा</h2>
+          <p class="bento__desc">The garden snail — a story.</p>
+        </div>
+        <div class="bento__tile no-hover is-locked span-3">
+          <span class="bento__bg-emoji">🌳</span>
+          <span class="tag">Coming soon</span>
+          <h2 class="bento__title devanagari">3 · नीम</h2>
+          <p class="bento__desc">The neem tree.</p>
+        </div>
+
+        <div class="bento__tile no-hover is-locked span-3">
+          <span class="bento__bg-emoji">🍱</span>
+          <span class="tag">Coming soon</span>
+          <h2 class="bento__title devanagari">4 · हमारा आहार</h2>
+          <p class="bento__desc">Our food.</p>
+        </div>
+        <div class="bento__tile no-hover is-locked span-3">
+          <span class="bento__bg-emoji">🌧️</span>
+          <span class="tag">Coming soon</span>
+          <h2 class="bento__title devanagari">5 · आसमान गिरा</h2>
+          <p class="bento__desc">The sky fell.</p>
+        </div>
+        <div class="bento__tile no-hover is-locked span-3">
+          <span class="bento__bg-emoji">✉️</span>
+          <span class="tag">Coming soon</span>
+          <h2 class="bento__title devanagari">6 · जयपुर से पत्र</h2>
+          <p class="bento__desc">Letter from Jaipur.</p>
+        </div>
+        <div class="bento__tile no-hover is-locked span-3">
+          <span class="bento__bg-emoji">💎</span>
+          <span class="tag">Coming soon</span>
+          <h2 class="bento__title devanagari">7 · नकली हीरे</h2>
+          <p class="bento__desc">Fake diamonds.</p>
+        </div>
+
+        <div class="bento__tile no-hover is-locked span-3">
+          <span class="bento__bg-emoji">🌺</span>
+          <span class="tag">Coming soon</span>
+          <h2 class="bento__title devanagari">8 · ओणम के रंग</h2>
+          <p class="bento__desc">The colours of Onam.</p>
+        </div>
+        <div class="bento__tile no-hover is-locked span-3">
+          <span class="bento__bg-emoji">🍬</span>
+          <span class="tag">Coming soon</span>
+          <h2 class="bento__title devanagari">9 · मिठाइयों का सम्मेलन</h2>
+          <p class="bento__desc">A conference of sweets.</p>
+        </div>
+        <div class="bento__tile no-hover is-locked span-3">
+          <span class="bento__bg-emoji">📷</span>
+          <span class="tag">Coming soon</span>
+          <h2 class="bento__title devanagari">10 · कैमरा</h2>
+          <p class="bento__desc">The camera.</p>
+        </div>
+        <div class="bento__tile no-hover is-locked span-3">
+          <span class="bento__bg-emoji">🖋️</span>
+          <span class="tag">Coming soon</span>
+          <h2 class="bento__title devanagari">11 · कविता का कमाल</h2>
+          <p class="bento__desc">The magic of poetry.</p>
+        </div>
+
+        <div class="bento__tile no-hover is-locked span-6">
+          <span class="bento__bg-emoji">♟️</span>
+          <span class="tag">Coming soon</span>
+          <h2 class="bento__title devanagari">12 · शतरंज में मात</h2>
+          <p class="bento__desc">Checkmate in chess — a story about cleverness.</p>
+        </div>
+        <div class="bento__tile no-hover is-locked span-6">
+          <span class="bento__bg-emoji">🛰️</span>
+          <span class="tag">Coming soon</span>
+          <h2 class="bento__title devanagari">13 · हमारा आदित्य</h2>
+          <p class="bento__desc">Our Aditya — India's solar mission.</p>
+        </div>
+
+      </section>
+
+      <!-- Tip card -->
+      <section class="bento" style="margin-top: var(--space-7);">
+        <div class="bento__tile no-hover mesh-cool span-12">
+          <span class="bento__bg-emoji">💡</span>
+          <p class="bento__eyebrow">Daily routine that works</p>
+          <h2 class="bento__title">15-minute Hindi habit</h2>
+          <p class="bento__desc" style="font-size:1.05rem; max-width:680px;">
+            <strong>5 min</strong> — Foundation page: review 5 letters + 5 words.
+            <strong>5 min</strong> — Open the current chapter, listen to it once.
+            <strong>5 min</strong> — Read-along with the chapter, tapping any new words. Done. Repeat tomorrow.
+          </p>
+        </div>
+      </section>
+
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <p>Back to <a href="index.html">home</a> · <a href="learning.html">all subjects</a></p>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/hindi.js"></script>
+  <script>
+    App.renderTopBar('hindi');
+    Progress.markVisit();
+    Progress.renderGamebar();
+
+    // शब्द of the day — bilingual word picker, day-stable seed
+    const words = [
+      { hi: 'नमस्ते',   tr: 'namaste',  pos: 'greeting',  en: 'Hello / Greetings (also: goodbye).', ex: 'नमस्ते दोस्त! — Hello friend!' },
+      { hi: 'धन्यवाद',  tr: 'dhanyavaad', pos: 'noun',     en: 'Thank you.', ex: 'खाने के लिए धन्यवाद। — Thanks for the food.' },
+      { hi: 'किताब',    tr: 'kitaab',   pos: 'noun (f.)', en: 'Book.', ex: 'मेरी किताब कहाँ है? — Where is my book?' },
+      { hi: 'पानी',     tr: 'paani',    pos: 'noun (m.)', en: 'Water.', ex: 'मुझे पानी चाहिए। — I want water.' },
+      { hi: 'दोस्त',    tr: 'dost',     pos: 'noun',      en: 'Friend.', ex: 'वह मेरा दोस्त है। — He is my friend.' },
+      { hi: 'खुश',      tr: 'khush',    pos: 'adjective', en: 'Happy.', ex: 'मैं बहुत खुश हूँ। — I am very happy.' },
+      { hi: 'सुंदर',    tr: 'sundar',   pos: 'adjective', en: 'Beautiful / handsome.', ex: 'यह फूल सुंदर है। — This flower is beautiful.' },
+      { hi: 'आसमान',    tr: 'aasmaan',  pos: 'noun (m.)', en: 'Sky.', ex: 'आसमान नीला है। — The sky is blue.' },
+      { hi: 'चिड़िया',  tr: 'chiriya',  pos: 'noun (f.)', en: 'Bird (small).', ex: 'चिड़िया उड़ती है। — The bird flies.' },
+      { hi: 'घर',       tr: 'ghar',     pos: 'noun (m.)', en: 'House / home.', ex: 'मेरा घर बहरीन में है। — My house is in Bahrain.' },
+      { hi: 'खाना',     tr: 'khaana',   pos: 'noun / verb', en: 'Food / to eat.', ex: 'खाना तैयार है। — Food is ready.' },
+      { hi: 'दौड़ना',   tr: 'daudna',   pos: 'verb',      en: 'To run.', ex: 'क्रिस्पिन तेज दौड़ता है। — Crispin runs fast.' },
+      { hi: 'फूल',      tr: 'phool',    pos: 'noun (m.)', en: 'Flower.', ex: 'गुलाब का फूल लाल है। — The rose flower is red.' },
+      { hi: 'समय',      tr: 'samay',    pos: 'noun (m.)', en: 'Time.', ex: 'समय कीमती है। — Time is precious.' },
+      { hi: 'सच',       tr: 'sach',     pos: 'noun / adj.', en: 'Truth / true.', ex: 'सच बोलो। — Speak the truth.' },
+      { hi: 'मित्र',    tr: 'mitra',    pos: 'noun (m.)', en: 'Friend (formal).', ex: 'मेरे प्रिय मित्र। — My dear friend.' },
+      { hi: 'गीत',      tr: 'geet',     pos: 'noun (m.)', en: 'Song.', ex: 'मुझे यह गीत पसंद है। — I like this song.' },
+      { hi: 'मेहनत',    tr: 'mehnat',   pos: 'noun (f.)', en: 'Hard work.', ex: 'मेहनत का फल मीठा होता है। — The fruit of hard work is sweet.' },
+    ];
+    const rand = App.seededRand(App.todayKey() + 'hin');
+    const pick = words[Math.floor(rand() * words.length)];
+    document.getElementById('wotd-hindi').textContent = pick.hi;
+    document.getElementById('wotd-translit').textContent = '/' + pick.tr + '/';
+    document.getElementById('wotd-pos').textContent = pick.pos;
+    document.getElementById('wotd-english').textContent = pick.en;
+    document.getElementById('wotd-example').textContent = pick.ex;
+    document.getElementById('wotd-speak').addEventListener('click', () => Hindi.speak(pick.hi));
+  </script>
+</body>
+</html>

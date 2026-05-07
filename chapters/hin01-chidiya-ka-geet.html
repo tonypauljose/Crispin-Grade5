@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 1 · चिड़िया का गीत — Crispin's World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700;800&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/hindi.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%A6%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<main class="page"><div class="container">
+
+  <section class="section">
+    <p class="muted"><a href="../hindi.html">← Back to Hindi</a></p>
+    <h1>📘 Chapter 1 · <span class="devanagari">चिड़िया का गीत</span></h1>
+    <p class="lead"><em>The bird's song</em> — a simple 3-stanza poem by <strong>निरंकार देव 'सेवक'</strong>. A baby bird tells how its idea of "the world" grew bigger and bigger.</p>
+  </section>
+
+  <div id="tts-warning-host"></div>
+
+  <!-- Tabs -->
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" data-target="tab-prelude">🌅 ऐसा वर दो (prayer)</button>
+    <button class="tab-btn" data-target="tab-vocab">📚 Pre-read vocab</button>
+    <button class="tab-btn" data-target="tab-read">📖 Read</button>
+    <button class="tab-btn" data-target="tab-listen">🔊 Listen</button>
+    <button class="tab-btn" data-target="tab-comp">❓ Comprehension</button>
+  </div>
+
+  <!-- ═══════════ PRELUDE: ऐसा वर दो ═══════════ -->
+  <section id="tab-prelude" class="tab-panel active">
+    <h2>The opening prayer — <span class="devanagari">ऐसा वर दो</span></h2>
+    <p>Every Hindi reader starts with a प्रार्थना (prayer). This one — by <strong>त्रिलोक सिंह ठकुरेला</strong> — asks for kindness, courage, knowledge, and the strength to walk the path of truth. Tap any line's 🔊 to hear it; tap the toggle to read the meaning.</p>
+
+    <div class="poem-stanza">
+      <div class="poem-stanza__header">
+        <h4>Verse 1 · the opening</h4>
+        <button class="hin-speak" data-stanza="prayer-1">🔊</button>
+      </div>
+      <p class="poem-stanza__line devanagari" id="prayer-1-line">
+        भगवन हमको ऐसा वर दो,<br>
+        जग के सारे सद्गुण भर दो।
+      </p>
+      <button class="poem-stanza__toggle"
+              data-toggle-target="#prayer-1-en"
+              data-label-show="Show meaning ▾"
+              data-label-hide="Hide meaning ▴">Show meaning ▾</button>
+      <div class="poem-stanza__english" id="prayer-1-en">
+        <strong>God, please grant us such a boon — fill us with all the virtues of the world.</strong>
+      </div>
+    </div>
+
+    <div class="poem-stanza">
+      <div class="poem-stanza__header">
+        <h4>Verse 2 · be like a flower</h4>
+        <button class="hin-speak" data-stanza="prayer-2">🔊</button>
+      </div>
+      <p class="poem-stanza__line devanagari" id="prayer-2-line">
+        हम फूलों जैसे मुस्काएँ,<br>
+        सब पर प्रेम-सुगंध लुटाएँ,<br>
+        हम परहित कर खुशी मनाएँ,<br>
+        ऐसे भाव हृदय में भर दो,<br>
+        भगवन हमको ऐसा वर दो।
+      </p>
+      <button class="poem-stanza__toggle"
+              data-toggle-target="#prayer-2-en"
+              data-label-show="Show meaning ▾"
+              data-label-hide="Hide meaning ▴">Show meaning ▾</button>
+      <div class="poem-stanza__english" id="prayer-2-en">
+        May we smile like flowers · spread the fragrance of love on everyone · feel joy in helping others — fill our hearts with such feelings, God grant us this boon.
+      </div>
+    </div>
+
+    <div class="poem-stanza">
+      <div class="poem-stanza__header">
+        <h4>Verse 3 · be a lamp</h4>
+        <button class="hin-speak" data-stanza="prayer-3">🔊</button>
+      </div>
+      <p class="poem-stanza__line devanagari" id="prayer-3-line">
+        दीपक बनें, लड़ें हम तम से,<br>
+        ज्योतिर्मय हो यह जग हमसे,<br>
+        कभी न हम घबराएँ गम से,<br>
+        तन, मन सबल हमारे कर दो,<br>
+        भगवन हमको ऐसा वर दो।
+      </p>
+      <button class="poem-stanza__toggle"
+              data-toggle-target="#prayer-3-en"
+              data-label-show="Show meaning ▾"
+              data-label-hide="Hide meaning ▴">Show meaning ▾</button>
+      <div class="poem-stanza__english" id="prayer-3-en">
+        May we become lamps and fight darkness · may this world be lit up because of us · may we never panic in sorrow · make our body and mind strong, God grant us this boon.
+      </div>
+    </div>
+
+    <div class="poem-stanza">
+      <div class="poem-stanza__header">
+        <h4>Verse 4 · the path of truth</h4>
+        <button class="hin-speak" data-stanza="prayer-4">🔊</button>
+      </div>
+      <p class="poem-stanza__line devanagari" id="prayer-4-line">
+        सत्य-मार्ग पर बढ़ते जाएँ,<br>
+        सबको ही सन्मार्ग दिखाएँ,<br>
+        सब मिलकर जीवन फल पाएँ,<br>
+        ऐसे ज्ञान, बुद्धि से भर दो,<br>
+        भगवन हमको ऐसा वर दो।
+      </p>
+      <button class="poem-stanza__toggle"
+              data-toggle-target="#prayer-4-en"
+              data-label-show="Show meaning ▾"
+              data-label-hide="Hide meaning ▴">Show meaning ▾</button>
+      <div class="poem-stanza__english" id="prayer-4-en">
+        May we keep walking the path of truth · show the right path to everyone · together find the fruits of life — fill us with such knowledge and wisdom, God grant us this boon.
+      </div>
+    </div>
+
+    <p class="muted" style="text-align:right; margin-top:8px;">— त्रिलोक सिंह ठकुरेला</p>
+  </section>
+
+  <!-- ═══════════ PRE-READ VOCAB ═══════════ -->
+  <section id="tab-vocab" class="tab-panel">
+    <h2>Words you'll see in the poem</h2>
+    <p>Learn these <strong>before</strong> reading. Tap each card to hear it, click 🔊 to hear it again. Goal: 80% recognised before opening the Read tab.</p>
+
+    <div class="vocab-grid" id="vocab-poem"></div>
+
+    <div class="card card--flat" style="margin-top:24px;">
+      <h3 style="color:var(--purple); margin-top:0;">💡 The poem in one line</h3>
+      <p>A baby bird grows up and realises the world is much bigger than it first thought. <strong>घर</strong> = home/nest, <strong>संसार</strong> = world, <strong>आसमान</strong> = sky, <strong>उड़ी</strong> = (I) flew. If you know just these 4 words, you'll get the whole idea.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════ READ ═══════════ -->
+  <section id="tab-read" class="tab-panel">
+    <h2>Read along · <span class="devanagari">चिड़िया का गीत</span></h2>
+    <p class="lead">Tap any underlined word to hear it spoken and see its meaning.</p>
+
+    <div class="poem-stanza">
+      <div class="poem-stanza__header">
+        <h4>Stanza 1 · inside the egg</h4>
+        <button class="hin-speak" data-stanza="ch01-s1">🔊</button>
+      </div>
+      <p class="poem-stanza__line devanagari" id="ch01-s1-line">
+        <span class="hin-word" data-tr="sabse" data-en="from all">सबसे</span>
+        <span class="hin-word" data-tr="pehle" data-en="first">पहले</span>
+        <span class="hin-word" data-tr="mere" data-en="my">मेरे</span>
+        <span class="hin-word" data-tr="ghar ka" data-en="of (the) house">घर का</span>,<br>
+        <span class="hin-word" data-tr="ande" data-en="egg">अंडे</span>
+        <span class="hin-word" data-tr="jaisa" data-en="like">जैसा</span>
+        <span class="hin-word" data-tr="tha" data-en="was">था</span>
+        <span class="hin-word" data-tr="aakaar" data-en="shape">आकार</span>।<br>
+        <span class="hin-word" data-tr="tab" data-en="then / at that time">तब</span>
+        <span class="hin-word" data-tr="main" data-en="I">मैं</span>
+        <span class="hin-word" data-tr="yahi" data-en="this only">यही</span>
+        <span class="hin-word" data-tr="samajhti thi" data-en="(I) used to think">समझती थी</span>,<br>
+        <span class="hin-word" data-tr="bas" data-en="just / only">बस</span>
+        <span class="hin-word" data-tr="itna sa hi" data-en="this much">इतना सा ही</span>
+        <span class="hin-word" data-tr="hai" data-en="is">है</span>
+        <span class="hin-word" data-tr="sansaar" data-en="world">संसार</span>।
+      </p>
+      <button class="poem-stanza__toggle"
+              data-toggle-target="#ch01-s1-en"
+              data-label-show="Show meaning ▾"
+              data-label-hide="Hide meaning ▴">Show meaning ▾</button>
+      <div class="poem-stanza__english" id="ch01-s1-en">
+        At first my home was egg-shaped (I was inside the egg). Back then I used to think that this much is the entire world.
+      </div>
+    </div>
+
+    <div class="poem-stanza">
+      <div class="poem-stanza__header">
+        <h4>Stanza 2 · in the nest</h4>
+        <button class="hin-speak" data-stanza="ch01-s2">🔊</button>
+      </div>
+      <p class="poem-stanza__line devanagari" id="ch01-s2-line">
+        <span class="hin-word" data-tr="phir" data-en="then">फिर</span>
+        <span class="hin-word" data-tr="mera" data-en="my">मेरा</span>
+        <span class="hin-word" data-tr="ghar" data-en="home">घर</span>
+        <span class="hin-word" data-tr="bana" data-en="became">बना</span>
+        <span class="hin-word" data-tr="ghonsla" data-en="nest">घोंसला</span>,<br>
+        <span class="hin-word" data-tr="sookhe" data-en="dry">सूखे</span>
+        <span class="hin-word" data-tr="tinkon se" data-en="from twigs">तिनकों से</span>
+        <span class="hin-word" data-tr="taiyaar" data-en="ready / made">तैयार</span>।<br>
+        <span class="hin-word" data-tr="tab" data-en="then">तब</span>
+        <span class="hin-word" data-tr="main" data-en="I">मैं</span>
+        <span class="hin-word" data-tr="yahi" data-en="this only">यही</span>
+        <span class="hin-word" data-tr="samajhti thi" data-en="used to think">समझती थी</span>,<br>
+        <span class="hin-word" data-tr="bas" data-en="just">बस</span>
+        <span class="hin-word" data-tr="itna sa hi" data-en="this much">इतना सा ही</span>
+        <span class="hin-word" data-tr="hai" data-en="is">है</span>
+        <span class="hin-word" data-tr="sansaar" data-en="world">संसार</span>।
+      </p>
+      <button class="poem-stanza__toggle"
+              data-toggle-target="#ch01-s2-en"
+              data-label-show="Show meaning ▾"
+              data-label-hide="Hide meaning ▴">Show meaning ▾</button>
+      <div class="poem-stanza__english" id="ch01-s2-en">
+        Then my home became a nest, made from dry twigs. Back then too I used to think that this much is the entire world.
+      </div>
+    </div>
+
+    <div class="poem-stanza">
+      <div class="poem-stanza__header">
+        <h4>Stanza 3 · open sky</h4>
+        <button class="hin-speak" data-stanza="ch01-s3">🔊</button>
+      </div>
+      <p class="poem-stanza__line devanagari" id="ch01-s3-line">
+        <span class="hin-word" data-tr="aakhir" data-en="finally">आख़िर</span>
+        <span class="hin-word" data-tr="jab" data-en="when">जब</span>
+        <span class="hin-word" data-tr="main" data-en="I">मैं</span>
+        <span class="hin-word" data-tr="aasmaan mein" data-en="in the sky">आसमान में</span>,<br>
+        <span class="hin-word" data-tr="udi" data-en="(I) flew">उड़ी</span>
+        <span class="hin-word" data-tr="door tak" data-en="far away">दूर तक</span>
+        <span class="hin-word" data-tr="pankh pasaar" data-en="wings spread">पंख पसार</span>।<br>
+        <span class="hin-word" data-tr="tabhi" data-en="only then">तभी</span>
+        <span class="hin-word" data-tr="samajh mein" data-en="into (my) understanding">समझ में</span>
+        <span class="hin-word" data-tr="meri" data-en="my">मेरी</span>
+        <span class="hin-word" data-tr="aaya" data-en="came">आया</span>,<br>
+        <span class="hin-word" data-tr="bahut bada" data-en="very big">बहुत बड़ा</span>
+        <span class="hin-word" data-tr="hai" data-en="is">है</span>
+        <span class="hin-word" data-tr="yeh" data-en="this">यह</span>
+        <span class="hin-word" data-tr="sansaar" data-en="world">संसार</span>।
+      </p>
+      <button class="poem-stanza__toggle"
+              data-toggle-target="#ch01-s3-en"
+              data-label-show="Show meaning ▾"
+              data-label-hide="Hide meaning ▴">Show meaning ▾</button>
+      <div class="poem-stanza__english" id="ch01-s3-en">
+        Finally, when I flew far into the sky with my wings spread — only then did I realise: this world is very, very big!
+      </div>
+    </div>
+
+    <p class="muted" style="text-align:right; margin-top:8px;">— निरंकार देव 'सेवक'</p>
+  </section>
+
+  <!-- ═══════════ LISTEN ═══════════ -->
+  <section id="tab-listen" class="tab-panel">
+    <h2>🔊 Listen to the whole poem</h2>
+    <p>Hear it spoken slowly, stanza by stanza. The current line lights up. Listen with eyes closed first, then open the Read tab and follow along.</p>
+
+    <div class="listen-panel">
+      <h3 id="listen-title">Ready when you are</h3>
+      <p>~ 35 seconds, read at slow pace</p>
+      <button class="listen-panel__btn" id="listen-play">▶ Play poem</button>
+      <button class="listen-panel__btn secondary" id="listen-stop" disabled>⏹ Stop</button>
+      <p class="listen-status" id="listen-status">&nbsp;</p>
+    </div>
+
+    <div class="card card--flat" style="margin-top:18px;">
+      <h3 style="color:var(--purple); margin-top:0;">🎯 What to listen for</h3>
+      <ul style="line-height:1.7;">
+        <li>The <strong>same two lines</strong> ("तब मैं यही समझती थी / बस इतना सा ही है संसार") repeat in stanzas 1 and 2 — that's the rhythm.</li>
+        <li>Stanza 3 changes the ending to <strong>"बहुत बड़ा है यह संसार"</strong> — this is the twist.</li>
+        <li>The rhyme: <strong>आकार · संसार · तैयार · पसार</strong> all end in "-aar".</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════ COMPREHENSION ═══════════ -->
+  <section id="tab-comp" class="tab-panel">
+    <h2>❓ Comprehension &amp; activities</h2>
+    <p>Try to answer in your head first, then tap "Show answer" to check.</p>
+
+    <div class="qa-card">
+      <p class="qa-card__q"><span>1.</span><span class="devanagari">पहले चिड़िया अपने घर को कैसा समझती थी?</span></p>
+      <p class="muted" style="margin: 4px 0 8px 24px; font-size:0.9rem;"><em>What did the bird first think her home was like?</em></p>
+      <button class="qa-card__reveal" data-toggle-target="#a-1"
+              data-label-show="Show answer ▾" data-label-hide="Hide ▴">Show answer ▾</button>
+      <div class="qa-card__a" id="a-1">
+        <p class="devanagari">पहले चिड़िया अपने घर को अंडे जैसा (अंडे के आकार का) समझती थी।</p>
+        <p><em>At first, the bird thought her home was egg-shaped — because she was inside the egg!</em></p>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <p class="qa-card__q"><span>2.</span><span class="devanagari">घोंसला किससे बना था?</span></p>
+      <p class="muted" style="margin: 4px 0 8px 24px; font-size:0.9rem;"><em>What was the nest made from?</em></p>
+      <button class="qa-card__reveal" data-toggle-target="#a-2"
+              data-label-show="Show answer ▾" data-label-hide="Hide ▴">Show answer ▾</button>
+      <div class="qa-card__a" id="a-2">
+        <p class="devanagari">घोंसला सूखे तिनकों से बना था।</p>
+        <p><em>The nest was made from dry twigs (तिनके).</em></p>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <p class="qa-card__q"><span>3.</span><span class="devanagari">चिड़िया को कब समझ आया कि संसार बहुत बड़ा है?</span></p>
+      <p class="muted" style="margin: 4px 0 8px 24px; font-size:0.9rem;"><em>When did the bird realise the world is very big?</em></p>
+      <button class="qa-card__reveal" data-toggle-target="#a-3"
+              data-label-show="Show answer ▾" data-label-hide="Hide ▴">Show answer ▾</button>
+      <div class="qa-card__a" id="a-3">
+        <p class="devanagari">जब चिड़िया अपने पंख फैलाकर आसमान में दूर तक उड़ी, तब उसे समझ आया कि संसार बहुत बड़ा है।</p>
+        <p><em>When she spread her wings and flew far into the sky — only then did she understand the world is very big.</em></p>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <p class="qa-card__q"><span>4.</span><span class="devanagari">कविता में चिड़िया के घर के तीन रूप कौन-से हैं?</span></p>
+      <p class="muted" style="margin: 4px 0 8px 24px; font-size:0.9rem;"><em>What are the three forms of the bird's "home" in the poem?</em></p>
+      <button class="qa-card__reveal" data-toggle-target="#a-4"
+              data-label-show="Show answer ▾" data-label-hide="Hide ▴">Show answer ▾</button>
+      <div class="qa-card__a" id="a-4">
+        <p class="devanagari">1. अंडा · 2. घोंसला · 3. खुला आसमान</p>
+        <p><em>1. The egg · 2. The nest · 3. The open sky</em></p>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <p class="qa-card__q"><span>5.</span><span class="devanagari">यह कविता हमें क्या सिखाती है?</span></p>
+      <p class="muted" style="margin: 4px 0 8px 24px; font-size:0.9rem;"><em>What does this poem teach us?</em></p>
+      <button class="qa-card__reveal" data-toggle-target="#a-5"
+              data-label-show="Show answer ▾" data-label-hide="Hide ▴">Show answer ▾</button>
+      <div class="qa-card__a" id="a-5">
+        <p class="devanagari">यह कविता सिखाती है कि संसार बहुत बड़ा है। हमें भी अपनी छोटी-सी दुनिया से बाहर निकलकर नई बातें देखनी और सीखनी चाहिए।</p>
+        <p><em>The poem teaches that the world is very big. We too should step out of our small world and see and learn new things.</em></p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:32px;">Word warm-up · विपरीत शब्द (opposites)</h3>
+    <p>Match each word with its opposite. Tap "Show" to check.</p>
+
+    <div class="qa-card">
+      <p class="qa-card__q"><span class="devanagari">सूखा</span> ↔ ?</p>
+      <button class="qa-card__reveal" data-toggle-target="#opp-1"
+              data-label-show="Show ▾" data-label-hide="Hide ▴">Show ▾</button>
+      <div class="qa-card__a" id="opp-1">
+        <p class="devanagari">गीला (geela) — wet</p>
+      </div>
+    </div>
+    <div class="qa-card">
+      <p class="qa-card__q"><span class="devanagari">आया</span> ↔ ?</p>
+      <button class="qa-card__reveal" data-toggle-target="#opp-2"
+              data-label-show="Show ▾" data-label-hide="Hide ▴">Show ▾</button>
+      <div class="qa-card__a" id="opp-2">
+        <p class="devanagari">गया (gaya) — went</p>
+      </div>
+    </div>
+    <div class="qa-card">
+      <p class="qa-card__q"><span class="devanagari">बड़ा</span> ↔ ?</p>
+      <button class="qa-card__reveal" data-toggle-target="#opp-3"
+              data-label-show="Show ▾" data-label-hide="Hide ▴">Show ▾</button>
+      <div class="qa-card__a" id="opp-3">
+        <p class="devanagari">छोटा (chhota) — small</p>
+      </div>
+    </div>
+    <div class="qa-card">
+      <p class="qa-card__q"><span class="devanagari">पास</span> ↔ ?</p>
+      <button class="qa-card__reveal" data-toggle-target="#opp-4"
+              data-label-show="Show ▾" data-label-hide="Hide ▴">Show ▾</button>
+      <div class="qa-card__a" id="opp-4">
+        <p class="devanagari">दूर (door) — far</p>
+      </div>
+    </div>
+  </section>
+
+</div></main>
+<footer class="footer"><div class="container">
+  <p>Made with ❤️ for Crispin · <a href="../hindi.html">All Hindi chapters</a> · <a href="../index.html">Home</a></p>
+</div></footer>
+
+<script src="../js/common.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/hindi.js"></script>
+<script>
+  App.renderTopBar('hindi');
+  Progress.markVisit();
+  Progress.renderGamebar();
+  App.wireTabs();
+  Hindi.checkVoiceAndWarn(document.getElementById('tts-warning-host'));
+
+  // Pre-read vocabulary for the poem
+  const POEM_VOCAB = [
+    { hi: 'घर',       tr: 'ghar',       en: 'home / house' },
+    { hi: 'अंडा',     tr: 'anda',       en: 'egg' },
+    { hi: 'आकार',     tr: 'aakaar',     en: 'shape' },
+    { hi: 'घोंसला',   tr: 'ghonsla',    en: 'nest' },
+    { hi: 'तिनका',    tr: 'tinka',      en: 'a piece of dry grass / twig' },
+    { hi: 'सूखा',     tr: 'sookha',     en: 'dry' },
+    { hi: 'तैयार',    tr: 'taiyaar',    en: 'ready / made' },
+    { hi: 'संसार',    tr: 'sansaar',    en: 'world' },
+    { hi: 'आसमान',    tr: 'aasmaan',    en: 'sky' },
+    { hi: 'पंख',      tr: 'pankh',      en: 'wing' },
+    { hi: 'पसारना',   tr: 'pasaarna',   en: 'to spread out' },
+    { hi: 'दूर',      tr: 'door',       en: 'far away' },
+    { hi: 'उड़ना',    tr: 'udna',       en: 'to fly' },
+    { hi: 'समझना',    tr: 'samajhna',   en: 'to understand' },
+    { hi: 'बहुत',     tr: 'bahut',      en: 'very / a lot' },
+    { hi: 'बड़ा',     tr: 'bada',       en: 'big' },
+    { hi: 'पहले',     tr: 'pehle',      en: 'first / earlier' },
+    { hi: 'फिर',      tr: 'phir',       en: 'then / again' },
+    { hi: 'आख़िर',    tr: 'aakhir',     en: 'finally / at last' },
+    { hi: 'चिड़िया',  tr: 'chiriya',    en: 'bird (small)' },
+    { hi: 'गीत',      tr: 'geet',       en: 'song' },
+  ];
+  const host = document.getElementById('vocab-poem');
+  host.innerHTML = POEM_VOCAB.map(it => `
+    <div class="vocab-card" data-speak="${it.hi}">
+      <p class="vocab-card__hi">
+        <span>${it.hi}</span>
+        <button class="hin-speak hin-speak--inline" data-speak="${it.hi}" aria-label="Speak">🔊</button>
+      </p>
+      <p class="vocab-card__tr">/${it.tr}/</p>
+      <p class="vocab-card__en">${it.en}</p>
+    </div>
+  `).join('');
+  host.querySelectorAll('.vocab-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      if (e.target.classList.contains('hin-speak')) return;
+      Hindi.speak(card.dataset.speak);
+    });
+  });
+  Hindi.wireSpeakButtons(host);
+  Hindi.wireWords(document);
+
+  // Stanza-speak buttons (whole stanza)
+  const STANZAS = {
+    'prayer-1': [
+      'भगवन हमको ऐसा वर दो',
+      'जग के सारे सद्गुण भर दो',
+    ],
+    'prayer-2': [
+      'हम फूलों जैसे मुस्काएँ',
+      'सब पर प्रेम-सुगंध लुटाएँ',
+      'हम परहित कर खुशी मनाएँ',
+      'ऐसे भाव हृदय में भर दो',
+      'भगवन हमको ऐसा वर दो',
+    ],
+    'prayer-3': [
+      'दीपक बनें, लड़ें हम तम से',
+      'ज्योतिर्मय हो यह जग हमसे',
+      'कभी न हम घबराएँ गम से',
+      'तन, मन सबल हमारे कर दो',
+      'भगवन हमको ऐसा वर दो',
+    ],
+    'prayer-4': [
+      'सत्य-मार्ग पर बढ़ते जाएँ',
+      'सबको ही सन्मार्ग दिखाएँ',
+      'सब मिलकर जीवन फल पाएँ',
+      'ऐसे ज्ञान, बुद्धि से भर दो',
+      'भगवन हमको ऐसा वर दो',
+    ],
+    'ch01-s1': [
+      'सबसे पहले मेरे घर का',
+      'अंडे जैसा था आकार',
+      'तब मैं यही समझती थी',
+      'बस इतना सा ही है संसार',
+    ],
+    'ch01-s2': [
+      'फिर मेरा घर बना घोंसला',
+      'सूखे तिनकों से तैयार',
+      'तब मैं यही समझती थी',
+      'बस इतना सा ही है संसार',
+    ],
+    'ch01-s3': [
+      'आख़िर जब मैं आसमान में',
+      'उड़ी दूर तक पंख पसार',
+      'तभी समझ में मेरी आया',
+      'बहुत बड़ा है यह संसार',
+    ],
+  };
+  document.querySelectorAll('[data-stanza]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.dataset.stanza;
+      const lines = STANZAS[id];
+      if (!lines) return;
+      btn.classList.add('speaking');
+      Hindi.speakStanza(lines, {
+        rate: 0.78,
+        onDone: () => btn.classList.remove('speaking'),
+      });
+    });
+  });
+
+  // Listen tab — full poem
+  const FULL_POEM = [...STANZAS['ch01-s1'], ...STANZAS['ch01-s2'], ...STANZAS['ch01-s3']];
+  const playBtn  = document.getElementById('listen-play');
+  const stopBtn  = document.getElementById('listen-stop');
+  const status   = document.getElementById('listen-status');
+  const title    = document.getElementById('listen-title');
+  playBtn.addEventListener('click', () => {
+    title.textContent = 'Listening…';
+    playBtn.disabled = true;
+    stopBtn.disabled = false;
+    Hindi.speakStanza(FULL_POEM, {
+      rate: 0.78,
+      onLine: (i, line) => { status.textContent = `Line ${i + 1}/${FULL_POEM.length} · ${line}`; },
+      onDone: () => {
+        title.textContent = 'Done!';
+        status.textContent = 'Now open the Read tab and follow along.';
+        playBtn.disabled = false;
+        stopBtn.disabled = true;
+      },
+    });
+  });
+  stopBtn.addEventListener('click', () => {
+    Hindi.stop();
+    title.textContent = 'Stopped.';
+    status.textContent = '';
+    playBtn.disabled = false;
+    stopBtn.disabled = true;
+  });
+</script>
+</body>
+</html>

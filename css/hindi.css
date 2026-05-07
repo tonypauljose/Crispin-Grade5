@@ -1,0 +1,483 @@
+/* ============================================================
+   Crispin's World — hindi.css
+   Devanagari typography + speak-buttons + read-along styling
+   ============================================================ */
+
+/* Use a Devanagari-friendly font for any element marked .devanagari */
+.devanagari {
+  font-family: 'Tiro Devanagari Hindi', 'Mukta', 'Noto Sans Devanagari',
+               'Bricolage Grotesque', system-ui, sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1;
+  letter-spacing: 0;
+}
+
+/* Make Hindi text in hero/title bigger so the script is comfortable to read */
+.bento__title.devanagari      { line-height: 1.25; }
+.bento__title--big.devanagari { line-height: 1.15; }
+
+/* ── Speak button (audio icon next to any Hindi text) ─────── */
+.hin-speak {
+  background: linear-gradient(135deg, #FBBF24, #F472B6);
+  color: #14142B;
+  border: none;
+  border-radius: 50%;
+  width: 38px; height: 38px;
+  font-size: 1.15rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(244,114,182,0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.hin-speak:hover { transform: scale(1.1); box-shadow: 0 6px 16px rgba(244,114,182,0.45); }
+.hin-speak:active { transform: scale(0.92); }
+.hin-speak.speaking {
+  animation: hin-speak-pulse 0.8s ease-in-out infinite;
+}
+@keyframes hin-speak-pulse {
+  0%, 100% { box-shadow: 0 4px 12px rgba(244,114,182,0.3); }
+  50% { box-shadow: 0 0 0 8px rgba(244,114,182,0.0); }
+}
+.hin-speak--inline {
+  width: 26px; height: 26px;
+  font-size: 0.85rem;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+/* ── Alphabet grid (foundation page) ──────────────────────── */
+.alphabet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.alphabet-card {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 14px 8px;
+  text-align: center;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  position: relative;
+}
+.alphabet-card:hover {
+  border-color: #F472B6;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(244,114,182,0.15);
+}
+.alphabet-card.varga--vowel       { background: linear-gradient(135deg, #FEF3C7, #FFE4B5); }
+.alphabet-card.varga--ka          { background: linear-gradient(135deg, #DBEAFE, #BFDBFE); }
+.alphabet-card.varga--cha         { background: linear-gradient(135deg, #DCFCE7, #BBF7D0); }
+.alphabet-card.varga--ta-retro    { background: linear-gradient(135deg, #FCE7F3, #FBCFE8); }
+.alphabet-card.varga--ta-dental   { background: linear-gradient(135deg, #E0E7FF, #C7D2FE); }
+.alphabet-card.varga--pa          { background: linear-gradient(135deg, #FEE2E2, #FECACA); }
+.alphabet-card.varga--antah       { background: linear-gradient(135deg, #F3E8FF, #E9D5FF); }
+.alphabet-card.varga--ushma       { background: linear-gradient(135deg, #FFEDD5, #FED7AA); }
+
+.alphabet-card__char {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Sans Devanagari', sans-serif;
+  font-size: 2.6rem;
+  line-height: 1;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.alphabet-card__sound {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.alphabet-card__hint {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  margin-top: 2px;
+  font-style: italic;
+}
+.alphabet-card__speak {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 22px; height: 22px;
+  font-size: 0.7rem;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0.8;
+}
+.alphabet-card__speak:hover { opacity: 1; transform: scale(1.1); background: white; }
+
+/* ── Varga heading row ─────────────────────────────────────── */
+.varga-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: var(--space-5);
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--line);
+}
+.varga-heading h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+.varga-heading .roman {
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.varga-heading .pronounce-where {
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+  font-style: italic;
+  margin-left: auto;
+}
+
+/* ── Vocabulary card grid ──────────────────────────────────── */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.vocab-card {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s ease;
+}
+.vocab-card:hover {
+  border-color: #F472B6;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(244,114,182,0.12);
+}
+.vocab-card__hi {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Sans Devanagari', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vocab-card__tr {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  font-style: italic;
+  margin-bottom: 6px;
+}
+.vocab-card__en {
+  font-size: 1rem;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.vocab-card__group {
+  position: absolute;
+  top: 8px; right: 10px;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+  background: var(--bg-soft);
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+/* ── Read-along (poem stanza) ─────────────────────────────── */
+.poem-stanza {
+  background: linear-gradient(135deg, #FFFBEB, #FFF7E0);
+  border-left: 4px solid #FBBF24;
+  border-radius: var(--radius-md);
+  padding: 24px 28px;
+  margin: 18px 0;
+  position: relative;
+}
+.poem-stanza__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed rgba(251,191,36,0.4);
+}
+.poem-stanza__header h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #B45309;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.poem-stanza__line {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Sans Devanagari', sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.9;
+  color: var(--ink);
+  margin: 0;
+}
+.poem-stanza__english {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(251,191,36,0.4);
+  font-size: 1rem;
+  color: var(--ink-soft);
+  font-style: italic;
+  line-height: 1.5;
+  display: none;
+}
+.poem-stanza__english.show { display: block; animation: popIn 0.3s ease-out; }
+.poem-stanza__toggle {
+  font-size: 0.85rem;
+  color: var(--purple-dark);
+  background: none;
+  border: 1px dashed var(--purple);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-weight: 600;
+}
+.poem-stanza__toggle:hover { background: rgba(124,58,237,0.08); }
+
+/* Tappable word inside the poem */
+.hin-word {
+  cursor: pointer;
+  border-bottom: 1.5px dotted transparent;
+  transition: all 0.1s ease;
+  padding: 0 1px;
+  border-radius: 3px;
+}
+.hin-word:hover {
+  background: rgba(251,191,36,0.25);
+  border-bottom-color: #B45309;
+}
+.hin-word.glossed {
+  background: linear-gradient(transparent 60%, rgba(244,114,182,0.25) 60%);
+}
+
+/* Hover gloss tooltip */
+.hin-tooltip {
+  position: fixed;
+  z-index: 1000;
+  background: #14142B;
+  color: white;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  pointer-events: none;
+  box-shadow: 0 12px 32px rgba(20,20,43,0.3);
+  max-width: 280px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.hin-tooltip.show { opacity: 1; transform: translateY(0); }
+.hin-tooltip__hi {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Sans Devanagari', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: block;
+}
+.hin-tooltip__tr {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.65);
+  font-style: italic;
+  margin-top: 2px;
+  display: block;
+}
+.hin-tooltip__en {
+  margin-top: 6px;
+  font-size: 0.95rem;
+  display: block;
+}
+
+/* ── Comprehension question card ──────────────────────────── */
+.qa-card {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin: 12px 0;
+}
+.qa-card__q {
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.qa-card__q .devanagari { font-size: 1.15rem; }
+.qa-card__a {
+  display: none;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.qa-card__a.show { display: block; animation: popIn 0.3s ease-out; }
+.qa-card__a .devanagari { font-size: 1.05rem; line-height: 1.7; }
+
+.qa-card__reveal {
+  font-size: 0.85rem;
+  color: var(--purple-dark);
+  background: none;
+  border: 1px dashed var(--purple);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 4px;
+}
+.qa-card__reveal:hover { background: rgba(124,58,237,0.08); }
+
+/* ── Listen panel (full-poem audio playback) ──────────────── */
+.listen-panel {
+  background: linear-gradient(135deg, #1F1B3D 0%, #14142B 100%);
+  color: white;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  text-align: center;
+  margin: 18px 0;
+}
+.listen-panel h3 {
+  margin: 0 0 8px;
+  font-size: 1.4rem;
+}
+.listen-panel p {
+  color: rgba(255,255,255,0.75);
+  margin: 0 0 20px;
+}
+.listen-panel__btn {
+  background: linear-gradient(135deg, #FBBF24, #F472B6);
+  color: #14142B;
+  border: none;
+  padding: 16px 32px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin: 0 6px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+.listen-panel__btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(244,114,182,0.4); }
+.listen-panel__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+.listen-panel__btn.secondary {
+  background: rgba(255,255,255,0.12);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.listen-status {
+  margin-top: 14px;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.7);
+  min-height: 1.4em;
+}
+
+/* No-voice warning banner */
+.tts-warning {
+  background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+  border: 1.5px solid #FBBF24;
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  margin: 12px 0;
+  font-size: 0.95rem;
+  color: #92400E;
+}
+.tts-warning strong { color: #78350F; }
+
+/* ── Matra demo row ───────────────────────────────────────── */
+.matra-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+  margin: 14px 0;
+}
+.matra-row .alphabet-card { padding: 10px 6px; }
+.matra-row .alphabet-card__char { font-size: 2rem; }
+
+/* ── Practice flashcard ────────────────────────────────────── */
+.flashcard {
+  perspective: 1000px;
+  max-width: 360px;
+  margin: 24px auto;
+  cursor: pointer;
+}
+.flashcard__inner {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  text-align: center;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-style: preserve-3d;
+}
+.flashcard.flipped .flashcard__inner { transform: rotateY(180deg); }
+.flashcard__face {
+  position: absolute;
+  width: 100%; height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-shadow: 0 12px 32px rgba(20,20,43,0.12);
+}
+.flashcard__face--front {
+  background: linear-gradient(135deg, #FEF3C7, #FFE4B5);
+}
+.flashcard__face--back {
+  background: linear-gradient(135deg, #DBEAFE, #BFDBFE);
+  transform: rotateY(180deg);
+}
+.flashcard__hi {
+  font-family: 'Tiro Devanagari Hindi', 'Noto Sans Devanagari', sans-serif;
+  font-size: 4rem;
+  font-weight: 600;
+  margin: 0;
+}
+.flashcard__en {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+}
+.flashcard__tr {
+  font-size: 1rem;
+  color: var(--ink-muted);
+  font-style: italic;
+  margin-top: 6px;
+}
+.flashcard__hint {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  margin-top: 14px;
+  font-style: italic;
+}
+.flashcard-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* Mobile tweaks */
+@media (max-width: 720px) {
+  .alphabet-card__char { font-size: 2.2rem; }
+  .vocab-card__hi { font-size: 1.4rem; }
+  .poem-stanza__line { font-size: 1.3rem; }
+  .listen-panel { padding: 22px 16px; }
+}
