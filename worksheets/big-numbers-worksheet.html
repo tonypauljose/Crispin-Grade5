@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Big Numbers Worksheet — Crispin's World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/print.css">
+  <style>
+    u { background: #FBE7B5; text-decoration: none; padding: 0 2px; font-weight: 700; }
+  </style>
+</head>
+<body class="worksheet-page">
+
+  <div class="no-print" style="position:sticky; top:0; background:#6B21A8; color:white; padding:12px 20px; text-align:center; z-index:10;">
+    <strong>📄 Big Numbers Worksheet</strong> ·
+    <a href="../chapters/big-numbers.html" style="color:#FACC15;">← Back to chapter</a>
+    <button class="btn btn-yellow btn-sm" onclick="window.print()" style="margin-left:12px;">🖨️ Print</button>
+    <button class="btn btn-teal btn-sm" onclick="location.reload()" style="margin-left:8px;">🔄 New questions</button>
+    <button class="btn btn-outline btn-sm" onclick="toggleAnswers()" style="margin-left:8px; background:white;">👁️ Toggle answer key</button>
+  </div>
+
+  <div class="worksheet">
+    <div class="worksheet__header">
+      <div class="worksheet__title-block">
+        <h1>💯 Big Numbers</h1>
+        <p class="subtitle">Lakhs, Crores, Millions · Worksheet</p>
+      </div>
+      <div class="worksheet__fields">
+        <label>Name:</label><span class="blank"></span>
+        <label>Date:</label><span class="blank" id="ws-date"></span>
+        <label>Score:</label><span class="blank">&nbsp;&nbsp;&nbsp; / 40</span>
+      </div>
+    </div>
+
+    <section class="worksheet__section">
+      <h2><span class="section-letter">A.</span> Put commas — Indian system <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <p class="worksheet__instructions">First comma after 3 digits, then every 2 digits.</p>
+      <ol class="ws-list" id="sec-a"></ol>
+    </section>
+
+    <section class="worksheet__section">
+      <h2><span class="section-letter">B.</span> Put commas — International system <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <p class="worksheet__instructions">Comma every 3 digits from the right.</p>
+      <ol class="ws-list" id="sec-b"></ol>
+    </section>
+
+    <section class="worksheet__section">
+      <h2><span class="section-letter">C.</span> Successor &amp; Predecessor <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <ol class="ws-list" id="sec-c"></ol>
+    </section>
+
+    <section class="worksheet__section">
+      <h2><span class="section-letter">D.</span> Standard form <span style="float:right; font-size:10pt; font-weight:normal;">(4 marks)</span></h2>
+      <p class="worksheet__instructions">Add the parts together.</p>
+      <ol class="ws-list" id="sec-d"></ol>
+    </section>
+
+    <section class="worksheet__section">
+      <h2><span class="section-letter">E.</span> Expanded form <span style="float:right; font-size:10pt; font-weight:normal;">(4 marks)</span></h2>
+      <p class="worksheet__instructions">Break each digit by its place value, joined with + signs.</p>
+      <ol class="ws-list" id="sec-e"></ol>
+    </section>
+
+    <section class="worksheet__section">
+      <h2><span class="section-letter">F.</span> Write the numeral (Indian) <span style="float:right; font-size:10pt; font-weight:normal;">(3 marks)</span></h2>
+      <ol class="ws-list" id="sec-f"></ol>
+    </section>
+
+    <section class="worksheet__section">
+      <h2><span class="section-letter">G.</span> Place value of the underlined digit <span style="float:right; font-size:10pt; font-weight:normal;">(5 marks)</span></h2>
+      <p class="worksheet__instructions">Write the place value (with Indian commas).</p>
+      <ol class="ws-list" id="sec-g"></ol>
+    </section>
+
+    <section class="worksheet__section">
+      <h2><span class="section-letter">H.</span> Face value of the underlined digit <span style="float:right; font-size:10pt; font-weight:normal;">(3 marks)</span></h2>
+      <p class="worksheet__instructions">The digit itself.</p>
+      <ol class="ws-list" id="sec-h"></ol>
+    </section>
+
+    <section class="worksheet__section">
+      <h2><span class="section-letter">I.</span> Compare: &lt;, &gt;, or = <span style="float:right; font-size:10pt; font-weight:normal;">(6 marks)</span></h2>
+      <ol class="ws-list ws-grid" id="sec-i"></ol>
+    </section>
+
+    <section class="answer-key" id="answer-key">
+      <h1>🗝️ Answer Key</h1>
+      <p class="muted">For parents/teachers. Students: try without peeking!</p>
+      <div class="answer-key__section"><h3>A. Indian commas</h3><ol class="answer-key__list" id="ans-a"></ol></div>
+      <div class="answer-key__section"><h3>B. International commas</h3><ol class="answer-key__list" id="ans-b"></ol></div>
+      <div class="answer-key__section"><h3>C. Successor / Predecessor</h3><ol class="answer-key__list" id="ans-c"></ol></div>
+      <div class="answer-key__section"><h3>D. Standard form</h3><ol class="answer-key__list" id="ans-d"></ol></div>
+      <div class="answer-key__section"><h3>E. Expanded form</h3><ol class="answer-key__list" id="ans-e"></ol></div>
+      <div class="answer-key__section"><h3>F. Numerals from words</h3><ol class="answer-key__list" id="ans-f"></ol></div>
+      <div class="answer-key__section"><h3>G. Place value</h3><ol class="answer-key__list" id="ans-g"></ol></div>
+      <div class="answer-key__section"><h3>H. Face value</h3><ol class="answer-key__list" id="ans-h"></ol></div>
+      <div class="answer-key__section"><h3>I. Compare</h3><ol class="answer-key__list" id="ans-i"></ol></div>
+    </section>
+
+  </div>
+
+  <script src="../js/common.js"></script>
+  <script>
+  document.getElementById('ws-date').textContent = App.formatDateDMY(new Date());
+
+  // ── Helpers (mirror the Python generator) ───────────────────────
+  const ONES_W = ['zero','one','two','three','four','five','six','seven','eight','nine','ten',
+                  'eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+  const TENS_W = {2:'twenty',3:'thirty',4:'forty',5:'fifty',6:'sixty',7:'seventy',8:'eighty',9:'ninety'};
+  function words2(n){
+    if (n < 20) return ONES_W[n];
+    const t = Math.floor(n/10), o = n%10;
+    return o === 0 ? TENS_W[t] : `${TENS_W[t]}-${ONES_W[o]}`;
+  }
+  function words3(n){
+    if (n === 0) return '';
+    if (n < 100) return words2(n);
+    const h = Math.floor(n/100), r = n%100;
+    return r ? `${ONES_W[h]} hundred ${words2(r)}` : `${ONES_W[h]} hundred`;
+  }
+  function indianWords(n){
+    if (n === 0) return 'zero';
+    let parts = [];
+    const cr = Math.floor(n/10000000); n %= 10000000;
+    const lk = Math.floor(n/100000);   n %= 100000;
+    const th = Math.floor(n/1000);     n %= 1000;
+    if (cr) parts.push(`${words2(cr)} crore`);
+    if (lk) parts.push(`${words2(lk)} lakh`);
+    if (th) parts.push(`${words2(th)} thousand`);
+    if (n)  parts.push(words3(n));
+    return parts.join(' ');
+  }
+  function indianCommas(n){
+    let s = String(n);
+    if (s.length <= 3) return s;
+    const last3 = s.slice(-3);
+    let rest = s.slice(0,-3);
+    const groups = [];
+    while (rest.length > 2) { groups.unshift(rest.slice(-2)); rest = rest.slice(0,-2); }
+    if (rest) groups.unshift(rest);
+    return groups.join(',') + ',' + last3;
+  }
+  function intlCommas(n){ return n.toLocaleString('en-US'); }
+  function expandedForm(n){
+    const s = String(n);
+    const parts = [];
+    for (let i = 0; i < s.length; i++) {
+      const d = +s[i];
+      if (d === 0) continue;
+      parts.push(indianCommas(d * (10 ** (s.length - 1 - i))));
+    }
+    return parts.join(' + ');
+  }
+  function randInt(a, b){ return Math.floor(Math.random() * (b - a + 1)) + a; }
+  function bigRand(minDigits, maxDigits){
+    const d = randInt(minDigits, maxDigits);
+    return randInt(10 ** (d-1), 10 ** d - 1);
+  }
+  function append(listId, html){
+    document.getElementById(listId).insertAdjacentHTML('beforeend', '<li>' + html + '</li>');
+  }
+
+  const PLACES_INDIAN = ['ones','tens','hundreds','thousands','ten thousands','lakhs','ten lakhs','crores','ten crores'];
+
+  // ── A: Indian commas ─────────────────
+  for (let i = 0; i < 5; i++) {
+    const n = bigRand(5, 9);
+    append('sec-a', `${n} → <span class="ws-blank wide"></span>`);
+    document.getElementById('ans-a').insertAdjacentHTML('beforeend', `<li>${n} → <b>${indianCommas(n)}</b></li>`);
+  }
+
+  // ── B: International commas ─────────
+  for (let i = 0; i < 5; i++) {
+    const n = bigRand(5, 9);
+    append('sec-b', `${n} → <span class="ws-blank wide"></span>`);
+    document.getElementById('ans-b').insertAdjacentHTML('beforeend', `<li>${n} → <b>${intlCommas(n)}</b></li>`);
+  }
+
+  // ── C: Succ / Pred (alternating) ──
+  for (let i = 0; i < 5; i++) {
+    const n = bigRand(5, 9);
+    if (i % 2 === 0) {
+      append('sec-c', `Successor of ${indianCommas(n)} = <span class="ws-blank"></span>`);
+      document.getElementById('ans-c').insertAdjacentHTML('beforeend', `<li>Succ ${indianCommas(n)} = <b>${indianCommas(n+1)}</b></li>`);
+    } else {
+      append('sec-c', `Predecessor of ${indianCommas(n)} = <span class="ws-blank"></span>`);
+      document.getElementById('ans-c').insertAdjacentHTML('beforeend', `<li>Pred ${indianCommas(n)} = <b>${indianCommas(n-1)}</b></li>`);
+    }
+  }
+
+  // ── D: Standard form ──────────────
+  for (let i = 0; i < 4; i++) {
+    const n = bigRand(5, 8);
+    append('sec-d', `${expandedForm(n)} = <span class="ws-blank wide"></span>`);
+    document.getElementById('ans-d').insertAdjacentHTML('beforeend', `<li>${expandedForm(n)} = <b>${indianCommas(n)}</b></li>`);
+  }
+
+  // ── E: Expanded form ──────────────
+  for (let i = 0; i < 4; i++) {
+    const n = bigRand(5, 8);
+    append('sec-e', `${indianCommas(n)} = <span class="ws-blank wide"></span>`);
+    document.getElementById('ans-e').insertAdjacentHTML('beforeend', `<li>${indianCommas(n)} = <b>${expandedForm(n)}</b></li>`);
+  }
+
+  // ── F: Numerals from words ────────
+  for (let i = 0; i < 3; i++) {
+    const n = bigRand(5, 8);
+    const w = indianWords(n);
+    const cap = w.charAt(0).toUpperCase() + w.slice(1);
+    append('sec-f', `"${cap}" → <span class="ws-blank wide"></span>`);
+    document.getElementById('ans-f').insertAdjacentHTML('beforeend', `<li>"${cap}" → <b>${indianCommas(n)}</b></li>`);
+  }
+
+  // ── G: Place value ────────────────
+  for (let i = 0; i < 5; i++) {
+    const n = bigRand(7, 9);
+    const s = String(n);
+    let idx;
+    do { idx = randInt(0, s.length - 1); } while (s[idx] === '0');
+    const digit = +s[idx];
+    const placePos = s.length - 1 - idx;
+    const pv = digit * (10 ** placePos);
+    const display = s.slice(0, idx) + '<u>' + s[idx] + '</u>' + s.slice(idx + 1);
+    append('sec-g', `In ${display}, place value of <u>${digit}</u> = <span class="ws-blank wide"></span>`);
+    document.getElementById('ans-g').insertAdjacentHTML('beforeend', `<li>${display} → <b>${indianCommas(pv)}</b> (${PLACES_INDIAN[placePos]})</li>`);
+  }
+
+  // ── H: Face value ─────────────────
+  for (let i = 0; i < 3; i++) {
+    const n = bigRand(7, 9);
+    const s = String(n);
+    const idx = randInt(0, s.length - 1);
+    const digit = +s[idx];
+    const display = s.slice(0, idx) + '<u>' + s[idx] + '</u>' + s.slice(idx + 1);
+    append('sec-h', `In ${display}, face value of <u>${digit}</u> = <span class="ws-blank"></span>`);
+    document.getElementById('ans-h').insertAdjacentHTML('beforeend', `<li>${display} → <b>${digit}</b></li>`);
+  }
+
+  // ── I: Compare ────────────────────
+  for (let i = 0; i < 6; i++) {
+    const a = bigRand(6, 9);
+    let b;
+    if (i % 3 === 0) b = a + randInt(-1000, 1000);
+    else b = bigRand(6, 9);
+    if (b < 1) b = 1;
+    const sign = a < b ? '<' : (a > b ? '>' : '=');
+    append('sec-i', `${indianCommas(a)} <span class="ws-blank" style="min-width:24px;"></span> ${indianCommas(b)}`);
+    document.getElementById('ans-i').insertAdjacentHTML('beforeend', `<li>${indianCommas(a)} <b>${sign}</b> ${indianCommas(b)}</li>`);
+  }
+
+  window.toggleAnswers = function () {
+    const k = document.getElementById('answer-key');
+    k.style.display = (k.style.display === 'none') ? 'block' : 'none';
+  };
+  </script>
+</body>
+</html>

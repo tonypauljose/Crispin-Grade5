@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Big Numbers · Lakhs, Crores, Millions — Crispin's World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%AF%3C/text%3E%3C/svg%3E">
+  <style>
+    /* Big-number reference tables */
+    .pv-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.95rem; }
+    .pv-table th, .pv-table td { border: 1px solid var(--line); padding: 8px 10px; text-align: center; }
+    .pv-table th { background: linear-gradient(135deg, #FBBF24, #F472B6); color: #14142B; font-weight: 700; }
+    .pv-table tr:nth-child(odd) td { background: #FBFAF6; }
+    .pv-table .indian th { background: linear-gradient(135deg, #34D399, #14B8A6); }
+    .pv-table .intl th { background: linear-gradient(135deg, #60A5FA, #818CF8); color: white; }
+    .pv-place { font-size: 0.78rem; color: var(--ink-muted); display: block; }
+    .pv-power { font-family: var(--font-mono, monospace); font-size: 0.85rem; }
+    u { background: linear-gradient(transparent 60%, rgba(244,114,182,0.4) 60%); text-decoration: none; font-weight: 700; }
+    .ex-item__q u { font-size: 1.1em; }
+    .num-display { font-family: var(--font-mono, monospace); font-size: 1.1rem; }
+  </style>
+</head>
+<body>
+<main class="page"><div class="container">
+
+  <section class="section">
+    <p class="muted"><a href="../maths.html">← Back to Mathematics</a></p>
+    <h1>💯 Big Numbers · Lakhs, Crores &amp; Millions</h1>
+    <p class="lead">Numbers up to <strong>10 crore</strong> (Indian) and <strong>100 million</strong> (International). Learn both comma systems, place value vs face value, succ/pred, standard ↔ expanded form, numerals ↔ words, and comparing.</p>
+  </section>
+
+  <!-- Tabs -->
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" data-target="tab-learn">📖 Learn</button>
+    <button class="tab-btn" data-target="tab-practice">✍️ Practice</button>
+    <button class="tab-btn" data-target="tab-quiz">🎯 Quiz</button>
+    <button class="tab-btn" data-target="tab-worksheet">🖨️ Worksheet</button>
+    <button class="tab-btn" data-target="tab-exam">📝 Exam</button>
+  </div>
+
+  <!-- ═══════════ LEARN ═══════════ -->
+  <section id="tab-learn" class="tab-panel active">
+
+    <!-- Cheat sheet card up top -->
+    <div class="card" style="background: linear-gradient(135deg, #FEF3C7, #FFE4B5); border-left:4px solid #FBBF24;">
+      <p style="margin:0 0 6px; font-size:0.9rem; letter-spacing:0.06em; text-transform:uppercase; color:#78350F; font-weight:700;">⚡ Cheat sheet</p>
+      <table class="pv-table" style="margin:0;">
+        <thead><tr><th>1 thousand</th><th>1 lakh</th><th>10 lakh = 1 million</th><th>1 crore = 10 million</th><th>10 crore = 100 million</th></tr></thead>
+        <tbody><tr>
+          <td>1,000</td><td>1,00,000</td><td>10,00,000 = 1,000,000</td><td>1,00,00,000 = 10,000,000</td><td>10,00,00,000 = 100,000,000</td>
+        </tr></tbody>
+      </table>
+    </div>
+
+    <!-- Lesson 1 -->
+    <div class="lesson" data-lesson="bn1">
+      <div class="lesson__header">
+        <span class="lesson__num">1</span>
+        <span class="lesson__title">The Indian place value system</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <p>In the Indian system, places are grouped like this from the right:</p>
+          <table class="pv-table">
+            <thead class="indian"><tr>
+              <th>Ten Crores<span class="pv-place">10,00,00,000</span></th>
+              <th>Crores<span class="pv-place">1,00,00,000</span></th>
+              <th>Ten Lakhs<span class="pv-place">10,00,000</span></th>
+              <th>Lakhs<span class="pv-place">1,00,000</span></th>
+              <th>Ten Thousands<span class="pv-place">10,000</span></th>
+              <th>Thousands<span class="pv-place">1,000</span></th>
+              <th>Hundreds<span class="pv-place">100</span></th>
+              <th>Tens<span class="pv-place">10</span></th>
+              <th>Ones<span class="pv-place">1</span></th>
+            </tr></thead>
+            <tbody><tr>
+              <td class="pv-power">10⁸</td><td class="pv-power">10⁷</td><td class="pv-power">10⁶</td><td class="pv-power">10⁵</td>
+              <td class="pv-power">10⁴</td><td class="pv-power">10³</td><td class="pv-power">10²</td><td class="pv-power">10¹</td><td class="pv-power">10⁰</td>
+            </tr></tbody>
+          </table>
+          <div class="example-box">
+            Read <strong class="num-display">5,34,67,890</strong> as <strong>"five crore thirty-four lakh sixty-seven thousand eight hundred ninety"</strong>.<br>
+            • 5 → ten crores (5 × 10⁷ = 5 crore = 5,00,00,000)<br>
+            • 34 → lakhs (34 × 10⁵ = 34 lakh = 34,00,000)<br>
+            • 67 → thousands (67 × 10³ = 67,000)<br>
+            • 890 → ones-tens-hundreds
+          </div>
+          <div class="tip-box">💡 The Indian groupings are <strong>"3 then pairs"</strong>: hundreds + tens + ones, then thousands (pair), then lakhs (pair), then crores (pair).</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lesson 2 -->
+    <div class="lesson" data-lesson="bn2">
+      <div class="lesson__header">
+        <span class="lesson__num">2</span>
+        <span class="lesson__title">The International place value system</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <p>In the International system, places group in <strong>threes</strong>:</p>
+          <table class="pv-table">
+            <thead class="intl"><tr>
+              <th>Hundred Millions<span class="pv-place">100,000,000</span></th>
+              <th>Ten Millions<span class="pv-place">10,000,000</span></th>
+              <th>Millions<span class="pv-place">1,000,000</span></th>
+              <th>Hundred Thousands<span class="pv-place">100,000</span></th>
+              <th>Ten Thousands<span class="pv-place">10,000</span></th>
+              <th>Thousands<span class="pv-place">1,000</span></th>
+              <th>Hundreds<span class="pv-place">100</span></th>
+              <th>Tens<span class="pv-place">10</span></th>
+              <th>Ones<span class="pv-place">1</span></th>
+            </tr></thead>
+          </table>
+          <div class="example-box">
+            <strong class="num-display">53,467,890</strong> = <strong>"fifty-three million four hundred sixty-seven thousand eight hundred ninety"</strong>.
+          </div>
+          <div class="tip-box">💡 Both systems are equal in value — just a different way of <em>grouping</em> the digits with commas. <strong>53,467,890</strong> (international) = <strong>5,34,67,890</strong> (Indian).</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lesson 3 -->
+    <div class="lesson" data-lesson="bn3">
+      <div class="lesson__header">
+        <span class="lesson__num">3</span>
+        <span class="lesson__title">The comma rules — Indian vs International</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <table class="pv-table">
+            <thead><tr><th>System</th><th>Rule</th><th>Pattern (right → left)</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Indian</strong></td>
+                <td>First comma after 3 digits, then every 2 digits</td>
+                <td>3 - 2 - 2 - 2 …</td>
+                <td><span class="num-display">1,23,45,67,890</span></td>
+              </tr>
+              <tr>
+                <td><strong>International</strong></td>
+                <td>Comma every 3 digits</td>
+                <td>3 - 3 - 3 …</td>
+                <td><span class="num-display">1,234,567,890</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="example-box">
+            <strong>Try it:</strong> <span class="num-display">7654321</span><br>
+            • Indian → <span class="num-display"><strong>76,54,321</strong></span> (3, then pair, then pair)<br>
+            • International → <span class="num-display"><strong>7,654,321</strong></span> (groups of 3)
+          </div>
+          <div class="watchout-box">⚠️ <strong>Don't put a comma at the very start.</strong> If you only have 5 digits, the Indian system gives one comma (e.g. 12,345) — not two.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lesson 4 -->
+    <div class="lesson" data-lesson="bn4">
+      <div class="lesson__header">
+        <span class="lesson__num">4</span>
+        <span class="lesson__title">Standard form &amp; Expanded form</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <p><strong>Standard form</strong> = the regular number, with commas. <strong>Expanded form</strong> = the number broken into the place values of each digit, joined with + signs.</p>
+          <div class="example-box">
+            <strong>Standard:</strong> 5,34,567<br>
+            <strong>Expanded:</strong> 5,00,000 + 30,000 + 4,000 + 500 + 60 + 7
+          </div>
+          <div class="tip-box">💡 Skip places where the digit is 0 (e.g. 5,03,007 expands to 5,00,000 + 3,000 + 7 — the zeroes are silent).</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lesson 5 -->
+    <div class="lesson" data-lesson="bn5">
+      <div class="lesson__header">
+        <span class="lesson__num">5</span>
+        <span class="lesson__title">Place value vs Face value</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <p>Two important — and often confused — definitions:</p>
+          <ul>
+            <li><strong>Face value</strong> of a digit = <em>the digit itself</em>, regardless of where it sits.</li>
+            <li><strong>Place value</strong> of a digit = the digit × the worth of its place.</li>
+          </ul>
+          <div class="example-box">
+            In <strong class="num-display">5,3<u>2</u>,45,678</strong> (the underlined digit is 2):<br>
+            • <strong>Face value</strong> = 2 (always just the digit)<br>
+            • <strong>Place value</strong> = 2 × 1,00,000 = <strong>2,00,000</strong> (the 2 is in the lakhs place)
+          </div>
+          <div class="watchout-box">⚠️ Face value never changes. Place value depends on where the digit sits.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lesson 6 -->
+    <div class="lesson" data-lesson="bn6">
+      <div class="lesson__header">
+        <span class="lesson__num">6</span>
+        <span class="lesson__title">Numerals ↔ Words (Indian)</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <p>To <strong>read</strong> a number, name each group from left:</p>
+          <ol>
+            <li>Crores group (the digits before the first comma in 7+ digits)</li>
+            <li>Lakhs group (next 2 digits)</li>
+            <li>Thousands group (next 2 digits)</li>
+            <li>Hundreds + tens + ones (last 3 digits)</li>
+          </ol>
+          <div class="example-box">
+            <strong class="num-display">8,36,58,086</strong> → "eight crore thirty-six lakh fifty-eight thousand eighty-six".<br>
+            <strong class="num-display">5,03,007</strong> → "five lakh three thousand seven" (skip empty places).<br>
+            <strong>"Two crore five lakh"</strong> → 2,05,00,000.
+          </div>
+          <div class="tip-box">💡 In the International system the same number reads as: 83,658,086 → "eighty-three million six hundred fifty-eight thousand eighty-six".</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lesson 7 -->
+    <div class="lesson" data-lesson="bn7">
+      <div class="lesson__header">
+        <span class="lesson__num">7</span>
+        <span class="lesson__title">Successor &amp; Predecessor</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <p>The <strong>successor</strong> is the next number (+1). The <strong>predecessor</strong> is the previous number (−1).</p>
+          <div class="example-box">
+            • Successor of 4,99,999 → <strong>5,00,000</strong><br>
+            • Predecessor of 1,00,00,000 (1 crore) → <strong>99,99,999</strong><br>
+            • Successor of 9,99,99,999 → <strong>10,00,00,000</strong> (10 crore)
+          </div>
+          <div class="tip-box">💡 When you cross a power of 10, the carries cascade — every 9 becomes 0 and the next digit goes up by 1.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lesson 8 -->
+    <div class="lesson" data-lesson="bn8">
+      <div class="lesson__header">
+        <span class="lesson__num">8</span>
+        <span class="lesson__title">Comparing big numbers (&lt;, &gt;, =)</span>
+        <span class="lesson__chevron">▼</span>
+      </div>
+      <div class="lesson__body">
+        <div class="lesson__content">
+          <ol>
+            <li><strong>Count digits.</strong> The number with more digits is larger (e.g. 1,00,00,000 &gt; 99,99,999).</li>
+            <li><strong>Same digit count?</strong> Compare <strong>from the LEFT</strong> (highest place first), digit by digit, until they differ.</li>
+          </ol>
+          <div class="example-box">
+            <strong>4,35,68,149 vs 4,35,69,149</strong>: same digits up to 4,35,6_,_4_. Hundreds-of-thousands digit: 8 &lt; 9, so <strong>4,35,68,149 &lt; 4,35,69,149</strong>.
+          </div>
+          <div class="tip-box">💡 The "&lt; &gt;" mouth always opens toward the bigger number — like a hungry crocodile.</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════ PRACTICE ═══════════ -->
+  <section id="tab-practice" class="tab-panel">
+    <h2>✍️ Practice</h2>
+    <p class="lead">Auto-scored. Type the answer in each box, then hit <strong>Check</strong>.</p>
+
+    <div class="exercise" id="ex-1" data-ex="1">
+      <h3 class="exercise__title">1. Put commas — Indian system</h3>
+      <p class="muted">Add commas in the Indian style (3, then 2, then 2…).</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="76,54,321"><span class="ex-item__q">7654321 → </span><input class="ex-item__input" placeholder="e.g. 76,54,321" /></div>
+        <div class="ex-item" data-answer="9,87,65,432"><span class="ex-item__q">98765432 → </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="1,00,000"><span class="ex-item__q">100000 → </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="3,45,67,890"><span class="ex-item__q">34567890 → </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(1)">Check</button>
+      <div class="ex-feedback" id="fb-1"></div>
+    </div>
+
+    <div class="exercise" id="ex-2" data-ex="2">
+      <h3 class="exercise__title">2. Put commas — International system</h3>
+      <p class="muted">Add commas in groups of 3 from the right.</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="7,654,321"><span class="ex-item__q">7654321 → </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="98,765,432"><span class="ex-item__q">98765432 → </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="100,000"><span class="ex-item__q">100000 → </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="34,567,890"><span class="ex-item__q">34567890 → </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(2)">Check</button>
+      <div class="ex-feedback" id="fb-2"></div>
+    </div>
+
+    <div class="exercise" id="ex-3" data-ex="3">
+      <h3 class="exercise__title">3. Successor &amp; Predecessor</h3>
+      <p class="muted">Indian commas are fine. Pure digits also work.</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="5,00,000|500000|5,00,000"><span class="ex-item__q">Successor of 4,99,999 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="99,99,999|9999999|9,999,999"><span class="ex-item__q">Predecessor of 1,00,00,000 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="2,34,56,790|23456790|23,456,790"><span class="ex-item__q">Successor of 2,34,56,789 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="9,99,999|999999|999,999"><span class="ex-item__q">Predecessor of 10,00,000 = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(3)">Check</button>
+      <div class="ex-feedback" id="fb-3"></div>
+    </div>
+
+    <div class="exercise" id="ex-4" data-ex="4">
+      <h3 class="exercise__title">4. Standard form (from expanded)</h3>
+      <p class="muted">Add the parts. Indian commas accepted.</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="5,34,567|534567"><span class="ex-item__q">5,00,000 + 30,000 + 4,000 + 500 + 60 + 7 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="20,07,005|2007005"><span class="ex-item__q">20,00,000 + 7,000 + 5 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="6,03,40,000|60340000"><span class="ex-item__q">6,00,00,000 + 3,00,000 + 40,000 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="1,11,11,111|11111111"><span class="ex-item__q">1,00,00,000 + 10,00,000 + 1,00,000 + 10,000 + 1,000 + 100 + 10 + 1 = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(4)">Check</button>
+      <div class="ex-feedback" id="fb-4"></div>
+    </div>
+
+    <div class="exercise" id="ex-5" data-ex="5">
+      <h3 class="exercise__title">5. Expanded form (from standard)</h3>
+      <p class="muted">Use + signs. Either with or without commas works.</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="3,00,000 + 40,000 + 5,000 + 600 + 70 + 8|300000 + 40000 + 5000 + 600 + 70 + 8"><span class="ex-item__q">3,45,678 = </span><input class="ex-item__input" placeholder="e.g. 3,00,000 + …" /></div>
+        <div class="ex-item" data-answer="50,00,000 + 7,000 + 9|5000000 + 7000 + 9"><span class="ex-item__q">50,07,009 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="1,00,00,000 + 20,00,000 + 3,00,000 + 40,000 + 5,000|10000000 + 2000000 + 300000 + 40000 + 5000"><span class="ex-item__q">1,23,45,000 = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(5)">Check</button>
+      <div class="ex-feedback" id="fb-5"></div>
+    </div>
+
+    <div class="exercise" id="ex-6" data-ex="6">
+      <h3 class="exercise__title">6. Numerals from words (Indian)</h3>
+      <p class="muted">Indian commas accepted. Pure digits also fine.</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="5,34,000|534000"><span class="ex-item__q">"Five lakh thirty-four thousand" → </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="2,05,00,000|20500000"><span class="ex-item__q">"Two crore five lakh" → </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="60,70,765|6070765"><span class="ex-item__q">"Sixty lakh seventy thousand seven hundred sixty-five" → </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="9,00,00,009|90000009"><span class="ex-item__q">"Nine crore nine" → </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(6)">Check</button>
+      <div class="ex-feedback" id="fb-6"></div>
+    </div>
+
+    <div class="exercise" id="ex-7" data-ex="7">
+      <h3 class="exercise__title">7. Words from numerals (Indian)</h3>
+      <p class="muted">Lowercase is fine. Hyphens optional (twenty-three or twenty three).</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="five lakh thirty-four thousand|five lakh thirty four thousand"><span class="ex-item__q">5,34,000 = </span><input class="ex-item__input" placeholder="e.g. five lakh…" /></div>
+        <div class="ex-item" data-answer="two crore five lakh|two crore five lakh only"><span class="ex-item__q">2,05,00,000 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="ten lakh|ten lakh only|one million"><span class="ex-item__q">10,00,000 = </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="one crore|one crore only|ten million"><span class="ex-item__q">1,00,00,000 = </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(7)">Check</button>
+      <div class="ex-feedback" id="fb-7"></div>
+    </div>
+
+    <div class="exercise" id="ex-8" data-ex="8">
+      <h3 class="exercise__title">8. Place value &amp; Face value of underlined digit</h3>
+      <p class="muted">Type the number for place value (e.g. 5,00,000); a single digit for face value.</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="2,00,000|200000|200,000|2 lakh|two lakh"><span class="ex-item__q"><strong>Place value</strong> of <u>2</u> in 5,3<u>2</u>,45,678 → </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="2"><span class="ex-item__q"><strong>Face value</strong> of the same <u>2</u> in 5,3<u>2</u>,45,678 → </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="40,00,000|4000000|4,000,000|40 lakh"><span class="ex-item__q"><strong>Place value</strong> of <u>4</u> in 9,<u>4</u>5,67,891 → </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="0|zero"><span class="ex-item__q"><strong>Place value</strong> of the underlined <u>0</u> in 5,3<u>0</u>,45,678 → </span><input class="ex-item__input" /></div>
+        <div class="ex-item" data-answer="9"><span class="ex-item__q"><strong>Face value</strong> of <u>9</u> in 1,2<u>9</u>,45,678 → </span><input class="ex-item__input" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(8)">Check</button>
+      <div class="ex-feedback" id="fb-8"></div>
+    </div>
+
+    <div class="exercise" id="ex-9" data-ex="9">
+      <h3 class="exercise__title">9. Compare: &lt;, &gt;, =</h3>
+      <p class="muted">Type <code>&lt;</code>, <code>&gt;</code>, or <code>=</code>.</p>
+      <div class="exercise__items">
+        <div class="ex-item" data-answer="<"><span class="ex-item__q">4,35,68,149 ___ 4,35,69,149</span><input class="ex-item__input" placeholder="< > =" style="width:60px;" /></div>
+        <div class="ex-item" data-answer=">"><span class="ex-item__q">1,00,00,000 ___ 99,99,999</span><input class="ex-item__input" style="width:60px;" /></div>
+        <div class="ex-item" data-answer="="><span class="ex-item__q">10,00,000 ___ 1,000,000</span><input class="ex-item__input" style="width:60px;" /></div>
+        <div class="ex-item" data-answer=">"><span class="ex-item__q">5,00,00,000 ___ 50,00,000</span><input class="ex-item__input" style="width:60px;" /></div>
+        <div class="ex-item" data-answer="<"><span class="ex-item__q">9,87,65,432 ___ 9,87,65,433</span><input class="ex-item__input" style="width:60px;" /></div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="checkEx(9)">Check</button>
+      <div class="ex-feedback" id="fb-9"></div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════ QUIZ ═══════════ -->
+  <section id="tab-quiz" class="tab-panel">
+    <h2>🎯 Quiz</h2>
+    <p class="lead">Auto-graded. <strong>300 questions in the bank · 25 random per attempt</strong> covering all 11 skills. Score 80%+ on three attempts in a row to know it's stuck.</p>
+    <div id="quiz-host"></div>
+    <div style="text-align:center; margin-top:18px;">
+      <button class="btn btn-primary btn-lg" id="quiz-start">🎯 Start a quiz</button>
+    </div>
+  </section>
+
+  <!-- ═══════════ WORKSHEET ═══════════ -->
+  <section id="tab-worksheet" class="tab-panel">
+    <h2>🖨️ Printable Worksheet</h2>
+    <div class="card">
+      <p>A4 worksheet with fresh numbers on every reload, 9 sections covering every skill, plus a built-in answer key for parents.</p>
+      <div class="text-center" style="margin-top:16px;">
+        <a class="btn btn-primary btn-lg" href="../worksheets/big-numbers-worksheet.html" target="_blank">Open worksheet 📄</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ EXAM ═══════════ -->
+  <section id="tab-exam" class="tab-panel">
+    <h2>📝 Chapter Exam</h2>
+    <div class="card">
+      <p style="font-size:1.05rem;">25 mixed questions, 30 sec/question, full review at the end.</p>
+      <div class="text-center" style="margin-top:16px;">
+        <a class="btn btn-primary btn-lg" href="../exam.html?ch=big-numbers">📝 Start the Exam →</a>
+      </div>
+    </div>
+  </section>
+
+</div></main>
+<footer class="footer"><div class="container">
+  <p>Made with ❤️ for Crispin · <a href="../maths.html">All Maths chapters</a> · <a href="../index.html">Home</a></p>
+</div></footer>
+
+<script src="../js/common.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/practice-runner.js"></script>
+<script src="../js/quiz-engine.js"></script>
+<script src="../data/big-numbers.js"></script>
+<script>
+  App.renderTopBar('maths');
+  Progress.markVisit();
+  Progress.renderGamebar();
+  App.wireTabs();
+  App.wireLessons();
+
+  function startQuiz() {
+    document.getElementById('quiz-start').style.display = 'none';
+    const bank = window.BIG_NUMBERS_BANK || [];
+    const engine = new QuizEngine({
+      containerId: 'quiz-host',
+      chapter: 'big-numbers',
+      tier: 'all',
+      bank: bank,
+      count: Math.min(25, bank.length),
+      onDone: () => {
+        document.getElementById('quiz-host').innerHTML = '';
+        document.getElementById('quiz-start').style.display = '';
+        document.getElementById('quiz-start').textContent = '🔁 Try another set';
+        window.scrollTo({ top: document.getElementById('tab-quiz').offsetTop - 60, behavior: 'smooth' });
+      },
+    });
+    engine.start();
+  }
+  document.getElementById('quiz-start').addEventListener('click', startQuiz);
+</script>
+</body>
+</html>
