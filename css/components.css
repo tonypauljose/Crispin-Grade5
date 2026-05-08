@@ -1416,6 +1416,76 @@ body.exam-running {
   min-height: 540px;
 }
 
+/* ==================================================================
+   BIG-SCREEN responsive (≥ 1280px) — fill the viewport during exam
+   so there's no empty space on the sides or at the bottom. Question
+   content is centred in a comfortable reading column inside the
+   stretched shell, so text doesn't become unreadable long lines.
+   ================================================================== */
+@media (min-width: 1280px) {
+  /* During exam mode let the host container go full-bleed */
+  body.exam-running .container {
+    max-width: none;
+    padding-left: clamp(16px, 2vw, 32px);
+    padding-right: clamp(16px, 2vw, 32px);
+  }
+
+  /* Shell fills available width and viewport height (minus topbar) */
+  body.exam-running .exam-shell {
+    max-width: none;
+    width: 100%;
+    min-height: calc(100vh - 32px);
+    display: flex;
+    flex-direction: column;
+  }
+  body.exam-running .exam-body {
+    flex: 1;
+    min-height: 0;
+    grid-template-columns: 320px 1fr;
+  }
+
+  /* Question pane: generous outer padding, content centred in a
+     readable max-width column (otherwise lines run too long on a TV). */
+  body.exam-running .exam-main {
+    padding: 32px clamp(32px, 5vw, 80px);
+  }
+  body.exam-running .exam-q-header,
+  body.exam-running .exam-q-text,
+  body.exam-running .exam-q-body,
+  body.exam-running .exam-controls,
+  body.exam-running .exam-submit-row {
+    max-width: 1000px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Ultra-wide / TV (≥ 1600px) — bigger type and more air. */
+@media (min-width: 1600px) {
+  body.exam-running .exam-body {
+    grid-template-columns: 360px 1fr;
+  }
+  body.exam-running .exam-main {
+    padding: 40px clamp(40px, 8vw, 120px);
+  }
+  body.exam-running .exam-q-header,
+  body.exam-running .exam-q-text,
+  body.exam-running .exam-q-body,
+  body.exam-running .exam-controls,
+  body.exam-running .exam-submit-row {
+    max-width: 1100px;
+  }
+  body.exam-running .exam-q-text { font-size: 1.55rem; }
+  body.exam-running .exam-option { padding: 18px 22px; font-size: 1.05rem; }
+  body.exam-running .exam-option__letter { width: 36px; height: 36px; font-size: 1.05rem; }
+  body.exam-running .exam-topbar { padding: 18px 32px; }
+  body.exam-running .exam-topbar__title  { font-size: 1.2rem; }
+  body.exam-running .exam-topbar__center { font-size: 1.05rem; padding: 6px 18px; }
+  body.exam-running .exam-topbar__timer  { font-size: 1.85rem; padding: 10px 26px; min-width: 150px; }
+  body.exam-running .palette-tile { font-size: 1.05rem; }
+}
+
 /* Tablet (≤ 1024px) — stack palette above question pane so neither feels cramped.
    This catches iPad portrait (768) and most Android tabs. */
 @media (max-width: 1024px) {
