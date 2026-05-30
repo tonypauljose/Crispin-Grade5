@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 9 · Chapter 2 Cumulative Mock — Periodic Practice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/print.css">
+</head>
+<body class="worksheet-page">
+
+  <div class="no-print" style="position:sticky; top:0; background:#6B21A8; color:white; padding:12px 20px; text-align:center; z-index:10;">
+    <strong>📝 Day 9 · Chapter 2 (Four Operations) — Cumulative Mock</strong> ·
+    <a href="../maths-periodic-exam.html" style="color:#FACC15;">← 10-day plan</a>
+    <button class="btn btn-yellow btn-sm" onclick="PP.printQuestions()" style="margin-left:10px;">🖨️ Print question paper</button>
+    <button class="btn btn-teal btn-sm" onclick="PP.printAnswers()" style="margin-left:6px;">🗝️ Print answer key</button>
+    <button class="btn btn-outline btn-sm" onclick="location.reload()" style="margin-left:6px; background:white;">🔄 New questions</button>
+    <button class="btn btn-outline btn-sm" onclick="PP.toggleAnswers()" style="margin-left:6px; background:white;">👁️ Toggle key</button>
+  </div>
+
+  <div class="worksheet" id="paper"></div>
+
+  <script src="../js/common.js"></script>
+  <script src="../js/periodic-practice.js"></script>
+  <script>
+    PP.buildPaper({
+      title: '📗 Day 9 · Chapter 2 (Four Operations) — Cumulative Mock',
+      subtitle: 'Maths Periodic Exam · Chapter 2 The Four Operations · Full revision paper',
+      intro: 'All four operations plus properties and word problems. Show working in every box and verify your divisions.',
+      sections: [
+        { title: 'Find the sum', gen: 'addition', count: 4, marks: 4 },
+        { title: 'Find the difference', gen: 'subtraction', count: 4, marks: 4 },
+        { title: 'Solve (mixed + and −)', gen: 'mixedAddSub', count: 3, marks: 3 },
+        { title: 'Multiply by 10 / 100 / 1000', gen: 'productPower', count: 3, marks: 3, grid: true },
+        { title: 'Multiply — show working', gen: 'multiply', count: 4, marks: 4 },
+        { title: 'Divide by 10 / 100 / 1000 (quotient & remainder)', gen: 'quotientPower', count: 3, marks: 3, grid: true },
+        { title: 'Divide and check', gen: 'divideCheck', count: 4, marks: 4 },
+        { title: 'Word problems', gen: 'wordProblem', count: 5, marks: 5, instructions: 'Write the numbers, the operation, your working, and the final answer.' }
+      ]
+    });
+  </script>
+</body>
+</html>

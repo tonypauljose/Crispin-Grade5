@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📝 Maths Periodic Exam · 10-Day Practice — Crispin's World</title>
+  <meta name="theme-color" content="#FAF7F0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AF%3C/text%3E%3C/svg%3E">
+  <style>
+    .day-tile { position: relative; }
+    .day-tile .day-num { font-weight: 800; font-size: 0.8rem; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-muted); }
+    .day-done-btn {
+      position: absolute; top: 14px; right: 14px; z-index: 3;
+      border: none; border-radius: 999px; padding: 5px 10px; font-size: .8rem; font-weight: 700;
+      cursor: pointer; background: rgba(255,255,255,.7); color: var(--ink);
+    }
+    .day-done-btn.done { background: #16A34A; color: white; }
+    .plan-progress { font-weight: 700; }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="container">
+
+      <section class="bento-hero">
+        <div class="bento-hero__eyebrow">
+          <span>Maths · Periodic Exam</span><span style="color:var(--ink-muted);">·</span><span>Chapter 1 Numbers + Chapter 2 Four Operations</span>
+        </div>
+        <h1 class="bento-hero__title">10 days,<br><span class="accent">one strong exam.</span></h1>
+        <p class="bento-hero__sub">A daily practice paper for the next 10 days — each one printable, with a separate answer key that has <strong>full worked solutions</strong>. Plus a 360-question timed practice exam you can take any time. Difficulty is set <strong>high</strong> on purpose.</p>
+        <p class="plan-progress" id="plan-progress" style="margin-top:10px; color:var(--purple);">Loading your progress…</p>
+      </section>
+
+      <!-- How to use + interactive exam -->
+      <section class="bento" style="margin-bottom: var(--space-7);">
+        <div class="bento__tile no-hover mesh-cool span-6">
+          <span class="bento__bg-emoji">🧭</span>
+          <p class="bento__eyebrow">How to use this (for the parent)</p>
+          <ul style="margin: var(--space-2) 0 0; padding-left: 20px; line-height: 1.7; color: var(--ink); font-size: .98rem;">
+            <li>Each day, open that day's paper and click <strong>🖨️ Print question paper</strong>.</li>
+            <li>Let Crispin solve it on paper (aim for ~40 min, no help).</li>
+            <li>Then click <strong>🗝️ Print answer key</strong> (prints separately) and mark together.</li>
+            <li>Click <strong>🔄 New questions</strong> any time for a fresh version of the same paper.</li>
+            <li>Read the <strong>Concept Cheat Sheet</strong> first so he knows every rule.</li>
+          </ul>
+        </div>
+        <a class="bento__tile mesh-warm span-6" href="exam.html?ch=periodic">
+          <span class="bento__bg-emoji">🎯</span>
+          <span class="tag tag--coral tag--live">Interactive · timed</span>
+          <h2 class="bento__title bento__title--big">Take the timed practice exam</h2>
+          <p class="bento__desc">25 mixed questions pulled from a <strong>360-question pool</strong> covering the whole portion. 30 sec per question, instant marking, worked-solution rationales, results you can email home.</p>
+          <span class="bento__cta">Start exam →</span>
+        </a>
+      </section>
+
+      <!-- Concept sheet -->
+      <section class="bento" style="margin-bottom: var(--space-7);">
+        <a class="bento__tile mesh-mint span-12" href="worksheets/periodic-concept-sheet.html">
+          <span class="bento__bg-emoji">📚</span>
+          <span class="tag tag--mint">Read me first</span>
+          <h2 class="bento__title">Concept Cheat Sheet — every rule on one printable sheet</h2>
+          <p class="bento__desc">Indian vs International commas · place vs face value · successor/predecessor · rounding rule · Roman numerals · the operation properties · and the all-important <strong>divide-and-check</strong> method.</p>
+          <span class="bento__cta">Open cheat sheet →</span>
+        </a>
+      </section>
+
+      <!-- 10-day grid -->
+      <h2 class="section-title">The 10-day plan</h2>
+      <section class="bento" id="day-grid"></section>
+
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p>Made with ❤️ and ⚽ for Crispin · <a href="maths.html">Maths</a> · <a href="exam.html">Exam mode</a> · <a href="index.html">Home</a></p>
+      </div>
+    </footer>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/progress.js"></script>
+  <script>
+    App.renderTopBar('maths');
+    Progress.markVisit();
+    Progress.renderGamebar();
+
+    const DAYS = [
+      { n: 1,  file: 'worksheets/periodic-day01-place-value.html',      title: 'Place Value & Number Names',        desc: 'Indian + International commas, number names, numerals, place vs face value.', mesh: 'mesh-purple', emoji: '🔢', tag: 'Chapter 1' },
+      { n: 2,  file: 'worksheets/periodic-day02-compare-round.html',    title: 'Successor, Compare, Order & Round', desc: 'Successor/predecessor, comparing, ascending/descending, rounding off.',        mesh: 'mesh-cool',   emoji: '⚖️', tag: 'Chapter 1' },
+      { n: 3,  file: 'worksheets/periodic-day03-expanded-roman.html',   title: 'Expanded/Standard Form & Roman',    desc: 'Expanded ↔ standard form, Roman numerals both ways, compare Romans.',           mesh: 'mesh-sunset', emoji: '🏛️', tag: 'Chapter 1' },
+      { n: 4,  file: 'worksheets/periodic-day04-add-subtract.html',     title: 'Addition & Subtraction',            desc: 'Large/multi-addend sums, differences, missing numbers, word problems.',        mesh: 'mesh-mint',   emoji: '➕', tag: 'Chapter 2' },
+      { n: 5,  file: 'worksheets/periodic-day05-multiplication.html',   title: 'Multiplication',                    desc: '×10/100/1000, 4-digit × 2–3-digit long multiplication, word problems.',        mesh: 'mesh-warm',   emoji: '✖️', tag: 'Chapter 2' },
+      { n: 6,  file: 'worksheets/periodic-day06-division.html',         title: 'Division & Divide-and-Check',       desc: '÷10/100/1000, 2–3-digit divisors, and verifying every division.',              mesh: 'mesh-purple', emoji: '➗', tag: 'Chapter 2' },
+      { n: 7,  file: 'worksheets/periodic-day07-mixed-operations.html', title: 'Mixed Operations & Word Problems',  desc: 'All four operations together, missing numbers, multi-step word problems.',     mesh: 'mesh-cool',   emoji: '🔀', tag: 'Chapter 2' },
+      { n: 8,  file: 'worksheets/periodic-day08-numbers-mock.html',     title: 'Chapter 1 Cumulative Mock',         desc: 'A full revision paper covering everything in Numbers.',                         mesh: 'mesh-sunset', emoji: '📘', tag: 'Revision' },
+      { n: 9,  file: 'worksheets/periodic-day09-operations-mock.html',  title: 'Chapter 2 Cumulative Mock',         desc: 'A full revision paper covering everything in the Four Operations.',             mesh: 'mesh-mint',   emoji: '📗', tag: 'Revision' },
+      { n: 10, file: 'worksheets/periodic-day10-full-mock.html',        title: 'FULL Mock Exam',                    desc: 'Both chapters, exam style, 40 min. Sit it like the real test.',                 mesh: 'mesh-warm',   emoji: '🏆', tag: 'Final' }
+    ];
+
+    const LS_KEY = 'crispin_periodic_days_done';
+    function loadDone() {
+      try { return JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch (_) { return []; }
+    }
+    function saveDone(arr) {
+      try { localStorage.setItem(LS_KEY, JSON.stringify(arr)); } catch (_) {}
+    }
+    let done = loadDone();
+
+    function updateProgress() {
+      const el = document.getElementById('plan-progress');
+      const c = done.length;
+      el.textContent = c === 0
+        ? '📅 0 of 10 days done — print Day 1 and begin!'
+        : (c >= 10 ? '🏆 All 10 days done — he is exam-ready. Great work!' : `✅ ${c} of 10 days done — keep the streak going!`);
+    }
+
+    function renderDays() {
+      const grid = document.getElementById('day-grid');
+      grid.innerHTML = DAYS.map(d => {
+        const isDone = done.includes(d.n);
+        const span = d.n === 10 ? 'span-12' : 'span-6';
+        return `
+          <a class="bento__tile day-tile ${d.mesh} ${span}" href="${d.file}">
+            <button class="day-done-btn ${isDone ? 'done' : ''}" data-day="${d.n}" title="Mark this day done">${isDone ? '✓ Done' : 'Mark done'}</button>
+            <span class="bento__bg-emoji">${d.emoji}</span>
+            <span class="tag tag--purple">${d.tag}</span>
+            <span class="day-num">Day ${d.n}</span>
+            <h2 class="bento__title">${d.title}</h2>
+            <p class="bento__desc">${d.desc}</p>
+            <span class="bento__cta">Open paper →</span>
+          </a>`;
+      }).join('');
+
+      grid.querySelectorAll('.day-done-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const day = parseInt(btn.dataset.day, 10);
+          if (done.includes(day)) {
+            done = done.filter(x => x !== day);
+            btn.classList.remove('done'); btn.textContent = 'Mark done';
+          } else {
+            done.push(day);
+            btn.classList.add('done'); btn.textContent = '✓ Done';
+            if (App.Audio) App.Audio.playCorrect();
+          }
+          saveDone(done);
+          updateProgress();
+        });
+      });
+    }
+
+    renderDays();
+    updateProgress();
+  </script>
+</body>
+</html>

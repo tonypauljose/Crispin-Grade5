@@ -91,6 +91,24 @@
 .ws-toolbar { text-align: center; margin: 5mm 0; }
 .ws-toolbar .btn { margin: 0 4px; }
 
+/* Boxed space for showing long working (multiplication / division / word problems) */
+.ws-workspace {
+  border: 1px dashed #9CA3AF;
+  border-radius: 4px;
+  min-height: 22mm;
+  margin: 2mm 0 4mm;
+  background: repeating-linear-gradient(transparent, transparent 7mm, #EEF 7mm, #EEF calc(7mm + 1px));
+}
+.ws-workspace.tall { min-height: 34mm; }
+.ws-list li.ws-compute { margin-bottom: 5mm; }
+.ws-list li .ws-q-label { font-weight: 700; }
+.ws-options { list-style: none; padding-left: 0; margin: 2mm 0 0; }
+.ws-options li { display: inline-block; margin: 0 6mm 1mm 0; }
+.ws-match { display: grid; grid-template-columns: 1fr 1fr; gap: 1mm 10mm; }
+.ws-match .ws-match__col { border: 1px solid #999; border-radius: 4px; padding: 3mm; }
+.ws-match .ws-match__col h4 { margin: 0 0 2mm; font-size: 11pt; color: #6B21A8; }
+.ws-match .ws-match__col ol, .ws-match .ws-match__col ul { margin: 0; padding-left: 6mm; }
+
 .answer-key {
   page-break-before: always;
   background: #FEF3C7;
@@ -126,6 +144,16 @@
     size: A4;
     margin: 12mm 15mm;
   }
+}
+
+/* ---------- Separate printing: question paper vs answer key ----------
+   The daily practice papers add one of these body classes just before
+   window.print(), then remove it afterwards (see worksheets/periodic-*.html).
+   This lets a parent print the questions and the answer key on separate runs. */
+@media print {
+  body.print-questions-only .answer-key { display: none !important; }
+  body.print-answers-only .worksheet > :not(.answer-key) { display: none !important; }
+  body.print-answers-only .answer-key { page-break-before: avoid; }
 }
 
 /* On screen, show the worksheet nicely */

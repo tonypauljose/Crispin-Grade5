@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 2 · Compare, Order & Round Off — Periodic Practice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/print.css">
+</head>
+<body class="worksheet-page">
+
+  <div class="no-print" style="position:sticky; top:0; background:#6B21A8; color:white; padding:12px 20px; text-align:center; z-index:10;">
+    <strong>📝 Day 2 · Successor, Compare, Order &amp; Round Off</strong> ·
+    <a href="../maths-periodic-exam.html" style="color:#FACC15;">← 10-day plan</a>
+    <button class="btn btn-yellow btn-sm" onclick="PP.printQuestions()" style="margin-left:10px;">🖨️ Print question paper</button>
+    <button class="btn btn-teal btn-sm" onclick="PP.printAnswers()" style="margin-left:6px;">🗝️ Print answer key</button>
+    <button class="btn btn-outline btn-sm" onclick="location.reload()" style="margin-left:6px; background:white;">🔄 New questions</button>
+    <button class="btn btn-outline btn-sm" onclick="PP.toggleAnswers()" style="margin-left:6px; background:white;">👁️ Toggle key</button>
+  </div>
+
+  <div class="worksheet" id="paper"></div>
+
+  <script src="../js/common.js"></script>
+  <script src="../js/periodic-practice.js"></script>
+  <script>
+    PP.buildPaper({
+      title: '📘 Day 2 · Successor, Compare, Order & Round Off',
+      subtitle: 'Maths Periodic Exam · Chapter 1 Numbers · Practice Paper',
+      intro: 'Remember: successor = +1, predecessor = −1. Compare by digit-count first, then left to right. For rounding, look at the digit just to the right of the rounding place.',
+      sections: [
+        { title: 'Write the successor', gen: 'successor', count: 5, marks: 5, grid: true },
+        { title: 'Write the predecessor', gen: 'predecessor', count: 5, marks: 5, grid: true },
+        { title: 'Compare using >, < or =', gen: 'compare', count: 7, marks: 7 },
+        { title: 'Arrange in ascending / descending order', gen: 'ordering', count: 4, marks: 4 },
+        { title: 'Round off (to nearest 10, 100 or 1000)', gen: 'rounding', count: 9, marks: 9 }
+      ]
+    });
+  </script>
+</body>
+</html>

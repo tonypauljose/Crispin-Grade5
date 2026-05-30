@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 1 · Place Value & Number Names — Periodic Practice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/print.css">
+</head>
+<body class="worksheet-page">
+
+  <div class="no-print" style="position:sticky; top:0; background:#6B21A8; color:white; padding:12px 20px; text-align:center; z-index:10;">
+    <strong>📝 Day 1 · Place Value &amp; Number Names</strong> ·
+    <a href="../maths-periodic-exam.html" style="color:#FACC15;">← 10-day plan</a>
+    <button class="btn btn-yellow btn-sm" onclick="PP.printQuestions()" style="margin-left:10px;">🖨️ Print question paper</button>
+    <button class="btn btn-teal btn-sm" onclick="PP.printAnswers()" style="margin-left:6px;">🗝️ Print answer key</button>
+    <button class="btn btn-outline btn-sm" onclick="location.reload()" style="margin-left:6px; background:white;">🔄 New questions</button>
+    <button class="btn btn-outline btn-sm" onclick="PP.toggleAnswers()" style="margin-left:6px; background:white;">👁️ Toggle key</button>
+  </div>
+
+  <div class="worksheet" id="paper"></div>
+
+  <script src="../js/common.js"></script>
+  <script src="../js/periodic-practice.js"></script>
+  <script>
+    PP.buildPaper({
+      title: '📘 Day 1 · Place Value & Number Names',
+      subtitle: 'Maths Periodic Exam · Chapter 1 Numbers · Practice Paper',
+      intro: 'Indian (3-2-2) and International (3-3-3) systems. Read every number carefully — these go up to 9 digits.',
+      sections: [
+        { title: 'Put commas (Indian system) & write the number name', gen: 'indianComma', count: 5, marks: 5 },
+        { title: 'Put commas (International system) & write the number name', gen: 'intlComma', count: 4, marks: 4 },
+        { title: 'Write the numeral from the number name', gen: 'numeralFromWords', count: 5, marks: 5 },
+        { title: 'Place value of the underlined digit', gen: 'placeValue', count: 6, marks: 6, grid: true },
+        { title: 'Face value of the underlined digit', gen: 'faceValue', count: 5, marks: 5, grid: true },
+        { title: 'Challenge — find (place value − face value)', gen: 'placeVsFace', count: 5, marks: 5 }
+      ]
+    });
+  </script>
+</body>
+</html>
