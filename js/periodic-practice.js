@@ -115,6 +115,8 @@
   const BLANKS = '<span class="ws-blank"></span>';
   const WORK = '<div class="ws-workspace"></div>';
   const WORK_TALL = '<div class="ws-workspace tall"></div>';
+  const LINE = '<div class="ws-answerline"></div>';            // one full-width writing line
+  const LINES2 = LINE + LINE;                                   // two writing lines (long answers)
   function underline(numStr, idx) {
     return numStr.slice(0, idx) + '<u>' + numStr[idx] + '</u>' + numStr.slice(idx + 1);
   }
@@ -128,14 +130,14 @@
     indianComma() {
       const n = bigNumber(6, 9), r = indianCommas(n);
       return {
-        q: `Put commas (Indian system) in <b>${n}</b> and write the number name. ${BLANK}`,
+        q: `Put commas (Indian system) in <b>${n}</b> and write the number name.${LINES2}`,
         a: `${n} → ${ans(r)} = ${ans(cap(indianWords(n)))}`
       };
     },
     intlComma() {
       const n = bigNumber(6, 9), r = intlCommas(n);
       return {
-        q: `Put commas (International system) in <b>${n}</b> and write the number name. ${BLANK}`,
+        q: `Put commas (International system) in <b>${n}</b> and write the number name.${LINES2}`,
         a: `${n} → ${ans(r)} = ${ans(cap(intlWords(n)))}`
       };
     },
@@ -144,7 +146,7 @@
       const n = bigNumber(6, 8);
       const w = intl ? intlWords(n) : indianWords(n);
       return {
-        q: `Write the numeral (${intl ? 'International' : 'Indian'} system): “${cap(w)}”. ${BLANK}`,
+        q: `Write the numeral (${intl ? 'International' : 'Indian'} system): “${cap(w)}”.${LINE}`,
         a: `${ans(indianCommas(n))} (Indian) = ${ans(intlCommas(n))} (International)`
       };
     },
@@ -195,14 +197,14 @@
     standardForm() {
       const n = bigNumber(6, 8);
       return {
-        q: `Write in standard form: ${expandedForm(n)} = ${BLANK}`,
+        q: `Write in standard form: ${expandedForm(n)} =${LINE}`,
         a: `Add the parts → ${ans(indianCommas(n))}`
       };
     },
     expandForm() {
       const n = bigNumber(6, 8);
       return {
-        q: `Write ${indianCommas(n)} in expanded form. ${BLANK}`,
+        q: `Write ${indianCommas(n)} in expanded form.${LINES2}`,
         a: `${ans(expandedForm(n))}`
       };
     },
@@ -227,7 +229,7 @@
       const shown = shuffle(nums);
       const sorted = nums.slice().sort((x, y) => want === 'ascending' ? x - y : y - x);
       return {
-        q: `Arrange in <b>${want}</b> order: ${shown.map(indianCommas).join(' , ')} <br>${BLANK}`,
+        q: `Arrange in <b>${want}</b> order: ${shown.map(indianCommas).join(' , ')}${LINE}`,
         a: `${sorted.map(indianCommas).join(want === 'ascending' ? ' < ' : ' > ')}`
       };
     },
