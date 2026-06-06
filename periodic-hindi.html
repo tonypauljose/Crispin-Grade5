@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>🐌 Hindi Journey — बगीचे का घोंघा + संज्ञा · Crispin's World</title>
+  <meta name="theme-color" content="#15803D">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Tiro+Devanagari+Hindi&family=Hind:wght@400;600;700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/hindi.css">
+  <link rel="stylesheet" href="css/hindi-journey.css">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%8C%3C/text%3E%3C/svg%3E">
+
+  <style>
+    .ph-hero { background: linear-gradient(135deg, #166534 0%, #15803D 45%, #4ADE80 100%); color: #fff; text-align: center; padding: var(--space-7) var(--space-4); border-radius: var(--radius-xl); margin: var(--space-5) 0; }
+    .ph-hero h1 { color: #fff; font-family: 'Fredoka One', cursive; font-size: clamp(1.8rem, 6vw, 2.6rem); margin: 0 0 6px; }
+    .ph-hero .hi-title { font-family: 'Tiro Devanagari Hindi', serif; font-size: clamp(1.1rem, 3.6vw, 1.5rem); opacity: .96; }
+    .ph-hero .pill { display: inline-block; margin-top: 12px; background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.45); padding: 6px 16px; border-radius: 999px; font-weight: 800; }
+
+    .ph-wrap { max-width: 960px; margin: 0 auto; padding: var(--space-6) 0 var(--space-8); }
+    .ph-h2 { font-family: 'Fredoka One', cursive; color: #166534; text-align: center; margin: 0 0 6px; }
+    .ph-sub { text-align: center; color: var(--ink-muted); margin: 0 0 var(--space-5); }
+
+    /* Action cards */
+    .ph-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-bottom: var(--space-7); }
+    .ph-card { background: var(--surface); border: 2px solid #BBF7D0; border-radius: 18px; padding: 20px; text-align: center; cursor: pointer; transition: transform .15s, box-shadow .15s, border-color .15s; display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: inherit; }
+    .ph-card:hover { transform: translateY(-5px); border-color: #15803D; box-shadow: 0 12px 28px rgba(21,128,61,.18); }
+    .ph-card .emoji { font-size: 2.6rem; }
+    .ph-card h3 { font-family: 'Fredoka One', cursive; margin: 0; font-size: 1.1rem; color: #166534; }
+    .ph-card p { margin: 0; font-size: .9rem; color: var(--ink-muted); }
+    .ph-card.feature { background: linear-gradient(135deg, #F0FDF4, #DCFCE7); border-color: #15803D; }
+    .ph-card .cta { margin-top: auto; align-self: center; background: #15803D; color: #fff; font-weight: 800; padding: 8px 18px; border-radius: 999px; font-size: .9rem; }
+
+    /* Mission path */
+    .ph-path { display: grid; gap: 14px; }
+    .mission-card { display: flex; align-items: center; gap: 16px; background: var(--surface); border: 2px solid #BBF7D0; border-radius: 18px; padding: 16px 18px; cursor: pointer; transition: transform .12s, border-color .15s; }
+    .mission-card:hover { transform: translateX(4px); border-color: #15803D; }
+    .mission-card .m-num { flex: 0 0 auto; width: 54px; height: 54px; border-radius: 50%; background: #DCFCE7; color: #166534; font-family: 'Fredoka One', cursive; font-size: 1.4rem; display: flex; align-items: center; justify-content: center; }
+    .mission-card.is-done .m-num { background: #BBF7D0; color: #14532d; }
+    .mission-card .m-body { flex: 1; }
+    .mission-card .m-title { font-family: 'Fredoka One', cursive; color: #166534; font-size: 1.1rem; }
+    .mission-card .m-title .hi { font-family: 'Tiro Devanagari Hindi', serif; }
+    .mission-card .m-meta { font-size: .85rem; color: var(--ink-muted); }
+    .mission-card .m-status { flex: 0 0 auto; font-weight: 800; font-size: .9rem; color: #15803D; }
+    .mission-card.is-done .m-status { color: #16A34A; }
+
+    /* Dashboard */
+    #dash { display: none; }
+    .dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
+    .dash-stat { background: var(--surface); border: 2px solid #BBF7D0; border-radius: 16px; padding: 16px; text-align: center; }
+    .dash-stat .num { font-family: 'Fredoka One', cursive; font-size: 1.8rem; color: #15803D; }
+    .dash-stat .lbl { font-size: .85rem; color: var(--ink-muted); }
+    .dash-ring { --pct: 0; width: 110px; height: 110px; border-radius: 50%; margin: 0 auto 6px; background: conic-gradient(#16A34A calc(var(--pct) * 1%), #DCFCE7 0); display: flex; align-items: center; justify-content: center; }
+    .dash-ring span { width: 82px; height: 82px; background: var(--surface); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Fredoka One', cursive; font-size: 1.4rem; color: #166534; }
+    .dash-list { background: var(--surface); border: 2px solid #BBF7D0; border-radius: 16px; padding: 14px 18px; margin-top: 14px; }
+    .dash-list h4 { margin: 0 0 8px; color: #166534; }
+    .dash-list .weak { display: inline-block; background: #FEE2E2; color: #b91c1c; border-radius: 999px; padding: 4px 12px; margin: 3px; font-weight: 700; font-size: .85rem; }
+    .dash-list .ok { color: #16A34A; font-weight: 700; }
+    .dash-revise { display: inline-block; margin: 4px; padding: 6px 14px; border-radius: 999px; background: #15803D; color: #fff; font-weight: 700; font-size: .85rem; cursor: pointer; border: none; }
+  </style>
+</head>
+<body>
+
+<main class="hj-hub">
+  <div class="container">
+    <header class="ph-hero">
+      <h1>🐌 Hindi Journey</h1>
+      <div class="hi-title">पाठ · बगीचे का घोंघा &nbsp;+&nbsp; व्याकरण · संज्ञा</div>
+      <p style="opacity:.95; margin:8px 0 0;">A gentle, step-by-step adventure for the Hindi Periodic Test</p>
+      <div class="pill" id="hero-pill">⭐ Read · Listen · Trace · Win badges</div>
+    </header>
+
+    <div class="ph-wrap">
+      <!-- Action cards -->
+      <div class="ph-actions">
+        <div class="ph-card feature" id="card-start">
+          <span class="emoji">🚀</span>
+          <h3>Start / Continue</h3>
+          <p>Pick up your next mission and learn step by step.</p>
+          <span class="cta">Let's go →</span>
+        </div>
+        <div class="ph-card" id="card-practice">
+          <span class="emoji">⚡</span>
+          <h3>Quick Practice</h3>
+          <p>10 quick questions to warm up. Try every day!</p>
+          <span class="cta">Practise →</span>
+        </div>
+        <a class="ph-card" href="worksheets/pt-hindi1-paper.html">
+          <span class="emoji">🖨️</span>
+          <h3>Practice Sheet</h3>
+          <p>Print it and write the answers by hand.</p>
+          <span class="cta">Open →</span>
+        </a>
+        <a class="ph-card" href="chapters/hin02-bageeche-ka-ghongha.html">
+          <span class="emoji">📖</span>
+          <h3>Read the Story</h3>
+          <p>Story, audio &amp; school notes for बगीचे का घोंघा.</p>
+          <span class="cta">Read →</span>
+        </a>
+      </div>
+
+      <!-- Mission path -->
+      <h2 class="ph-h2">🗺️ Your Mission Map</h2>
+      <p class="ph-sub">Eight little missions — about 10–15 minutes each. Finish one, win a badge!</p>
+      <div class="ph-path" id="mission-path"></div>
+
+      <!-- Parent dashboard toggle -->
+      <div style="text-align:center; margin-top: var(--space-7);">
+        <button class="btn-modern btn-modern--soft" id="dash-toggle">👨‍👩‍👧 Parent Dashboard</button>
+      </div>
+
+      <section id="dash" style="margin-top: var(--space-6);">
+        <h2 class="ph-h2">Progress &amp; Test Readiness</h2>
+        <p class="ph-sub">A quick look at how Crispin is doing.</p>
+        <div id="dash-body"></div>
+        <div style="text-align:center; margin-top: var(--space-5);">
+          <button class="btn-modern btn-modern--soft" id="dash-reset">↺ Reset progress</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Back to <a href="index.html">home</a> · <a href="hindi.html">Hindi</a> · <a href="learning.html">all subjects</a></p>
+    </div>
+  </footer>
+</main>
+
+<!-- Full-viewport slide stage (engine fills this) -->
+<div id="hj-stage" class="hj-stage"></div>
+
+<script src="js/common.js"></script>
+<script src="js/progress.js"></script>
+<script src="data/pt-hindi1.js"></script>
+<script src="js/hindi-journey.js"></script>
+<script>
+(function () {
+  'use strict';
+  App.renderTopBar('hindi');
+  Progress.markVisit();
+  Progress.renderGamebar();
+
+  const DATA = window.PT_HINDI1;
+  const stage = document.getElementById('hj-stage');
+  const onExit = () => { document.body.classList.remove('hj-running'); renderHub(); window.scrollTo({ top: 0 }); };
+
+  function progress() { return HindiJourney.getProgress(DATA.id); }
+
+  function renderHub() {
+    const p = progress();
+    const path = document.getElementById('mission-path');
+    const nextId = (DATA.missions.find(m => !(p.missions[m.id] && p.missions[m.id].done)) || {}).id;
+    path.innerHTML = DATA.missions.map((m, i) => {
+      const done = !!(p.missions[m.id] && p.missions[m.id].done);
+      const isNext = m.id === nextId;
+      const status = done ? '⭐ Done' : isNext ? '▶ Start' : 'Open';
+      return `<div class="mission-card ${done ? 'is-done' : ''}" data-id="${m.id}">
+        <div class="m-num">${done ? '✓' : i + 1}</div>
+        <div class="m-body">
+          <div class="m-title">${m.emoji} <span class="hi">${m.titleHi}</span> · ${m.title}</div>
+          <div class="m-meta">${m.words ? m.words.length + ' words · ' : ''}about ${m.estMin || 12} min</div>
+        </div>
+        <div class="m-status">${status}</div>
+      </div>`;
+    }).join('');
+    path.querySelectorAll('.mission-card').forEach(c => c.onclick = () => launch(c.dataset.id));
+    document.getElementById('hero-pill').textContent =
+      `⭐ ${Object.values(p.missions).filter(m => m.done).length} / ${DATA.missions.length} missions · ${p.readiness || 0}% ready`;
+    if (document.getElementById('dash').style.display === 'block') renderDash();
+  }
+
+  function launch(missionId) { HindiJourney.start({ data: DATA, missionId, host: stage, onExit }); window.scrollTo({ top: 0 }); }
+  function startJourney() { HindiJourney.startNext({ data: DATA, host: stage, onExit }); window.scrollTo({ top: 0 }); }
+  function practice() { HindiJourney.startPractice({ data: DATA, host: stage, onExit }); window.scrollTo({ top: 0 }); }
+
+  function renderDash() {
+    const p = progress();
+    const total = DATA.missions.length;
+    const done = Object.values(p.missions).filter(m => m.done).length;
+    const tests = Object.entries(p.miniTests);
+    const reads = p.wordsReadSelf.length;
+    const practised = p.wordsPractised.length;
+    const readConf = practised ? Math.round((reads / practised) * 100) : 0;
+
+    const weakMissions = DATA.missions.filter(m => {
+      const t = p.miniTests[m.id];
+      return t && (t.score / t.total) < 0.67;
+    });
+    const revealWords = Object.entries(p.revealsUsed).filter(([, n]) => n >= 1).map(([w]) => w);
+
+    document.getElementById('dash-body').innerHTML = `
+      <div class="dash-grid">
+        <div class="dash-stat">
+          <div class="dash-ring" style="--pct:${p.readiness || 0}"><span>${p.readiness || 0}%</span></div>
+          <div class="lbl">Test readiness</div>
+        </div>
+        <div class="dash-stat"><div class="num">${done}/${total}</div><div class="lbl">Missions done</div></div>
+        <div class="dash-stat"><div class="num">${practised}</div><div class="lbl">Words practised</div></div>
+        <div class="dash-stat"><div class="num">${readConf}%</div><div class="lbl">Reading on his own</div></div>
+        <div class="dash-stat"><div class="num">${p.answersWritten.length}</div><div class="lbl">Answers written ✍️</div></div>
+      </div>
+
+      <div class="dash-list">
+        <h4>📊 Mini-test scores</h4>
+        ${tests.length ? tests.map(([id, t]) => {
+          const m = DATA.missions.find(x => x.id === id) || { title: id, titleHi: '' };
+          return `<div>${(t.score / t.total) >= 0.67 ? '✅' : '🔁'} <strong>${m.titleHi}</strong> ${m.title} — ${t.score}/${t.total}</div>`;
+        }).join('') : '<span class="lbl">No mini-tests yet — start a mission!</span>'}
+      </div>
+
+      <div class="dash-list">
+        <h4>🎯 Needs revision</h4>
+        ${(weakMissions.length || revealWords.length)
+          ? `${weakMissions.map(m => `<button class="dash-revise" data-id="${m.id}">↻ ${m.titleHi} (${m.title})</button>`).join('')}
+             ${revealWords.length ? `<div style="margin-top:8px;" class="lbl">Words he needed help reading: ${revealWords.map(w => `<span class="weak">${w}</span>`).join('')}</div>` : ''}`
+          : '<span class="ok">Looking strong! Keep practising a little each day. 🌟</span>'}
+      </div>`;
+
+    document.getElementById('dash-body').querySelectorAll('.dash-revise').forEach(b => b.onclick = () => launch(b.dataset.id));
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!DATA) { console.error('PT_HINDI1 failed to load'); return; }
+    document.getElementById('card-start').onclick = startJourney;
+    document.getElementById('card-practice').onclick = practice;
+    document.getElementById('dash-toggle').onclick = () => {
+      const d = document.getElementById('dash');
+      const show = d.style.display !== 'block';
+      d.style.display = show ? 'block' : 'none';
+      if (show) { renderDash(); d.scrollIntoView({ behavior: 'smooth' }); }
+    };
+    document.getElementById('dash-reset').onclick = () => {
+      if (confirm('Reset all Hindi journey progress for this chapter?')) { HindiJourney.resetProgress(DATA.id); renderHub(); renderDash(); }
+    };
+    renderHub();
+    const start = new URLSearchParams(location.search).get('start');
+    if (start === 'practice') practice();
+    else if (start === 'journey') startJourney();
+  });
+})();
+</script>
+
+</body>
+</html>
