@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" data-child="crispin">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Half-Yearly HQ — Crispin's World</title>
+  <meta name="description" content="Crispin's Half-Yearly exam headquarters — interactive lessons, mastery practice with spaced repetition, a repair shop for mistakes, and timed mock papers. Grade 5, Asian School Bahrain, CBSE." />
+  <meta name="theme-color" content="#6D28D9" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/half-yearly.css" />
+  <link rel="stylesheet" href="css/half-yearly-learn.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AF%3C/text%3E%3C/svg%3E" />
+</head>
+<body class="hy-page">
+  <div id="hy-host"></div>
+
+  <!-- ── configuration ───────────────────────────────────── -->
+  <script src="data/hy-config.js"></script>
+
+  <!-- ── content: one file per topic ─────────────────────── -->
+  <script src="data/hy-eng-gilli-danda.js"></script>
+  <script src="data/hy-eng-panchayat.js"></script>
+  <script src="data/hy-eng-adjectives.js"></script>
+  <script src="data/hy-eng-tenses.js"></script>
+  <script src="data/hy-hin-aasmaan-gira.js"></script>
+  <script src="data/hy-hin-neem.js"></script>
+  <script src="data/hy-hin-ekta.js"></script>
+  <script src="data/hy-hin-sarvanaam.js"></script>
+  <script src="data/hy-math-geometry.js"></script>
+  <script src="data/hy-math-geometry-2.js"></script>
+  <script src="data/hy-math-multiples-factors.js"></script>
+  <script src="data/hy-math-multiples-factors-2.js"></script>
+
+  <!-- ── interactive lessons and mock papers ─────────────── -->
+  <script src="data/hy-lessons.js"></script>
+  <script src="data/hy-papers.js"></script>
+
+  <!-- ── engine ──────────────────────────────────────────── -->
+  <script src="js/hy/util.js"></script>
+  <script src="js/hy/store.js"></script>
+  <script src="js/hy/gen.js"></script>
+  <script src="js/hy/plan.js"></script>
+  <script src="js/hy/items.js"></script>
+  <script src="js/hy/widgets-math.js"></script>
+  <script src="js/hy/widgets-lang.js"></script>
+  <script src="js/hy/drill.js"></script>
+  <script src="js/hy/lesson.js"></script>
+  <script src="js/hy/exam.js"></script>
+  <script src="js/hy/app.js"></script>
+
+  <!-- Host site engines: enables the one-way XP bridge into Crispin's
+       main progress system. They define globals only — no chrome. -->
+  <script src="js/common.js"></script>
+  <script src="js/progress.js"></script>
+
+  <script>HY.app.start(document.getElementById('hy-host'));</script>
+</body>
+</html>
