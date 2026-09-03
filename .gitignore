@@ -34,3 +34,12 @@ npm-debug.log*
 
 # ── Local media (kept off the repo — large files) ──
 Crispin Photos and Videos/
+
+# ── Scanned school material (kept off the repo) ──
+# This repo is published to crispintony.com via GitHub Pages, so scans of
+# Crispin's notebooks — his name, his handwriting, his teacher's marking —
+# must not be committed. They are the SOURCE for the apps built from them;
+# keep them locally and in a private backup instead.
+Half Yearly Portion/
+Maths - Periodic Exam Reference/
+Periodic Test - 1/

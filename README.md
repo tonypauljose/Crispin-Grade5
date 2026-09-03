@@ -17,6 +17,51 @@ Built as a pure **static HTML / CSS / JavaScript site** — no build tools, no f
 - **Printable worksheet** (`worksheets/ch01-numbers-worksheet.html`) — A4-optimised, randomised questions on each load, answer key on a separate page.
 - **Fun Zone** (`fun.html`) — Penalty shootout mini-game, Riddle of the Day, 33+ riddle archive (math / word / logic / football).
 
+## Half-Yearly HQ (`half-yearly.html`)
+
+The exam-preparation app, built from photographs of Crispin's own notebooks,
+textbooks and workbooks in `Half Yearly Portion/`. Two halves:
+
+**Learn** — 13 interactive lessons. Each is a short journey of single-idea
+screens: an explanation, then a piece of *apparatus he plays with* (build
+rectangles to discover factors, run the Sieve of Eratosthenes, grow a factor
+tree, sort primes into a Venn to see what HCF and LCM actually are, drag a real
+two-scale protractor, swing a chord until it becomes the diameter, flip a verb
+through six tenses, feed verbs into the -ing machine, hunt adjectives in a
+sentence, read नीम line by line with audio), then a few real questions. The
+Next button stays locked on an apparatus screen until it has actually been used.
+
+**Practise** — a mastery engine, not a quiz. Every skill sits in a Leitner box
+(review after 1, 2, 3, 5, 8 days). A wrong answer drops it two boxes, re-opens
+the teach card at the worked example, and pushes the question back into the same
+session three places later; the session will not end while a skill is broken.
+"Mastered" additionally requires a correct answer **on a later day**, so it
+cannot be crammed the night before.
+
+- **Today** — the day's plan, built fresh each morning: warm-up recall, any new
+  lessons, new skills, the repair shop, an interleaved mixed set, and mock
+  papers as the exam nears. Heavy days split into two sittings.
+- **Syllabus** — every topic and skill, colour-coded from *not started* to *mastered*.
+- **Repair** — the error book. Every mistake lands here and stays until the skill is right again.
+- **Mocks** — timed papers with a clock, a question palette and a full review.
+  The papers are blueprints, so a fresh set of questions is assembled every sitting.
+- **Progress** — exam readiness, pacing against the plan, a countdown calendar, and JSON backup/restore.
+
+Content: **10 topics · 54 skills · 800+ questions · 13 lessons · 5 mock papers**,
+plus 19 maths **generators** that make unlimited fresh questions so the bank can
+never be memorised. All progress is in `localStorage` (`crispin_hy_v1`).
+
+Set the exam date in `data/hy-config.js` — the phases, the daily new-skill count
+and the countdown all re-shape themselves around it.
+
+### Checking the content
+
+```bash
+node tools/validate_hy.js   # schema, answer keys, cross-references, paper blueprints
+node tools/smoke_hy.js      # mastery rules, planner pacing, every generator
+node tools/render_hy.js     # headless walkthrough of the whole app (needs jsdom)
+```
+
 ## Gamification
 
 - **8 levels:** Beginner → Explorer → Learner → Adventurer → Scholar → Master → Champion → Legend.
