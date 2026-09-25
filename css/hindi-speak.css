@@ -1,0 +1,75 @@
+/* ============================================================
+   Hindi Speak — pronunciation lab. Own namespace (.hs-*).
+   Devanagari is set large: he reads the script slowly.
+   ============================================================ */
+
+.hs-head { background: var(--surface); border: 2px solid #BBF7D0; border-radius: 16px; padding: 14px 16px; margin-bottom: 16px; }
+.hs-bar { height: 10px; background: #DCFCE7; border-radius: 999px; overflow: hidden; }
+.hs-bar__fill { height: 100%; background: linear-gradient(90deg, #15803D, #4ADE80); border-radius: 999px; transition: width .3s; }
+.hs-head__row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-top: 10px; font-size: .98rem; }
+.hs-support { font-size: .86rem; }
+.hs-ok { color: #166534; font-weight: 700; }
+.hs-warn { color: #92400E; }
+.hs-warn--row { display: block; margin-top: 10px; font-size: .86rem; background: #FEF3C7; border: 1px solid #FDE68A; border-radius: 10px; padding: 8px 10px; }
+
+/* tabs */
+.hs-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.hs-tab { display: flex; flex-direction: column; align-items: center; gap: 2px; background: var(--surface); border: 2px solid #BBF7D0;
+          border-radius: 14px; padding: 8px 16px; cursor: pointer; transition: transform .12s, border-color .15s, background .15s; }
+.hs-tab:hover { transform: translateY(-2px); border-color: #15803D; }
+.hs-tab.is-on { background: #15803D; border-color: #15803D; color: #fff; }
+.hs-tab__hi { font-family: 'Tiro Devanagari Hindi', serif; font-size: 1.15rem; line-height: 1.3; }
+.hs-tab__en { font-size: .74rem; opacity: .8; }
+
+/* cards */
+.hs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.hs-card { background: var(--surface); border: 2px solid #E2E8F0; border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 6px; }
+.hs-card.is-ok { border-color: #15803D; background: linear-gradient(180deg, #F0FDF4, var(--surface)); }
+.hs-card.is-try { border-color: #F59E0B; }
+.hs-card.is-listening { border-color: #DC2626; box-shadow: 0 0 0 4px rgba(220, 38, 38, .12); }
+.hs-card__tag { font-size: .76rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-muted); font-weight: 700; }
+.hs-tick { color: #15803D; }
+.hs-q { font-family: 'Tiro Devanagari Hindi', serif; font-size: 1.05rem; color: var(--ink-muted); }
+.hs-q i { font-family: 'Nunito', sans-serif; font-size: .82rem; }
+.hs-hi { font-family: 'Tiro Devanagari Hindi', 'Hind', serif; color: var(--ink); line-height: 1.75; }
+.hs-hi--word { font-size: 2.1rem; font-weight: 600; }
+.hs-hi--sent { font-size: 1.32rem; }
+.hs-roman { font-size: .95rem; font-style: italic; color: #15803D; font-weight: 700; }
+.hs-en { font-size: .92rem; color: var(--ink-muted); }
+
+/* buttons */
+.hs-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.hs-btns--after { margin-top: 10px; }
+.hs-btn { border: 2px solid #CBD5E1; background: #fff; border-radius: 999px; padding: 8px 14px; font-weight: 800; font-size: .92rem;
+          cursor: pointer; transition: transform .1s, background .15s, border-color .15s; font-family: inherit; }
+.hs-btn:hover { transform: translateY(-1px); }
+.hs-btn:disabled { opacity: .5; cursor: default; transform: none; }
+.hs-btn--hear { border-color: #93C5FD; background: #EFF6FF; }
+.hs-btn--slow { border-color: #C4B5FD; background: #F5F3FF; }
+.hs-btn--play { border-color: #FDBA74; background: #FFF7ED; }
+.hs-btn--mic { border-color: #15803D; background: #15803D; color: #fff; }
+.hs-btn--ghost { border-color: #E2E8F0; background: #F8FAFC; color: var(--ink-muted); font-weight: 700; }
+
+/* result */
+.hs-result { margin-top: 8px; border-top: 1px dashed #CBD5E1; padding-top: 10px; }
+.hs-listening { font-weight: 800; color: #DC2626; animation: hs-pulse 1s ease-in-out infinite; }
+@keyframes hs-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+.hs-verdict { font-weight: 800; font-size: 1rem; }
+.hs-verdict--ok { color: #166534; }
+.hs-verdict--try { color: #B45309; font-family: 'Tiro Devanagari Hindi', serif; font-weight: 600; }
+.hs-verdict i, .hs-tip i { font-family: 'Nunito', sans-serif; font-weight: 600; font-size: .85rem; color: var(--ink-muted); }
+.hs-words { margin: 8px 0; font-family: 'Tiro Devanagari Hindi', serif; font-size: 1.25rem; line-height: 2; }
+.hs-w { padding: 1px 6px; border-radius: 6px; }
+.hs-w--ok { background: #DCFCE7; color: #166534; }
+.hs-w--bad { background: #FEE2E2; color: #991B1B; text-decoration: underline wavy #DC2626; }
+.hs-tip { font-size: .95rem; margin: 6px 0 0; }
+.hs-tip b { font-family: 'Tiro Devanagari Hindi', serif; font-size: 1.15rem; }
+.hs-empty { text-align: center; color: var(--ink-muted); padding: 30px 10px; font-family: 'Tiro Devanagari Hindi', serif; font-size: 1.15rem; }
+.hs-empty i { font-family: 'Nunito', sans-serif; font-size: .9rem; display: block; margin-top: 6px; }
+
+@media (max-width: 560px) {
+  .hs-grid { grid-template-columns: 1fr; }
+  .hs-hi--word { font-size: 1.9rem; }
+  .hs-btn { padding: 10px 14px; }
+}
+@media print { .hs-tabs, .hs-btns, .hs-result, .hs-head { display: none !important; } }

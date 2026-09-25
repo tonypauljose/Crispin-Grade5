@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>🗣️ हिंदी बोलो — Say it right · Crispin's World</title>
+  <meta name="theme-color" content="#15803D">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Tiro+Devanagari+Hindi&family=Hind:wght@400;600;700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/hindi.css">
+  <link rel="stylesheet" href="css/hindi-speak.css">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%97%A3%EF%B8%8F%3C/text%3E%3C/svg%3E">
+
+  <style>
+    .hsx-hero { background: linear-gradient(135deg, #166534 0%, #15803D 45%, #4ADE80 100%); color: #fff; text-align: center; padding: var(--space-7) var(--space-4); border-radius: var(--radius-xl); margin: var(--space-5) 0; }
+    .hsx-hero h1 { color: #fff; font-family: 'Fredoka One', cursive; font-size: clamp(1.8rem, 6vw, 2.6rem); margin: 0 0 6px; }
+    .hsx-hero .hi-title { font-family: 'Tiro Devanagari Hindi', serif; font-size: clamp(1.1rem, 3.6vw, 1.5rem); opacity: .96; }
+    .hsx-hero p { opacity: .95; margin: 10px 0 0; }
+    .hsx-wrap { max-width: 1040px; margin: 0 auto; padding: var(--space-6) 0 var(--space-8); }
+    .hsx-how { background: var(--surface); border: 2px solid #BBF7D0; border-radius: 18px; padding: 18px 20px; margin-bottom: 18px; }
+    .hsx-how h2 { font-family: 'Fredoka One', cursive; color: #166534; margin: 0 0 4px; font-size: 1.2rem; }
+    .hsx-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-top: 12px; }
+    .hsx-step { background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 14px; padding: 12px 14px; }
+    .hsx-step b { display: block; font-family: 'Tiro Devanagari Hindi', serif; font-size: 1.15rem; color: #166534; }
+    .hsx-step span { font-size: .88rem; color: var(--ink-muted); }
+    .hsx-mic { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-top: 14px;
+               background: #F8FAFC; border: 1px dashed #CBD5E1; border-radius: 14px; padding: 12px 14px; }
+    .hsx-mic button { border: 2px solid #15803D; background: #15803D; color: #fff; border-radius: 999px; padding: 9px 18px; font-weight: 800; cursor: pointer; font-family: inherit; }
+    .hsx-mic .out { font-size: .92rem; }
+    .hsx-links { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 0; }
+    .hsx-links a { background: var(--surface); border: 2px solid #BBF7D0; border-radius: 999px; padding: 8px 16px; font-weight: 700; text-decoration: none; color: #166534; font-size: .92rem; }
+    .hsx-links a:hover { border-color: #15803D; }
+  </style>
+</head>
+<body>
+
+<main class="page">
+  <div class="container">
+    <header class="hsx-hero">
+      <h1>🗣️ हिंदी बोलो</h1>
+      <div class="hi-title">सुनो · बोलो · जाँचो</div>
+      <p>Say it out loud and the app tells you if it came out right — word by word.</p>
+    </header>
+
+    <div class="hsx-wrap">
+      <section class="hsx-how">
+        <h2>How this works</h2>
+        <p style="margin:0; color:var(--ink-muted);">Hindi is not his first language, so guessing "I read it correctly" is how a wrong
+          pronunciation sticks. Here the browser listens in Hindi and compares what it heard with the word on the card.</p>
+        <div class="hsx-steps">
+          <div class="hsx-step"><b>१ · सुनो</b><span>Tap 🔊 to hear it, 🐢 for slow. Copy the sound.</span></div>
+          <div class="hsx-step"><b>२ · बोलो</b><span>Tap 🎤 and say it. Speak straight away, close to the mic.</span></div>
+          <div class="hsx-step"><b>३ · जाँचो</b><span>It shows what it heard. In a sentence, wrong words turn red.</span></div>
+          <div class="hsx-step"><b>४ · फिर से</b><span>Anything you miss lands in <b>मुश्किल शब्द</b> to drill.</span></div>
+        </div>
+        <div class="hsx-mic">
+          <span class="out" id="mic-out">Tap the button and say <b style="font-family:'Tiro Devanagari Hindi',serif">नमस्ते</b> to check the microphone.</span>
+          <button id="mic-test" type="button">🎤 माइक जाँचो</button>
+        </div>
+        <div class="hsx-links">
+          <a href="worksheets/hy-hindi-study-booklet.pdf">📘 पढ़ाई की किताब (PDF)</a>
+          <a href="worksheets/hy-hindi-practice-booklet.pdf">✏️ अभ्यास पुस्तिका (PDF)</a>
+          <a href="half-yearly.html">🎯 Half-Yearly HQ</a>
+          <a href="hindi.html">← Hindi</a>
+        </div>
+      </section>
+
+      <div id="hs-app"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Back to <a href="index.html">home</a> · <a href="hindi.html">Hindi</a> · <a href="learning.html">all subjects</a></p>
+    </div>
+  </footer>
+</main>
+
+<script src="js/common.js"></script>
+<script src="js/progress.js"></script>
+<script src="data/hy-hindi-study.js"></script>
+<script src="js/hindi-speak.js"></script>
+<script>
+(function () {
+  if (window.App && App.renderTopBar) App.renderTopBar('hindi');
+  if (window.Progress) { Progress.markVisit(); Progress.renderGamebar(); }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    if (!window.HINDI_STUDY) { console.error('HINDI_STUDY failed to load'); return; }
+    HindiSpeak.mount('#hs-app', window.HINDI_STUDY);
+
+    var btn = document.getElementById('mic-test');
+    var out = document.getElementById('mic-out');
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) {
+      out.innerHTML = '⚠️ This browser cannot check Hindi speech. Open this page in <b>Chrome</b> (desktop or Android) and allow the microphone.';
+      btn.disabled = true;
+      btn.style.opacity = .5;
+      return;
+    }
+    btn.onclick = function () {
+      out.textContent = '🎤 सुन रहा हूँ… say नमस्ते';
+      var r = new SR();
+      r.lang = 'hi-IN'; r.interimResults = false; r.maxAlternatives = 3;
+      r.onresult = function (e) {
+        var heard = e.results[0][0].transcript;
+        var ok = HindiSpeak._sim('नमस्ते', heard) >= 0.6;
+        out.innerHTML = ok
+          ? '✅ Microphone works — it heard “<b>' + heard + '</b>”. You are ready.'
+          : '🤔 It heard “<b>' + heard + '</b>”. The mic works; move a little closer and speak clearly.';
+      };
+      r.onerror = function (e) {
+        out.innerHTML = e.error === 'not-allowed'
+          ? '🚫 The microphone is blocked. Click the padlock in the address bar → allow the microphone, then reload.'
+          : '⚠️ ' + e.error + ' — try again.';
+      };
+      try { r.start(); } catch (_) { out.textContent = 'Could not start the microphone.'; }
+    };
+  });
+})();
+</script>
+
+</body>
+</html>
