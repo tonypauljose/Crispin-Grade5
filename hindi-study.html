@@ -34,6 +34,14 @@
                background: #F8FAFC; border: 1px dashed #CBD5E1; border-radius: 14px; padding: 12px 14px; }
     .hsx-mic button { border: 2px solid #15803D; background: #15803D; color: #fff; border-radius: 999px; padding: 9px 18px; font-weight: 800; cursor: pointer; font-family: inherit; }
     .hsx-mic .out { font-size: .92rem; }
+    .hsx-diag { margin-top: 12px; background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 10px 14px; }
+    .hsx-diag summary { cursor: pointer; font-weight: 800; color: #166534; }
+    .hsx-diag__row { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; border-bottom: 1px dashed #E2E8F0; font-size: .9rem; }
+    .hsx-diag__row:last-child { border-bottom: 0; }
+    .hsx-diag__row b { font-weight: 700; }
+    .hsx-diag__row .no { color: #B91C1C; font-weight: 800; }
+    .hsx-diag__row .yes { color: #15803D; font-weight: 800; }
+    .hsx-diag__help { font-size: .86rem; color: var(--ink-muted); margin: 10px 0 0; line-height: 1.55; }
     .hsx-links { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 0; }
     .hsx-links a { background: var(--surface); border: 2px solid #BBF7D0; border-radius: 999px; padding: 8px 16px; font-weight: 700; text-decoration: none; color: #166534; font-size: .92rem; }
     .hsx-links a:hover { border-color: #15803D; }
@@ -64,6 +72,16 @@
           <span class="out" id="mic-out">Tap the button and say <b style="font-family:'Tiro Devanagari Hindi',serif">नमस्ते</b> to check the microphone.</span>
           <button id="mic-test" type="button">🎤 माइक जाँचो</button>
         </div>
+        <details class="hsx-diag">
+          <summary>🔎 Microphone not working? Check this device</summary>
+          <div id="diag">…</div>
+          <p class="hsx-diag__help">
+            <b>Where it works:</b> Chrome or Edge on a Windows/Mac laptop, or Chrome on Android — these can check his Hindi.
+            On an iPad or iPhone use <b>Safari</b>; Chrome on iOS cannot listen (it runs Safari underneath).
+            Speech checking also needs the internet.<br>
+            <b>If it says “denied”:</b> tap the 🔒 padlock (or ⓘ) next to the web address → <b>Microphone → Allow</b> → reload.
+          </p>
+        </details>
         <div class="hsx-links">
           <a href="worksheets/hy-hindi-study-booklet.pdf">📘 पढ़ाई की किताब (PDF)</a>
           <a href="worksheets/hy-hindi-practice-booklet.pdf">✏️ अभ्यास पुस्तिका (PDF)</a>
@@ -99,29 +117,66 @@
     var btn = document.getElementById('mic-test');
     var out = document.getElementById('mic-out');
     var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    // Device report — so a parent can see WHY nothing happened.
+    function renderDiag() {
+      HindiSpeak.diagnose(function (d) {
+        function row(label, value, good) {
+          return '<div class="hsx-diag__row"><b>' + label + '</b>' +
+            '<span class="' + (good === true ? 'yes' : good === false ? 'no' : '') + '">' + value + '</span></div>';
+        }
+        document.getElementById('diag').innerHTML =
+          row('Browser', d.browser) +
+          row('Secure connection (https)', d.secure ? 'yes' : 'NO', d.secure) +
+          row('Can check Hindi speech', d.recognition ? 'yes' : 'NO — see below', d.recognition) +
+          row('Can record audio', d.recorder ? 'yes' : 'no', d.recorder) +
+          row('Microphone permission', d.permission, d.permission === 'granted' ? true : d.permission === 'denied' ? false : null) +
+          row('Hindi voice for 🔊', d.hindiVoice || 'none installed on this device', !!d.hindiVoice);
+      });
+    }
+    renderDiag();
+
     if (!SR) {
-      out.innerHTML = '⚠️ This browser cannot check Hindi speech. Open this page in <b>Chrome</b> (desktop or Android) and allow the microphone.';
-      btn.disabled = true;
-      btn.style.opacity = .5;
-      return;
+      out.innerHTML = '⚠️ This browser cannot check Hindi speech. On a laptop use <b>Chrome</b> or <b>Edge</b>; on an iPad use <b>Safari</b>. You can still record and compare.';
     }
     btn.onclick = function () {
-      out.textContent = '🎤 सुन रहा हूँ… say नमस्ते';
-      var r = new SR();
-      r.lang = 'hi-IN'; r.interimResults = false; r.maxAlternatives = 3;
-      r.onresult = function (e) {
-        var heard = e.results[0][0].transcript;
-        var ok = HindiSpeak._sim('नमस्ते', heard) >= 0.6;
-        out.innerHTML = ok
-          ? '✅ Microphone works — it heard “<b>' + heard + '</b>”. You are ready.'
-          : '🤔 It heard “<b>' + heard + '</b>”. The mic works; move a little closer and speak clearly.';
-      };
-      r.onerror = function (e) {
-        out.innerHTML = e.error === 'not-allowed'
-          ? '🚫 The microphone is blocked. Click the padlock in the address bar → allow the microphone, then reload.'
-          : '⚠️ ' + e.error + ' — try again.';
-      };
-      try { r.start(); } catch (_) { out.textContent = 'Could not start the microphone.'; }
+      out.textContent = '🎤 माइक की अनुमति… allow the microphone if asked';
+      // Ask for the microphone explicitly first: this is what makes the permission
+      // prompt appear. Leaving it to the speech engine can fail silently.
+      HindiSpeak.ensureMic(function (ok, why) {
+        renderDiag();
+        if (!ok) {
+          out.innerHTML = /NotAllowed|denied|Security/i.test(why || '')
+            ? '🚫 The microphone is blocked for this site. Tap the 🔒 padlock next to the address → <b>Microphone → Allow</b> → reload this page.'
+            : '⚠️ No microphone available (' + why + '). Close other apps using the mic and try again.';
+          return;
+        }
+        if (!SR) {
+          out.innerHTML = '✅ Microphone works. This browser cannot <i>check</i> Hindi speech, but 🎤 बोलो will record you so you can compare with 🔊.';
+          return;
+        }
+        out.textContent = '🎤 सुन रहा हूँ… say नमस्ते';
+        var r = new SR();
+        r.lang = 'hi-IN'; r.interimResults = false; r.maxAlternatives = 3;
+        var got = false;
+        r.onresult = function (e) {
+          got = true;
+          var heard = e.results[0][0].transcript;
+          var good = HindiSpeak._sim('नमस्ते', heard) >= 0.6;
+          out.innerHTML = good
+            ? '✅ It heard “<b>' + heard + '</b>” — everything works. Start with the शब्द cards below.'
+            : '🤔 It heard “<b>' + heard + '</b>”. The mic works; sit closer and say it a little louder.';
+        };
+        r.onerror = function (e) {
+          out.innerHTML = e.error === 'not-allowed'
+            ? '🚫 The microphone is blocked. Tap the 🔒 padlock → allow the microphone → reload.'
+            : e.error === 'network'
+              ? '🌐 Speech checking needs the internet — check the connection and try again.'
+              : '⚠️ ' + e.error + ' — try again.';
+        };
+        r.onend = function () { if (!got && !/heard|blocked|internet|⚠️/.test(out.innerHTML)) out.textContent = '🤔 Nothing came through — tap the button and speak straight away.'; };
+        try { r.start(); } catch (_) { out.textContent = 'Could not start the microphone — reload the page and try again.'; }
+      });
     };
   });
 })();

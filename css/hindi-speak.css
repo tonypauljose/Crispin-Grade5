@@ -63,6 +63,7 @@
 .hs-w--ok { background: #DCFCE7; color: #166534; }
 .hs-w--bad { background: #FEE2E2; color: #991B1B; text-decoration: underline wavy #DC2626; }
 .hs-tip { font-size: .95rem; margin: 6px 0 0; }
+.hs-code { font-family: ui-monospace, Consolas, monospace; font-size: .78rem; color: var(--ink-muted); }
 .hs-tip b { font-family: 'Tiro Devanagari Hindi', serif; font-size: 1.15rem; }
 .hs-empty { text-align: center; color: var(--ink-muted); padding: 30px 10px; font-family: 'Tiro Devanagari Hindi', serif; font-size: 1.15rem; }
 .hs-empty i { font-family: 'Nunito', sans-serif; font-size: .9rem; display: block; margin-top: 6px; }

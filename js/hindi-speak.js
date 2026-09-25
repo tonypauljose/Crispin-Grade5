@@ -120,6 +120,23 @@
   /* ---------------- speech in ---------------- */
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   let active = null;
+
+  // Ask for the microphone ourselves before starting recognition. Leaving it to
+  // the recognition engine to prompt is the usual reason nothing happens: on some
+  // builds it fails silently instead of showing the permission bar.
+  let micReady = false;
+  function ensureMic(cb) {
+    if (micReady) { cb(true); return; }
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { cb(true); return; }
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+      stream.getTracks().forEach(function (t) { t.stop(); });
+      micReady = true;
+      cb(true);
+    }).catch(function (err) {
+      cb(false, (err && (err.name || err.message)) || 'denied');
+    });
+  }
+
   function listen(cb) {
     if (!SR) { cb({ error: 'unsupported' }); return null; }
     if (active) { try { active.abort(); } catch (_) {} active = null; }
@@ -361,7 +378,19 @@
         return;
       }
 
-      listen(function (res) {
+      ensureMic(function (okMic, why) {
+        if (!okMic) {
+          finish();
+          const isDenied = /NotAllowed|denied|Security/i.test(why || '');
+          box.innerHTML = '<p class="hs-tip">' + (isDenied
+            ? '🚫 माइक की अनुमति नहीं मिली। <i>The microphone is blocked for this site. Tap the 🔒 padlock (or ⓘ) next to the address, set <b>Microphone → Allow</b>, then reload the page.</i>'
+            : '🎤 माइक नहीं मिला। <i>No microphone was available (' + esc(why || '?') + '). Check that no other app is using it.</i>') +
+            '</p><div class="hs-btns hs-btns--after">' +
+            '<button class="hs-btn hs-btn--mic" data-act="speak">🎤 फिर कोशिश करो</button>' +
+            '<button class="hs-btn hs-btn--ghost" data-act="ok">मैंने सही बोला ✓</button></div>';
+          return;
+        }
+        listen(function (res) {
         finish();
         if (res.error) {
           const msg = {
@@ -371,8 +400,10 @@
             'network': 'इंटरनेट चाहिए। <i>Speech checking needs the internet.</i>',
             'unsupported': 'This browser cannot check Hindi speech — open in <b>Chrome</b>.'
           }[res.error] || 'फिर से कोशिश करो। <i>Something went wrong — try again.</i>';
-          box.innerHTML = '<p class="hs-tip">' + msg + '</p>' +
-            '<div class="hs-btns hs-btns--after"><button class="hs-btn hs-btn--mic" data-act="speak">🎤 फिर बोलो</button></div>';
+          box.innerHTML = '<p class="hs-tip">' + msg + ' <span class="hs-code">[' + esc(res.error) + ']</span></p>' +
+            '<div class="hs-btns hs-btns--after">' +
+            '<button class="hs-btn hs-btn--mic" data-act="speak">🎤 फिर बोलो</button>' +
+            '<button class="hs-btn hs-btn--ghost" data-act="ok">मैंने सही बोला ✓</button></div>';
           return;
         }
         let best = { score: 0, heard: res.alts[0] || '', marks: null };
@@ -396,6 +427,7 @@
           card.classList.add('is-try');
         }
         refreshHead();
+        });
       });
     }
 
@@ -435,6 +467,37 @@
   };
 
   HS.reset = function () { stats = {}; save(stats); };
+
+  // What can this device actually do? Shown on the page so a parent can see why
+  // nothing happened, instead of guessing.
+  HS.diagnose = function (cb) {
+    const ua = navigator.userAgent;
+    const criOS = /CriOS|FxiOS|EdgiOS/.test(ua);           // any iOS browser is Safari underneath
+    const out = {
+      browser: criOS ? 'Chrome/other on iPhone or iPad (Safari engine underneath)'
+        : /Edg\//.test(ua) ? 'Edge'
+          : /Chrome\//.test(ua) ? 'Chrome'
+            : /Safari\//.test(ua) ? 'Safari' : 'other',
+      secure: location.protocol === 'https:' || location.hostname === 'localhost',
+      recognition: !!SR,
+      recorder: !!(navigator.mediaDevices && window.MediaRecorder),
+      getUserMedia: !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia),
+      hindiVoice: (pickHi() || {}).name || null,
+      voices: ((window.speechSynthesis && speechSynthesis.getVoices()) || []).length,
+      permission: 'unknown',
+      ua: ua
+    };
+    if (navigator.permissions && navigator.permissions.query) {
+      try {
+        navigator.permissions.query({ name: 'microphone' })
+          .then(function (p) { out.permission = p.state; cb(out); })
+          .catch(function () { cb(out); });
+        return;
+      } catch (_) {}
+    }
+    cb(out);
+  };
+  HS.ensureMic = function (cb) { ensureMic(cb); };
   // exposed for the smoke test
   HS._sim = sim;
   HS._wordCheck = wordCheck;
