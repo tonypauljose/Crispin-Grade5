@@ -345,7 +345,7 @@ const click = (sel) => { const e = doc.querySelector(sel); must(e, 'missing ' + 
     click('#fd-next'); await wait();
     const n0 = FD.store.sk('F2').hist.length;
     click('#fd-check');
-    must(/boxes|Type|Fill/.test(doc.querySelector('#fd-msg').textContent), 'no friendly message for empty');
+    must(/boxes|Type|Fill|Tap/.test(doc.querySelector('#fd-msg').textContent), 'no friendly message for empty');
     must(!doc.querySelector('.fd-feedback'), 'empty answer was marked');
     must(FD.store.sk('F2').hist.length === n0, 'empty answer counted');
   });

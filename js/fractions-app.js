@@ -843,7 +843,7 @@
       var p, d1, d2, n1, n2;
       do { p = R.pick(DEN2); d1 = p[0]; d2 = p[1]; n1 = 1; n2 = 1; } while (new Frac(1, d1).add(new Frac(1, d2)).cmp(new Frac(1, 1)) >= 0);
       var info = unlikeStepsFor(n1, d1, n2, d2, '+');
-      return wp('frac', 'Ronaldo scored ' + fr(1, d1) + ' of the team\'s goals in the league and ' + fr(1, d2) + ' of the team\'s goals in the cup. What fraction of the team\'s goals did he score in <b>both</b>?', new Frac(info.res, info.L), {
+      return wp('frac', 'This season Ronaldo scored ' + fr(1, d1) + ' of his team\'s goals with headers and another ' + fr(1, d2) + ' of his team\'s goals with free kicks. What fraction of the team\'s goals did he score <b>altogether</b>?', new Frac(info.res, info.L), {
         dens: [d1, d2, info.L], f: 1 / d1 + 1 / d2, steps: info.steps, hint: 'Different bottoms: find the LCM, convert, then add.'
       });
     },
@@ -879,7 +879,7 @@
       var p, a, b;
       do { p = R.pick(DEN2); a = p[0]; b = p[1]; } while (new Frac(1, a).add(new Frac(1, b)).cmp(new Frac(1, 1)) >= 0);
       var spent = new Frac(1, a).add(new Frac(1, b)), left = new Frac(1, 1).sub(spent), L = lcm(a, b);
-      return wp('frac', 'Crispin spends ' + fr(1, a) + ' of his Robux on a skin and ' + fr(1, b) + ' on an emote. What fraction of his Robux is <b>left</b>?', left, {
+      return wp('frac', 'Crispin spends ' + fr(1, a) + ' of the Robux he started with on a skin and ' + fr(1, b) + ' of the Robux he started with on an emote. What fraction of his Robux is <b>left</b>?', left, {
         dens: [a, b, L], f: 1 - 1 / a - 1 / b, hint: 'Add what he spent (find the LCM). Then take it away from 1 whole.',
         steps: ['Spent altogether: ' + fr(1, a) + ' + ' + fr(1, b) + ' = ' + fr(L / a, L) + ' + ' + fr(L / b, L) + ' = ' + fr(L / a + L / b, L) + '.', 'The whole is 1 = ' + fr(L, L) + ', so left = ' + fr(L, L) + ' − ' + fr(L / a + L / b, L) + ' = ' + fr(L - L / a - L / b, L) + (new Frac(L - L / a - L / b, L).isLowest() ? '.' : ' = ' + frF(left.red()) + ' (simplest form).')]
       });
@@ -907,7 +907,7 @@
     },
     function (R) {   /* pizza shared */
       var n = R.int(1, 3), d = R.int(2, 5), m = R.int(2, 5), res = new Frac(n, d * m);
-      return wp('frac', ' ' + fr(n, d) + ' of a pizza is left after the match. Crispin shares it equally among ' + m + ' friends. What fraction of the <b>whole pizza</b> does each friend get?', res, {
+      return wp('frac', fr(n, d) + ' of a pizza is left after the match. Crispin shares it equally among ' + m + ' friends. What fraction of the <b>whole pizza</b> does each friend get?', res, {
         dens: [d, m, d * m], f: n / d / m, hint: 'Sharing equally means divide. Keep, Change, Flip.',
         steps: ['Divide ' + fr(n, d) + ' by ' + m + '.', '<b>Keep</b> ' + fr(n, d) + ', <b>Change</b> ÷ to ×, <b>Flip</b> ' + m + ' to its M.I ' + fr(1, m) + '.', fr(n, d) + ' × ' + fr(1, m) + ' = ' + fr(n, d * m) + (new Frac(n, d * m).isLowest() ? '.' : ' = ' + frF(res.red()) + ' (simplest form).')]
       });
@@ -982,7 +982,9 @@
       });
     },
     function (R) {   /* BD decimals: change */
-      var a = R.int(2, 9) * 1000 + R.pick([250, 500, 750, 100, 350, 450, 650, 950]), b = R.int(1, 6) * 1000 + R.pick([250, 500, 750, 100, 350]), pay = Math.ceil((a + b) / 5000) * 5000 + (R.chance(0.5) ? 5000 : 0), change = pay - a - b;
+      var a = R.int(2, 9) * 1000 + R.pick([250, 500, 750, 100, 350, 450, 650, 950]), b = R.int(1, 6) * 1000 + R.pick([250, 500, 750, 100, 350]), pay = Math.ceil((a + b) / 5000) * 5000 + (R.chance(0.5) ? 5000 : 0);
+      if (pay === a + b) pay += 5000;   /* never BD 0.000 change */
+      var change = pay - a - b;
       return decQ('CH', 'Real life', 'A football shirt costs BD ' + dstr(a, 3) + ' and a pair of boots costs BD ' + dstr(b, 3) + '. Crispin pays with BD ' + dstr(pay, 3) + '. How much <b>change</b> in BD does he get?', new Frac(change, 1000), dstr(change, 3), {
         f: change / 1000, dens: [], unit: 'BD', hint: 'Add the two prices first, then take that total away from what he paid. Line up the decimal points.',
         steps: ['Total cost: ' + dstr(a, 3) + ' + ' + dstr(b, 3) + ' = ' + dstr(a + b, 3) + ' BD.', 'Change: ' + dstr(pay, 3) + ' − ' + dstr(a + b, 3) + ' = <b>' + dstr(change, 3) + '</b> BD.']
